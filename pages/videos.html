@@ -1,0 +1,2667 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mega Furniture | شوفنا</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .css-x {
+        position: relative;
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+      }
+      .css-x::before,
+      .css-x::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        top: 50%;
+        left: 0;
+      }
+      .css-x::before { transform: translateY(-50%) rotate(45deg); }
+      .css-x::after  { transform: translateY(-50%) rotate(-45deg); }
+
+      :root {
+        --o: #f5a623;
+        --od: #b8722a;
+        --ol: #f7b84a;
+        --bg: #0a0a0a;
+        --s: #161616;
+        --s2: #212121;
+        --s3: #2e2e2e;
+        --t: #f5f4f0;
+        --tm: #908c84;
+        --b: rgba(255, 255, 255, 0.07);
+        --bh: rgba(245, 166, 35, 0.4);
+        --nb: rgba(10, 10, 10, 0.93);
+        --sh: 0 8px 40px rgba(0, 0, 0, 0.55);
+        --gc: rgba(255, 255, 255, 0.02);
+        --font-head: "Fraunces", serif;
+        --font-body: "Outfit", sans-serif;
+      }
+      [data-theme="light"] {
+        --bg: #f7f3ec;
+        --s: #fefcf8;
+        --s2: #ede4d6;
+        --s3: #dfd2bf;
+        --t: #1a1612;
+        --tm: #6b5d4f;
+        --b: rgba(26, 22, 18, 0.08);
+        --bh: rgba(232, 150, 30, 0.28);
+        --nb: rgba(247, 243, 236, 0.95);
+        --sh: 0 8px 40px rgba(26, 22, 18, 0.1);
+        --gc: rgba(26, 22, 18, 0.02);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      body {
+        background: var(--bg);
+        color: var(--t);
+        font-family: var(--font-body);
+        overflow-x: hidden;
+        max-width: 100vw;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      .pb {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: var(--o);
+        z-index: 9999;
+        width: 0;
+        transition: width 0.1s;
+        pointer-events: none;
+      }
+
+      /* NAV */
+      
+      /* ── GENERAL ANNOUNCEMENT BAR ── */
+      #gen-ann-bar {
+        position: relative;
+        width: 100%;
+        z-index: 10;
+        background: #0e0d0b;
+        color: #fff;
+        height: 42px;
+        font-family: var(--font-body);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 0 48px;
+        overflow: hidden;
+      }
+      .ann-marquee-container {
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+      }
+      .ann-marquee-content {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        animation: ann-marquee-anim 20s linear infinite;
+        width: max-content;
+        will-change: transform;
+      }
+      .ann-marquee-content:hover {
+        animation-play-state: paused;
+      }
+      .ann-item {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 20px;
+      }
+      .ann-bullet {
+        color: var(--o, #ff9900);
+        font-weight: bold;
+        margin-left: 20px;
+      }
+      @keyframes ann-marquee-anim {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(-50%, 0, 0);
+        }
+      }
+      /* Floating WhatsApp Menu Styles */
+      .wa-menu-container {
+        position: relative;
+      }
+      .wa-menu {
+        position: absolute;
+        bottom: 56px;
+        right: 0;
+        background: var(--nb);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        padding: 6px 0;
+        display: none;
+        flex-direction: column;
+        min-width: 240px;
+        z-index: 999;
+      }
+      .wa-menu.show {
+        display: flex;
+      }
+      .wa-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        color: var(--t);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: background 0.2s, color 0.2s;
+        text-align: right;
+        direction: rtl;
+        border-bottom: 1px solid var(--b);
+      }
+      .wa-menu-item:last-child {
+        border-bottom: none;
+      }
+      html[lang="en"] .wa-menu-item {
+        text-align: left;
+        direction: ltr;
+      }
+      .wa-menu-item:hover {
+        background: var(--b);
+        color: var(--o);
+      }
+      .nl {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .nlimg {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .nb2 {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 20px;
+        color: var(--t);
+        line-height: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        letter-spacing: 0.08em;
+      }
+      .nb2 .nb-fur {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        font-weight: 400;
+        color: var(--o);
+        font-family: var(--font-body);
+        text-transform: uppercase;
+      }
+      .nlinks {
+        display: flex;
+        gap: 4px;
+        list-style: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .nlink {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.2s;
+        font-family: var(--font-body);
+      }
+      .nlink:hover {
+        color: var(--t);
+        background: var(--s);
+      }
+      .nlink.active {
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.1);
+      }
+      .nr {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tt {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        flex-shrink: 0;
+      }
+      .tt:hover {
+        background: var(--s3);
+        transform: scale(1.08);
+      }
+      .t-sun {
+        display: block;
+      }
+      .t-sun svg {
+        stroke: var(--o);
+      }
+      .t-moon {
+        display: none;
+      }
+      [data-theme="light"] .t-sun {
+        display: none;
+      }
+      [data-theme="light"] .t-moon {
+        display: block;
+      }
+      .cbt {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--t);
+        transition: background 0.2s;
+      }
+      .cbt:hover {
+        background: var(--s3);
+      }
+      .cbadge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--o);
+        color: #0e0d0b;
+        font-size: 10px;
+        font-weight: 700;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-head);
+        border: 2px solid var(--bg);
+      }
+      .langbtn {
+        background: transparent;
+        border: 1px solid var(--b);
+        color: var(--tm);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+      }
+      .langbtn:hover {
+        border-color: var(--o);
+        color: var(--o);
+      }
+      .hbg {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: var(--s);
+        border: 1px solid var(--o);
+        border-radius: 50%;
+        padding: 0;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .hbg span {
+        display: block;
+        width: 18px;
+        height: 2px;
+        background: var(--o);
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+      .hbg.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hbg.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hbg.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* MOBILE MENU */
+      .mm {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(75vw, 300px);
+        height: 100dvh;
+        background: var(--bg);
+        z-index: 201;
+        display: flex;
+        flex-direction: column;
+        transform: translateX(110%);
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        border-left: 1px solid var(--b);
+        overflow-y: auto;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .mm.open {
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: all;
+      }
+      .mm-hdr {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 24px 20px;
+        border-bottom: 1px solid var(--b);
+        flex-shrink: 0;
+      }
+      .mm-brand {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 22px;
+        color: var(--t);
+        letter-spacing: 0.2em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      .mm-brand-sub {
+        font-size: 10px;
+        letter-spacing: 0.4em;
+        font-weight: 400;
+        color: var(--o);
+        font-family: var(--font-body);
+        text-transform: uppercase;
+        display: block;
+        margin-top: 2px;
+      }
+      .mm-x {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        color: var(--t);
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .mm-x:hover {
+        background: var(--s3);
+      }
+      .mm .nlink {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        font-size: 18px;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--b);
+        border-radius: 0;
+        min-height: 56px;
+        color: var(--t);
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .mm .nlink:hover {
+        background: var(--s);
+      }
+      .mm .nlink.active {
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.06);
+      }
+      .mm-ftr {
+        margin-top: auto;
+        padding: 16px 20px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      #mov {
+        z-index: 200;
+      }
+      .ov {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .ov.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #cov {
+        z-index: 500;
+      }
+
+      /* CART */
+      .cpa {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(440px, 100vw);
+        background: var(--s);
+        border-left: 1px solid var(--b);
+        z-index: 501;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+      }
+      .cpa.open {
+        transform: translateX(0);
+      }
+      .chdr {
+        padding: 22px;
+        border-bottom: 1px solid var(--b);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .chdr h3 {
+        font-family: var(--font-head);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .chdr h3 span {
+        color: var(--tm);
+        font-weight: 400;
+        font-size: 13px;
+        font-family: var(--font-body);
+      }
+      .cx {
+        background: var(--s2);
+        border: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--t);
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .cx:hover {
+        background: var(--s3);
+      }
+      .clist {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .cemp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        gap: 12px;
+        color: var(--tm);
+        text-align: center;
+        padding: 40px;
+      }
+      .cir {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--s2);
+        border-radius: 12px;
+        padding: 12px;
+        border: 1px solid var(--b);
+      }
+      .cii {
+        width: 52px;
+        height: 52px;
+        border-radius: 8px;
+        background: var(--s3);
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .cii img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cin {
+        flex: 1;
+        min-width: 0;
+      }
+      .cin .nm {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--t);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 2px;
+      }
+      .cin .pr {
+        font-size: 11px;
+        color: var(--o);
+        margin-bottom: 7px;
+      }
+      .ciq {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .ciq button {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--s);
+        border: 1px solid var(--b);
+        color: var(--t);
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .ciq button:hover {
+        background: var(--o);
+        color: #0a0a0a;
+        border-color: var(--o);
+      }
+      .ciq span {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--t);
+        min-width: 16px;
+        text-align: center;
+      }
+      .crm {
+        background: none;
+        border: none;
+        color: var(--tm);
+        cursor: pointer;
+        font-size: 16px;
+        padding: 4px;
+        transition: color 0.2s;
+        flex-shrink: 0;
+      }
+      .crm:hover {
+        color: #ff4757;
+      }
+      .cir.bundle-item {
+        border-left: 2px solid var(--o);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .cir.bundle-item .cir-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .bundle-tag {
+        display: inline-block;
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        background: var(--o);
+        color: #0a0a0a;
+        border-radius: 4px;
+        padding: 2px 6px;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .bundle-item-count {
+        font-size: 11px;
+        color: var(--tm);
+        margin-bottom: 6px;
+      }
+      .bundle-items-list {
+        font-size: 10px;
+        color: var(--tm);
+        line-height: 1.7;
+        padding-left: 4px;
+      }
+      .cftr {
+        padding: 18px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .bp {
+        background: var(--o);
+        color: #0e0d0b;
+        border: none;
+        padding: 14px 32px;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bp:hover {
+        background: var(--ol);
+        transform: scale(1.04);
+      }
+      .bf {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      /* TOAST */
+      .toast {
+        position: fixed;
+        bottom: 96px;
+        right: 28px;
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        padding: 14px 20px;
+        font-size: 14px;
+        color: var(--t);
+        box-shadow: var(--sh);
+        z-index: 800;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transform: translateX(130%);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .toast.show {
+        transform: translateX(0);
+      }
+
+      /* SCROLL REVEAL */
+      .rev {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s,
+          transform 0.7s;
+      }
+      .rev.vis {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* FLOAT BUTTONS */
+      .fbtns {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 200;
+      }
+      .fbtn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+      .fbtn:hover {
+        transform: scale(1.12);
+      }
+      .wab {
+        background: #25d366;
+        color: white;
+        text-decoration: none;
+      }
+      .topb {
+        background: var(--o);
+        color: #0e0d0b;
+        font-size: 20px;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .topb.vis {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        padding: 60px 48px 32px;
+        transition: background 0.3s;
+      }
+      .fg {
+        max-width: 1200px;
+        margin: 0 auto 48px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+      }
+      .fbr p {
+        color: var(--tm);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-top: 12px;
+        max-width: 280px;
+      }
+      .f-soc {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .f-soc a {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        text-decoration: none;
+        color: var(--tm);
+      }
+      .f-soc a:hover {
+        border-color: var(--o);
+        color: var(--o);
+      }
+      .fc h4 {
+        font-family: var(--font-head);
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--t);
+      }
+      .fc ul {
+        list-style: none;
+      }
+      .fc li {
+        margin-bottom: 10px;
+      }
+      .fc a {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .fc a:hover {
+        color: var(--o);
+      }
+      .fb {
+        max-width: 1200px;
+        margin: 0 auto;
+        border-top: 1px solid var(--b);
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--tm);
+        font-size: 13px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      /* ─── PAGE WRAPPER ─── */
+      .pw {
+        padding-top: 68px;
+      }
+
+      /* ─── HERO ─── */
+      .sph-hero {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 72px 48px 56px;
+        text-align: center;
+      }
+      .stag {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--o);
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      .sph-h1 {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: clamp(32px, 5vw, 60px);
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        color: var(--t);
+        margin-bottom: 16px;
+      }
+      .sph-sub {
+        color: var(--tm);
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.6;
+        max-width: 520px;
+        margin: 0 auto 32px;
+      }
+      .sph-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .sph-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-size: 12px;
+        font-weight: 300;
+        color: var(--tm);
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          color 0.2s,
+          transform 0.2s;
+        white-space: nowrap;
+      }
+      .sph-pill:hover {
+        border-color: var(--o);
+        color: var(--t);
+        transform: translateY(-2px);
+      }
+
+      /* ─── SECTION SHARED ─── */
+      .sph-sec {
+        padding: 72px 0;
+        border-top: 1px solid var(--b);
+      }
+      .sph-wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+      .sph-sh {
+        margin-bottom: 36px;
+      }
+      .sph-sh-h {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: clamp(24px, 3.5vw, 40px);
+        letter-spacing: -0.02em;
+        color: var(--t);
+        margin-bottom: 6px;
+      }
+      .sph-handle {
+        font-size: 13px;
+        color: var(--o);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+      }
+      .sph-sh-sub {
+        color: var(--tm);
+        font-size: 14px;
+        margin-top: 4px;
+      }
+      .sph-more {
+        margin-top: 32px;
+        text-align: center;
+      }
+      .sph-follow-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--b);
+        color: var(--tm);
+        padding: 12px 28px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          color 0.2s,
+          transform 0.2s;
+      }
+      .sph-follow-btn:hover {
+        border-color: var(--o);
+        color: var(--o);
+        transform: translateY(-2px);
+      }
+
+      /* ─── INSTAGRAM GRID ─── */
+      .ig-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .ig-card {
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        display: block;
+        text-decoration: none;
+        background: linear-gradient(135deg, #f0e8dc 0%, #ddd0c0 100%);
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.25s;
+        cursor: pointer;
+      }
+      .ig-card:hover {
+        transform: scale(1.02);
+      }
+      .ig-card-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: background 0.25s;
+        color: white;
+        opacity: 0;
+      }
+      .ig-card:hover .ig-card-overlay {
+        background: rgba(0, 0, 0, 0.55);
+        opacity: 1;
+      }
+      .ig-card-overlay span {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: white;
+      }
+      .ig-card-title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 28px 12px 12px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        font-size: 12px;
+        font-weight: 500;
+        color: white;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .ig-card--placeholder {
+        background: linear-gradient(135deg, var(--s2) 0%, var(--s3) 100%);
+      }
+      .ig-card--placeholder .ig-card-overlay {
+        opacity: 1;
+        background: transparent;
+        color: var(--tm);
+      }
+      .ig-card--placeholder .ig-card-overlay span {
+        color: var(--tm);
+      }
+      .ig-card--has-img {
+        background-color: var(--s2);
+      }
+
+      /* ─── TIKTOK GRID ─── */
+      .tt-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .tt-card {
+        aspect-ratio: 9 / 16;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        display: block;
+        text-decoration: none;
+        background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.25s;
+        cursor: pointer;
+      }
+      .tt-card:hover {
+        transform: scale(1.02);
+      }
+      .tt-card-ico {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        opacity: 0.6;
+      }
+      .tt-card-title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 36px 12px 14px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        font-family: var(--font-head);
+        font-size: 13px;
+        font-weight: 300;
+        color: white;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .tt-card-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: background 0.25s;
+        opacity: 0;
+        color: white;
+      }
+      .tt-card:hover .tt-card-overlay {
+        background: rgba(0, 0, 0, 0.55);
+        opacity: 1;
+      }
+      .tt-card-overlay span {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .tt-card--placeholder {
+        background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+      }
+      .tt-card--placeholder .tt-card-overlay {
+        opacity: 1;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .tt-card--placeholder .tt-card-overlay span {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* ─── CUSTOMER DELIVERIES ─── */
+      .deliv-cols {
+        columns: 3;
+        column-gap: 12px;
+      }
+      .deliv-item {
+        break-inside: avoid;
+        margin-bottom: 12px;
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .deliv-item img {
+        width: 100%;
+        display: block;
+        border-radius: 12px;
+      }
+      .deliv-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        transition: background 0.25s;
+        opacity: 0;
+      }
+      .deliv-item:hover .deliv-overlay {
+        background: rgba(0, 0, 0, 0.4);
+        opacity: 1;
+      }
+      .deliv-meta {
+        font-size: 12px;
+        color: var(--tm);
+        margin-top: 6px;
+        padding: 0 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .deliv-empty {
+        grid-column: 1/-1;
+        text-align: center;
+        padding: 80px 20px;
+        color: var(--tm);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .deliv-empty p {
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      /* ─── REVIEW CTA BAND ─── */
+      .sph-cta-band {
+        background: var(--t);
+        padding: 72px 48px;
+        text-align: center;
+      }
+      [data-theme="dark"] .sph-cta-band {
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        border-bottom: 1px solid var(--b);
+      }
+      .sph-cta-band h2 {
+        font-family: var(--font-head);
+        font-size: clamp(24px, 4vw, 44px);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        color: var(--bg);
+        margin-bottom: 12px;
+      }
+      [data-theme="dark"] .sph-cta-band h2 {
+        color: var(--t);
+      }
+      .sph-cta-band p {
+        font-size: 15px;
+        color: rgba(247, 243, 236, 0.65);
+        margin-bottom: 28px;
+        font-weight: 300;
+      }
+      [data-theme="dark"] .sph-cta-band p {
+        color: var(--tm);
+      }
+      .sph-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--o);
+        color: #0e0d0b;
+        padding: 14px 36px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+      }
+      .sph-cta-btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+      }
+
+      /* ─── PLATFORM CARDS ─── */
+      .plat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .plat-card {
+        border-radius: 20px;
+        padding: 48px 32px;
+        text-align: center;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        text-decoration: none;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        color: white;
+      }
+      .plat-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+      .plat-ig {
+        background: linear-gradient(
+          135deg,
+          #f09433 0%,
+          #e6683c 25%,
+          #dc2743 50%,
+          #cc2366 75%,
+          #bc1888 100%
+        );
+      }
+      .plat-tt {
+        background: #010101;
+      }
+      .plat-fb {
+        background: #1877f2;
+      }
+      .plat-stat {
+        font-family: var(--font-head);
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1;
+      }
+      .plat-lbl {
+        font-size: 12px;
+        opacity: 0.75;
+        letter-spacing: 0.05em;
+      }
+      .plat-handle {
+        font-size: 13px;
+        opacity: 0.85;
+        font-weight: 500;
+        margin-top: 4px;
+      }
+
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 900px) {
+        
+        .nl {
+          flex: 1 1 auto;
+          min-width: 0;
+          max-width: 50%;
+        }
+        .nr {
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+        .tt,
+        .cbt,
+        .hbg {
+          width: 38px;
+          height: 38px;
+          min-width: 38px;
+          flex-shrink: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-size: 16px;
+          border-radius: 50%;
+          background: var(--s2);
+          border: 1px solid var(--b);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--t);
+          transition: all 0.2s ease;
+        }
+        .tt:active,
+        .cbt:active,
+        .hbg:active {
+          background: var(--s3);
+          transform: scale(0.95);
+        }
+        .langbtn {
+          width: auto;
+          min-width: auto;
+          height: 38px;
+          padding: 0 14px;
+          font-size: 11px;
+          border-radius: 999px;
+          background: var(--s2);
+          border: 1px solid var(--b);
+          color: var(--t);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          transition: all 0.2s ease;
+        }
+        .langbtn:active {
+          background: var(--s3);
+          transform: scale(0.95);
+        }
+        .nlinks {
+          display: none;
+        }
+        .hbg {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .hbg span {
+          width: 16px;
+          height: 2px;
+          background: var(--t);
+          border-radius: 1px;
+          transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s;
+        }
+        .hbg.open span:nth-child(1) {
+          transform: translateY(6px) rotate(45deg);
+        }
+        .hbg.open span:nth-child(2) {
+          opacity: 0;
+        }
+        .hbg.open span:nth-child(3) {
+          transform: translateY(-6px) rotate(-45deg);
+        }
+        .sph-wrap {
+          padding: 0 20px;
+        }
+        .sph-hero {
+          padding: 56px 20px 40px;
+        }
+        .ig-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .tt-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliv-cols {
+          columns: 2;
+        }
+        .plat-grid {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .fg {
+          grid-template-columns: 1fr 1fr;
+        }
+        footer {
+          padding: 40px 24px 24px;
+        }
+        .sph-cta-band {
+          padding: 48px 20px;
+        }
+        .sph-sec {
+          padding: 52px 0;
+        }
+      }
+      @media (max-width: 540px) {
+        .tt-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliv-cols {
+          columns: 2;
+        }
+        .fg {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        footer {
+          padding: 32px 16px 20px;
+        }
+        .fb {
+          flex-direction: column;
+          gap: 4px;
+          text-align: center;
+        }
+      }
+      @media (max-width: 400px) {
+        .langbtn {
+          font-size: 0 !important;
+          padding: 4px 6px;
+          width: 28px;
+          min-width: 28px;
+        }
+        .langbtn::after {
+          content: attr(data-short);
+          font-family: var(--font-body);
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+        }
+      }
+
+      /* Video Player Lightbox Modal Styles */
+      #video-player-modal {
+        background: rgba(0, 0, 0, 0.88);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+      }
+      #video-player-modal.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .lightbox-container {
+        width: min(720px, 92vw);
+        background: transparent;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .lightbox-video {
+        width: 100%;
+        max-height: 75vh;
+        border-radius: 12px;
+        box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+        background: #000;
+        outline: none;
+      }
+      .lightbox-close {
+        position: absolute;
+        top: -45px;
+        right: 0;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+      }
+      .lightbox-title {
+        color: #fff;
+        font-family: var(--font-head);
+        font-size: 16px;
+        margin-top: 14px;
+        text-align: center;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ANNOUNCEMENT BAR -->
+    <div id="gen-ann-bar">
+      <div class="ann-marquee-container">
+        <div class="ann-marquee-content" id="gen-ann-msg-container">
+          <span id="gen-ann-msg"></span>
+        </div>
+      </div>
+      <button
+        onclick="dismissGenAnn()"
+        aria-label="Dismiss"
+        style="
+          position: absolute;
+          right: 14px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          color: #fff;
+          opacity: 0.6;
+          line-height: 1;
+          padding: 0 4px;
+          z-index: 10;
+        "
+      >
+        <span class="css-x"></span>
+      </button>
+    </div>
+    <div class="pb" id="pb"></div>
+    <div class="toast" id="toast">
+      <span id="ti"></span><span id="tm2"></span>
+    </div>
+
+    <!-- NAV -->
+    <script src="header.js"></script>
+
+    <!-- CART -->
+    <div class="ov" id="cov" onclick="closeCart()"></div>
+    <aside class="cpa" id="cpa">
+      <div class="chdr">
+        <h3 data-t="cart-title">Your Cart <span id="cc">(0)</span></h3>
+        <button class="cx" onclick="closeCart()"><span class="css-x"></span></button>
+      </div>
+      <div class="clist" id="clist"></div>
+      <div class="cftr" id="cftr" style="display: none">
+        <a class="bp bf" href="shop.html" data-t="cart-view"
+          >عرض السلة والطلب ←</a
+        >
+      </div>
+    </aside>
+
+    <!-- ── PAGE CONTENT ── -->
+
+    <!-- HERO -->
+    <section class="sph-hero pw rev">
+      <div class="stag" data-t="sph-tag">SOCIAL · سوشيال</div>
+      <h1 class="sph-h1" data-t="sph-h1">شوفنا على السوشيال</h1>
+      <p class="sph-sub" data-t="sph-sub">
+        ريلز حقيقية، وصولات لعملائنا، وكواليس من المعرض
+      </p>
+      <div class="sph-pills">
+        <a
+          class="sph-pill"
+          href="https://www.instagram.com/megafurniturehome/"
+          target="_blank"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+            />
+          </svg>
+          <span data-t="pill-ig">53K+ متابع · Instagram</span>
+        </a>
+        <a
+          class="sph-pill"
+          href="https://www.tiktok.com/@khaledmohyrashdan"
+          target="_blank"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"
+            />
+          </svg>
+          <span data-t="pill-tt">63K+ متابع · TikTok</span>
+        </a>
+        <a
+          class="sph-pill"
+          href="https://www.facebook.com/search/top?q=mega%20furniture&locale=ar_AR"
+          target="_blank"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+            />
+          </svg>
+          <span data-t="pill-fb">68K+ متابع · Facebook</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="sph-sec" id="gallery-section" style="display: none;">
+      <div class="sph-wrap">
+        <div class="sph-sh rev">
+          <h2 class="sph-sh-h" data-t="gallery-h">معرض الفيديو</h2>
+          <p class="sph-sh-sub" data-t="gallery-sub" style="color:var(--tm); font-size:14px; margin-top:8px;">فيديوهات حقيقية من صالة عرض ميجا فرنيتشر</p>
+        </div>
+        <div class="ig-grid rev" id="gallery-grid">
+          <!-- Inject gallery items dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTAGRAM SECTION -->
+    <section class="sph-sec">
+      <div class="sph-wrap">
+        <div class="sph-sh rev">
+          <h2 class="sph-sh-h" data-t="ig-h">إنستجرام</h2>
+          <div class="sph-handle">@megafurniturehome</div>
+        </div>
+        <div class="ig-grid rev" id="ig-grid">
+          <a
+            class="ig-card ig-card--placeholder"
+            href="https://www.instagram.com/megafurniturehome/"
+            target="_blank"
+            style="grid-column: 1 / -1; justify-self: center; width: 260px"
+          >
+            <div
+              class="ig-card-overlay"
+              style="
+                opacity: 1;
+                background: transparent;
+                flex-direction: column;
+                gap: 12px;
+                color: var(--t);
+              "
+            >
+              <svg
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                style="opacity: 0.4"
+              >
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                />
+              </svg>
+              <span
+                style="
+                  font-size: 13px;
+                  font-weight: 600;
+                  color: var(--t);
+                  text-align: center;
+                "
+                >تابعونا على إنستجرام للمزيد</span
+              >
+            </div>
+          </a>
+        </div>
+        <div class="sph-more">
+          <a
+            class="sph-follow-btn"
+            href="https://www.instagram.com/megafurniturehome/"
+            target="_blank"
+            data-t="ig-follow"
+            >تابعنا على إنستجرام</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- TIKTOK SECTION -->
+    <section class="sph-sec">
+      <div class="sph-wrap">
+        <div class="sph-sh rev">
+          <h2 class="sph-sh-h" data-t="tt-h">تيك توك</h2>
+          <div class="sph-handle">@khaledmohyrashdan</div>
+        </div>
+        <div class="tt-grid rev" id="tt-grid">
+          <a
+            class="tt-card tt-card--placeholder"
+            href="https://www.tiktok.com/@khaledmohyrashdan"
+            target="_blank"
+            style="grid-column: 1 / -1; justify-self: center; width: 200px"
+          >
+            <div
+              class="tt-card-overlay"
+              style="
+                opacity: 1;
+                background: transparent;
+                flex-direction: column;
+                gap: 12px;
+              "
+            >
+              <svg
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="white"
+                style="opacity: 0.4"
+              >
+                <path
+                  d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"
+                />
+              </svg>
+              <span
+                style="
+                  font-size: 13px;
+                  font-weight: 600;
+                  color: rgba(255, 255, 255, 0.7);
+                  text-align: center;
+                "
+                >تابعونا على تيك توك</span
+              >
+            </div>
+          </a>
+        </div>
+        <div class="sph-more">
+          <a
+            class="sph-follow-btn"
+            href="https://www.tiktok.com/@khaledmohyrashdan"
+            target="_blank"
+            data-t="tt-follow"
+            >تابعنا على تيك توك</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMER DELIVERIES -->
+    <section class="sph-sec">
+      <div class="sph-wrap">
+        <div class="sph-sh rev">
+          <h2 class="sph-sh-h" data-t="deliv-h">وصولات عملاءنا</h2>
+          <p class="sph-sh-sub" data-t="deliv-sub">
+            صور حقيقية من بيوت عملاءنا
+          </p>
+        </div>
+        <div class="deliv-cols rev" id="deliv-grid">
+          <div class="deliv-empty" style="column-span: all">
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="opacity: 0.2"
+            >
+              <path
+                d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+              />
+              <circle cx="12" cy="13" r="4" />
+            </svg>
+            <p data-t="deliv-empty-h">صور العملاء هتظهر هنا</p>
+            <p style="font-size: 13px; opacity: 0.6" data-t="deliv-empty-sub">
+              اطلب منتجك وشارك صورتك
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEW CTA BAND -->
+    <div class="sph-cta-band">
+      <h2 data-t="rcta-h">عندك صورة من بيتك؟</h2>
+      <p data-t="rcta-sub">
+        شاركنا صورتك واكتب تقييمك — هتساعد عائلات تانية تختار صح
+      </p>
+      <a class="sph-cta-btn" href="reviews.html" data-t="rcta-btn"
+        >اكتب تقييمك</a
+      >
+    </div>
+
+    <!-- PLATFORM CARDS -->
+    <section class="sph-sec">
+      <div class="sph-wrap">
+        <div class="plat-grid rev">
+          <a
+            class="plat-card plat-ig"
+            href="https://www.instagram.com/megafurniturehome/"
+            target="_blank"
+          >
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+              />
+            </svg>
+            <div class="plat-stat">53K+</div>
+            <div class="plat-lbl" data-t="plat-followers">
+              متابع · Followers
+            </div>
+            <div class="plat-handle">@megafurniturehome</div>
+          </a>
+          <a
+            class="plat-card plat-tt"
+            href="https://www.tiktok.com/@khaledmohyrashdan"
+            target="_blank"
+          >
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+              <path
+                d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"
+              />
+            </svg>
+            <div class="plat-stat">63K+</div>
+            <div class="plat-lbl" data-t="plat-followers">
+              متابع · Followers
+            </div>
+            <div class="plat-handle">@khaledmohyrashdan</div>
+          </a>
+          <a
+            class="plat-card plat-fb"
+            href="https://www.facebook.com/search/top?q=mega%20furniture&locale=ar_AR"
+            target="_blank"
+          >
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+              />
+            </svg>
+            <div class="plat-stat">68K+</div>
+            <div class="plat-lbl" data-t="plat-followers">
+              متابع · Followers
+            </div>
+            <div class="plat-handle">Mega Furniture</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="fg">
+        <div class="fbr">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <img
+              src="../logos/mega-logo.jpg"
+              alt="Logo"
+              style="
+                width: 32px;
+                height: 32px;
+                border-radius: 0;
+                object-fit: cover;
+              "
+              onerror="this.style.display = 'none'"
+            />
+            <span
+              style="
+                font-family: var(--font-head);
+                font-weight: 700;
+                font-size: 14px;
+                color: var(--t);
+              "
+              >MEGA <span style="color: #f5a623">FURNITURE</span></span
+            >
+          </div>
+          <p data-t="footer-desc">
+            أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998
+          </p>
+          <div class="f-soc">
+            <a
+              href="https://www.instagram.com/megafurniturehome/"
+              target="_blank"
+              title="Instagram"
+              ><svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                /></svg
+            ></a>
+            <a
+              href="https://www.facebook.com/search/top?q=mega%20furniture&locale=ar_AR"
+              target="_blank"
+              title="Facebook"
+              ><svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                /></svg
+            ></a>
+            <a
+              href="https://www.tiktok.com/@khaledmohyrashdan"
+              target="_blank"
+              title="TikTok"
+              ><svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"
+                /></svg
+            ></a>
+          </div>
+        </div>
+        <div class="fc">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">غرف معيشة · Living</a></li>
+            <li><a href="shop.html">غرف نوم · Bedroom</a></li>
+            <li><a href="shop.html">سفرة · Dining</a></li>
+            <li><a href="shop.html">Home Office</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../mega-furniture.html">About Us · عنّا</a></li>
+            <li>
+              <a
+                href="https://www.instagram.com/megafurniturehome/"
+                target="_blank"
+                >Instagram</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.tiktok.com/@khaledmohyrashdan"
+                target="_blank"
+                >TikTok</a
+              >
+            </li>
+            <li><a href="videos.html">Videos</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4>Support · دعم</h4>
+          <ul>
+            <li><a href="contact.html">Returns</a></li>
+            <li><a href="about.html#warranty" data-t="f-warranty">Warranty</a></li>
+            <li><a href="contact.html">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fb">
+        <span data-t="footer-copy"
+          >© 2026 Mega Furniture · ميجا فرنيتشر.</span
+        >
+        <span data-t="footer-made">صُنع لمصر</span>
+      </div>
+    </footer>
+
+    <div class="fbtns">
+      <button
+        class="fbtn topb"
+        id="topb"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      >
+        ↑
+      </button>
+      <div class="wa-menu-container">
+        <div class="wa-menu" id="wa-menu">
+          <a href="https://wa.me/201040454343" target="_blank" class="wa-menu-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-t="wa-menu-sales">Sales Team</span>
+          </a>
+          <a href="https://wa.me/201105343715" target="_blank" class="wa-menu-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-t="wa-menu-web">Web Support</span>
+          </a>
+        </div>
+        <button
+          onclick="toggleWaMenu(event)"
+          class="fbtn wab"
+          aria-label="WhatsApp"
+        >
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        if (!localStorage.getItem("megaTheme"))
+          localStorage.setItem("megaTheme", "light");
+        document.documentElement.setAttribute(
+          "data-theme",
+          localStorage.getItem("megaTheme"),
+        );
+      })();
+
+      let lang = localStorage.getItem("megaLang") || "en";
+      let cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
+
+      function updBadge() {
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        const b = document.getElementById("cbadge");
+        if (!b) return;
+        b.textContent = n;
+        b.style.display = n > 0 ? "flex" : "none";
+      }
+      function iu(src) {
+        if (!src) return "";
+        return src.startsWith("http") ? src : "/uploads/" + src;
+      }
+      function saveCart() {
+        localStorage.setItem("megaCart", JSON.stringify(cart));
+      }
+      function rmCartIdx(idx) {
+        cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function updQtyIdx(idx, delta) {
+        if (!cart[idx]) return;
+        cart[idx].qty += delta;
+        if (cart[idx].qty < 1) cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function renderCart() {
+        const el = document.getElementById("clist"),
+          cc = document.getElementById("cc"),
+          ft = document.getElementById("cftr");
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        if (cc) cc.textContent = "(" + n + ")";
+        if (!cart.length) {
+          el.innerHTML = `<div class="cemp"><div class="big"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><p>${t("cart-empty")}</p><small>${t("cart-empty-sub")}</small></div>`;
+          if (ft) ft.style.display = "none";
+          return;
+        }
+        if (ft) ft.style.display = "flex";
+        const lang = localStorage.getItem("megaLang") || "en";
+        el.innerHTML = cart
+          .map((item) => {
+            const nm =
+              lang === "ar"
+                ? item.nameAr || item.nameEn
+                : item.nameEn || item.nameAr;
+            const imgSrc = iu(item.mainPhoto);
+            const unitPrice = item.price || 0;
+            const lineTotal = unitPrice * item.qty;
+            const idx = cart.indexOf(item);
+            if (item.isBundle) {
+              const bundleTag = t("bundle-tag");
+              const countLbl = t("bundle-includes").replace("{n}", item.itemCount || 0);
+              const itemsList = (item.items || [])
+                .map(
+                  (p) =>
+                    "· " +
+                    (lang === "ar"
+                      ? p.nameAr || p.nameEn
+                      : p.nameEn || p.nameAr),
+                )
+                .join("<br>");
+              const priceStr =
+                unitPrice > 0
+                  ? item.qty > 1
+                    ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                    : "EGP " + Number(unitPrice).toLocaleString()
+                  : "";
+              return `<div class="cir bundle-item"><div class="cir-top"><div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div><div class="cin" style="flex:1;min-width:0"><div><span class="bundle-tag">${bundleTag}</span></div><div class="nm">${nm}</div><div class="pr">${priceStr}</div><div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div></div><button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button></div><div class="bundle-item-count">${countLbl}</div>${itemsList ? `<div class="bundle-items-list">${itemsList}</div>` : ""}</div>`;
+            }
+            const priceStr =
+              unitPrice > 0
+                ? item.qty > 1
+                  ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                  : "EGP " + Number(unitPrice).toLocaleString()
+                : "";
+            const meta = [
+              item.color || "",
+              item.size
+                ? (lang === "ar" ? item.size.nameAr : item.size.nameEn) || ""
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" · ");
+            return `<div class="cir"><div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div><div class="cin"><div class="nm">${nm}${meta ? `<span style="font-size:10px;color:var(--tm);margin-right:4px"> · ${meta}</span>` : ""}</div><div class="pr">${priceStr}</div><div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div></div><button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button></div>`;
+          })
+          .join("");
+      }
+      function openCart() {
+        renderCart();
+        document.getElementById("cpa").classList.add("open");
+        document.getElementById("cov").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCart() {
+        document.getElementById("cpa").classList.remove("open");
+        document.getElementById("cov").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      document.getElementById("tt").addEventListener("click", function () {
+        const h = document.documentElement;
+        const cur = h.getAttribute("data-theme") || "light";
+        const next = cur === "dark" ? "light" : "dark";
+        const newBg = next === "light" ? "#F7F3EC" : "#0A0A0A";
+        const curtain = document.createElement("div");
+        curtain.style.cssText =
+          "position:fixed;inset:0;background:" +
+          newBg +
+          ";transform-origin:top;transform:scaleY(0);z-index:9997;pointer-events:none;transition:none";
+        document.body.appendChild(curtain);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            curtain.style.transition =
+              "transform 480ms cubic-bezier(0.76,0,0.24,1)";
+            curtain.style.transform = "scaleY(1)";
+          });
+        });
+        setTimeout(() => {
+          h.setAttribute("data-theme", next);
+          localStorage.setItem("megaTheme", next);
+          curtain.style.transformOrigin = "bottom";
+          curtain.style.transform = "scaleY(0)";
+          setTimeout(() => curtain.remove(), 520);
+        }, 490);
+      });
+      function toggleMenu() {
+        const isOpen = document.getElementById("mm").classList.toggle("open");
+        document.getElementById("hbg").classList.toggle("open");
+        const mov = document.getElementById("mov");
+        if (mov) mov.classList.toggle("open", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+      }
+      function closeMenu() {
+        document.getElementById("mm").classList.remove("open");
+        document.getElementById("hbg").classList.remove("open");
+        const mov = document.getElementById("mov");
+        if (mov) mov.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      window.addEventListener("scroll", function () {
+        const pct = document.body.scrollHeight - window.innerHeight;
+        document.getElementById("pb").style.width =
+          (pct > 0 ? (window.scrollY / pct) * 100 : 0) + "%";
+        const b = document.getElementById("topb");
+        window.scrollY > 400
+          ? b.classList.add("vis")
+          : b.classList.remove("vis");
+      });
+      const io = new IntersectionObserver(
+        (e) => {
+          e.forEach((x) => {
+            if (x.isIntersecting) x.target.classList.add("vis");
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".rev").forEach((el) => io.observe(el));
+      let _tt;
+      function showToast(icon, msg) {
+        document.getElementById("ti").innerHTML = icon;
+        document.getElementById("tm2").innerHTML = msg;
+        const t = document.getElementById("toast");
+        t.classList.add("show");
+        clearTimeout(_tt);
+        _tt = setTimeout(() => t.classList.remove("show"), 2800);
+      }
+
+      const TRANS = {
+        ar: {
+          "nav-home": "الرئيسية",
+          "nav-shop": "تسوق",
+          "nav-videos": "فيديوهات",
+          "nav-about": "من نحن",
+          "nav-reviews": "آراء",
+          "nav-contact": "تواصل",
+          "nav-custom-work": "شغل عمولة",
+          "f-warranty": "الضمان ضد عيوب الصناعة",
+          "footer-copy": "© 2026 Mega Furniture · ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+          "cart-empty": "السلة فاضية",
+          "cart-count": "منتج في سلتك",
+          "cart-view": "عرض السلة والطلب ←",
+          "sph-tag": "SOCIAL · سوشيال",
+          "sph-h1": "شوفنا على السوشيال",
+          "sph-sub": "ريلز حقيقية، وصولات لعملائنا، وكواليس من المعرض",
+          "pill-ig": "53K+ متابع · Instagram",
+          "pill-tt": "63K+ متابع · TikTok",
+          "pill-fb": "68K+ متابع · Facebook",
+          "ig-h": "إنستجرام",
+          "ig-follow": "تابعنا على إنستجرام",
+          "view-ig": "عرض على إنستجرام",
+          "tt-h": "تيك توك",
+          "tt-follow": "تابعنا على تيك توك",
+          "view-tt": "شاهد على تيك توك",
+          "deliv-h": "وصولات عملاءنا",
+          "deliv-sub": "صور حقيقية من بيوت عملاءنا",
+          "deliv-empty-h": "صور العملاء هتظهر هنا",
+          "deliv-empty-sub": "اطلب منتجك وشارك صورتك",
+          "rcta-h": "عندك صورة من بيتك؟",
+          "rcta-sub":
+            "شاركنا صورتك واكتب تقييمك — هتساعد عائلات تانية تختار صح",
+          "rcta-btn": "اكتب تقييمك",
+          "plat-followers": "متابع · Followers",
+          "footer-desc": "أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998",
+           "wa-menu-sales": "فريق المبيعات",
+          "wa-menu-web": "الدعم والطلبات (الموقع)",
+          "gallery-h": "معرض الفيديو",
+          "gallery-sub": "فيديوهات حقيقية من صالة عرض ميجا فرنيتشر",
+          "cart-title": "السلة",
+          "cart-empty-sub": "تسوق حاجة حلوة!",
+          "bundle-tag": "طقم",
+          "bundle-includes": "يشمل {n} منتجات",
+        },
+        en: {
+          "nav-home": "Home",
+          "nav-shop": "Shop",
+          "nav-videos": "Videos",
+          "nav-about": "About Us",
+          "nav-reviews": "Reviews",
+          "nav-contact": "Contact",
+          "nav-track": "Track Order",
+          "nav-custom-work": "Custom Work",
+          "f-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+          "cart-empty": "Your cart is empty",
+          "cart-count": "items in your cart",
+          "cart-view": "View Cart & Order →",
+          "sph-tag": "SOCIAL · سوشيال",
+          "sph-h1": "See Us in Action",
+          "sph-sub": "Real reels, customer deliveries & behind the scenes",
+          "pill-ig": "53K+ Followers · Instagram",
+          "pill-tt": "63K+ Followers · TikTok",
+          "pill-fb": "68K+ Followers · Facebook",
+          "ig-h": "Instagram",
+          "ig-follow": "Follow on Instagram",
+          "view-ig": "View on Instagram",
+          "tt-h": "TikTok",
+          "tt-follow": "Follow on TikTok",
+          "view-tt": "Watch on TikTok",
+          "deliv-h": "Customer Deliveries",
+          "deliv-sub": "Real photos from our customers' homes",
+          "deliv-empty-h": "Customer photos will appear here",
+          "deliv-empty-sub": "Order and share your photo",
+          "rcta-h": "Got a photo from your home?",
+          "rcta-sub":
+            "Share your photo and review — help other families choose right",
+          "rcta-btn": "Write a Review",
+          "plat-followers": "Followers",
+          "footer-desc":
+            "Premium furniture for Egyptian homes · Est. 2020 · Since 1998",
+           "wa-menu-sales": "Sales Team",
+          "wa-menu-web": "Web Support",
+          "gallery-h": "Showroom Gallery",
+          "gallery-sub": "Real showroom videos and exhibition tours",
+          "cart-title": "Your Cart",
+          "cart-empty-sub": "Find something you love!",
+          "bundle-tag": "BUNDLE",
+          "bundle-includes": "{n} products included",
+        },
+      };
+
+      function t(key) {
+        return (TRANS[lang] && TRANS[lang][key]) || TRANS.en[key] || key;
+      }
+      function applyLang(l) {
+        lang = l;
+        localStorage.setItem("megaLang", lang);
+        document.documentElement.lang = lang === "ar" ? "ar" : "en";
+        document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+        document.querySelectorAll("[data-t]").forEach((el) => {
+          const k = el.getAttribute("data-t");
+          if (TRANS[lang] && TRANS[lang][k] !== undefined)
+            el.innerHTML = TRANS[lang][k];
+        });
+        document.querySelectorAll(".langbtn, #langbtn, #lang-btn").forEach((b) => {
+          b.textContent = lang === "ar" ? "EN" : "عربي";
+          b.setAttribute("data-short", lang === "ar" ? "EN" : "ع");
+        });
+      }
+      function toggleLang() {
+        applyLang(localStorage.getItem("megaLang") === "ar" ? "en" : "ar");
+      }
+      (function () {
+        applyLang(localStorage.getItem("megaLang") || "en");
+      })();
+
+      /* ── SETTINGS FETCH (server-driven defaults for new visitors) ── */
+      (function () {
+        if (!localStorage.getItem("megaLang") || !localStorage.getItem("megaTheme")) {
+          fetch("/api/settings").then(r => r.json()).then(s => {
+            if (!localStorage.getItem("megaLang") && s.defaultLanguage) {
+              applyLang(s.defaultLanguage);
+            }
+            if (!localStorage.getItem("megaTheme") && s.defaultTheme) {
+              document.documentElement.setAttribute("data-theme", s.defaultTheme);
+              localStorage.setItem("megaTheme", s.defaultTheme);
+            }
+          }).catch(() => {});
+        }
+      })();
+
+      /* GENERAL ANNOUNCEMENT */
+      (async function () {
+        try {
+          if (sessionStorage.getItem("genAnnDismissed")) return;
+          const r = await fetch(window.location.origin + "/api/announcement");
+          if (!r.ok) return;
+          const ann = await r.json();
+          if (!ann || !ann.active) return;
+          const l = localStorage.getItem("megaLang") || "en";
+          const msg = l === "ar" ? ann.message_ar : ann.message_en;
+          if (!msg) return;
+          let html = msg;
+          if (ann.link) {
+            const lt =
+              l === "ar"
+                ? ann.linkText_ar || ann.linkText_en
+                : ann.linkText_en || ann.linkText_ar;
+            if (lt)
+              html += ` <a href="${ann.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+          }
+          const msgEl = document.getElementById("gen-ann-msg");
+          if (msgEl) msgEl.innerHTML = html;
+          
+          const container = document.getElementById("gen-ann-msg-container");
+          if (container) {
+            let unitHtml = `<span class="ann-item">${html}</span><span class="ann-bullet">&bull;</span>`;
+            let half = unitHtml.repeat(4);
+            container.innerHTML = half + half;
+          }
+          document.getElementById("gen-ann-bar").style.display = "flex";
+          document.body.classList.add("gen-ann-visible");
+        } catch {}
+      })();
+      function dismissGenAnn() {
+        sessionStorage.setItem("genAnnDismissed", "1");
+        document.getElementById("gen-ann-bar").style.display = "none";
+        document.body.classList.remove("gen-ann-visible");
+      }
+
+      function toggleWaMenu(e) {
+        if (e) e.stopPropagation();
+        const menu = document.getElementById("wa-menu");
+        if (menu) menu.classList.toggle("show");
+      }
+      document.addEventListener("click", () => {
+        const menu = document.getElementById("wa-menu");
+        if (menu) menu.classList.remove("show");
+      });
+
+      updBadge();
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeCart();
+      });
+
+      /* ── SOCIAL HUB DATA LOADERS ── */
+
+      const IG_SVG =
+        '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>';
+      const TT_SVG =
+        '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>';
+
+      function igPlaceholders() {
+        return `<a class="ig-card ig-card--placeholder" href="https://www.instagram.com/megafurniturehome/" target="_blank" style="grid-column:1/-1;justify-self:center;width:260px;">
+          <div class="ig-card-overlay" style="opacity:1;background:transparent;flex-direction:column;gap:12px;color:var(--t)">
+            ${IG_SVG.replace('fill="currentColor"', 'fill="currentColor" style="opacity:0.4"')}
+            <span style="font-size:13px;font-weight:600;color:var(--t);text-align:center">${lang === "ar" ? "تابعونا على إنستجرام للمزيد" : "Follow us on Instagram"}</span>
+          </div>
+        </a>`;
+      }
+      function ttPlaceholders() {
+        return `<a class="tt-card tt-card--placeholder" href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" style="grid-column:1/-1;justify-self:center;width:200px;">
+          <div class="tt-card-overlay" style="opacity:1;background:transparent;flex-direction:column;gap:12px;">
+            ${TT_SVG.replace('fill="currentColor"', 'fill="white" style="opacity:0.4"')}
+            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);text-align:center">${lang === "ar" ? "تابعونا على تيك توك" : "Follow us on TikTok"}</span>
+          </div>
+        </a>`;
+      }
+
+      async function loadInstagramVideos() {
+        const grid = document.getElementById("ig-grid");
+        try {
+          const res = await fetch(window.location.origin + "/api/videos");
+          if (!res.ok) throw new Error();
+          const all = await res.json();
+          const videos = all.filter((v) => v.platform === "instagram");
+          if (!videos.length) {
+            grid.innerHTML = igPlaceholders();
+            return;
+          }
+          grid.innerHTML = videos
+            .map((v) => {
+              const title =
+                lang === "ar"
+                  ? v.titleAr || v.titleEn || ""
+                  : v.titleEn || v.titleAr || "";
+              const thumb = v.thumbnail 
+                ? (v.thumbnail.startsWith("http") ? v.thumbnail : "/uploads/" + v.thumbnail)
+                : "";
+              const style = thumb
+                ? `background-image:url('${thumb}');background-color:var(--s2)`
+                : "";
+              
+              if (v.videoUrl) {
+                const videoSrc = v.videoUrl.startsWith("http") ? v.videoUrl : "/uploads/" + v.videoUrl;
+                return `<div class="ig-card${thumb ? " ig-card--has-img" : ""}" onclick="playLocalVideo(event, '${videoSrc}', '${title.replace(/'/g, "\\'")}')" style="${style}">
+                ${title ? `<div class="ig-card-title">${title}</div>` : ""}
+                <div class="ig-card-overlay">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="white" style="filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                  <span>${lang === 'ar' ? 'تشغيل ريل' : 'PLAY REEL'}</span>
+                </div>
+                </div>`;
+              } else {
+                return `<a class="ig-card${thumb ? " ig-card--has-img" : ""}" href="${v.linkUrl}" target="_blank" style="${style}">
+                ${title ? `<div class="ig-card-title">${title}</div>` : ""}
+                <div class="ig-card-overlay">${IG_SVG}<span>${t("view-ig")}</span></div>
+                </a>`;
+              }
+            })
+            .join("");
+        } catch (e) {
+          console.error(e);
+          grid.innerHTML = igPlaceholders();
+        }
+      }
+
+      async function loadTikTokVideos() {
+        const grid = document.getElementById("tt-grid");
+        try {
+          const res = await fetch(window.location.origin + "/api/videos");
+          if (!res.ok) throw new Error();
+          const all = await res.json();
+          const videos = all.filter((v) => v.platform === "tiktok");
+          if (!videos.length) {
+            grid.innerHTML = ttPlaceholders();
+            return;
+          }
+          grid.innerHTML = videos
+            .map((v) => {
+              const title =
+                lang === "ar"
+                  ? v.titleAr || v.titleEn || ""
+                  : v.titleEn || v.titleAr || "";
+              const thumb = v.thumbnail 
+                ? (v.thumbnail.startsWith("http") ? v.thumbnail : "/uploads/" + v.thumbnail)
+                : "";
+              const style = thumb
+                ? `background-image:url('${thumb}');background-color:#111`
+                : "";
+
+              if (v.videoUrl) {
+                const videoSrc = v.videoUrl.startsWith("http") ? v.videoUrl : "/uploads/" + v.videoUrl;
+                return `<div class="tt-card${thumb ? " tt-card--has-img" : ""}" onclick="playLocalVideo(event, '${videoSrc}', '${title.replace(/'/g, "\\'")}')" style="${style}">
+                <div class="tt-card-ico">${TT_SVG.replace('fill="currentColor"', 'fill="white" style="opacity:0.5"')}</div>
+                ${title ? `<div class="tt-card-title">${title}</div>` : ""}
+                <div class="tt-card-overlay">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="white" style="filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                  <span>${lang === 'ar' ? 'تشغيل تيك توك' : 'PLAY TIKTOK'}</span>
+                </div>
+                </div>`;
+              } else {
+                return `<a class="tt-card${thumb ? " tt-card--has-img" : ""}" href="${v.linkUrl}" target="_blank" style="${style}">
+                <div class="tt-card-ico">${TT_SVG.replace('fill="currentColor"', 'fill="white" style="opacity:0.5"')}</div>
+                ${title ? `<div class="tt-card-title">${title}</div>` : ""}
+                <div class="tt-card-overlay">${TT_SVG.replace('fill="currentColor"', 'fill="white"')}<span>${t("view-tt")}</span></div>
+                </a>`;
+              }
+            })
+            .join("");
+        } catch (e) {
+          console.error(e);
+          grid.innerHTML = ttPlaceholders();
+        }
+      }
+
+      async function loadGalleryVideos() {
+        const section = document.getElementById("gallery-section");
+        const grid = document.getElementById("gallery-grid");
+        if (!section || !grid) return;
+
+        try {
+          const res = await fetch(window.location.origin + "/api/videos");
+          if (!res.ok) throw new Error();
+          const all = await res.json();
+          const videos = all.filter((v) => v.platform === "local");
+          if (!videos.length) {
+            section.style.display = "none";
+            return;
+          }
+          section.style.display = "block";
+          grid.innerHTML = videos
+            .map((v) => {
+              const title =
+                lang === "ar"
+                  ? v.titleAr || v.titleEn || ""
+                  : v.titleEn || v.titleAr || "";
+              const thumb = v.thumbnail 
+                ? (v.thumbnail.startsWith("http") ? v.thumbnail : "/uploads/" + v.thumbnail)
+                : "";
+              const style = thumb
+                ? `background-image:url('${thumb}');background-color:var(--s2)`
+                : "";
+              const videoSrc = v.videoUrl.startsWith("http") ? v.videoUrl : "/uploads/" + v.videoUrl;
+              
+              return `<div class="ig-card${thumb ? " ig-card--has-img" : ""}" onclick="playLocalVideo(event, '${videoSrc}', '${title.replace(/'/g, "\\'")}')" style="${style}">
+              ${title ? `<div class="ig-card-title">${title}</div>` : ""}
+              <div class="ig-card-overlay">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="white" style="filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3))">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                <span>${lang === 'ar' ? 'تشغيل الفيديو' : 'PLAY VIDEO'}</span>
+              </div>
+              </div>`;
+            })
+            .join("");
+        } catch (e) {
+          console.error(e);
+          section.style.display = "none";
+        }
+      }
+
+      function playLocalVideo(event, url, title) {
+        if (event) event.preventDefault();
+        const modal = document.getElementById("video-player-modal");
+        const video = document.getElementById("player-video-element");
+        const titleEl = document.getElementById("player-video-title");
+        if (!modal || !video) return;
+
+        video.src = url;
+        if (titleEl) titleEl.textContent = title || "";
+        modal.style.display = "flex";
+        
+        setTimeout(() => {
+          modal.classList.add("open");
+          video.play().catch(err => console.log("Autoplay blocked:", err));
+        }, 10);
+      }
+
+      function closeVideoPlayer() {
+        const modal = document.getElementById("video-player-modal");
+        const video = document.getElementById("player-video-element");
+        if (!modal || !video) return;
+
+        modal.classList.remove("open");
+        video.pause();
+        video.src = "";
+        
+        setTimeout(() => {
+          modal.style.display = "none";
+        }, 300);
+      }
+
+      async function loadCustomerPhotos() {
+        const grid = document.getElementById("deliv-grid");
+        try {
+          const res = await fetch(window.location.origin + "/api/reviews");
+          if (!res.ok) throw new Error();
+          const reviews = await res.json();
+          const withPhotos = reviews.filter(
+            (r) => r.photo && r.approved !== false,
+          );
+          if (!withPhotos.length) return;
+          grid.innerHTML = withPhotos
+            .map((r) => {
+              const src = r.photo.startsWith("http")
+                ? r.photo
+                : "/uploads/" + r.photo;
+              const name = r.customerName || "";
+              const city = r.city || "";
+              return `<div class="deliv-item">
+              <img src="${src}" alt="${name}" loading="lazy" onerror="this.parentElement.style.display='none'">
+              <div class="deliv-overlay"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+              ${name ? `<div class="deliv-meta">${name}${city ? " · " + city : ""}</div>` : ""}
+            </div>`;
+            })
+            .join("");
+        } catch {}
+      }
+
+      loadGalleryVideos();
+      loadInstagramVideos();
+      loadTikTokVideos();
+      loadCustomerPhotos();
+    </script>
+    <!-- VIDEO PLAYER LIGHTBOX MODAL -->
+    <div id="video-player-modal" onclick="closeVideoPlayer()">
+      <div class="lightbox-container" onclick="event.stopPropagation()">
+        <button class="lightbox-close" onclick="closeVideoPlayer()"><span class="css-x"></span></button>
+        <video id="player-video-element" class="lightbox-video" controls playsinline></video>
+        <div id="player-video-title" class="lightbox-title"></div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "d7722891-9048-4ec5-bf56-11d7856a742f",
+    "trackingCode": "MF-20260713-UPE3M",
+    "customerName": "Test User",
+    "phone": "01000000000",
+    "email": "test@gmail.com",
+    "address": "123 Street",
+    "city": "Cairo · القاهرة — EGP 80",
+    "notes": "",
+    "items": [
+      {
+        "id": "prod-1",
+        "nameAr": "سرير مودرن",
+        "nameEn": "Modern Bed",
+        "price": 12000,
+        "quantity": 1,
+        "costAtOrder": 0,
+        "color": null,
+        "colorName": null,
+        "size": null,
+        "sideChoice": null
+      }
+    ],
+    "subtotal": 12000,
+    "shippingFee": 80,
+    "shippingZoneId": "sh-cairo",
+    "discountAmount": 0,
+    "discountPercent": 0,
+    "promoCode": null,
+    "paymentMethod": "cod",
+    "total": 12080,
+    "status": "received",
+    "statusHistory": [
+      {
+        "status": "received",
+        "at": "2026-07-13T14:27:33.881Z"
+      }
+    ],
+    "createdAt": "2026-07-13T14:27:33.881Z",
+    "updatedAt": "2026-07-13T14:27:33.881Z"
+  },
+  {
+    "id": "c1f034a8-306b-4366-80da-69d827a2694a",
+    "trackingCode": "MF-20260714-MRPT9",
+    "customerName": "Test User",
+    "phone": "01000000000",
+    "email": "test@example.com",
+    "address": "123 Test Street",
+    "city": "Cairo · القاهرة — EGP 80",
+    "notes": "",
+    "items": [
+      {
+        "id": "prod-1",
+        "nameAr": "سرير مودرن",
+        "nameEn": "Modern Bed",
+        "price": 12000,
+        "quantity": 1,
+        "costAtOrder": 0,
+        "color": null,
+        "colorName": null,
+        "size": null,
+        "sideChoice": null
+      },
+      {
+        "id": "prod-1",
+        "nameAr": "سرير مودرن",
+        "nameEn": "Modern Bed",
+        "price": 12000,
+        "quantity": 1,
+        "costAtOrder": 0,
+        "color": null,
+        "colorName": null,
+        "size": null,
+        "sideChoice": null
+      },
+      {
+        "id": "bundle_bundle-1",
+        "nameAr": "غرفة نوم كاملة",
+        "nameEn": "Complete Bedroom Set",
+        "price": 25500,
+        "quantity": 1,
+        "costAtOrder": 0,
+        "color": null,
+        "colorName": null,
+        "size": null,
+        "sideChoice": null
+      }
+    ],
+    "subtotal": 49500,
+    "shippingFee": 80,
+    "shippingZoneId": "sh-cairo",
+    "discountAmount": 0,
+    "discountPercent": 0,
+    "promoCode": null,
+    "paymentMethod": "cod",
+    "total": 49580,
+    "status": "received",
+    "statusHistory": [
+      {
+        "status": "received",
+        "at": "2026-07-14T13:38:20.090Z"
+      }
+    ],
+    "createdAt": "2026-07-14T13:38:20.090Z",
+    "updatedAt": "2026-07-14T13:38:20.090Z",
+    "termsAccepted": true,
+    "termsAcceptedAt": "2026-07-14T13:38:20.064Z"
+  }
+]

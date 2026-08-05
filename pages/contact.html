@@ -1,0 +1,2599 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mega Furniture | Contact</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500&family=Jost:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .css-x {
+        position: relative;
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+      }
+      .css-x::before,
+      .css-x::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        top: 50%;
+        left: 0;
+      }
+      .css-x::before { transform: translateY(-50%) rotate(45deg); }
+      .css-x::after  { transform: translateY(-50%) rotate(-45deg); }
+
+      .css-warn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        border: 1.5px solid currentColor;
+        border-radius: 50%;
+        font-style: normal;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .css-warn::after { content: '!'; }
+
+      :root {
+        --o: #f5a623;
+        --od: #b8722a;
+        --ol: #f7b84a;
+        --bg: #0a0a0a;
+        --s: #161616;
+        --s2: #212121;
+        --s3: #2e2e2e;
+        --t: #f5f4f0;
+        --tm: #908c84;
+        --b: rgba(255, 255, 255, 0.07);
+        --bh: rgba(245, 166, 35, 0.4);
+        --nb: rgba(10, 10, 10, 0.93);
+        --sh: 0 8px 40px rgba(0, 0, 0, 0.55);
+        --font-head: "Fraunces", serif;
+        --font-body: "Outfit", sans-serif;
+      }
+      [data-theme="light"] {
+        --bg: #f7f3ec;
+        --s: #fefcf8;
+        --s2: #ede4d6;
+        --s3: #dfd2bf;
+        --t: #1a1612;
+        --tm: #6b5d4f;
+        --b: rgba(26, 22, 18, 0.08);
+        --bh: rgba(232, 150, 30, 0.28);
+        --nb: rgba(247, 243, 236, 0.95);
+        --sh: 0 8px 40px rgba(26, 22, 18, 0.1);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      body {
+        background: var(--bg);
+        color: var(--t);
+        font-family: "Outfit", sans-serif;
+        overflow-x: hidden;
+        max-width: 100vw;
+        box-sizing: border-box;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      .pb {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: var(--o);
+        z-index: 9999;
+        width: 0;
+        transition: width 0.1s;
+        pointer-events: none;
+      }
+      
+      /* ── GENERAL ANNOUNCEMENT BAR ── */
+      #gen-ann-bar {
+        position: relative;
+        width: 100%;
+        z-index: 10;
+        background: #0e0d0b;
+        color: #fff;
+        height: 42px;
+        font-family: var(--font-body);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 0 48px;
+        overflow: hidden;
+      }
+      .ann-marquee-container {
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+      }
+      .ann-marquee-content {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        animation: ann-marquee-anim 20s linear infinite;
+        width: max-content;
+        will-change: transform;
+      }
+      .ann-marquee-content:hover {
+        animation-play-state: paused;
+      }
+      .ann-item {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 20px;
+      }
+      .ann-bullet {
+        color: var(--o, #ff9900);
+        font-weight: bold;
+        margin-left: 20px;
+      }
+      @keyframes ann-marquee-anim {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(-50%, 0, 0);
+        }
+      }
+      /* Floating WhatsApp Menu Styles */
+      .wa-menu-container {
+        position: relative;
+      }
+      .wa-menu {
+        position: absolute;
+        bottom: 56px;
+        right: 0;
+        background: var(--nb);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        padding: 6px 0;
+        display: none;
+        flex-direction: column;
+        min-width: 240px;
+        z-index: 999;
+      }
+      .wa-menu.show {
+        display: flex;
+      }
+      .wa-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        color: var(--t);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: background 0.2s, color 0.2s;
+        text-align: right;
+        direction: rtl;
+        border-bottom: 1px solid var(--b);
+      }
+      .wa-menu-item:last-child {
+        border-bottom: none;
+      }
+      html[lang="en"] .wa-menu-item {
+        text-align: left;
+        direction: ltr;
+      }
+      .wa-menu-item:hover {
+        background: var(--b);
+        color: var(--o);
+      }
+      .nl {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .nlimg {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .nb2 {
+        font-family: "Fraunces", serif;
+        font-weight: 300;
+        font-size: 20px;
+        color: var(--t);
+        line-height: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        letter-spacing: 0.08em;
+      }
+      .nb2 .nb-fur {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        font-weight: 400;
+        color: var(--o);
+        font-family: "Outfit", sans-serif;
+        font-style: normal;
+        text-transform: uppercase;
+      }
+      .nlinks {
+        display: flex;
+        gap: 4px;
+        list-style: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .nlink {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.2s;
+      }
+      .nlink:hover {
+        color: var(--t);
+        background: var(--s);
+      }
+      .nlink.active {
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.1);
+      }
+      .nr {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tt {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        flex-shrink: 0;
+        font-size: 20px;
+        line-height: 1;
+      }
+      .tt:hover {
+        background: var(--s3);
+        transform: scale(1.08);
+      }
+      .t-sun {
+        display: block;
+      }
+      .t-sun svg {
+        stroke: var(--o);
+      }
+      .t-moon {
+        display: none;
+      }
+      [data-theme="light"] .t-sun {
+        display: none;
+      }
+      [data-theme="light"] .t-moon {
+        display: block;
+      }
+      .cbt {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        transition: background 0.2s;
+        color: var(--t);
+      }
+      .cbt:hover {
+        background: var(--s3);
+      }
+      .cbadge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--o);
+        color: #0e0d0b;
+        font-size: 10px;
+        font-weight: 700;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-family: "Fraunces", serif;
+        border: 2px solid var(--bg);
+      }
+      .ncta {
+        background: var(--o);
+        color: #0e0d0b;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 100px;
+        font-family: "Outfit", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+      }
+      .ncta:hover {
+        background: var(--ol);
+        transform: scale(1.04);
+      }
+      .langbtn {
+        background: transparent;
+        border: 1px solid var(--b);
+        color: var(--tm);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-family: "Outfit", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+      }
+      .langbtn:hover {
+        border-color: var(--o);
+        color: var(--o);
+      }
+      .hbg {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: var(--s);
+        border: 1px solid var(--o);
+        border-radius: 50%;
+        padding: 0;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        overflow: visible;
+      }
+      .hbg span {
+        display: block;
+        width: 18px;
+        height: 2px;
+        background: var(--o);
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+      .hbg.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hbg.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hbg.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+      .mm {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(75vw, 300px);
+        height: 100dvh;
+        background: var(--bg);
+        z-index: 201;
+        display: flex;
+        flex-direction: column;
+        transform: translateX(110%);
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        border-left: 1px solid var(--b);
+        overflow-y: auto;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .mm.open {
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: all;
+      }
+      .mm-hdr {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 24px 20px;
+        border-bottom: 1px solid var(--b);
+        flex-shrink: 0;
+      }
+      .mm-brand {
+        font-family: "Fraunces", serif;
+        font-weight: 300;
+        font-size: 22px;
+        color: var(--t);
+        letter-spacing: 0.2em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      .mm-brand-sub {
+        font-size: 10px;
+        letter-spacing: 0.4em;
+        font-weight: 400;
+        color: var(--o);
+        font-family: "Outfit", sans-serif;
+        text-transform: uppercase;
+        display: block;
+        margin-top: 2px;
+      }
+      .mm-x {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        color: var(--t);
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .mm-x:hover {
+        background: var(--s3);
+      }
+      .mm .nlink {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        font-size: 18px;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--b);
+        border-radius: 0;
+        min-height: 56px;
+        color: var(--t);
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .mm .nlink:hover {
+        background: var(--s);
+      }
+      .mm .nlink.active {
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.06);
+      }
+      .mm-ftr {
+        margin-top: auto;
+        padding: 16px 20px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      #mov {
+        z-index: 200;
+      }
+      .ov {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .ov.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #cov {
+        z-index: 500;
+      }
+      .cpa {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(440px, 100vw);
+        background: var(--s);
+        border-left: 1px solid var(--b);
+        z-index: 501;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+      }
+      .cpa.open {
+        transform: translateX(0);
+      }
+      .chdr {
+        padding: 22px;
+        border-bottom: 1px solid var(--b);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .chdr h3 {
+        font-family: "Fraunces", serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .chdr h3 span {
+        color: var(--tm);
+        font-weight: 400;
+        font-size: 13px;
+        font-family: "Outfit", sans-serif;
+      }
+      .cx {
+        background: var(--s2);
+        border: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--t);
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .cx:hover {
+        background: var(--s3);
+      }
+      .clist {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .cemp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        gap: 12px;
+        color: var(--tm);
+        text-align: center;
+        padding: 40px;
+      }
+      .cemp .big {
+        font-size: 60px;
+        opacity: 0.2;
+      }
+      .cir {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--s2);
+        border-radius: 14px;
+        padding: 14px;
+        border: 1px solid var(--b);
+      }
+      .cii {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: var(--s3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .cii img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cin {
+        flex: 1;
+        min-width: 0;
+      }
+      .cnm {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--t);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 3px;
+      }
+      .cpr {
+        font-size: 12px;
+        color: var(--o);
+        margin-bottom: 8px;
+      }
+      .ciq {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .ciq button {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--s);
+        border: 1px solid var(--b);
+        color: var(--t);
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .ciq button:hover {
+        background: var(--o);
+        color: #0e0d0b;
+        border-color: var(--o);
+      }
+      .ciq span {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--t);
+        min-width: 18px;
+        text-align: center;
+      }
+      .crm {
+        background: none;
+        border: none;
+        color: var(--tm);
+        cursor: pointer;
+        font-size: 17px;
+        padding: 4px;
+        transition: color 0.2s;
+        flex-shrink: 0;
+      }
+      .crm:hover {
+        color: #ff4757;
+      }
+      .cir.bundle-item {
+        border-left: 2px solid var(--o);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .cir.bundle-item .cir-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .bundle-tag {
+        display: inline-block;
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        background: var(--o);
+        color: #0a0a0a;
+        border-radius: 4px;
+        padding: 2px 6px;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .bundle-item-count {
+        font-size: 11px;
+        color: var(--tm);
+        margin-bottom: 6px;
+      }
+      .bundle-items-list {
+        font-size: 10px;
+        color: var(--tm);
+        line-height: 1.7;
+        padding-left: 4px;
+      }
+      .cftr {
+        padding: 18px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .ctrw {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      .ctrw .lb {
+        color: var(--tm);
+        font-size: 14px;
+      }
+      .ctrw .am {
+        font-family: "Fraunces", serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--o);
+      }
+      .bf {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+      .bp {
+        background: var(--o);
+        color: #0e0d0b;
+        border: none;
+        padding: 14px 32px;
+        border-radius: 100px;
+        font-family: "Outfit", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bp:hover {
+        background: var(--ol);
+        transform: scale(1.04);
+      }
+      .bg2 {
+        background: transparent;
+        color: var(--t);
+        border: 1px solid var(--b);
+        padding: 14px 32px;
+        border-radius: 100px;
+        font-family: "Outfit", sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bg2:hover {
+        border-color: var(--o);
+        color: var(--o);
+        transform: scale(1.04);
+      }
+      /* PAGE */
+      .pw {
+        padding-top: 68px;
+      }
+      .stag {
+        font-size: 12px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--o);
+        font-weight: 500;
+        margin-bottom: 12px;
+      }
+      .stitle {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: clamp(26px, 3.5vw, 44px);
+        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+        line-height: 1.1;
+        color: var(--t);
+      }
+      .stitle span {
+        color: var(--o);
+      }
+      /* HERO CONTACT OPTIONS */
+      .chero {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 48px 0;
+      }
+      .chero p {
+        color: var(--tm);
+        font-size: 17px;
+        line-height: 1.7;
+        max-width: 520px;
+        margin-bottom: 40px;
+      }
+      .copts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 60px;
+      }
+      .copt {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 16px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
+        text-decoration: none;
+        color: inherit;
+      }
+      .copt:hover {
+        border-color: var(--bh);
+        box-shadow: var(--sh);
+        transform: translateY(-4px);
+      }
+      .copt .ico {
+        font-size: 36px;
+      }
+      .copt h3 {
+        font-family: "Fraunces", serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .copt p {
+        color: var(--tm);
+        font-size: 13px;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .copt .action {
+        font-size: 13px;
+        color: var(--o);
+        font-weight: 600;
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      /* MAIN LAYOUT */
+      .cmain {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 48px 80px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+      }
+      /* FORM */
+      .cform {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 20px;
+        padding: 36px;
+      }
+      .cform h2 {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: 20px;
+        color: var(--t);
+        margin-bottom: 6px;
+      }
+      .cform .sub {
+        color: var(--tm);
+        font-size: 14px;
+        margin-bottom: 28px;
+      }
+      .fgroup {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 18px;
+      }
+      .fgroup label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--tm);
+        letter-spacing: 0.04em;
+      }
+      .finp {
+        background: var(--s2);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: var(--t);
+        font-family: "Outfit", sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s;
+        width: 100%;
+      }
+      .finp:focus {
+        border-color: var(--o);
+      }
+      .finp::placeholder {
+        color: var(--s3);
+      }
+      textarea.finp {
+        resize: vertical;
+        min-height: 110px;
+        line-height: 1.6;
+      }
+      select.finp option {
+        background: var(--s2);
+      }
+      .frow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      /* SHOWROOMS */
+      .crooms {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .crooms h2 {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: 20px;
+        color: var(--t);
+        margin-bottom: 4px;
+      }
+      .crooms .sub {
+        color: var(--tm);
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+      .room {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 16px;
+        padding: 24px;
+        transition: border-color 0.2s;
+      }
+      .room:hover {
+        border-color: var(--bh);
+      }
+      .room .rtop {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 14px;
+        gap: 12px;
+      }
+      .room h3 {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--t);
+      }
+      .room .rbadge {
+        background: rgba(245, 166, 35, 0.12);
+        border: 1px solid rgba(245, 166, 35, 0.25);
+        color: var(--o);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 3px 10px;
+        border-radius: 100px;
+        flex-shrink: 0;
+      }
+      .rdet {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .rdet p {
+        color: var(--tm);
+        font-size: 13px;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .rdet p span {
+        flex-shrink: 0;
+        font-size: 15px;
+      }
+      .rlinks {
+        display: flex;
+        gap: 8px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .rlink {
+        font-size: 13px;
+        color: var(--o);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 500;
+        padding: 6px 14px;
+        background: rgba(245, 166, 35, 0.08);
+        border: 1px solid rgba(245, 166, 35, 0.2);
+        border-radius: 100px;
+        transition: all 0.2s;
+      }
+      .rlink:hover {
+        background: var(--o);
+        color: #0e0d0b;
+      }
+      /* MAP */
+      .cmap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 48px 60px;
+      }
+      .cmap h2 {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: 20px;
+        color: var(--t);
+        margin-bottom: 20px;
+      }
+      .maptiles {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .maptile {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 16px;
+        padding: 28px 24px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        text-decoration: none;
+        color: inherit;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
+      }
+      .maptile:hover {
+        border-color: var(--bh);
+        box-shadow: var(--sh);
+        transform: translateY(-3px);
+      }
+      .maptile-icon {
+        font-size: 36px;
+        flex-shrink: 0;
+      }
+      .maptile-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .maptile-badge {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.1);
+        border: 1px solid rgba(245, 166, 35, 0.2);
+        padding: 3px 10px;
+        border-radius: 100px;
+        width: fit-content;
+      }
+      .maptile-info h3 {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--t);
+        line-height: 1.3;
+      }
+      .maptile-info p {
+        font-size: 12px;
+        color: var(--o);
+        font-weight: 500;
+      }
+      /* FAQ */
+      .cfaq {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 48px 80px;
+      }
+      .cfaq h2 {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: clamp(18px, 2.5vw, 28px);
+        color: var(--t);
+        margin-bottom: 28px;
+      }
+      .cfaq h2 span {
+        color: var(--o);
+      }
+      .faqlist {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .faq {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 14px;
+        overflow: hidden;
+        transition: border-color 0.2s;
+      }
+      .faq.open {
+        border-color: var(--bh);
+      }
+      .faqq {
+        padding: 18px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        gap: 16px;
+      }
+      .faqq span {
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--t);
+      }
+      .faqarrow {
+        font-size: 20px;
+        color: var(--tm);
+        transition: transform 0.3s;
+        flex-shrink: 0;
+      }
+      .faq.open .faqarrow {
+        transform: rotate(45deg);
+        color: var(--o);
+      }
+      .faqa {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .faq.open .faqa {
+        max-height: 300px;
+      }
+      .faqa p {
+        padding: 0 22px 18px;
+        color: var(--tm);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      /* FOOTER */
+      footer {
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        padding: 60px 48px 32px;
+        transition: background 0.3s;
+      }
+      .fg {
+        max-width: 1200px;
+        margin: 0 auto 48px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+      }
+      .fbr p {
+        color: var(--tm);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-top: 12px;
+        max-width: 280px;
+      }
+      .fc h4 {
+        font-family: "Fraunces", serif;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--t);
+      }
+      .fc ul {
+        list-style: none;
+      }
+      .fc li {
+        margin-bottom: 10px;
+      }
+      .fc a {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .fc a:hover {
+        color: var(--o);
+      }
+      .fb {
+        max-width: 1200px;
+        margin: 0 auto;
+        border-top: 1px solid var(--b);
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--tm);
+        font-size: 13px;
+      }
+      .fbtns {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 200;
+      }
+      .fbtn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+      .fbtn:hover {
+        transform: scale(1.12);
+      }
+      .wab {
+        background: #25d366;
+        color: white;
+        text-decoration: none;
+      }
+      .topb {
+        background: var(--o);
+        color: #0e0d0b;
+        font-size: 20px;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .topb.vis {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .toast {
+        position: fixed;
+        bottom: 96px;
+        right: 28px;
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        padding: 14px 20px;
+        font-size: 14px;
+        color: var(--t);
+        box-shadow: var(--sh);
+        z-index: 800;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transform: translateX(130%);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .toast.show {
+        transform: translateX(0);
+      }
+      .rev {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s,
+          transform 0.7s;
+      }
+      .rev.vis {
+        opacity: 1;
+        transform: none;
+      }
+      @media (max-width: 900px) {
+        
+        .nl {
+          flex: 1 1 auto;
+          min-width: 0;
+          max-width: 50%;
+        }
+        .nr {
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+        .tt,
+        .cbt,
+        .hbg {
+          width: 38px;
+          height: 38px;
+          min-width: 38px;
+          flex-shrink: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-size: 16px;
+          border-radius: 50%;
+          background: var(--s2);
+          border: 1px solid var(--b);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--t);
+          transition: all 0.2s ease;
+        }
+        .tt:active,
+        .cbt:active,
+        .hbg:active {
+          background: var(--s3);
+          transform: scale(0.95);
+        }
+        .langbtn {
+          width: auto;
+          min-width: auto;
+          height: 38px;
+          padding: 0 14px;
+          font-size: 11px;
+          border-radius: 999px;
+          background: var(--s2);
+          border: 1px solid var(--b);
+          color: var(--t);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          transition: all 0.2s ease;
+        }
+        .langbtn:active {
+          background: var(--s3);
+          transform: scale(0.95);
+        }
+        .nlinks {
+          display: none;
+        }
+        .hbg {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .hbg span {
+          width: 16px;
+          height: 2px;
+          background: var(--t);
+          border-radius: 1px;
+          transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s;
+        }
+        .hbg.open span:nth-child(1) {
+          transform: translateY(6px) rotate(45deg);
+        }
+        .hbg.open span:nth-child(2) {
+          opacity: 0;
+        }
+        .hbg.open span:nth-child(3) {
+          transform: translateY(-6px) rotate(-45deg);
+        }
+        .chero {
+          padding: 40px 20px 0;
+        }
+        .copts {
+          grid-template-columns: 1fr;
+        }
+        .cmain {
+          grid-template-columns: 1fr;
+          padding: 0 20px 60px;
+        }
+        .cmap,
+        .cfaq {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .maptiles {
+          grid-template-columns: 1fr;
+        }
+        .fg {
+          grid-template-columns: 1fr 1fr;
+        }
+        footer {
+          padding: 40px 24px 24px;
+        }
+        .frow {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 400px) {
+        .langbtn {
+          font-size: 0 !important;
+          padding: 4px 6px;
+          width: 28px;
+          min-width: 28px;
+        }
+        .langbtn::after {
+          content: attr(data-short);
+          font-family: "Outfit", sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+        }
+      }
+      @media (max-width: 768px) {
+        .ncta {
+          display: none;
+        }
+        .stitle {
+          font-size: clamp(22px, 7vw, 36px);
+        }
+        .chero {
+          padding: 32px 16px 0;
+        }
+        .chero p {
+          font-size: 15px;
+          margin-bottom: 24px;
+        }
+        .copts {
+          gap: 10px;
+        }
+        .cmain {
+          padding: 0 16px 48px;
+          gap: 20px;
+        }
+        .cform {
+          padding: 20px 16px;
+        }
+        .frow {
+          grid-template-columns: 1fr;
+        }
+        .cmap,
+        .cfaq {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+        .maptiles {
+          gap: 10px;
+        }
+        .fg {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        footer {
+          padding: 32px 16px 20px;
+        }
+        .fb {
+          flex-direction: column;
+          gap: 4px;
+          text-align: center;
+        }
+        img {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- GENERAL ANNOUNCEMENT BAR -->
+    <div id="gen-ann-bar">
+      <div class="ann-marquee-container">
+        <div class="ann-marquee-content" id="gen-ann-msg-container">
+          <span id="gen-ann-msg"></span>
+        </div>
+      </div>
+      <button
+        onclick="dismissGenAnn()"
+        aria-label="Dismiss"
+        style="
+          position: absolute;
+          right: 14px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          color: #fff;
+          opacity: 0.6;
+          line-height: 1;
+          padding: 0 4px;
+          z-index: 10;
+        "
+      >
+        <span class="css-x"></span>
+      </button>
+    </div>
+    <div class="pb" id="pb"></div>
+    <div class="toast" id="toast">
+      <span id="ti"></span><span id="tm2"></span>
+    </div>
+
+    <script src="header.js"></script>
+
+    <div class="ov" id="cov" onclick="closeCart()"></div>
+    <aside class="cpa" id="cpa">
+      <div class="chdr">
+        <h3 data-t="cart-title">Your Cart <span id="cc">(0)</span></h3>
+        <button class="cx" onclick="closeCart()"><span class="css-x"></span></button>
+      </div>
+      <div class="clist" id="clist"></div>
+      <div class="cftr" id="cftr" style="display: none">
+        <a class="bp bf" href="shop.html" data-t="cart-view"
+          >عرض السلة والطلب ←</a
+        >
+      </div>
+    </aside>
+
+    <div class="pw">
+      <div class="chero rev">
+        <div class="stag" data-t="page-tag">تواصل معنا</div>
+        <h1 class="stitle" data-t="page-h1">هنا لمساعدتك <span>دايما</span></h1>
+        <p data-t="page-desc">
+          سواء بتطلب، بتتابع توصيل، بتسأل عن ضمان، أو محتاج نصيحة ديكور — فريقنا
+          بيرد بسرعة.
+        </p>
+        <div class="copts">
+          <a class="copt" href="https://wa.me/201040454343" target="_blank">
+            <div class="ico">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                />
+              </svg>
+            </div>
+            <h3 data-t="wa-h3">واتساب</h3>
+            <p data-t="wa-desc">
+              أسرع رد. تكلم فريقنا مباشرة للطلبات والاستفسارات والدعم.
+            </p>
+            <div class="action" data-t="wa-action">تكلم معانا ←</div>
+          </a>
+          <a class="copt" href="tel:+201040454343">
+            <div class="ico">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"
+                />
+              </svg>
+            </div>
+            <h3 data-t="call-h3">اتصل بينا</h3>
+            <p data-t="call-desc">
+              اتكلم مع مستشار أثاث.
+            </p>
+            <div class="action">+20 104 045 4343 →</div>
+          </a>
+          <a
+            class="copt"
+            href="https://www.instagram.com/megafurniturehome/"
+            target="_blank"
+          >
+            <div class="ico">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+                />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+            </div>
+            <h3 data-t="ig-h3">إنستجرام DM</h3>
+            <p data-t="ig-desc">
+              ابعتلنا DM أو تاجنا في بيتك. بنحب نشوف مساحاتكم.
+            </p>
+            <div class="action" data-t="ig-action">@megafurniturehome ←</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="cmain rev">
+        <div class="cform">
+          <h2 data-t="form-h2">ابعت رسالة</h2>
+          <p class="sub" data-t="form-sub">
+            اكتب بياناتك وهنرد عليك عن طريق واتساب في خلال ساعتين.
+          </p>
+          <div class="frow">
+            <div class="fgroup">
+              <label>First Name</label
+              ><input
+                class="finp"
+                type="text"
+                id="fn"
+                placeholder="Sara"
+                required
+              />
+            </div>
+            <div class="fgroup">
+              <label>Last Name</label
+              ><input
+                class="finp"
+                type="text"
+                id="ln"
+                placeholder="Mohamed"
+                required
+              />
+            </div>
+          </div>
+          <div class="fgroup">
+            <label>Phone Number</label
+            ><input
+              class="finp"
+              type="tel"
+              id="ph"
+              placeholder="01X XXXX XXXX"
+              required
+            />
+          </div>
+          <div class="fgroup">
+            <label>City</label>
+            <select class="finp" id="city">
+              <option value="">Select your city...</option>
+              <option>Cairo</option>
+              <option>Giza</option>
+              <option>Alexandria</option>
+              <option>New Cairo</option>
+              <option>Heliopolis</option>
+              <option>Maadi</option>
+              <option>Zamalek</option>
+              <option>6th of October</option>
+              <option>Shorouk</option>
+              <option>Rehab City</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <label>Subject</label>
+            <select class="finp" id="subj">
+              <option value="">What can we help with?</option>
+              <option>Place a New Order</option>
+              <option>Product Question</option>
+              <option>Warranty Claim</option>
+              <option>Return / Exchange</option>
+              <option>Showroom Visit</option>
+              <option>Interior Design Advice</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <label>Message</label
+            ><textarea
+              class="finp"
+              id="msg"
+              placeholder="Tell us how we can help..."
+            ></textarea>
+          </div>
+          <button class="bp" style="width: 100%" onclick="sendMsg()">
+            Send via WhatsApp
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="crooms">
+          <h2 data-t="rooms-h2">مواقعنا</h2>
+          <p class="sub" data-t="rooms-sub">المصنع والمعارض — زورنا بنفسك.</p>
+          <div class="room">
+            <div class="rtop">
+              <h3 data-t="loc2-name">Hadayek El Haram Showroom</h3>
+              <span class="rbadge" data-t="loc2-badge">معرض</span>
+            </div>
+            <div class="rdet">
+              <p>
+                <span
+                  ><svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" /></svg></span
+                ><span data-t="hadayek-hours">كل الأسبوع: ١٢م – ١٠م</span>
+              </p>
+              <p>
+                <span
+                  ><svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"
+                    /></svg></span
+                >+20 108 060 8497
+              </p>
+            </div>
+            <div class="rlinks">
+              <a
+                class="rlink"
+                href="https://www.google.com/maps?ftid=0x14584fda869140b5:0xb28073fdc0c9bc1d"
+                target="_blank"
+                ><svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+                <span data-t="team-dir">الاتجاهات</span></a
+              >
+              <a class="rlink" href="tel:+201080608497"
+                ><svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"
+                  />
+                </svg>
+                <span data-t="team-call">اتصل</span></a
+              >
+              <a class="rlink" href="https://wa.me/201080608497" target="_blank"
+                ><svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                  />
+                </svg>
+                <span data-t="team-wa">واتساب</span></a
+              >
+            </div>
+          </div>
+          <div class="room">
+            <div class="rtop">
+              <h3 data-t="loc3-name">New Cairo Showroom</h3>
+              <span class="rbadge" data-t="loc3-badge">معرض</span>
+            </div>
+            <div class="rdet">
+              <p>
+                <span
+                  ><svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" /></svg></span
+                ><span data-t="cairo-hours">كل الأسبوع: ١٢م – ١٠م</span>
+              </p>
+              <p>
+                <span
+                  ><svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"
+                    /></svg></span
+                >01006536575
+              </p>
+            </div>
+            <div class="rlinks">
+              <a
+                class="rlink"
+                href="https://www.google.com/maps?ftid=0x14583dffe644998f:0xcf4bbaee5974bf3d"
+                target="_blank"
+                ><svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  />
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+                <span data-t="team-dir">الاتجاهات</span></a
+              >
+              <a class="rlink" href="tel:+201006536575"
+                ><svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"
+                  />
+                </svg>
+                <span data-t="team-call">اتصل</span></a
+              >
+              <a class="rlink" href="https://wa.me/201006536575" target="_blank"
+                ><svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                  />
+                </svg>
+                <span data-t="team-wa">واتساب</span></a
+              >
+            </div>
+          </div>
+        </div>
+                <div class="room">
+            <div class="rtop">
+              <h3 data-t="team-sales-name">فريق المبيعات</h3>
+              <span class="rbadge" style="background:var(--o);color:white;" data-t="team-badge">قسم</span>
+            </div>
+            <div class="rdet">
+              <p>
+                <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg></span>01040454343
+              </p>
+            </div>
+            <div class="rlinks">
+              <a class="rlink" href="tel:+201040454343"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg> <span data-t="team-call">اتصل</span></a>
+              <a class="rlink" href="https://wa.me/201040454343" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> <span data-t="team-wa">واتساب</span></a>
+            </div>
+          </div>
+          <div class="room">
+            <div class="rtop">
+              <h3 data-t="team-web-name">دعم الموقع</h3>
+              <span class="rbadge" style="background:var(--o);color:white;" data-t="team-badge">قسم</span>
+            </div>
+            <div class="rdet">
+              <p>
+                <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg></span>01105343715
+              </p>
+            </div>
+            <div class="rlinks">
+              <a class="rlink" href="tel:+201105343715"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg> <span data-t="team-call">اتصل</span></a>
+              <a class="rlink" href="https://wa.me/201105343715" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> <span data-t="team-wa">واتساب</span></a>
+            </div>
+          </div>
+        </div>
+
+      <div class="cmap rev">
+        <h2 data-t="map-h2">مواقعنا على الخريطة</h2>
+        <div class="maptiles">
+
+          <a
+            class="maptile"
+            href="https://www.google.com/maps?ftid=0x14584fda869140b5:0xb28073fdc0c9bc1d"
+            target="_blank"
+          >
+            <div class="maptile-icon">️</div>
+            <div class="maptile-info">
+              <span class="maptile-badge" data-t="loc2-badge">معرض</span>
+              <h3 data-t="loc2-name">Hadayek El Haram Showroom</h3>
+              <p data-t="maptile-open">افتح في خرائط جوجل ←</p>
+            </div>
+          </a>
+          <a
+            class="maptile"
+            href="https://www.google.com/maps?ftid=0x14583dffe644998f:0xcf4bbaee5974bf3d"
+            target="_blank"
+          >
+            <div class="maptile-icon">️</div>
+            <div class="maptile-info">
+              <span class="maptile-badge" data-t="loc3-badge">معرض</span>
+              <h3 data-t="loc3-name">New Cairo Showroom</h3>
+              <p data-t="maptile-open">افتح في خرائط جوجل ←</p>
+            </div>
+          </a>
+        
+        </div>
+      </div>
+      <div class="cfaq rev">
+        <h2 data-t="faq-h2">أسئلة <span>شايعة</span></h2>
+        <div class="faqlist" id="faqlist"></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="fg">
+        <div class="fbr">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <img
+              src="../logos/mega-logo.jpg"
+              alt="Logo"
+              style="
+                width: 32px;
+                height: 32px;
+                border-radius: 6px;
+                object-fit: cover;
+              "
+              onerror="this.style.display = 'none'"
+            />
+            <span
+              style="
+                font-family: &quot;Fraunces&quot;, serif;
+                font-weight: 700;
+                font-size: 14px;
+                color: var(--t);
+              "
+              >MEGA <span style="color: #f5a623">FURNITURE</span></span
+            >
+          </div>
+          <p data-t="footer-desc">
+            Crafting quality furniture for Egyptian homes · Est. 2020 ·
+            Experience since 1998.
+          </p>
+        </div>
+        <div class="fc">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">Living Room</a></li>
+            <li><a href="shop.html">Bedroom</a></li>
+            <li><a href="shop.html">Dining</a></li>
+            <li><a href="shop.html">Home Office</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../mega-furniture.html">About Us</a></li>
+            <li>
+              <a
+                href="https://www.instagram.com/megafurniturehome/"
+                target="_blank"
+                >Instagram</a
+              >
+            </li>
+
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="contact.html">Returns</a></li>
+            <li><a href="about.html#warranty" data-t="f-warranty">Warranty</a></li>
+            <li><a href="contact.html">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fb">
+        <span data-t="footer-copy"
+          >© 2026 Mega Furniture · ميجا فرنيتشر.</span
+        >
+        <span data-t="footer-made">صُنع لمصر</span>
+      </div>
+    </footer>
+
+    <div class="fbtns">
+      <button
+        class="fbtn topb"
+        id="topb"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      >
+        ↑
+      </button>
+      <div class="wa-menu-container">
+        <div class="wa-menu" id="wa-menu">
+          <a href="https://wa.me/201040454343" target="_blank" class="wa-menu-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-t="wa-menu-sales">Sales Team</span>
+          </a>
+          <a href="https://wa.me/201105343715" target="_blank" class="wa-menu-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-t="wa-menu-web">Web Support</span>
+          </a>
+        </div>
+        <button
+          onclick="toggleWaMenu(event)"
+          class="fbtn wab"
+          aria-label="WhatsApp"
+        >
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        if (!localStorage.getItem("megaTheme"))
+          localStorage.setItem("megaTheme", "light");
+        document.documentElement.setAttribute(
+          "data-theme",
+          localStorage.getItem("megaTheme"),
+        );
+      })();
+      const faqs = [
+        {
+          q: "How long does delivery take?",
+          a: "Delivery time depends on the specific item ordered. Each product page clearly specifies its own estimated delivery timeframe. We will also confirm the exact delivery date when you place your order.",
+        },
+        {
+          q: "Do you offer installation and assembly?",
+          a: "Yes! Our professional assembly team handles full installation for all furniture. The service is included in the delivery for most items and takes between 30 minutes and 2 hours depending on the piece.",
+        },
+        {
+          q: "What is your return policy?",
+          a: "We accept returns within 14 days of delivery if the item is unused and in original packaging. Contact us via WhatsApp with your order details and photos and we'll arrange a pickup.",
+        },
+        {
+          q: "Is there a warranty on the furniture?",
+          a: "All Mega Furniture products come with a warranty against manufacturing defects. Bedroom and dining room collections carry a 5-year warranty, mattresses carry a 10-year warranty, and other categories (such as living rooms, sectionals, salons, tables, and TV units) carry a 3-year warranty. relocations or reassemblies without company supervision void the warranty, and it does not apply to misuse or wear items (like fabric and leather). Keep your purchase receipt.",
+        },
+        {
+          q: "What payment methods do you accept?",
+          a: "We accept Cash on Delivery (COD) and direct Bank / InstaPay transfers for maximum convenience.",
+        },
+        {
+          q: "Can I visit a showroom before ordering online?",
+          a: "Absolutely! We encourage showroom visits. You can see, touch, and sit on every piece. Our consultants are available to help you with layout planning and color choices. See our locations above.",
+        },
+        {
+          q: "Do you ship outside Cairo and Giza?",
+          a: "Yes, we deliver nationwide across all of Egypt. Delivery fees may vary by distance. Contact us for a quote for your governorate.",
+        },
+        {
+          q: "Can I customize colors or fabrics?",
+          a: "For certain collections (including the Candy S147 and Orion V128), we offer custom fabric and color selection. Lead time for custom orders is 3–4 weeks. Ask us for the full swatch book.",
+        },
+      ];
+      (function renderFAQ() {
+        document.getElementById("faqlist").innerHTML = faqs
+          .map(
+            (f, i) => `<div class="faq" id="faq${i}">
+    <div class="faqq" onclick="toggleFAQ(${i})"><span>${f.q}</span><span class="faqarrow">+</span></div>
+    <div class="faqa"><p>${f.a}</p></div>
+  </div>`,
+          )
+          .join("");
+      })();
+      function toggleFAQ(i) {
+        const el = document.getElementById("faq" + i);
+        el.classList.toggle("open");
+      }
+      function sendMsg() {
+        const fn = document.getElementById("fn").value.trim();
+        const ln = document.getElementById("ln").value.trim();
+        const ph = document.getElementById("ph").value.trim();
+        const city = document.getElementById("city").value;
+        const subj = document.getElementById("subj").value;
+        const msg = document.getElementById("msg").value.trim();
+        if (!fn || !ph) {
+          showToast('<span class="css-warn"></span>', "Please fill in your name and phone.");
+          return;
+        }
+        const text = `Hello! I'm reaching out via the Mega Furniture website.\n\nName: ${fn} ${ln}\nPhone: ${ph}\nCity: ${city || "Not specified"}\nSubject: ${subj || "General Inquiry"}\n\nMessage:\n${msg || "(no message)"}`;
+        window.open(
+          "https://wa.me/201040454343?text=" + encodeURIComponent(text),
+          "_blank",
+        );
+        showToast("", "Opening WhatsApp...");
+      }
+      let cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
+      function updBadge() {
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        const b = document.getElementById("cbadge");
+        b.textContent = n;
+        b.style.display = n > 0 ? "flex" : "none";
+      }
+      function iu(src) {
+        if (!src) return "";
+        return src.startsWith("http") ? src : "/uploads/" + src;
+      }
+      function saveCart() {
+        localStorage.setItem("megaCart", JSON.stringify(cart));
+      }
+      function rmCartIdx(idx) {
+        cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function updQtyIdx(idx, delta) {
+        if (!cart[idx]) return;
+        cart[idx].qty += delta;
+        if (cart[idx].qty < 1) cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function renderCart() {
+        const el = document.getElementById("clist"),
+          cc = document.getElementById("cc"),
+          ft = document.getElementById("cftr");
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        if (cc) cc.textContent = "(" + n + ")";
+        if (!cart.length) {
+          el.innerHTML = `<div class="cemp"><div class="big"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><p>${t("cart-empty")}</p><small>${t("cart-empty-sub")}</small></div>`;
+          if (ft) ft.style.display = "none";
+          return;
+        }
+        if (ft) ft.style.display = "flex";
+        const lang = localStorage.getItem("megaLang") || "en";
+        el.innerHTML = cart
+          .map((item) => {
+            const nm =
+              lang === "ar"
+                ? item.nameAr || item.nameEn
+                : item.nameEn || item.nameAr;
+            const imgSrc = iu(item.mainPhoto);
+            const unitPrice = item.price || 0;
+            const lineTotal = unitPrice * item.qty;
+            const idx = cart.indexOf(item);
+            if (item.isBundle) {
+              const bundleTag = t("bundle-tag");
+              const countLbl = t("bundle-includes").replace("{n}", item.itemCount || 0);
+              const itemsList = (item.items || [])
+                .map(
+                  (p) =>
+                    "· " +
+                    (lang === "ar"
+                      ? p.nameAr || p.nameEn
+                      : p.nameEn || p.nameAr),
+                )
+                .join("<br>");
+              const priceStr =
+                unitPrice > 0
+                  ? item.qty > 1
+                    ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                    : "EGP " + Number(unitPrice).toLocaleString()
+                  : "";
+              return `<div class="cir bundle-item"><div class="cir-top"><div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div><div class="cin" style="flex:1;min-width:0"><div><span class="bundle-tag">${bundleTag}</span></div><div class="nm">${nm}</div><div class="pr">${priceStr}</div><div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div></div><button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button></div><div class="bundle-item-count">${countLbl}</div>${itemsList ? `<div class="bundle-items-list">${itemsList}</div>` : ""}</div>`;
+            }
+            const priceStr =
+              unitPrice > 0
+                ? item.qty > 1
+                  ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                  : "EGP " + Number(unitPrice).toLocaleString()
+                : "";
+            const meta = [
+              item.color || "",
+              item.size
+                ? (lang === "ar" ? item.size.nameAr : item.size.nameEn) || ""
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" · ");
+            return `<div class="cir"><div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div><div class="cin"><div class="nm">${nm}${meta ? `<span style="font-size:10px;color:var(--tm);margin-right:4px"> · ${meta}</span>` : ""}</div><div class="pr">${priceStr}</div><div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div></div><button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button></div>`;
+          })
+          .join("");
+      }
+      function openCart() {
+        renderCart();
+        document.getElementById("cpa").classList.add("open");
+        document.getElementById("cov").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCart() {
+        document.getElementById("cpa").classList.remove("open");
+        document.getElementById("cov").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      document.getElementById("tt").addEventListener("click", function () {
+        const h = document.documentElement;
+        const cur = h.getAttribute("data-theme") || "light";
+        const next = cur === "dark" ? "light" : "dark";
+        const newBg = next === "light" ? "#F7F3EC" : "#0A0A0A";
+        const curtain = document.createElement("div");
+        curtain.style.cssText =
+          "position:fixed;inset:0;background:" +
+          newBg +
+          ";transform-origin:top;transform:scaleY(0);z-index:9997;pointer-events:none;transition:none";
+        document.body.appendChild(curtain);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            curtain.style.transition =
+              "transform 480ms cubic-bezier(0.76,0,0.24,1)";
+            curtain.style.transform = "scaleY(1)";
+          });
+        });
+        setTimeout(() => {
+          h.setAttribute("data-theme", next);
+          localStorage.setItem("megaTheme", next);
+          curtain.style.transformOrigin = "bottom";
+          curtain.style.transform = "scaleY(0)";
+          setTimeout(() => curtain.remove(), 520);
+        }, 490);
+      });
+      function toggleMenu() {
+        const isOpen = document.getElementById("mm").classList.toggle("open");
+        document.getElementById("hbg").classList.toggle("open");
+        const mov = document.getElementById("mov");
+        if (mov) mov.classList.toggle("open", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+      }
+      function closeMenu() {
+        document.getElementById("mm").classList.remove("open");
+        document.getElementById("hbg").classList.remove("open");
+        const mov = document.getElementById("mov");
+        if (mov) mov.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      window.addEventListener("scroll", function () {
+        const pct = document.body.scrollHeight - window.innerHeight;
+        document.getElementById("pb").style.width =
+          (pct > 0 ? (window.scrollY / pct) * 100 : 0) + "%";
+        const b = document.getElementById("topb");
+        window.scrollY > 400
+          ? b.classList.add("vis")
+          : b.classList.remove("vis");
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeCart();
+      });
+      const io = new IntersectionObserver(
+        (e) => {
+          e.forEach((x) => {
+            if (x.isIntersecting) x.target.classList.add("vis");
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".rev").forEach((el) => io.observe(el));
+      let tt2;
+      function showToast(icon, msg) {
+        document.getElementById("ti").innerHTML = icon;
+        document.getElementById("tm2").innerHTML = msg;
+        const t = document.getElementById("toast");
+        t.classList.add("show");
+        clearTimeout(tt2);
+        tt2 = setTimeout(() => t.classList.remove("show"), 2800);
+      }
+      const TRANS = {
+        ar: {
+          "nav-home": "الرئيسية",
+          "nav-shop": "تسوق",
+          "nav-videos": "فيديوهات",
+          "nav-about": "من نحن",
+          "nav-reviews": "آراء",
+          "nav-contact": "تواصل",
+          "nav-custom-work": "شغل عمولة",
+          "nav-shop-cta": "تسوق الآن",
+          "f-warranty": "الضمان ضد عيوب الصناعة",
+          "footer-copy": "© 2026 Mega Furniture · ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+          "footer-desc": "أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.",
+          "cart-empty": "السلة فاضية",
+          "cart-empty-sub": "تسوق حاجة حلوة!",
+          "cart-count": "منتج في سلتك",
+          "cart-hint": "اضغط على الزر في الأسفل لعرض السلة واتمام الطلب.",
+          "cart-view": "عرض السلة والطلب ←",
+          "page-tag": "تواصل معنا",
+          "page-h1": "هنا لمساعدتك <span>دايما</span>",
+          "page-desc":
+            "سواء بتطلب، بتتابع توصيل، بتسأل عن ضمان، أو محتاج نصيحة ديكور — فريقنا بيرد بسرعة.",
+          "wa-h3": "واتساب",
+          "wa-desc": "أسرع رد. تكلم فريقنا مباشرة للطلبات والاستفسارات والدعم.",
+          "wa-action": "تكلم معانا ←",
+          "call-h3": "اتصل بينا",
+          "call-desc": "اتكلم مع مستشار أثاث.",
+          "call-action": "اتصل الآن ←",
+          "team-sales-name": "فريق المبيعات",
+          "team-web-name": "دعم الموقع",
+          "team-badge": "قسم",
+          "team-hours": "كل الأسبوع: ٩ص – ٩م",
+          "team-call": "اتصل",
+          "team-wa": "واتساب",
+          "team-dir": "الاتجاهات",
+          "cairo-hours": "كل الأسبوع: ١٢م – ١٠م",
+          "hadayek-hours": "كل الأسبوع: ١٢م – ١٠م",
+          "ig-h3": "إنستجرام DM",
+          "ig-desc": "ابعتلنا DM أو تاجنا في بيتك. بنحب نشوف مساحاتكم.",
+          "ig-action": "@megafurniturehome ←",
+          "form-h2": "ابعت رسالة",
+          "form-sub": "اكتب بياناتك وهنرد عليك عن طريق واتساب في خلال ساعتين.",
+          "rooms-h2": "مواقعنا",
+          "rooms-sub": "المصنع والمعارض — زورنا بنفسك.",
+          "map-h2": "مواقعنا على الخريطة",
+          "loc1-name": "المصنع الرئيسي",
+          "loc1-badge": "مصنع",
+          "loc2-name": "Hadayek El Haram Showroom",
+          "loc2-badge": "معرض",
+          "loc3-name": "New Cairo Showroom",
+          "loc3-badge": "معرض",
+          "maptile-open": "افتح في خرائط جوجل ←",
+          "faq-h2": "أسئلة <span>شايعة</span>",
+          "wa-menu-sales": "فريق المبيعات",
+          "wa-menu-web": "الدعم والطلبات (الموقع)",
+          "cart-title": "السلة",
+          "bundle-tag": "طقم",
+          "bundle-includes": "يشمل {n} منتجات",
+        },
+        en: {
+          "nav-home": "Home",
+          "nav-shop": "Shop",
+          "nav-videos": "Videos",
+          "nav-about": "About Us",
+          "nav-reviews": "Reviews",
+          "nav-contact": "Contact",
+          "nav-track": "Track Order",
+          "nav-custom-work": "Custom Work",
+          "nav-shop-cta": "Shop Now",
+          "f-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+          "footer-desc": "Crafting quality furniture for Egyptian homes · Est. 2020 · Experience since 1998.",
+          "cart-empty": "Your cart is empty",
+          "cart-empty-sub": "Find something you love!",
+          "cart-count": "items in your cart",
+          "cart-hint":
+            "Tap the button below to review your cart and place an order.",
+          "cart-view": "View Cart & Order →",
+          "page-tag": "Get in Touch",
+          "page-h1": "We're Here to <span>Help</span>",
+          "page-desc":
+            "Whether you're ordering, tracking a delivery, asking about warranty, or need design advice — our team responds fast.",
+          "wa-h3": "WhatsApp",
+          "wa-desc":
+            "Fastest response. Chat with our team directly for orders, inquiries, and support.",
+          "wa-action": "Chat now →",
+          "call-h3": "Call Us",
+          "call-desc":
+            "Speak to a furniture consultant.",
+          "ig-h3": "Instagram DM",
+          "ig-desc":
+            "Send us a DM or tag us in your home setup. We love seeing your spaces.",
+          "ig-action": "@megafurniturehome →",
+          "form-h2": "Send a Message",
+          "form-sub":
+            "Fill in your details and we'll get back to you via WhatsApp within 2 hours.",
+          "rooms-h2": "Our Locations",
+          "rooms-sub": "Factory &amp; showrooms — come see us in person.",
+          "map-h2": "Our Locations on the Map",
+          "loc1-name": "Main Factory",
+          "loc1-badge": "Factory",
+          "loc2-name": "Hadayek El Haram Showroom",
+          "loc2-badge": "Showroom",
+          "loc3-name": "New Cairo Showroom",
+          "loc3-badge": "Showroom",
+          "maptile-open": "Open in Google Maps →",
+          
+          "call-action": "Call now ←",
+          "team-sales-name": "Sales Team",
+          "team-web-name": "Web Support",
+          "team-badge": "Dept",
+          "team-hours": "Everyday: 9am - 9pm",
+          "team-call": "Call",
+          "team-wa": "WhatsApp",
+          "team-dir": "Directions",
+          "cairo-hours": "Everyday: 12pm - 10pm",
+          "hadayek-hours": "Everyday: 12pm - 10pm",
+          
+          "team-sales-name": "Sales Team",
+          "team-web-name": "Web Support",
+          "team-badge": "Dept",
+          "team-hours": "Everyday: 9am - 9pm",
+          "team-call": "Call",
+          "team-wa": "WhatsApp",
+          "team-dir": "Directions",
+          "cairo-hours": "Everyday: 12pm - 10pm",
+          "hadayek-hours": "Everyday: 12pm - 10pm",
+          "faq-h2": "Frequently Asked <span>Questions</span>",
+          "wa-menu-sales": "Sales Team",
+          "wa-menu-web": "Web Support",
+          "cart-title": "Your Cart",
+          "bundle-tag": "BUNDLE",
+          "bundle-includes": "{n} products included",
+        },
+      };
+      function applyLang(lang) {
+        localStorage.setItem("megaLang", lang);
+        document.documentElement.lang = lang === "ar" ? "ar" : "en";
+        document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+        document.querySelectorAll("[data-t]").forEach((el) => {
+          const k = el.getAttribute("data-t");
+          if (TRANS[lang] && TRANS[lang][k] !== undefined)
+            el.innerHTML = TRANS[lang][k];
+        });
+        document.querySelectorAll(".langbtn, #langbtn, #lang-btn").forEach((b) => {
+          b.textContent = lang === "ar" ? "EN" : "عربي";
+          b.setAttribute("data-short", lang === "ar" ? "EN" : "ع");
+        });
+      }
+      function toggleLang() {
+        applyLang(localStorage.getItem("megaLang") === "ar" ? "en" : "ar");
+      }
+      (function () {
+        applyLang(localStorage.getItem("megaLang") || "en");
+      })();
+
+      /* ── SETTINGS FETCH (server-driven defaults for new visitors) ── */
+      (function () {
+        if (!localStorage.getItem("megaLang") || !localStorage.getItem("megaTheme")) {
+          fetch("/api/settings").then(r => r.json()).then(s => {
+            if (!localStorage.getItem("megaLang") && s.defaultLanguage) {
+              applyLang(s.defaultLanguage);
+            }
+            if (!localStorage.getItem("megaTheme") && s.defaultTheme) {
+              document.documentElement.setAttribute("data-theme", s.defaultTheme);
+              localStorage.setItem("megaTheme", s.defaultTheme);
+            }
+          }).catch(() => {});
+        }
+      })();
+      /* ── GENERAL ANNOUNCEMENT ── */
+      (async function () {
+        try {
+          if (sessionStorage.getItem("genAnnDismissed")) return;
+          const r = await fetch(window.location.origin + "/api/announcement");
+          if (!r.ok) return;
+          const ann = await r.json();
+          if (!ann || !ann.active) return;
+          const l = localStorage.getItem("megaLang") || "en";
+          const msg = l === "ar" ? ann.message_ar : ann.message_en;
+          if (!msg) return;
+          let html = msg;
+          if (ann.link) {
+            const lt =
+              l === "ar"
+                ? ann.linkText_ar || ann.linkText_en
+                : ann.linkText_en || ann.linkText_ar;
+            if (lt)
+              html += ` <a href="${ann.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+          }
+          const msgEl = document.getElementById("gen-ann-msg");
+          if (msgEl) msgEl.innerHTML = html;
+          
+          const container = document.getElementById("gen-ann-msg-container");
+          if (container) {
+            let unitHtml = `<span class="ann-item">${html}</span><span class="ann-bullet">&bull;</span>`;
+            let half = unitHtml.repeat(4);
+            container.innerHTML = half + half;
+          }
+          
+          const bar = document.getElementById("gen-ann-bar");
+          bar.style.display = "flex";
+          document.body.classList.add("gen-ann-visible");
+        } catch {}
+      })();
+      function dismissGenAnn() {
+        sessionStorage.setItem("genAnnDismissed", "1");
+        document.getElementById("gen-ann-bar").style.display = "none";
+        document.body.classList.remove("gen-ann-visible");
+      }
+
+      function toggleWaMenu(e) {
+        if (e) e.stopPropagation();
+        const menu = document.getElementById("wa-menu");
+        if (menu) menu.classList.toggle("show");
+      }
+      document.addEventListener("click", () => {
+        const menu = document.getElementById("wa-menu");
+        if (menu) menu.classList.remove("show");
+      });
+      updBadge();
+    </script>
+  </body>
+</html>

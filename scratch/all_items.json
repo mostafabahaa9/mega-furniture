@@ -1,0 +1,2645 @@
+{
+  "lcorner": {
+    "categoryName": "L-Coner (ركنه)",
+    "items": [
+      {
+        "nameEn": "LSHAPE_015",
+        "nameAr": "LSHAPE_015",
+        "sku": "LSHAPE_014",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_014",
+        "nameAr": "LSHAPE_014",
+        "sku": "LSHAPE_014",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_013",
+        "nameAr": "LSHAPE_013",
+        "sku": "LSHAPE_013",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_012",
+        "nameAr": "LSHAPE_012",
+        "sku": "LSHAPE_012",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_001",
+        "nameAr": "LSHAPE_001",
+        "sku": "LSHAPE_001",
+        "dimensions": {
+          "length": 200,
+          "width": 300,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_002",
+        "nameAr": "LSHAPE_002",
+        "sku": "LSHAPE_002",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_003",
+        "nameAr": "LSHAPE_003",
+        "sku": "LSHAPE_003",
+        "dimensions": {
+          "length": 140,
+          "width": 340,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_004",
+        "nameAr": "LSHAPE_004",
+        "sku": "LSHAPE_004",
+        "dimensions": {
+          "length": 200,
+          "width": 300,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_005",
+        "nameAr": "LSHAPE_005",
+        "sku": "LSHAPE_005",
+        "dimensions": {
+          "length": 200,
+          "width": 300,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_007",
+        "nameAr": "LSHAPE_007",
+        "sku": "LSHAPE_007",
+        "dimensions": {
+          "length": 260,
+          "width": 260,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_008",
+        "nameAr": "LSHAPE_008",
+        "sku": "LSHAPE_008",
+        "dimensions": {
+          "length": 200,
+          "width": 340,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_009",
+        "nameAr": "LSHAPE_009",
+        "sku": "LSHAPE_009",
+        "dimensions": {
+          "length": 200,
+          "width": 360,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_006",
+        "nameAr": "LSHAPE_006",
+        "sku": "LSHAPE_006",
+        "dimensions": {
+          "length": 200,
+          "width": 300,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_011",
+        "nameAr": "LSHAPE_011",
+        "sku": "LSHAPE_011",
+        "dimensions": {
+          "length": 200,
+          "width": 320,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LSHAPE_010",
+        "nameAr": "LSHAPE_010",
+        "sku": "LSHAPE_010",
+        "dimensions": {
+          "length": 200,
+          "width": 320,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "bedroom": {
+    "categoryName": "Bedroom (غرف نوم)",
+    "items": [
+      {
+        "nameEn": "Bedroom20",
+        "nameAr": "Bedroom20",
+        "sku": "BEDROOM_020",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom19",
+        "nameAr": "Bedroom19",
+        "sku": "BEDROOM_019",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom18",
+        "nameAr": "Bedroom18",
+        "sku": "BEDROOM_018",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom17",
+        "nameAr": "Bedroom17",
+        "sku": "BEDROOM_017",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom16",
+        "nameAr": "Bedroom16",
+        "sku": "BEDROOM_016",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom15",
+        "nameAr": "Bedroom15",
+        "sku": "BEDROOM_015",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Zeina",
+        "nameAr": "Zeina",
+        "sku": "BEDROOM_014",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom1",
+        "nameAr": "Bedroom1",
+        "sku": "BEDROOM_001",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "depth": null,
+              "width": 160,
+              "height": 195,
+              "length": 120,
+              "nameAr": "السرير",
+              "nameEn": "Bed"
+            },
+            {
+              "depth": 60,
+              "width": 260,
+              "height": 230,
+              "length": null,
+              "nameAr": "الدولاب",
+              "nameEn": "Wardrobe"
+            },
+            {
+              "depth": null,
+              "width": 50,
+              "height": 40,
+              "length": null,
+              "nameAr": "كومود",
+              "nameEn": "Nightstand"
+            },
+            {
+              "depth": null,
+              "width": 130,
+              "height": null,
+              "length": null,
+              "nameAr": "تسريحه",
+              "nameEn": "Dressing table"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "Bedroom2",
+        "nameAr": "Bedroom2",
+        "sku": "BEDROOM_002",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "depth": null,
+              "width": 160,
+              "height": 195,
+              "length": 120,
+              "nameAr": "السرير",
+              "nameEn": "Bed"
+            },
+            {
+              "depth": 60,
+              "width": 260,
+              "height": 260,
+              "length": null,
+              "nameAr": "الدولاب",
+              "nameEn": "Wardrobe"
+            },
+            {
+              "depth": null,
+              "width": 50,
+              "height": 40,
+              "length": null,
+              "nameAr": "الكومود",
+              "nameEn": "Nighstand"
+            },
+            {
+              "depth": null,
+              "width": null,
+              "height": null,
+              "length": 130,
+              "nameAr": "تسريحه",
+              "nameEn": "Dressing Table"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "Bedroom3",
+        "nameAr": "Bedroom3",
+        "sku": "BEDROOM_003",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom4",
+        "nameAr": "Bedroom4",
+        "sku": "BEDROOM_004",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom6",
+        "nameAr": "Bedroom6",
+        "sku": "BEDROOM_006",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom7",
+        "nameAr": "Bedroom7",
+        "sku": "BEDROOM_007",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom8",
+        "nameAr": "Bedroom8",
+        "sku": "BEDROOM_008",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom9",
+        "nameAr": "Bedroom9",
+        "sku": "BEDROOM_009",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom10",
+        "nameAr": "Bedroom10",
+        "sku": "BEDROOM_010",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom11",
+        "nameAr": "Bedroom11",
+        "sku": "BEDROOM_011",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom12",
+        "nameAr": "Bedroom12",
+        "sku": "BEDROOM_012",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bedroom13",
+        "nameAr": "Bedroom13",
+        "sku": "BEDROOM_013",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "uncategorized": {
+    "categoryName": "uncategorized",
+    "items": [
+      {
+        "nameEn": "Bedroom20",
+        "nameAr": "Bedroom20",
+        "sku": "BEDROOM_020",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": ",",
+        "nameAr": ",",
+        "sku": "",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": ".",
+        "nameAr": ".",
+        "sku": "",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "bedroom set 18",
+        "nameAr": "bedroom set 18",
+        "sku": "",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "office": {
+    "categoryName": "Office (مكاتب)",
+    "items": [
+      {
+        "nameEn": "Office10",
+        "nameAr": "Office10",
+        "sku": "OFFICE_010",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Office9",
+        "nameAr": "Office9",
+        "sku": "OFFICE_009",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Office8",
+        "nameAr": "Office8",
+        "sku": "OFFICE_008",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Office7",
+        "nameAr": "Office7",
+        "sku": "OFFICE_007",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Office6",
+        "nameAr": "Office6",
+        "sku": "OFFICE_006",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Office5",
+        "nameAr": "Office5",
+        "sku": "OFFICE_005",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "office4",
+        "nameAr": "office4",
+        "sku": "OFFICE_004",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "office3",
+        "nameAr": "office3",
+        "sku": "OFFICE_003",
+        "dimensions": {
+          "length": null,
+          "width": 120,
+          "depth": 60,
+          "height": 75,
+          "pieces": [
+            {
+              "depth": 60,
+              "width": 40,
+              "height": 75,
+              "length": null,
+              "nameAr": "Storage Unit",
+              "nameEn": "Storage Unit"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "Office2",
+        "nameAr": "Office2",
+        "sku": "OFFICE_002",
+        "dimensions": {
+          "length": null,
+          "width": 140,
+          "depth": 60,
+          "height": 75,
+          "pieces": [
+            {
+              "depth": 60,
+              "width": 40,
+              "height": 82,
+              "length": null,
+              "nameAr": "درج",
+              "nameEn": "Drawer"
+            },
+            {
+              "depth": 30,
+              "width": 120,
+              "height": 35,
+              "length": null,
+              "nameAr": "رف جداري",
+              "nameEn": "Wall Shelf"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "Office1",
+        "nameAr": "Office1",
+        "sku": "OFFICE_001",
+        "dimensions": {
+          "length": 75,
+          "width": 120,
+          "depth": 60,
+          "height": null,
+          "pieces": [
+            {
+              "depth": 60,
+              "width": 40,
+              "height": 71,
+              "length": null,
+              "nameAr": "درج",
+              "nameEn": "Drawer"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "tables": {
+    "categoryName": "Tables (طاولات)",
+    "items": [
+      {
+        "nameEn": "table21",
+        "nameAr": "table21",
+        "sku": "TABLE_021",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table20",
+        "nameAr": "table20",
+        "sku": "TABLE_020",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table19",
+        "nameAr": "table19",
+        "sku": "TABLE_019",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table18",
+        "nameAr": "table18",
+        "sku": "TABLE_018",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table17",
+        "nameAr": "table17",
+        "sku": "TABLE_017",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table16",
+        "nameAr": "table16",
+        "sku": "TABLE_016",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table15",
+        "nameAr": "table15",
+        "sku": "TABLE_015",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table14",
+        "nameAr": "table14",
+        "sku": "TABLE_014",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table13",
+        "nameAr": "table13",
+        "sku": "TABLE_013",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table12",
+        "nameAr": "table12",
+        "sku": "TABLE_012",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table11",
+        "nameAr": "table11",
+        "sku": "TABLE_011",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table10",
+        "nameAr": "table10",
+        "sku": "TABLE_010",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table9",
+        "nameAr": "table9",
+        "sku": "TABLE_009",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table8",
+        "nameAr": "table8",
+        "sku": "TABLE_008",
+        "dimensions": {
+          "length": 45,
+          "width": 90,
+          "depth": null,
+          "height": 60,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table7",
+        "nameAr": "table7",
+        "sku": "TABLE_007",
+        "dimensions": {
+          "length": 60,
+          "width": 70,
+          "depth": null,
+          "height": 100,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table6",
+        "nameAr": "table6",
+        "sku": "TABLE_006",
+        "dimensions": {
+          "length": 80,
+          "width": 80,
+          "depth": null,
+          "height": 80,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table5",
+        "nameAr": "table5",
+        "sku": "TABLE_005",
+        "dimensions": {
+          "length": 60,
+          "width": 60,
+          "depth": null,
+          "height": 60,
+          "pieces": [
+            {
+              "width": 60,
+              "height": 60,
+              "length": 45,
+              "nameAr": "Second Table",
+              "nameEn": "Second Table"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "table4",
+        "nameAr": "table4",
+        "sku": "TABLE_004",
+        "dimensions": {
+          "length": 55,
+          "width": 60,
+          "depth": null,
+          "height": 100,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table3",
+        "nameAr": "table3",
+        "sku": "TABLE_003",
+        "dimensions": {
+          "length": 90,
+          "width": 60,
+          "depth": null,
+          "height": 50,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table2",
+        "nameAr": "table2",
+        "sku": "TABLE_002",
+        "dimensions": {
+          "length": 50,
+          "width": 60,
+          "depth": null,
+          "height": 100,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "table1",
+        "nameAr": "table1",
+        "sku": "TABLE_001",
+        "dimensions": {
+          "length": 50,
+          "width": 60,
+          "depth": null,
+          "height": 100,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "living-room": {
+    "categoryName": "Living Room (غرف معيشة)",
+    "items": [
+      {
+        "nameEn": "LIVING_025",
+        "nameAr": "LIVING_025",
+        "sku": "LIVING_025",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_024",
+        "nameAr": "LIVING_024",
+        "sku": "LIVING_024",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_023",
+        "nameAr": "LIVING_023",
+        "sku": "LIVING_023",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_022",
+        "nameAr": "LIVING_022",
+        "sku": "LIVING_022",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_021",
+        "nameAr": "LIVING_021",
+        "sku": "LIVING_021",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_020",
+        "nameAr": "LIVING_020",
+        "sku": "LIVING_020",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_019",
+        "nameAr": "LIVING_019",
+        "sku": "LIVING_019",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_018",
+        "nameAr": "LIVING_018",
+        "sku": "LIVING_018",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_017",
+        "nameAr": "LIVING_017",
+        "sku": "LIVING_017",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Biance",
+        "nameAr": "Biance",
+        "sku": "LIVING_016",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Lara",
+        "nameAr": "Lara",
+        "sku": "LIVING_015",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Alex",
+        "nameAr": "Alex",
+        "sku": "LIVING_014",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Swan",
+        "nameAr": "Swan",
+        "sku": "LIVING_013",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_012",
+        "nameAr": "LIVING_012",
+        "sku": "LIVING_012",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_011",
+        "nameAr": "LIVING_011",
+        "sku": "LIVING_011",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_010",
+        "nameAr": "LIVING_010",
+        "sku": "LIVING_010",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_009",
+        "nameAr": "LIVING_009",
+        "sku": "LIVING_009",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "width": 220,
+              "height": 90,
+              "length": 55,
+              "nameAr": "Three Seater Sofa",
+              "nameEn": "كنبه ثلاثيه"
+            },
+            {
+              "width": 180,
+              "height": 90,
+              "length": 55,
+              "nameAr": "Two Seater Sofa",
+              "nameEn": "كنبه ثنائيه"
+            },
+            {
+              "width": 80,
+              "height": 90,
+              "length": 55,
+              "nameAr": "Armchair",
+              "nameEn": "فوتيه"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "LIVING_001",
+        "nameAr": "LIVING_001",
+        "sku": "LIVING_001",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "width": 180,
+              "height": 80,
+              "length": 80,
+              "nameAr": "الكنبه ثنائيه",
+              "nameEn": "Two Seater Sofa"
+            },
+            {
+              "width": 120,
+              "height": 40,
+              "length": 50,
+              "nameAr": "بانكت",
+              "nameEn": "Bench"
+            },
+            {
+              "width": 210,
+              "height": 80,
+              "length": 80,
+              "nameAr": "كنبه ثلاثيه",
+              "nameEn": "Three Seater Sofa"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "LIVING_002",
+        "nameAr": "LIVING_002",
+        "sku": "LIVING_002",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "width": 240,
+              "height": 90,
+              "length": 80,
+              "nameAr": "كنبه ثلاثيه",
+              "nameEn": "Three Seater Sofa"
+            },
+            {
+              "width": 200,
+              "height": 90,
+              "length": 80,
+              "nameAr": "كنبه ثنائيه",
+              "nameEn": "Two Seater Sofa"
+            },
+            {
+              "width": 80,
+              "height": 90,
+              "length": 80,
+              "nameAr": "فوتيه",
+              "nameEn": "Arm Chair"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "LIVING_004",
+        "nameAr": "LIVING_004",
+        "sku": "LIVING_004",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "width": 210,
+              "height": 76,
+              "length": 73,
+              "nameAr": "كنبه ثلاثيه",
+              "nameEn": "Three Seater Sofa"
+            },
+            {
+              "width": 150,
+              "height": 72,
+              "length": 65,
+              "nameAr": "كنبه ثنائيه",
+              "nameEn": "Two Seater Sofa"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "LIVING_005",
+        "nameAr": "LIVING_005",
+        "sku": "LIVING_005",
+        "dimensions": {
+          "length": 90,
+          "width": 290,
+          "depth": null,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_008",
+        "nameAr": "LIVING_008",
+        "sku": "LIVING_008",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_006",
+        "nameAr": "LIVING_006",
+        "sku": "LIVING_006",
+        "dimensions": {
+          "length": 85,
+          "width": 260,
+          "depth": null,
+          "height": 85,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "LIVING_007",
+        "nameAr": "LIVING_007",
+        "sku": "LIVING_007",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "width": 210,
+              "height": 90,
+              "length": 90,
+              "nameAr": "كنبه ثلاثيه",
+              "nameEn": "Three Seater Sofa"
+            },
+            {
+              "width": 180,
+              "height": 90,
+              "length": 90,
+              "nameAr": "كنبه ثنائيه",
+              "nameEn": "Two Seater Sofa"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "LIVING_003",
+        "nameAr": "LIVING_003",
+        "sku": "LIVING_003",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "width": 240,
+              "height": 90,
+              "length": 85,
+              "nameAr": "كنبه ثلاثيه",
+              "nameEn": "Three Seater Sofa"
+            },
+            {
+              "width": 190,
+              "height": 90,
+              "length": 85,
+              "nameAr": "كنبه ثنائيه",
+              "nameEn": "Two Seater Sofa"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "LIVING_012",
+        "nameAr": "LIVING_012",
+        "sku": "LIVING_012",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "width": 220,
+              "height": 90,
+              "length": 85,
+              "nameAr": "كنبه ثلاثيه",
+              "nameEn": "Three Seater Sofa"
+            },
+            {
+              "width": 180,
+              "height": 90,
+              "length": 85,
+              "nameAr": "كنبه ثنائيه",
+              "nameEn": "Two Seater Sofa"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "kids/teens-room": {
+    "categoryName": "kids/teens room (غرف أطفال و الشباب)",
+    "items": [
+      {
+        "nameEn": "Kroom1",
+        "nameAr": "Kroom1",
+        "sku": "KROOM_001",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom2",
+        "nameAr": "Kroom2",
+        "sku": "KROOM_002",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom3",
+        "nameAr": "Kroom3",
+        "sku": "KROOM_003",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom4",
+        "nameAr": "Kroom4",
+        "sku": "KROOM_004",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom5",
+        "nameAr": "Kroom5",
+        "sku": "KROOM_005",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom6",
+        "nameAr": "Kroom6",
+        "sku": "KROOM_006",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom11",
+        "nameAr": "Kroom11",
+        "sku": "KROOM_011",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom10",
+        "nameAr": "Kroom10",
+        "sku": "KROOM_010",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom9",
+        "nameAr": "Kroom9",
+        "sku": "KROOM_009",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom8",
+        "nameAr": "Kroom8",
+        "sku": "KROOM_008",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Kroom7",
+        "nameAr": "Kroom7",
+        "sku": "KROOM_007",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "matters": {
+    "categoryName": "Mattresses (مراتب)",
+    "items": [
+      {
+        "nameEn": "Mattresses4",
+        "nameAr": "Mattresses4",
+        "sku": "MATTRESSES_004",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Mattresses3",
+        "nameAr": "Mattresses3",
+        "sku": "MATTRESSES_003",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Mattresses2",
+        "nameAr": "Mattresses2",
+        "sku": "MATTRESSES2",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Mattresses1",
+        "nameAr": "Mattresses1",
+        "sku": "MATTRESSES_001",
+        "dimensions": {
+          "length": 195,
+          "width": 100,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "buffet": {
+    "categoryName": "buffet (بوفيه)",
+    "items": [
+      {
+        "nameEn": "Buffet10",
+        "nameAr": "Buffet10",
+        "sku": "BUFFET_010",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet9",
+        "nameAr": "Buffet9",
+        "sku": "BUFFET_009",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet8",
+        "nameAr": "Buffet8",
+        "sku": "BUFFET_008",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet7",
+        "nameAr": "Buffet67",
+        "sku": "BUFFET_007",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet2",
+        "nameAr": "Buffet2",
+        "sku": "BUFFET_002",
+        "dimensions": {
+          "length": 90,
+          "width": 200,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet1",
+        "nameAr": "Buffet1",
+        "sku": "BUFFET_001",
+        "dimensions": {
+          "length": 90,
+          "width": 160,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet3",
+        "nameAr": "Buffet3",
+        "sku": "BUFFET_003",
+        "dimensions": {
+          "length": 85,
+          "width": 200,
+          "depth": null,
+          "height": 50,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet4",
+        "nameAr": "Buffet4",
+        "sku": "BUFFET_004",
+        "dimensions": {
+          "length": null,
+          "width": 180,
+          "depth": 40,
+          "height": 90,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet5",
+        "nameAr": "Buffet5",
+        "sku": "BUFFET_005",
+        "dimensions": {
+          "length": 90,
+          "width": 180,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Buffet6",
+        "nameAr": "Buffet6",
+        "sku": "BUFFET_006",
+        "dimensions": {
+          "length": null,
+          "width": 200,
+          "depth": 45,
+          "height": 90,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "shoe-cabinet": {
+    "categoryName": "Shoe Cabinet (خزانة أحذية)",
+    "items": [
+      {
+        "nameEn": "SCabinet9",
+        "nameAr": "SCabinet9",
+        "sku": "SCABINET_009",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet8",
+        "nameAr": "SCabinet8",
+        "sku": "SCABINET_008",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet7",
+        "nameAr": "SCabinet7",
+        "sku": "SCABINET_007",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet6",
+        "nameAr": "SCabinet6",
+        "sku": "SCABINET_006",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet5",
+        "nameAr": "SCabinet5",
+        "sku": "SCABINET_005",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet4",
+        "nameAr": "SCabinet4",
+        "sku": "SCABINET_004",
+        "dimensions": {
+          "length": null,
+          "width": 100,
+          "depth": 35,
+          "height": 135,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet3",
+        "nameAr": "SCabinet3",
+        "sku": "SCABINET_003",
+        "dimensions": {
+          "length": null,
+          "width": 150,
+          "depth": 40,
+          "height": 130,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet3",
+        "nameAr": "SCabinet3",
+        "sku": "SCABINET_003",
+        "dimensions": {
+          "length": null,
+          "width": 80,
+          "depth": 24,
+          "height": 120,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet2",
+        "nameAr": "SCabinet2",
+        "sku": "SCABINET_002",
+        "dimensions": {
+          "length": null,
+          "width": 65,
+          "depth": 24,
+          "height": 110,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SCabinet1",
+        "nameAr": "SCabinet1",
+        "sku": "SCABINET_001",
+        "dimensions": {
+          "length": null,
+          "width": 124,
+          "depth": 24,
+          "height": 105,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "display-cabinet": {
+    "categoryName": "Display Cabinet (النيش)",
+    "items": [
+      {
+        "nameEn": "Dcabinet1",
+        "nameAr": "Dcabinet1",
+        "sku": "DCABINET_001",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "dressing": {
+    "categoryName": "Dressing (دريسنج)",
+    "items": [
+      {
+        "nameEn": "Dressing3",
+        "nameAr": "Dressing3",
+        "sku": "DRESSING_003",
+        "dimensions": {
+          "length": null,
+          "width": 240,
+          "depth": 60,
+          "height": 240,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Dressing2",
+        "nameAr": "Dressing2",
+        "sku": "DRESSING_002",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "depth": 60,
+              "width": 120,
+              "height": 240,
+              "length": null,
+              "nameAr": "Long Arm",
+              "nameEn": "Long Arm"
+            },
+            {
+              "depth": 60,
+              "width": 220,
+              "height": 240,
+              "length": null,
+              "nameAr": "Short Arm",
+              "nameEn": "Short Arm"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "Dressing1",
+        "nameAr": "Dressing1",
+        "sku": "DRESSING_001",
+        "dimensions": {
+          "length": null,
+          "width": 240,
+          "depth": 60,
+          "height": 240,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "beds": {
+    "categoryName": "Beds (سراير)",
+    "items": [
+      {
+        "nameEn": "Bed1",
+        "nameAr": "Bed1",
+        "sku": "BED_001",
+        "dimensions": {
+          "length": 208,
+          "width": 160,
+          "depth": null,
+          "height": 127,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bed2",
+        "nameAr": "Bed2",
+        "sku": "BED_002",
+        "dimensions": {
+          "length": 210,
+          "width": 150,
+          "depth": null,
+          "height": 120,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bed3",
+        "nameAr": "Bed3",
+        "sku": "BED_003",
+        "dimensions": {
+          "length": 220,
+          "width": 200,
+          "depth": null,
+          "height": 120,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bed4",
+        "nameAr": "Bed4",
+        "sku": "BED_004",
+        "dimensions": {
+          "length": 200,
+          "width": 180,
+          "depth": null,
+          "height": 120,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bed6",
+        "nameAr": "Bed6",
+        "sku": "BED_006",
+        "dimensions": {
+          "length": 200,
+          "width": 160,
+          "depth": null,
+          "height": 135,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bed7",
+        "nameAr": "Bed7",
+        "sku": "BED_007",
+        "dimensions": {
+          "length": 200,
+          "width": 100,
+          "depth": null,
+          "height": 135,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Bed5",
+        "nameAr": "Bed5",
+        "sku": "BED_005",
+        "dimensions": {
+          "length": 200,
+          "width": 120,
+          "depth": null,
+          "height": 120,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "chair": {
+    "categoryName": "Chair (كرسي)",
+    "items": [
+      {
+        "nameEn": "chair7",
+        "nameAr": "chair7",
+        "sku": "CHAIR_007",
+        "dimensions": {
+          "length": 82,
+          "width": 78,
+          "depth": null,
+          "height": 80,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair17",
+        "nameAr": "chair17",
+        "sku": "CHAIR_017",
+        "dimensions": {
+          "length": 78,
+          "width": 49,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair16",
+        "nameAr": "chair16",
+        "sku": "CHAIR_016",
+        "dimensions": {
+          "length": 78,
+          "width": 49,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair15",
+        "nameAr": "chair15",
+        "sku": "CHAIR_015",
+        "dimensions": {
+          "length": 78,
+          "width": 49,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair14",
+        "nameAr": "chair14",
+        "sku": "CHAIR_014",
+        "dimensions": {
+          "length": 78,
+          "width": 49,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair13",
+        "nameAr": "chair13",
+        "sku": "CHAIR_013",
+        "dimensions": {
+          "length": 78,
+          "width": 49,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair12",
+        "nameAr": "chair12",
+        "sku": "CHAIR_012",
+        "dimensions": {
+          "length": 78,
+          "width": 49,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair11",
+        "nameAr": "chair11",
+        "sku": "CHAIR_011",
+        "dimensions": {
+          "length": 78,
+          "width": 49,
+          "depth": null,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair10",
+        "nameAr": "chair10",
+        "sku": "CHAIR_010",
+        "dimensions": {
+          "length": 78,
+          "width": 72,
+          "depth": null,
+          "height": 82,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair9",
+        "nameAr": "chair9",
+        "sku": "CHAIR_009",
+        "dimensions": {
+          "length": 82,
+          "width": 80,
+          "depth": null,
+          "height": 85,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair8",
+        "nameAr": "chair8",
+        "sku": "CHAIR_008",
+        "dimensions": {
+          "length": 80,
+          "width": 85,
+          "depth": null,
+          "height": 78,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair6",
+        "nameAr": "chair6",
+        "sku": "CHAIR_006",
+        "dimensions": {
+          "length": 82,
+          "width": 76,
+          "depth": null,
+          "height": 78,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair5",
+        "nameAr": "chair5",
+        "sku": "CHAIR_005",
+        "dimensions": {
+          "length": 80,
+          "width": 78,
+          "depth": null,
+          "height": 82,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair 4",
+        "nameAr": "chair 4",
+        "sku": "CHAIR_004",
+        "dimensions": {
+          "length": 86,
+          "width": 82,
+          "depth": null,
+          "height": 98,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair 3",
+        "nameAr": "chair 3",
+        "sku": "CHAIR_003",
+        "dimensions": {
+          "length": 80,
+          "width": 82,
+          "depth": null,
+          "height": 74,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "chair 2",
+        "nameAr": "chair 2",
+        "sku": "CHAIR_002",
+        "dimensions": {
+          "length": 84,
+          "width": 88,
+          "depth": null,
+          "height": 74,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "Chair 1",
+        "nameAr": "Chair 1",
+        "sku": "CHAIR_001",
+        "dimensions": {
+          "length": 82,
+          "width": 85,
+          "depth": null,
+          "height": 72,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "dining-room": {
+    "categoryName": "Dining Room (غرف سفرة)",
+    "items": [
+      {
+        "nameEn": "Dinning1",
+        "nameAr": "Dinning1",
+        "sku": "DINNING_001",
+        "dimensions": {
+          "length": 189,
+          "width": 90,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "depth": null,
+              "width": 100,
+              "height": 45,
+              "length": 75,
+              "nameAr": "البوفيه",
+              "nameEn": "Buffet"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "dinning2",
+        "nameAr": "dinning2",
+        "sku": "DINNING_002",
+        "dimensions": {
+          "length": 180,
+          "width": 85,
+          "depth": null,
+          "height": null,
+          "pieces": [
+            {
+              "width": 200,
+              "height": 45,
+              "length": 90,
+              "nameAr": "بوفيه",
+              "nameEn": "Buffet"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "dinning3",
+        "nameAr": "dinning3",
+        "sku": "DINNING_003",
+        "dimensions": {
+          "length": 220,
+          "width": 110,
+          "depth": null,
+          "height": 75,
+          "pieces": [
+            {
+              "depth": null,
+              "width": 200,
+              "height": 80,
+              "length": null,
+              "nameAr": "البوفيه",
+              "nameEn": "Buffet"
+            }
+          ]
+        }
+      },
+      {
+        "nameEn": "dinning16",
+        "nameAr": "dinning16",
+        "sku": "DINNING_016",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning15",
+        "nameAr": "dinning15",
+        "sku": "DINNING_015",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning 14",
+        "nameAr": "dinning 14",
+        "sku": "DINNING_14",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning 13",
+        "nameAr": "dinning 13",
+        "sku": "DINNING_013",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning 12",
+        "nameAr": "dinning 12",
+        "sku": "DINNING_012",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning 11",
+        "nameAr": "dinning 11",
+        "sku": "DINNING_011",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning 10",
+        "nameAr": "dinning 10",
+        "sku": "DINNING_010",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning room 9",
+        "nameAr": "dinning room 9",
+        "sku": "DINNING_009",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning room 8",
+        "nameAr": "dinning room 8",
+        "sku": "DINNING_008",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning room 6",
+        "nameAr": "dinning room 6",
+        "sku": "DINNING_006",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning room 3",
+        "nameAr": "dinning room 3",
+        "sku": "DINNING_003",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "dinning room 2",
+        "nameAr": "dinning room 2",
+        "sku": "DINNING_002",
+        "dimensions": {
+          "length": null,
+          "width": null,
+          "depth": null,
+          "height": null,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "tv-unit": {
+    "categoryName": "TV Units (وحدات تلفزيون)",
+    "items": [
+      {
+        "nameEn": "un11",
+        "nameAr": "un11",
+        "sku": "UNIT_011",
+        "dimensions": {
+          "length": null,
+          "width": 200,
+          "depth": 40,
+          "height": 50,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un12",
+        "nameAr": "un12",
+        "sku": "UNIT_012",
+        "dimensions": {
+          "length": 55,
+          "width": 150,
+          "depth": 40,
+          "height": null,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un10",
+        "nameAr": "un10",
+        "sku": "UNIT_010",
+        "dimensions": {
+          "length": null,
+          "width": 180,
+          "depth": 35,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un9",
+        "nameAr": "un9",
+        "sku": "UNIT_009",
+        "dimensions": {
+          "length": null,
+          "width": 180,
+          "depth": 30,
+          "height": 45,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un8",
+        "nameAr": "un8",
+        "sku": "UNIT_008",
+        "dimensions": {
+          "length": null,
+          "width": 200,
+          "depth": 40,
+          "height": 50,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un7",
+        "nameAr": "un7",
+        "sku": "UNIT_007",
+        "dimensions": {
+          "length": null,
+          "width": 200,
+          "depth": 40,
+          "height": 40,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un6",
+        "nameAr": "un6",
+        "sku": "UNIT_006",
+        "dimensions": {
+          "length": null,
+          "width": 240,
+          "depth": 40,
+          "height": 40,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un5",
+        "nameAr": "un5",
+        "sku": "UNIT_005",
+        "dimensions": {
+          "length": null,
+          "width": 140,
+          "depth": 40,
+          "height": 40,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un4",
+        "nameAr": "un4",
+        "sku": "UNIT_004",
+        "dimensions": {
+          "length": null,
+          "width": 180,
+          "depth": 40,
+          "height": 40,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un3",
+        "nameAr": "un3",
+        "sku": "UNIT_003",
+        "dimensions": {
+          "length": null,
+          "width": 180,
+          "depth": 40,
+          "height": 40,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un2",
+        "nameAr": "un2",
+        "sku": "UNIT_002",
+        "dimensions": {
+          "length": null,
+          "width": 260,
+          "depth": 40,
+          "height": 40,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "un1",
+        "nameAr": "un1",
+        "sku": "UNIT_001",
+        "dimensions": {
+          "length": null,
+          "width": 160,
+          "depth": 30,
+          "height": 50,
+          "pieces": []
+        }
+      }
+    ]
+  },
+  "sofa": {
+    "categoryName": "Sofa (كنب)",
+    "items": [
+      {
+        "nameEn": "SOFA_001",
+        "nameAr": "SOFA_001",
+        "sku": "SOFA_001",
+        "dimensions": {
+          "length": null,
+          "width": 220,
+          "depth": 90,
+          "height": 75,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SOFA_002",
+        "nameAr": "SOFA_002",
+        "sku": "SOFA_002",
+        "dimensions": {
+          "length": null,
+          "width": 210,
+          "depth": 90,
+          "height": 75,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SOFA_003",
+        "nameAr": "SOFA_003",
+        "sku": "SOFA_003",
+        "dimensions": {
+          "length": null,
+          "width": 220,
+          "depth": 90,
+          "height": 55,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SOFA_004",
+        "nameAr": "SOFA_004",
+        "sku": "SOFA_004",
+        "dimensions": {
+          "length": null,
+          "width": 220,
+          "depth": 90,
+          "height": 55,
+          "pieces": []
+        }
+      },
+      {
+        "nameEn": "SOFA_005",
+        "nameAr": "SOFA_005",
+        "sku": "SOFA_005",
+        "dimensions": {
+          "length": null,
+          "width": 220,
+          "depth": 90,
+          "height": 55,
+          "pieces": []
+        }
+      }
+    ]
+  }
+}

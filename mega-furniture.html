@@ -1,0 +1,5351 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mega Furniture | الرئيسية</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .css-x {
+        position: relative;
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+      }
+      .css-x::before,
+      .css-x::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        top: 50%;
+        left: 0;
+      }
+      .css-x::before { transform: translateY(-50%) rotate(45deg); }
+      .css-x::after  { transform: translateY(-50%) rotate(-45deg); }
+
+      :root {
+        --o: #e8961e;
+        --od: #c07a18;
+        --ol: #f0a830;
+        --bg: #f7f3ec;
+        --s: #fefcf8;
+        --s2: #ede4d6;
+        --s3: #dfd2bf;
+        --t: #1a1612;
+        --tm: #6b5d4f;
+        --b: rgba(26, 22, 18, 0.08);
+        --bh: rgba(232, 150, 30, 0.28);
+        --nb: rgba(247, 243, 236, 0.95);
+        --sh: 0 8px 40px rgba(26, 22, 18, 0.1);
+        --gc: rgba(26, 22, 18, 0.02);
+        --font-head: "Fraunces", serif;
+        --font-body: "Outfit", sans-serif;
+      }
+      [data-theme="dark"] {
+        --o: #f5a623;
+        --od: #b8722a;
+        --ol: #f7b84a;
+        --bg: #0a0a0a;
+        --s: #161616;
+        --s2: #212121;
+        --s3: #2e2e2e;
+        --t: #f5f4f0;
+        --tm: #908c84;
+        --b: rgba(255, 255, 255, 0.07);
+        --bh: rgba(245, 166, 35, 0.4);
+        --nb: rgba(10, 10, 10, 0.93);
+        --sh: 0 8px 40px rgba(0, 0, 0, 0.55);
+        --gc: rgba(255, 255, 255, 0.02);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      body {
+        background: var(--bg);
+        color: var(--t);
+        font-family: var(--font-body);
+        overflow-x: hidden;
+        max-width: 100vw;
+        box-sizing: border-box;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 9997;
+        pointer-events: none;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 180px;
+      }
+      .bf {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+      .pw {
+        padding-top: 0;
+      }
+      /* HERO SLIDER — full-bleed edge-to-edge */
+      .hero-slider {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: var(--s);
+        padding: 0;
+        border-radius: 0;
+        display: block;
+      }
+      .hs-track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform;
+      }
+      .hs-slide {
+        flex-shrink: 0;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        cursor: pointer;
+      }
+      .hs-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+      /* Subtle dark overlay at bottom for depth */
+      .hs-slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 60%,
+          rgba(0, 0, 0, 0.18) 100%
+        );
+        pointer-events: none;
+      }
+
+      /* ARROWS */
+      .hs-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--s);
+        border: 1px solid var(--b);
+        color: var(--t);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        box-shadow: var(--sh);
+      }
+      .hero-slider:hover .hs-arrow {
+        opacity: 0.85;
+        visibility: visible;
+      }
+      .hs-prev {
+        left: 24px;
+      }
+      .hs-next {
+        right: 24px;
+      }
+      .hs-arrow:hover {
+        opacity: 1 !important;
+        background: var(--s);
+        color: var(--o);
+        transform: translateY(-50%) scale(1.08);
+      }
+      .hs-arrow:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+
+      /* DOTS */
+      .hs-dots {
+        display: none !important;
+      }
+      .hs-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.3s ease;
+      }
+      .hs-dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: #fff;
+      }
+
+      /* MOBILE */
+      @media (max-width: 768px) {
+        .hero-slider {
+          width: calc(100% - 24px);
+          margin: 12px auto 0;
+          border-radius: 8px;
+          aspect-ratio: 16 / 9;
+          max-height: none;
+        }
+        .hs-arrow {
+          display: flex;
+          opacity: 0.9;
+          visibility: visible;
+          width: 36px;
+          height: 36px;
+        }
+        .hs-prev {
+          left: 12px;
+        }
+        .hs-next {
+          right: 12px;
+        }
+        .hs-arrow svg {
+          width: 16px;
+          height: 16px;
+        }
+        .hs-dots {
+          bottom: 12px;
+        }
+      }
+      
+      nav.nav-scrolled {
+        padding: 8px 48px;
+        box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
+      }
+      .nl {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .nlimg {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .nb {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 20px;
+        color: var(--t);
+        line-height: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        letter-spacing: 0.08em;
+      }
+      .nb .nb-fur {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        font-weight: 400;
+        color: var(--o);
+        font-family: var(--font-body);
+        font-style: normal;
+        text-transform: uppercase;
+      }
+      .nlinks {
+        display: flex;
+        gap: 4px;
+        list-style: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .nlink {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.2s;
+        font-family: var(--font-body);
+      }
+      .nlink:hover {
+        color: var(--t);
+        background: var(--s);
+      }
+      .nlink.active {
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.1);
+      }
+      .nr {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tt {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        flex-shrink: 0;
+        font-size: 20px;
+        line-height: 1;
+      }
+      .tt:hover {
+        background: var(--s3);
+        transform: scale(1.08);
+      }
+      .t-sun {
+        display: none;
+      }
+      .t-sun svg {
+        stroke: var(--o);
+      }
+      .t-moon {
+        display: block;
+      }
+      [data-theme="dark"] .t-sun {
+        display: block;
+      }
+      [data-theme="dark"] .t-moon {
+        display: none;
+      }
+      .langbtn {
+        background: transparent;
+        border: 1px solid var(--b);
+        color: var(--tm);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+      }
+      .langbtn:hover {
+        border-color: var(--o);
+        color: var(--o);
+      }
+      .cb {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        transition: background 0.2s;
+        color: var(--t);
+      }
+      .cb:hover {
+        background: var(--s3);
+      }
+      .cbadge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--o);
+        color: #0e0d0b;
+        font-size: 10px;
+        font-weight: 700;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-head);
+        border: 2px solid var(--bg);
+      }
+      .ncta {
+        background: var(--o);
+        color: #0e0d0b;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        cursor: pointer;
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        box-shadow: 0 3px 16px rgba(245, 166, 35, 0.25);
+      }
+      .ncta:hover {
+        background: var(--ol);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 24px rgba(245, 166, 35, 0.38);
+      }
+      .ncta-ghost {
+        background: var(--s2);
+        color: var(--t);
+        border: 1px solid var(--b);
+        padding: 10px 18px;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+      }
+      .ncta-ghost:hover {
+        background: var(--s3);
+      }
+      .hbg {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: var(--s);
+        border: 1px solid var(--o);
+        border-radius: 50%;
+        padding: 0;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        overflow: visible;
+      }
+      .hbg span {
+        display: block;
+        width: 18px;
+        height: 2px;
+        background: var(--o);
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+      .hbg.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hbg.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hbg.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+      .mm {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(75vw, 300px);
+        height: 100dvh;
+        background: var(--bg);
+        z-index: 201;
+        display: flex;
+        flex-direction: column;
+        transform: translateX(110%);
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        border-left: 1px solid var(--b);
+        overflow-y: auto;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .mm.open {
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: all;
+      }
+      .mm-hdr {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 20px;
+        border-bottom: 1px solid var(--b);
+      }
+      .mm-brand {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 22px;
+        color: var(--t);
+        letter-spacing: 0.2em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      .mm-brand-sub {
+        font-size: 10px;
+        letter-spacing: 0.4em;
+        font-weight: 400;
+        color: var(--o);
+        font-family: var(--font-body);
+        text-transform: uppercase;
+        display: block;
+        margin-top: 2px;
+      }
+      .mm-x, #mm-close, button[onclick="closeMM()"] {
+        position: absolute !important;
+        right: 20px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        left: auto !important;
+      }
+      .mm .nlink {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        font-size: 18px;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--b);
+        border-radius: 0;
+        min-height: 56px;
+        color: var(--t);
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .mm .nlink:hover {
+        background: var(--s);
+      }
+      .mm .nlink.active {
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.06);
+      }
+      .mm-ftr {
+        margin-top: auto;
+        padding: 16px 20px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .ov {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .ov.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #cov {
+        z-index: 500;
+      }
+      #mov {
+        z-index: 200;
+      }
+      .cp {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(440px, 100vw);
+        background: var(--s);
+        border-left: 1px solid var(--b);
+        z-index: 501;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+      }
+      .cp.open {
+        transform: translateX(0);
+      }
+      .chdr {
+        padding: 22px;
+        border-bottom: 1px solid var(--b);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .chdr h3 {
+        font-family: var(--font-head);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .chdr h3 span {
+        color: var(--tm);
+        font-weight: 400;
+        font-size: 13px;
+        font-family: var(--font-body);
+      }
+      .cx {
+        background: var(--s2);
+        border: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--t);
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .cx:hover {
+        background: var(--s3);
+      }
+      .clist {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .cemp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        gap: 12px;
+        color: var(--tm);
+        text-align: center;
+        padding: 40px;
+      }
+      .cemp .big {
+        font-size: 60px;
+        opacity: 0.2;
+      }
+      .cir {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--s2);
+        border-radius: 14px;
+        padding: 14px;
+        border: 1px solid var(--b);
+        animation: sr 0.3s ease;
+      }
+      @keyframes sr {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .cii {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: var(--s3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .cii img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cin {
+        flex: 1;
+        min-width: 0;
+      }
+      .cin .nm {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--t);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 3px;
+      }
+      .cin .pr {
+        font-size: 12px;
+        color: var(--o);
+        margin-bottom: 8px;
+      }
+      .ciq {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .ciq button {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--s);
+        border: 1px solid var(--b);
+        color: var(--t);
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .ciq button:hover {
+        background: var(--o);
+        color: #0e0d0b;
+        border-color: var(--o);
+      }
+      .ciq span {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--t);
+        min-width: 18px;
+        text-align: center;
+      }
+      .crm {
+        background: none;
+        border: none;
+        color: var(--tm);
+        cursor: pointer;
+        font-size: 17px;
+        padding: 4px;
+        transition: color 0.2s;
+        flex-shrink: 0;
+      }
+      .crm:hover {
+        color: #ff4757;
+      }
+      .cir.bundle-item {
+        border-left: 2px solid var(--o);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .cir.bundle-item .cir-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .bundle-tag {
+        display: inline-block;
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        background: var(--o);
+        color: #0a0a0a;
+        border-radius: 4px;
+        padding: 2px 6px;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .bundle-item-count {
+        font-size: 11px;
+        color: var(--tm);
+        margin-bottom: 6px;
+      }
+      .bundle-items-list {
+        font-size: 10px;
+        color: var(--tm);
+        line-height: 1.7;
+        padding-left: 4px;
+      }
+      .cftr {
+        padding: 18px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .ctr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      .ctr .lb {
+        color: var(--tm);
+        font-size: 14px;
+      }
+      .ctr .am {
+        font-family: var(--font-head);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--o);
+      }
+      .bf {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .bp {
+        background: var(--t);
+        color: var(--bg);
+        border: none;
+        padding: 14px 36px;
+        border-radius: 999px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bp:hover {
+        background: var(--o);
+        transform: translateY(-2px);
+      }
+      .bg2 {
+        background: transparent;
+        color: var(--t);
+        border: 1px solid var(--b);
+        padding: 14px 36px;
+        border-radius: 999px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          border-color 0.3s,
+          color 0.3s,
+          transform 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bg2:hover {
+        border-color: var(--o);
+        color: var(--o);
+        transform: translateY(-2px);
+      }
+      /* ABOUT */
+      .as {
+        max-width: 960px;
+        margin: 160px auto;
+        padding: 0 48px;
+        text-align: center;
+      }
+      .stag {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--tm);
+        font-weight: 400;
+        margin-bottom: 20px;
+      }
+      .as h2 {
+        font-family: var(--font-head);
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(28px, 4vw, 52px);
+        letter-spacing: -0.01em;
+        margin-bottom: 24px;
+        line-height: 1.1;
+        color: var(--t);
+      }
+      .as h2 span {
+        color: var(--o);
+      }
+      .as p {
+        color: var(--tm);
+        font-size: 16px;
+        line-height: 1.85;
+        margin-bottom: 14px;
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .abadges {
+        display: none;
+      }
+      .avis {
+        display: none;
+      }
+      /* CATEGORIES */
+      .sec {
+        padding: 160px 48px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .stitle {
+        font-family: var(--font-head);
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(26px, 3.5vw, 44px);
+        letter-spacing: -0.01em;
+        margin-bottom: 64px;
+        line-height: 1.1;
+        color: var(--t);
+      }
+      .stitle span {
+        color: var(--t);
+      }
+      .cgrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .ccard {
+        background: var(--s);
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid var(--b);
+        transition:
+          transform 0.5s ease-out,
+          box-shadow 0.5s ease-out;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .ccard:hover {
+        box-shadow: var(--sh);
+        transform: scale(1.02);
+      }
+      .cimg {
+        background: var(--s2);
+        height: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .cimg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease-out;
+      }
+      .ccard:hover .cimg img {
+        transform: scale(1.04);
+      }
+      .cimgico {
+        display: none;
+      }
+      .cimgicon {
+        display: none;
+      }
+      .cimgacc {
+        display: none;
+      }
+      .ctag {
+        display: none;
+      }
+      .cico {
+        display: none;
+      }
+      .cbody {
+        padding: 20px 20px 24px;
+      }
+      .cbody h3 {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 15px;
+        margin-bottom: 4px;
+        letter-spacing: 0.01em;
+        color: var(--t);
+      }
+      .cbody p {
+        color: var(--tm);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      .cprice {
+        margin-top: 8px;
+        color: var(--tm);
+        font-weight: 300;
+        font-size: 13px;
+        letter-spacing: 0.05em;
+      }
+      /* FEATURED PRODUCTS */
+      .fprods {
+        max-width: 1100px;
+        margin: 0 auto 160px;
+        padding: 0 48px;
+      }
+      .fph {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 52px;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      /* SHOWCASE TABS NAVIGATION */
+      .showcase-tabs-nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+        padding: 4px 0;
+      }
+      .showcase-tabs-nav::-webkit-scrollbar {
+        display: none;
+      }
+      .showcase-tab {
+        background: transparent;
+        border: 1px solid var(--b, rgba(0, 0, 0, 0.15));
+        color: var(--tm, #555555);
+        padding: 8px 20px;
+        border-radius: 24px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.25s ease;
+        flex-shrink: 0;
+        font-family: inherit;
+      }
+      .showcase-tab:hover {
+        border-color: var(--t, #111111);
+        color: var(--t, #111111);
+      }
+      .showcase-tab.active {
+        background: var(--t, #111111);
+        color: #ffffff;
+        border-color: var(--t, #111111);
+        font-weight: 600;
+      }
+      .fph h2 {
+        font-family: var(--font-head);
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(22px, 3vw, 36px);
+        letter-spacing: -0.01em;
+        color: var(--t);
+      }
+      .fph h2 span {
+        color: var(--t);
+      }
+      .fpgrid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 24px;
+        padding-bottom: 24px;
+        scrollbar-width: none;
+      }
+      .fpgrid::-webkit-scrollbar {
+        display: none;
+      }
+      .fpgrid .fpc {
+        flex: 0 0 calc(33.333% - 16px);
+        min-width: calc(33.333% - 16px);
+        max-width: calc(33.333% - 16px);
+        scroll-snap-align: start;
+      }
+      .fp-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--nb);
+        border: 1px solid var(--b);
+        color: var(--t);
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 5;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s;
+      }
+      .fprods:hover .fp-nav-btn {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .fp-nav-btn:hover {
+        background: var(--s2);
+        color: var(--o);
+      }
+      .fp-nav-btn.prev {
+        left: -22px;
+      }
+      .fp-nav-btn.next {
+        right: -22px;
+      }
+      html[dir="rtl"] .fp-nav-btn.prev {
+        left: auto;
+        right: -22px;
+      }
+      html[dir="rtl"] .fp-nav-btn.next {
+        right: auto;
+        left: -22px;
+      }
+      @media (max-width: 768px) {
+        .fp-nav-btn { display: none !important; }
+      }
+      .fpc {
+        background: transparent;
+        border: none;
+        overflow: hidden;
+        transition: transform 0.5s ease-out;
+        text-decoration: none;
+        display: block;
+        color: var(--t);
+      }
+      .fpc:hover {
+        transform: scale(1.02);
+      }
+      .fpcimg {
+        aspect-ratio: 3/4;
+        overflow: hidden;
+        position: relative;
+        background: var(--s2);
+        border-radius: 2px;
+      }
+      .fpcimg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s ease-out;
+      }
+      .fpc:hover .fpcimg img {
+        transform: scale(1.04);
+      }
+      .discount-bar-red {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(90deg, #dc2626, #b91c1c);
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 700;
+        text-align: center;
+        padding: 5px 8px;
+        z-index: 4;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+      .fpcimg-ph {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background: var(--s2);
+      }
+      .fpcph-icon {
+        display: none;
+      }
+      .fpctag {
+        display: none;
+      }
+      .fpcb {
+        padding: 16px 2px 0;
+      }
+      .fpcb h3 {
+        font-family: var(--font-head);
+        font-size: 15px;
+        font-weight: 300;
+        margin-bottom: 4px;
+        color: var(--t);
+        letter-spacing: 0.01em;
+      }
+      .fpcb p:not(.pr) {
+        display: none;
+      }
+      .fpcb .pr {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 300;
+        color: var(--tm);
+        letter-spacing: 0.05em;
+      }
+      /* AD */
+      .adbanner {
+        display: none;
+      }
+      /* FOOTER */
+      footer {
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        padding: 80px 48px 48px;
+        transition: background 0.3s;
+        text-align: center;
+      }
+      .fg {
+        display: none;
+      }
+      .f-min {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .f-min-brand {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 18px;
+        letter-spacing: 0.2em;
+        color: var(--t);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .fbr p {
+        color: var(--tm);
+        font-size: 13px;
+        line-height: 1.7;
+        margin-top: 6px;
+      }
+      .fc {
+        display: none;
+      }
+      .fb {
+        max-width: 600px;
+        margin: 32px auto 0;
+        border-top: 1px solid var(--b);
+        padding-top: 24px;
+        color: var(--tm);
+        font-size: 12px;
+        text-align: center;
+        letter-spacing: 0.05em;
+      }
+      .f-min-links {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        list-style: none;
+        margin: 28px 0;
+      }
+      .f-min-links a {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        transition: color 0.4s;
+      }
+      .f-min-links a:hover {
+        color: var(--t);
+      }
+      .f-soc {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin: 20px 0;
+      }
+      .f-soc a {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--tm);
+        text-decoration: none;
+        transition: color 0.4s;
+        border-radius: 50%;
+        border: 1px solid var(--b);
+      }
+      .f-soc a:hover {
+        color: var(--t);
+        border-color: var(--t);
+      }
+      /* FLOATING */
+      .fbtns {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 200;
+      }
+      .fbtn {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid var(--b);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.4s ease-out,
+          background 0.4s,
+          border-color 0.4s;
+        background: var(--s);
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+      }
+      .fbtn:hover {
+        transform: scale(1.08);
+      }
+      .wab {
+        background: #25d366 !important;
+        color: #fff !important;
+        text-decoration: none;
+        border: none !important;
+        width: 46px !important;
+        height: 46px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .wab:hover {
+        background: #20ba5a !important;
+        color: #fff !important;
+      }
+      .topb {
+        background: var(--s);
+        color: var(--t);
+        border: 1px solid var(--b);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.4s,
+          transform 0.4s ease-out;
+        padding: 0;
+        overflow: hidden;
+      }
+      .topb.vis {
+        opacity: 1;
+        pointer-events: all;
+      }
+      /* UTILS */
+      .toast {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        background: var(--bg);
+        border: 1px solid var(--b);
+        border-left: 2px solid var(--o);
+        border-radius: 3px;
+        padding: 12px 18px;
+        font-size: 13px;
+        color: var(--t);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        z-index: 800;
+        display: none;
+        opacity: 0;
+        align-items: center;
+        gap: 10px;
+        transform: translateX(calc(100% + 36px));
+        transition:
+          transform 0.5s ease-out,
+          opacity 0.3s ease-out;
+        min-width: 200px;
+        max-width: 280px;
+      }
+      .toast.show {
+        display: flex;
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .rev {
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+          opacity 0.5s ease-out,
+          transform 0.5s ease-out;
+      }
+      .rev.vis {
+        opacity: 1;
+        transform: none;
+      }
+      /* On mobile, disable rev animation entirely for performance */
+      @media (max-width: 768px) {
+        .rev {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+      }
+
+      @media (max-width: 900px) {
+        
+        .nl {
+          flex: 1 1 auto;
+          min-width: 0;
+          max-width: 50%;
+        }
+        .nr {
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+        .tt,
+        .cb,
+        .hbg {
+          width: 38px;
+          height: 38px;
+          min-width: 38px;
+          flex-shrink: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-size: 16px;
+          border-radius: 50%;
+          background: var(--s2);
+          border: 1px solid var(--b);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--t);
+          transition: all 0.2s ease;
+        }
+        .tt:active,
+        .cb:active,
+        .hbg:active {
+          background: var(--s3);
+          transform: scale(0.95);
+        }
+        .langbtn {
+          width: auto;
+          min-width: auto;
+          height: 38px;
+          padding: 0 14px;
+          font-size: 11px;
+          border-radius: 999px;
+          background: var(--s2);
+          border: 1px solid var(--b);
+          color: var(--t);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          transition: all 0.2s ease;
+        }
+        .langbtn:active {
+          background: var(--s3);
+          transform: scale(0.95);
+        }
+        .nlinks {
+          display: none;
+        }
+        .hbg {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .hbg span {
+          width: 16px;
+          height: 2px;
+          background: var(--t);
+          border-radius: 1px;
+          transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s;
+        }
+        .hbg.open span:nth-child(1) {
+          transform: translateY(6px) rotate(45deg);
+        }
+        .hbg.open span:nth-child(2) {
+          opacity: 0;
+        }
+        .hbg.open span:nth-child(3) {
+          transform: translateY(-6px) rotate(-45deg);
+        }
+        .hi {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .hgallery {
+          height: 260px;
+        }
+        .hdesc {
+          max-width: 100%;
+        }
+        .as {
+          grid-template-columns: 1fr;
+          padding: 0 24px;
+        }
+        .avis {
+          display: none;
+        }
+        .cgrid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .sec {
+          padding: 60px 24px;
+        }
+        .fg {
+          grid-template-columns: 1fr 1fr;
+        }
+        footer {
+          padding: 40px 24px 24px;
+        }
+        .hact {
+          justify-content: center;
+        }
+        .fprods {
+          padding: 0 24px;
+        }
+        .fpgrid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .adbanner {
+          padding: 0 24px;
+        }
+      }
+      @media (max-width: 540px) {
+        .cgrid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .hgallery {
+          height: 200px;
+        }
+      }
+      @media (max-width: 400px) {
+        .langbtn {
+          font-size: 0 !important;
+          padding: 4px 6px;
+          width: 28px;
+          min-width: 28px;
+        }
+        .langbtn::after {
+          content: attr(data-short);
+          font-family: var(--font-body);
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+        }
+      }
+
+      /* ── ROOM SHOWCASE ── */
+      .rs-section {
+        padding: 160px 48px;
+        max-width: 1196px;
+        margin: 0 auto;
+      }
+      .rs-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 48px;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      .rs-cards {
+        display: flex !important;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding: 8px 4px 20px 4px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        direction: ltr !important;
+        scroll-behavior: smooth;
+        height: auto !important;
+        min-height: unset !important;
+      }
+      .rs-cards::-webkit-scrollbar {
+        display: none;
+      }
+      .rs-card-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--s) 0%, var(--bg) 100%);
+      }
+      .rs-card {
+        min-width: 280px;
+        max-width: 280px;
+        height: 440px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+      .rs-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        z-index: 2;
+      }
+      .rs-nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .rs-arrow {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        color: var(--t);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .rs-arrow:hover {
+        background: var(--s3);
+        border-color: var(--o);
+        color: var(--o);
+      }
+      .rs-card-images {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      .rs-card-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 1s ease-in-out, transform 0.7s ease-out;
+        z-index: 0;
+      }
+      .rs-card-img.active {
+        opacity: 1;
+        z-index: 1;
+      }
+      .rs-card:hover .rs-card-img.active {
+        transform: scale(1.04);
+      }
+      .rs-card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.3) 60%,
+          transparent 90%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 20px 16px;
+        transition: background 0.5s ease-out;
+        z-index: 2;
+      }
+      .rs-card:hover .rs-card-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.95) 0%,
+          rgba(0, 0, 0, 0.5) 60%,
+          rgba(0, 0, 0, 0.15) 90%,
+          transparent 100%
+        );
+      }
+      .rs-card-num {
+        font-family: var(--font-body);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 6px;
+      }
+      .rs-card-name {
+        font-family: var(--font-head);
+        font-style: italic;
+        font-size: clamp(15px, 1.4vw, 22px);
+        color: #fff;
+        font-weight: 300;
+        line-height: 1.15;
+        letter-spacing: 0.01em;
+        margin-bottom: 10px;
+      }
+      .rs-card-sep {
+        width: 20px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.35);
+        margin-bottom: 8px;
+        transition: width 0.5s ease-out;
+      }
+      .rs-card:hover .rs-card-sep {
+        width: 36px;
+      }
+      .rs-card-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: rgba(255, 255, 255, 0.55);
+        font-family: var(--font-body);
+        font-size: 10px;
+        font-weight: 300;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: color 0.4s;
+      }
+      .rs-card:hover .rs-card-btn {
+        color: rgba(255, 255, 255, 0.88);
+      }
+      .rs-card-arrow {
+        display: inline-block;
+        font-size: 11px;
+        transition: transform 0.4s ease-out;
+        line-height: 1;
+      }
+      .rs-card:hover .rs-card-arrow {
+        transform: translateX(3px);
+      }
+      .rs-card-subs {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 4px;
+        transition: opacity 0.3s;
+      }
+      .rs-card-sub-link {
+        font-family: var(--font-body);
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        letter-spacing: 0.05em;
+        transition: color 0.2s, padding-left 0.2s, padding-right 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .rs-card-sub-bullet {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .rs-card-sub-link:hover {
+        color: #fff;
+        padding-left: 4px;
+      }
+      [lang="ar"] .rs-card-sub-link:hover {
+        padding-left: 0;
+        padding-right: 4px;
+      }
+      /* ── PHILOSOPHY ── */
+      .philosophy {
+        padding: 140px 48px;
+        background: var(--t);
+        text-align: center;
+      }
+      .philosophy-quote {
+        font-family: var(--font-head);
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(22px, 3.5vw, 44px);
+        color: var(--bg);
+        line-height: 1.35;
+        max-width: 740px;
+        margin: 0 auto 28px;
+        letter-spacing: 0.01em;
+        opacity: 0.9;
+      }
+      .philosophy-attr {
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 11px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.38);
+      }
+      [data-theme="dark"] .philosophy {
+        background: var(--s2);
+      }
+      [data-theme="dark"] .philosophy-quote {
+        color: var(--t);
+      }
+      /* ── MOBILE 768px ── */
+      @media (max-width: 768px) {
+        
+        .ncta {
+          display: none;
+        }
+        .langbtn {
+          padding: 4px 8px;
+          font-size: 11px;
+        }
+        .tt,
+        .cb,
+        .hbg {
+          width: 32px;
+          height: 32px;
+          font-size: 16px;
+        }
+        .rs-section {
+          padding: 80px 20px;
+        }
+        .rs-card-name {
+          font-size: clamp(14px, 3.5vw, 20px);
+        }
+        .rs-card:hover {
+          transform: none;
+        }
+        .rs-card:hover img {
+          transform: none;
+        }
+        .as {
+          margin: 80px auto;
+          padding: 0 20px;
+        }
+        .sec {
+          padding: 80px 20px;
+        }
+        .fprods {
+          padding: 0 20px;
+          margin-bottom: 80px;
+        }
+        .fpgrid {
+          grid-template-columns: 1fr;
+        }
+        footer {
+          padding: 48px 20px 28px;
+        }
+        .philosophy {
+          padding: 80px 24px;
+        }
+        img {
+          max-width: 100%;
+        }
+        .cri-name {
+          font-size: clamp(24px, 6vw, 44px);
+        }
+        .cri-link {
+          padding: 18px 0;
+          gap: 12px;
+        }
+        .cp {
+          width: 100vw;
+        }
+        .fb {
+          flex-direction: column;
+          gap: 4px;
+          text-align: center;
+        }
+        .ncta {
+          display: none;
+        }
+        .nr {
+          gap: 6px;
+        }
+      }
+
+      /* ═══════════════════════════════════════
+         MOBILE OVERHAUL — 375px-768px
+      ═══════════════════════════════════════ */
+      /* GLOBAL MOBILE FIXES */
+      @media (max-width: 768px) {
+        * {
+          min-height: 0;
+        }
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        /* tap-target baseline */
+        button,
+        a,
+        [role="button"] {
+          min-height: 44px;
+        }
+
+        /* HERO — fine-tune for small screens */
+        .hero-left {
+          padding: 32px 16px 40px;
+        }
+        h1 {
+          font-size: clamp(28px, 9vw, 44px);
+        }
+        .hdesc {
+          font-size: 15px;
+          margin-bottom: 24px;
+        }
+        .hact {
+          gap: 10px;
+        }
+        .hact .bp,
+        .hact .bg2 {
+          min-height: 48px;
+        }
+
+        /* ABOUT */
+        .as {
+          padding: 0 16px;
+          margin: 40px auto;
+        }
+        .abadges {
+          gap: 8px;
+        }
+        .abadge {
+          font-size: 13px;
+          padding: 8px 14px;
+        }
+
+        /* CATEGORIES */
+        .sec {
+          padding: 40px 16px;
+        }
+        .cgrid {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+        .ccard {
+          border-radius: 12px;
+        }
+        .cimg {
+          height: 130px;
+        }
+        .cbody {
+          padding: 12px;
+        }
+        .cbody h3 {
+          font-size: 13px;
+        }
+        .cbody p {
+          font-size: 12px;
+        }
+
+        /* FEATURED PRODUCTS — horizontal snap slider */
+        .fprods {
+          padding: 0 16px;
+        }
+        .fph {
+          margin-bottom: 12px;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .showcase-tabs-nav {
+          width: 100%;
+          order: 3;
+          padding-bottom: 4px;
+          margin-top: 4px;
+        }
+        .fpgrid {
+          display: flex !important;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          gap: 12px;
+          padding: 0 16px 12px 0;
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+          align-items: flex-start;
+        }
+        .fpgrid::-webkit-scrollbar {
+          display: none;
+        }
+        .fpgrid .fpc {
+          min-width: 76vw;
+          max-width: 76vw;
+          flex-shrink: 0;
+          scroll-snap-align: start;
+        }
+        .fpcimg {
+          aspect-ratio: unset;
+          height: 200px;
+        }
+        .fp-arrows {
+          display: flex !important;
+          justify-content: center;
+          gap: 12px;
+          margin-top: 16px;
+          width: 100%;
+          order: 3;
+        }
+
+        .fpcb {
+          padding: 12px;
+        }
+        .fpcb h3 {
+          font-size: 12px;
+        }
+        .fpcb .pr {
+          font-size: 13px;
+        }
+
+        /* ROOM SHOWCASE — horizontal snap */
+        .rs-section {
+          padding: 32px 16px 16px;
+        }
+        .rs-cards {
+          display: flex !important;
+          flex-direction: row;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          gap: 12px;
+          padding: 0 0 16px 0;
+          scrollbar-width: none;
+          height: auto !important;
+          min-height: unset !important;
+          -webkit-overflow-scrolling: touch;
+        }
+        .rs-cards::-webkit-scrollbar {
+          display: none;
+        }
+        .rs-card {
+          min-width: 76vw;
+          max-width: 76vw;
+          height: 52vh;
+          min-height: 200px;
+          flex-shrink: 0;
+          scroll-snap-align: start;
+          border-radius: 16px;
+          overflow: hidden;
+        }
+        .rs-card:hover {
+          transform: none;
+        }
+        .rs-card:hover img {
+          transform: none;
+        }
+        .rs-dots {
+          display: flex !important;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+          padding-bottom: 8px;
+        }
+        
+        .nr {
+          gap: 4px;
+          flex-shrink: 0;
+        }
+
+        /* AD BANNER */
+        .adbanner {
+          padding: 0 16px;
+          margin-bottom: 48px;
+        }
+
+        /* SHOP CTA MOBILE */
+        .shopcta-inner {
+          padding: 32px 20px !important;
+        }
+        .shopcta-btn {
+          display: block !important;
+          width: 100% !important;
+          text-align: center;
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+        }
+
+        /* FOOTER */
+        footer {
+          padding: 32px 16px 20px;
+        }
+        .fg {
+          grid-template-columns: 1fr;
+          gap: 24px;
+          text-align: center;
+        }
+        .fbr p {
+          max-width: 100%;
+        }
+        .f-soc {
+          justify-content: center;
+        }
+        .fc h4 {
+          text-align: center;
+        }
+        .fb {
+          flex-direction: column;
+          gap: 4px;
+          text-align: center;
+        }
+
+        /* NO HORIZONTAL OVERFLOW */
+        .pw {
+          overflow-x: hidden;
+        }
+      }
+
+      /* FEATURED PRODUCTS ARROWS */
+      .fp-arrows {
+        display: none;
+        gap: 8px;
+        align-items: center;
+      }
+      .fp-arr {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--s);
+        border: 1px solid var(--o);
+        color: var(--o);
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s,
+          color 0.2s;
+        flex-shrink: 0;
+        min-height: 40px;
+      }
+      .fp-arr:hover {
+        background: var(--o);
+        color: #fff;
+        border-color: var(--o);
+      }
+
+      /* ROOM SHOWCASE DOTS */
+      .rs-dots {
+        display: none !important;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        margin-top: 12px;
+        padding-bottom: 8px;
+      }
+      .rs-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--b);
+        border: none;
+        cursor: pointer;
+        transition: all 0.25s;
+        padding: 0;
+        flex-shrink: 0;
+        opacity: 0.5;
+      }
+      .rs-dot.active {
+        width: 20px;
+        border-radius: 3px;
+        background: var(--o);
+        opacity: 1;
+      }
+      /* ── ANNOUNCEMENT BAR ── */
+      .ann-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 101;
+        background: #0e0d0b;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 400;
+        font-family: var(--font-body);
+        letter-spacing: 0.04em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 9px 48px;
+        transform: translateY(-100%);
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .ann-bar.show {
+        transform: translateY(0);
+      }
+      .ann-bar-x {
+        position: absolute;
+        right: 14px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #ffffff;
+        opacity: 0.6;
+        line-height: 1;
+        padding: 0 4px;
+      }
+      .ann-bar-x:hover {
+        opacity: 1;
+      }
+      
+      body.ann-visible .pw {
+        padding-top: 0;
+      }
+      /* ── GENERAL ANNOUNCEMENT BAR ── */
+      #gen-ann-bar {
+        position: relative;
+        width: 100%;
+        z-index: 10;
+        background: #0e0d0b;
+        color: #fff;
+        height: 42px;
+        font-family: var(--font-body);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 0 48px;
+        overflow: hidden;
+      }
+      .ann-marquee-container {
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+      }
+      .ann-marquee-content {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        animation: ann-marquee-anim 35s linear infinite;
+        width: max-content;
+        will-change: transform;
+      }
+      .ann-marquee-content:hover {
+        animation-play-state: paused;
+      }
+      .ann-item {
+        display: inline-block;
+        white-space: nowrap;
+        padding: 0 20px;
+      }
+      .ann-bullet {
+        display: inline-block;
+        color: var(--o, #ff9900);
+        font-weight: bold;
+        margin-left: 20px;
+      }
+      @keyframes ann-marquee-anim {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(-50%, 0, 0);
+        }
+      }
+      html[dir="rtl"] .ann-marquee-content {
+        animation: ann-marquee-anim-rtl 35s linear infinite;
+      }
+      @keyframes ann-marquee-anim-rtl {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(50%, 0, 0);
+        }
+      }
+      
+      body.gen-ann-visible .pw {
+        padding-top: 0;
+      }
+      body.gen-ann-visible .ann-bar {
+        top: 46px;
+      }
+      
+      body.gen-ann-visible.ann-visible .pw {
+        padding-top: 0;
+      }
+      /* Floating WhatsApp Menu Styles */
+      .wa-menu-container {
+        position: relative;
+      }
+      .wa-menu {
+        position: absolute;
+        bottom: 56px;
+        right: 0;
+        background: var(--nb);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        padding: 6px 0;
+        display: none;
+        flex-direction: column;
+        min-width: 240px;
+        z-index: 999;
+      }
+      .wa-menu.show {
+        display: flex;
+      }
+      .wa-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        color: var(--t);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: background 0.2s, color 0.2s;
+        text-align: right;
+        direction: rtl;
+        border-bottom: 1px solid var(--b);
+      }
+      .wa-menu-item:last-child {
+        border-bottom: none;
+      }
+      html[lang="en"] .wa-menu-item {
+        text-align: left;
+        direction: ltr;
+      }
+      .wa-menu-item:hover {
+        background: var(--b);
+        color: var(--o);
+      }
+      /* NEW badge on featured products */
+      .fpctag-new {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: var(--o);
+        color: #0e0d0b;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 100px;
+        z-index: 2;
+      }
+      @media (max-width: 768px) {
+        #gen-ann-bar {
+          padding: 0 48px !important;
+          font-size: 10px !important;
+        }
+        #gen-ann-bar button,
+        .ann-bar-x {
+          min-height: auto !important;
+          height: 32px;
+          width: 32px;
+          top: 50%;
+          transform: translateY(-50%);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        html[dir="rtl"] #gen-ann-bar button,
+        html[dir="rtl"] .ann-bar-x {
+          right: auto !important;
+          left: 14px !important;
+        }
+        .ann-bar {
+          font-size: 12px;
+          padding: 8px 48px;
+        }
+      }
+      /* ── FURNITURE INTRO ── */
+      .iso-intro {
+        position: fixed;
+        inset: 0;
+        background: var(--bg);
+        z-index: 9998;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.6s ease;
+      }
+      .iso-intro.iso-exit {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .iso-scene-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      .iso-canvas {
+        width: min(520px, 94vw);
+        height: auto;
+      }
+      .iso-brand {
+        text-align: center;
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .iso-brand.vis {
+        opacity: 1;
+        transform: none;
+      }
+      .iso-brand-mega {
+        display: block;
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: clamp(26px, 5.5vw, 40px);
+        letter-spacing: 0.22em;
+        color: var(--t);
+        line-height: 1;
+      }
+      .iso-brand-fur {
+        display: block;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: clamp(8px, 1.5vw, 11px);
+        letter-spacing: 0.6em;
+        text-transform: uppercase;
+        color: var(--o);
+        margin-top: 6px;
+      }
+      .iso-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: var(--o);
+        width: 0;
+        animation: isoProgress 2.9s 0.4s linear forwards;
+      }
+      @keyframes isoProgress {
+        to {
+          width: 100%;
+        }
+      }
+      /* ── NEW ARRIVALS SECTION ── */
+      .newarr-sec {
+        padding: 100px 0;
+        background: var(--s);
+      }
+      .na-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+      .na-head {
+        text-align: center;
+        margin-bottom: 52px;
+      }
+      .na-tag {
+        font-family: var(--font-body);
+        font-size: 10px;
+        letter-spacing: 0.38em;
+        color: var(--o);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 14px;
+      }
+      .na-h2 {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: clamp(28px, 4vw, 44px);
+        letter-spacing: 0.04em;
+        color: var(--t);
+      }
+      .na-h2 em {
+        font-style: italic;
+        color: var(--o);
+      }
+      .na-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+      .na-footer {
+        text-align: center;
+      }
+      .na-card {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        transition: transform 0.35s ease;
+      }
+      .na-card:hover {
+        transform: translateY(-4px);
+      }
+      .na-card-img {
+        aspect-ratio: 4/5;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(135deg, #f0e8dc, #d4c8b8);
+        margin-bottom: 12px;
+      }
+      .na-card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .na-card:hover .na-card-img img {
+        transform: scale(1.04);
+      }
+      .na-card-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--o);
+        color: #fff;
+        font-family: var(--font-body);
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 2px;
+      }
+      .na-card-name {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 16px;
+        color: var(--t);
+        margin-bottom: 4px;
+        letter-spacing: 0.02em;
+      }
+      .na-card-price {
+        font-family: var(--font-body);
+        font-size: 13px;
+        color: var(--t);
+      }
+      .na-old {
+        text-decoration: line-through;
+        color: var(--tm);
+        opacity: 0.6;
+        font-size: 12px;
+        margin-left: 6px;
+      }
+      .na-sale {
+        color: var(--o);
+        font-weight: 500;
+      }
+      @media (max-width: 1024px) {
+        .na-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 600px) {
+        .na-inner {
+          padding: 0 20px;
+        }
+        .na-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 14px;
+        }
+      }
+      /* ── BUNDLES SECTION ── */
+      .bundles-sec {
+        padding: 100px 0;
+        background: var(--bg);
+      }
+      .bundles-sec .bs-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+      .bundles-sec .bs-head {
+        text-align: center;
+        margin-bottom: 52px;
+      }
+      .bs-tag {
+        font-family: var(--font-body);
+        font-size: 10px;
+        letter-spacing: 0.38em;
+        color: var(--o);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 14px;
+      }
+      .bs-h2 {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: clamp(28px, 4vw, 44px);
+        letter-spacing: 0.04em;
+        color: var(--t);
+        margin-bottom: 10px;
+      }
+      .bs-h2 em {
+        font-style: italic;
+        color: var(--o);
+      }
+      .bs-sub {
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 15px;
+        color: var(--tm);
+        letter-spacing: 0.04em;
+      }
+      .bs-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+      .bundle-card {
+        border: 1px solid var(--b);
+        border-radius: 16px;
+        overflow: hidden;
+        background: var(--s);
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+        cursor: pointer;
+      }
+      .bundle-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+      }
+      .bc-img {
+        aspect-ratio: 4/3;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #f0e8dc, #d4c8b8);
+      }
+      .bc-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .bundle-card:hover .bc-img img {
+        transform: scale(1.04);
+      }
+      .bc-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: var(--t);
+        color: var(--bg);
+        font-family: var(--font-body);
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 999px;
+      }
+      .bc-save {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: var(--o);
+        color: #fff;
+        font-family: var(--font-body);
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 999px;
+      }
+      .bc-body {
+        padding: 20px;
+      }
+      .bc-name {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 18px;
+        color: var(--t);
+        margin-bottom: 6px;
+        letter-spacing: 0.03em;
+      }
+      .bc-count {
+        font-family: var(--font-body);
+        font-size: 12px;
+        color: var(--tm);
+        letter-spacing: 0.08em;
+        margin-bottom: 14px;
+      }
+      .bc-thumbs {
+        display: flex;
+        margin-bottom: 16px;
+      }
+      .bc-thumb {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid var(--s);
+        margin-right: -8px;
+        background: var(--b);
+        background-size: cover;
+        background-position: center;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--tm);
+        font-family: var(--font-body);
+      }
+      .bc-prices {
+        margin-bottom: 16px;
+      }
+      .bc-original {
+        font-family: var(--font-body);
+        font-size: 12px;
+        color: var(--tm);
+        text-decoration: line-through;
+        opacity: 0.6;
+        display: block;
+      }
+      .bc-price {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 24px;
+        color: var(--o);
+        display: block;
+        margin-top: 2px;
+      }
+      .bc-savings {
+        font-family: var(--font-body);
+        font-size: 12px;
+        color: #4caf50;
+        display: block;
+        margin-top: 3px;
+      }
+      .bc-btn {
+        width: 100%;
+        padding: 12px;
+        background: var(--t);
+        color: var(--bg);
+        border: none;
+        border-radius: 999px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .bc-btn:hover {
+        background: var(--o);
+      }
+      .bc-btn.added {
+        background: #4caf50;
+      }
+      .bs-footer {
+        text-align: center;
+      }
+      .btn-text {
+        font-family: var(--font-body);
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--o);
+        text-decoration: none;
+      }
+      .btn-text:hover {
+        text-decoration: underline;
+      }
+      @media (max-width: 1024px) {
+        .bs-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .bundles-sec .bs-inner {
+          padding: 0 20px;
+        }
+        .bs-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* ── BUNDLE DETAIL MODAL ── */
+      .bundle-detail-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bdm-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+      }
+      .bdm-content {
+        position: relative;
+        background: var(--bg);
+        max-width: 560px;
+        width: 90%;
+        max-height: 88vh;
+        overflow-y: auto;
+        border-radius: 20px;
+        z-index: 1;
+      }
+      .bdm-img {
+        aspect-ratio: 16/9;
+        background-size: cover;
+        background-position: center;
+        background-color: var(--s2);
+        border-radius: 20px 20px 0 0;
+      }
+      .bdm-body {
+        padding: 32px;
+      }
+      .bdm-tag {
+        font-family: var(--font-body);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        color: var(--o);
+        text-transform: uppercase;
+      }
+      .bdm-name {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 28px;
+        color: var(--t);
+        margin: 8px 0;
+      }
+      .bdm-count {
+        font-family: var(--font-body);
+        font-size: 13px;
+        color: var(--tm);
+        margin-bottom: 20px;
+      }
+      .bdm-items {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 24px;
+        padding: 20px 0;
+        border-top: 1px solid var(--b);
+        border-bottom: 1px solid var(--b);
+      }
+      .bdm-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .bdm-item-img {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        background-size: cover;
+        background-position: center;
+        background-color: var(--s2);
+        flex-shrink: 0;
+      }
+      .bdm-item-name {
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: var(--t);
+        flex: 1;
+      }
+      .bdm-item-price {
+        font-family: var(--font-body);
+        font-size: 13px;
+        color: var(--tm);
+      }
+      .bdm-prices {
+        margin-bottom: 24px;
+      }
+      .bdm-original {
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: var(--tm);
+        text-decoration: line-through;
+        opacity: 0.6;
+        display: block;
+      }
+      .bdm-price {
+        font-family: var(--font-head);
+        font-weight: 300;
+        font-size: 32px;
+        color: var(--o);
+        display: block;
+        margin: 4px 0;
+      }
+      .bdm-savings {
+        font-family: var(--font-body);
+        font-size: 13px;
+        color: #4caf50;
+        display: block;
+      }
+      .bdm-add {
+        width: 100%;
+        padding: 15px;
+        background: var(--t);
+        color: var(--bg);
+        border: none;
+        border-radius: 999px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 12px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .bdm-add:hover {
+        background: var(--o);
+      }
+      .bdm-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: none;
+        cursor: pointer;
+        z-index: 2;
+      }
+      .bdm-close::before,
+      .bdm-close::after {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 1.5px;
+        background: var(--t);
+        top: 50%;
+        left: 50%;
+      }
+      .bdm-close::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      .bdm-close::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+      .bundle-card {
+        cursor: pointer;
+      }
+
+      /* ── RTL (RIGHT-TO-LEFT) LAYOUT OVERRIDES ── */
+      html[dir="rtl"] body { text-align: right; }
+      html[dir="rtl"] input, html[dir="rtl"] textarea, html[dir="rtl"] select { text-align: right; direction: rtl; }
+      
+      html[dir="rtl"] .hero-slider,
+      html[dir="rtl"] .hs-track,
+      html[dir="rtl"] .rs-cards {
+        direction: ltr !important;
+      }
+
+      html[dir="rtl"] .rs-nav {
+        direction: ltr;
+      }
+      html[dir="rtl"] .rs-nav a[data-t="rs-see-all"],
+      html[dir="rtl"] .rs-nav .bg2 {
+        order: -1;
+      }
+
+      html[dir="rtl"] .hs-prev {
+        left: auto;
+        right: 24px;
+      }
+      html[dir="rtl"] .hs-next {
+        right: auto;
+        left: 24px;
+      }
+      html[dir="rtl"] .hs-arrow svg {
+        transform: scaleX(-1);
+      }
+
+      html[dir="rtl"] .rs-card:hover .rs-card-arrow {
+        transform: translateX(-4px);
+      }
+
+      html[dir="rtl"] .nlinks { left: auto; right: 50%; transform: translateX(50%); }
+      html[dir="rtl"] .nr { flex-direction: row-reverse; }
+      html[dir="rtl"] .mm { right: auto; left: 0; transform: translateX(-110%); border-left: none; border-right: 1px solid var(--b); }
+      html[dir="rtl"] .mm.open { transform: translateX(0); }
+      html[dir="rtl"] .cp { right: auto; left: 0; transform: translateX(-100%); border-left: none; border-right: 1px solid var(--b); }
+      html[dir="rtl"] .cp.open { transform: translateX(0); }
+      html[dir="rtl"] .cx { right: auto; left: 20px; }
+      html[dir="rtl"] .breadcrumb-item:not(:last-child)::after { content: "‹"; }
+    </style>
+  </head>
+  <body>
+    <!-- FURNITURE INTRO OVERLAY -->
+    <div id="iso-intro" class="iso-intro">
+      <div class="iso-scene-wrap">
+        <svg
+          id="iso-svg"
+          class="iso-canvas"
+          viewBox="0 0 400 280"
+          xmlns="http://www.w3.org/2000/svg"
+        ></svg>
+        <div class="iso-brand" id="iso-brand">
+          <span class="iso-brand-mega">MEGA</span>
+          <span class="iso-brand-fur">FURNITURE</span>
+        </div>
+      </div>
+      <div class="iso-progress"></div>
+    </div>
+
+
+    <div class="toast" id="toast">
+      <span id="ti"></span><span id="tm2"></span>
+    </div>
+    <script src="pages/header.js"></script>
+
+    <div class="ov" id="cov" onclick="closeCart()"></div>
+    <aside class="cp" id="cp">
+      <div class="chdr">
+        <h3 data-t="cart-title">Your Cart <span id="cc">(0)</span></h3>
+        <button class="cx" onclick="closeCart()"><span class="css-x"></span></button>
+      </div>
+      <div class="clist" id="clist"></div>
+      <div class="cftr" id="cftr" style="display: none">
+        <a class="bp bf" href="./pages/checkout.html" data-t="cart-view">View Cart & Order →</a>
+      </div>
+    </aside>
+
+    <!-- SITE HEADER NAVIGATION -->
+    <nav class="global-header"></nav>
+
+    <!-- GENERAL ANNOUNCEMENT BAR (UNDER NAV) -->
+    <div id="gen-ann-bar">
+      <div class="ann-marquee-container">
+        <div class="ann-marquee-content" id="gen-ann-msg-container">
+          <span id="gen-ann-msg"></span>
+        </div>
+      </div>
+      <button
+        onclick="dismissGenAnn()"
+        aria-label="Dismiss"
+        style="
+          position: absolute;
+          right: 14px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          color: #fff;
+          opacity: 0.6;
+          line-height: 1;
+          padding: 0 4px;
+          z-index: 10;
+        "
+      >
+        <span class="css-x"></span>
+      </button>
+    </div>
+
+    <!-- HERO SLIDER -->
+    <section class="hero-slider" id="heroSlider">
+      <div class="hs-track" id="hsTrack">
+        <!-- slides injected by JS -->
+      </div>
+      
+      <!-- Navigation arrows -->
+      <button class="hs-arrow hs-prev" id="hsPrev" onclick="slidePrev()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="15,18 9,12 15,6"/>
+        </svg>
+      </button>
+      <button class="hs-arrow hs-next" id="hsNext" onclick="slideNext()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="9,18 15,12 9,6"/>
+        </svg>
+      </button>
+      
+      <!-- Dots -->
+      <div class="hs-dots" id="hsDots"></div>
+    </section>
+
+    <div class="pw">
+      <!-- DYNAMIC BANNER CONTAINER -->
+      <div id="dynamic-banners-container" style="display: none; margin: 40px auto 20px; max-width: 1200px; padding: 0 24px;">
+        <!-- Banners will be rendered dynamically here -->
+      </div>
+
+      <!-- BRAND STORY: DO NOT MODIFY THIS TEXT -->
+      <div class="as rev">
+        <div class="stag" data-t="about-tag">قصتنا</div>
+        <h2 data-t="about-h2">من ورشة صغيرة لحاجة أكبر</h2>
+        <p data-t="about-p1">
+          بدأت الحكاية سنة 1998… لما والدنا قرر يبني شغله بنفسه في مجال الأثاث، من بلد صغيرة في الجيزة اسمها البدرشين، واللي كانت معروفة من زمان بصناعة الموبيليا.
+        </p>
+        <p data-t="about-p2">
+          في البداية اختار يشتغل في تجارة الأثاث، وكان بيعتمد على منتجات دمياط، لأنها كانت وما زالت من أهم مدن صناعة الأثاث في مصر. وكعادة أي أب، دخلنا معاه الشغل من وإحنا صغيرين. اتعلمنا كل خطوة، وعشنا تفاصيل المهنة يوم بيوم، لحد ما بقت جزء من شخصيتنا.
+        </p>
+        <p data-t="about-p3">
+          وفي سنة 2020، خدنا خطوة جديدة… وبدأنا نصنع الأثاث بنفسنا، بالتوازي مع افتتاح أول فرع خارج بلدنا. والنهارده، بعد رحلة بدأت من ورشة صغيرة وحلم كبير، بقينا موجودين بفرعين باسم Mega Furniture، ولسه مكملين بنفس الشغف اللي بدأت بيه الحكاية.
+        </p>
+        <div
+          style="
+            margin-top: 36px;
+            padding-top: 28px;
+            border-top: 1px solid var(--b);
+          "
+        >
+          <div
+            style="
+              font-family: var(--font-head);
+              font-weight: 300;
+              font-size: 12px;
+              color: var(--t);
+              letter-spacing: 0.18em;
+              text-transform: uppercase;
+              margin-bottom: 4px;
+            "
+          >
+            MEGA <span style="color: var(--o)">FURNITURE</span>
+          </div>
+          <div
+            style="font-size: 12px; color: var(--tm); letter-spacing: 0.08em"
+            data-t="brand-since"
+          >
+            تأسست 2020 · بخبرة من 1998
+          </div>
+        </div>
+      </div>
+      <!-- ROOM SHOWCASE -->
+      <section class="rs-section" id="rs-section" style="display: none">
+        <div class="rs-header">
+          <div>
+            <div class="stag" data-t="rs-tag">تصفح حسب الغرفة</div>
+            <h2 class="stitle" data-t="rs-h2">غرف تحكي قصتك</h2>
+          </div>
+          <div class="rs-nav">
+            <button class="rs-arrow" id="rsPrev" onclick="scrollRs(-1)" aria-label="Previous">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+            </button>
+            <button class="rs-arrow" id="rsNext" onclick="scrollRs(1)" aria-label="Next">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+            </button>
+            <a
+              class="bg2"
+              href="./pages/shop.html"
+              style="font-size: 11px; padding: 10px 22px; letter-spacing: 0.2em"
+              data-t="rs-see-all"
+              >تسوق الكل</a
+            >
+          </div>
+        </div>
+        <div class="rs-cards" id="rs-cards"></div>
+        <div class="rs-dots" id="rs-dots"></div>
+      </section>
+
+      <div class="fprods" id="fp-section" style="display: none">
+        <div class="fph">
+          <h2 data-t="feat-title">منتجاتنا المميزة</h2>
+          <div class="showcase-tabs-nav">
+            <button class="showcase-tab active" data-tab="best-sellers" onclick="switchShowcaseTab('best-sellers')" data-t="showcase-tab-best">Best Sellers</button>
+            <button class="showcase-tab" data-tab="new-arrivals" onclick="switchShowcaseTab('new-arrivals')" data-t="showcase-tab-new">New Arrivals</button>
+            <button class="showcase-tab" data-tab="featured" onclick="switchShowcaseTab('featured')" data-t="showcase-tab-featured">Featured</button>
+          </div>
+          <a
+            class="bg2"
+            href="./pages/shop.html"
+            style="font-size: 11px; padding: 10px 22px; letter-spacing: 0.2em"
+            data-t="feat-see-all"
+            >تسوق الكل</a
+          >
+        </div>
+        <div style="position: relative;">
+          <button class="fp-nav-btn prev" onclick="scrollFpGrid(-1)" aria-label="Previous">❮</button>
+          <div class="fpgrid" id="fp-grid"></div>
+          <button class="fp-nav-btn next" onclick="scrollFpGrid(1)" aria-label="Next">❯</button>
+        </div>
+      </div>
+
+      <div class="adbanner rev">
+        <div
+          onclick="
+            window.open(
+              'https://wa.me/201040454343?text=مرحبا!%20أريد%20الاستفسار%20عن%20المنتجات.',
+              '_blank',
+            )
+          "
+          onmouseover="
+            this.querySelector('img').style.transform = 'scale(1.03)'
+          "
+          onmouseout="this.querySelector('img').style.transform = 'scale(1)'"
+          style="
+            cursor: pointer;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--b);
+          "
+        >
+          <img
+            src="./logos/img-ad.jpg"
+            alt="عروض ميجا فرنيتشر"
+            style="
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transition: transform 0.4s;
+            "
+            onerror="this.style.display = 'none'"
+          />
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- BUNDLES -->
+    <section class="bundles-sec" id="home-bundles-sec" style="display: none">
+      <div class="bs-inner">
+        <div class="bs-head">
+          <span class="bs-tag" data-t="bundles-tag"></span>
+          <h2 class="bs-h2">
+            <em data-t="bundles-h2-em"></em>
+            <span data-t="bundles-h2-rest"></span>
+          </h2>
+          <p class="bs-sub" data-t="bundles-sub"></p>
+        </div>
+        <div class="bs-grid" id="home-bs-grid"></div>
+        <div class="bs-footer">
+          <a
+            href="./pages/shop.html#bundles"
+            class="btn-text"
+            data-t="bundles-see-all"
+          ></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY -->
+    <section class="philosophy rev">
+      <p class="philosophy-quote" data-t="philosophy-quote">
+        بيتك مش مجرد مكان — هو القصة اللي تحكيها كل يوم بدون كلام.
+      </p>
+      <div class="philosophy-attr" data-t="philosophy-attr">
+        MEGA FURNITURE · منذ 1998
+      </div>
+    </section>
+
+    <!-- SHOP NOW CTA -->
+    <div
+      style="
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 120px 24px 140px;
+        text-align: center;
+      "
+    >
+      <div class="rev">
+        <h2
+          style="
+            font-family: var(--font-head);
+            font-style: italic;
+            font-size: clamp(24px, 4vw, 42px);
+            font-weight: 300;
+            color: var(--t);
+            letter-spacing: -0.01em;
+            margin-bottom: 16px;
+            line-height: 1.1;
+          "
+          data-t="cta-heading"
+        >
+          اكتشف مجموعتنا الكاملة
+        </h2>
+        <p
+          style="
+            font-size: 15px;
+            color: var(--tm);
+            margin: 0 auto 48px;
+            max-width: 420px;
+            line-height: 1.75;
+            font-weight: 300;
+          "
+          data-t="cta-sub"
+        >
+          أثاث فاخر يناسب كل بيت وكل ذوق — تصفح الآن واطلب مجاناً.
+        </p>
+        <a class="bp" href="./pages/shop.html" data-t="cta-btn">تسوق الآن</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="f-min">
+        <div class="f-min-brand">
+          MEGA <span style="color: var(--o)">FURNITURE</span>
+        </div>
+        <div class="fbr">
+          <p data-t="footer-desc">
+            أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.
+          </p>
+        </div>
+        <ul class="f-min-links">
+          <li>
+            <a href="./pages/shop.html" data-t="footer-shop">تسوق</a>
+          </li>
+          <li>
+            <a href="./pages/about.html" data-t="footer-company">عنّا</a>
+          </li>
+          <li>
+            <a href="./pages/contact.html" data-t="footer-support">تواصل</a>
+          </li>
+        </ul>
+        <div class="f-soc">
+          <a
+            href="https://www.instagram.com/megafurniturehome/"
+            target="_blank"
+            title="Instagram"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://www.facebook.com/search/top?q=mega%20furniture&locale=ar_AR"
+            target="_blank"
+            title="Facebook"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://www.tiktok.com/@khaledmohyrashdan"
+            target="_blank"
+            title="TikTok"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="fb">
+        <span data-t="footer-copy"
+          >© 2026 Mega Furniture · ميجا فرنيتشر.</span
+        >
+        <span data-t="footer-made">صُنع لمصر</span>
+      </div>
+    </footer>
+
+    <div class="fbtns">
+      <button
+        class="fbtn topb"
+        id="topb"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+        title="Back to top"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="12" y1="19" x2="12" y2="5" />
+          <polyline points="5,12 12,5 19,12" />
+        </svg>
+      </button>
+      <div class="wa-menu-container">
+        <div class="wa-menu" id="wa-menu">
+          <a href="https://wa.me/201040454343" target="_blank" class="wa-menu-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-t="wa-menu-sales">Sales Team</span>
+          </a>
+          <a href="https://wa.me/201105343715" target="_blank" class="wa-menu-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-t="wa-menu-web">Web Support</span>
+          </a>
+        </div>
+        <button
+          onclick="toggleWaMenu(event)"
+          class="fbtn wab"
+          aria-label="WhatsApp"
+        >
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        if (!localStorage.getItem("megaTheme"))
+          localStorage.setItem("megaTheme", "light");
+        document.documentElement.setAttribute(
+          "data-theme",
+          localStorage.getItem("megaTheme"),
+        );
+      })();
+
+      /* ── LANGUAGE SYSTEM ── */
+      const TRANS = {
+        ar: {
+          "nav-home": "الرئيسية",
+          "nav-shop": "تسوق",
+          "nav-videos": "فيديوهات",
+          "nav-about": "من نحن",
+          "nav-reviews": "آراء",
+          "nav-contact": "تواصل",
+          "nav-custom-work": "شغل عمولة",
+          "nav-shop-cta": "تسوق الآن",
+          "hero-tag": "• المجموعة",
+          "hero-desc": "أثاث فاخر للبيت المصري الحقيقي — مصنوع يعيش معاك",
+          "hero-btn1": "استكشف المجموعة",
+          "stat1-num": "147+",
+          "stat1-lbl": "منتج",
+          "stat2-num": "20",
+          "stat2-lbl": "سنة خبرة",
+          "stat3-num": "50K+",
+          "stat3-lbl": "بيت مصري",
+          "hg-sofa": "ركنة",
+          "hg-bed": "غرفة نوم",
+          "hg-dining": "سفرة",
+          "hg-tv": "وحدة TV",
+          "about-tag": "قصتنا",
+          "about-h2": "من ورشة صغيرة لحاجة أكبر",
+          "about-p1":
+            "بدأت الحكاية سنة 1998… لما والدنا قرر يبني شغله بنفسه في مجال الأثاث، من بلد صغيرة في الجيزة اسمها البدرشين، واللي كانت معروفة من زمان بصناعة الموبيليا.",
+          "about-p2":
+            "في البداية اختار يشتغل في تجارة الأثاث، وكان بيعتمد على منتجات دمياط، لأنها كانت وما زالت من أهم مدن صناعة الأثاث في مصر. وكعادة أي أب، دخلنا معاه الشغل من وإحنا صغيرين. اتعلمنا كل خطوة، وعشنا تفاصيل المهنة يوم بيوم، لحد ما بقت جزء من شخصيتنا.",
+          "about-p3":
+            "وفي سنة 2020، خدنا خطوة جديدة… وبدأنا نصنع الأثاث بنفسنا، بالتوازي مع افتتاح أول فرع خارج بلدنا. والنهارده، بعد رحلة بدأت من ورشة صغيرة وحلم كبير، بقينا موجودين بفرعين باسم Mega Furniture، ولسه مكملين بنفس الشغف اللي بدأت بيه الحكاية.",
+          badge1: "توصيل مجاني",
+          badge2: "المعاينة قبل الاستلام",
+          badge3: "تركيب متخصص",
+          badge4: "ضمان شامل للجودة",
+          "footer-copy": "© 2026 Mega Furniture · ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+          "cat1-tag": "معيشة",
+          "cat1-name": "غرف المعيشة",
+          "cat1-desc": "كنب وركنات تخلي صالونك فريد من نوعه.",
+          "cat1-price": "من EGP 18,900",
+          "cat2-tag": "نوم",
+          "cat2-name": "غرف النوم",
+          "cat2-desc": "أسرة ودواليب وتسريحات لنوم هادي وراحة تامة.",
+          "cat2-price": "من EGP 12,800",
+          "cat3-tag": "سفرة",
+          "cat3-name": "غرف السفرة",
+          "cat3-desc": "طاولات وكراسي تحوّل وجبة العيلة لذكرى.",
+          "cat3-price": "من EGP 5,200",
+          "feat-title": "منتجاتنا <span>المميزة</span>",
+          "feat-see-all": "تسوق الكل ←",
+          "tag-new": "جديد",
+          "tag-best": "الأكثر مبيعاً",
+          "fp-name1": "ركنة زاوية",
+          "fp-name2": "غرفة نوم كاملة",
+          "fp-name3": "سفرة 6 كراسي",
+          "prod1-desc": "كنبة بوكليه كريمية بأرجل خشب زان صلب.",
+          "prod2-desc": "سرير مبطن بإطار خشب مصمت وتفاصيل ذهبية.",
+          "prod3-desc": "طاولة سفرة فاخرة بـ6 كراسي وتشطيب رخام.",
+          "vid-title": "من <span>ريلزنا</span>",
+          "vid-see-all": "شوف الكل ←",
+          "vid1-title": "أحدث عروضنا",
+          "vid2-title": "إزاي تختار غرفة نوم؟",
+          "vid3-title": "اعرف وافهم ",
+          "cta-h2": "غرفة أحلامك في انتظارك",
+          "cta-p": "زور معارضنا أو تصفح الكتالوج — توصيل مجاني في مصر كلها.",
+          "cta-heading": "اكتشف مجموعتنا الكاملة",
+          "cta-sub": "أثاث فاخر يناسب كل بيت وكل ذوق — تصفح الآن واطلب مجاناً.",
+          "cta-btn": "تسوق الآن",
+          "cart-title": "السلة",
+          "cart-total": "الإجمالي",
+          "cart-order": "اطلب عبر واتساب ←",
+          "cart-continue": "تابع التسوق",
+          "cart-empty": "السلة فاضية",
+          "cart-empty-sub": "تسوق حاجة حلوة!",
+          "cart-count": "منتج في سلتك",
+          "cart-hint": "اضغط على الزر في الأسفل لعرض السلة واتمام الطلب.",
+          "footer-desc": "أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.",
+          "footer-shop": "تسوق",
+          "footer-company": "عنّا",
+          "footer-support": "دعم",
+          "f-living": "غرف المعيشة",
+          "f-bedroom": "غرف النوم",
+          "f-dining": "غرف السفرة",
+          "f-new": "جديد",
+          "f-about": "من نحن",
+          "f-videos": "فيديوهاتنا",
+          "f-returns": "إرجاع",
+          "f-warranty": "الضمان ضد عيوب الصناعة",
+          "footer-copy":
+            "© 2026 Mega Furniture · ميجا فرنيتشر. جميع الحقوق محفوظة.",
+          "brand-since": "تأسست 2020 · بخبرة من 1998",
+          "rs-tag": "تصفح حسب الغرفة",
+          "rs-h2": "غرف تحكي قصتك",
+          "rs-see-all": "تسوق الكل",
+          "rs-shop-btn": "تسوق الآن",
+          "philosophy-quote":
+            "بيتك مش مجرد مكان — هو القصة اللي تحكيها كل يوم بدون كلام.",
+          "philosophy-attr": "MEGA FURNITURE · منذ 1998",
+          "feat-title": "منتجاتنا المميزة",
+          "showcase-tab-best": "الأكثر مبيعاً",
+          "showcase-tab-new": "وصل حديثاً",
+          "showcase-tab-featured": "المميزة",
+          "newarr-tag": "• وصل حديثاً",
+          "newarr-h2-em": "وصل",
+          "newarr-h2-rest": "حديثاً",
+          "newarr-see-all": "شوف كل الجديد ←",
+          "bundles-tag": "• طقم كامل",
+          "bundles-h2-em": "طقم كامل",
+          "bundles-h2-rest": "بسعر خاص",
+          "bundles-sub": "وفّر أكتر لما تاخد الأوضة كاملة دفعة واحدة",
+          "bundles-see-all": "عرض كل الأطقم ←",
+          "bundles-add": "أضف الطقم للسلة",
+          "bundles-added": "تمت الإضافة",
+          "bundles-save": "توفر",
+          "cart-view": "عرض السلة والطلب ←",
+          "bundle-tag": "طقم",
+          "bundle-includes": "يشمل {n} منتجات",
+          "cart-items-label": "منتج",
+          "wa-menu-sales": "فريق المبيعات",
+          "wa-menu-web": "الدعم والطلبات (الموقع)",
+        },
+        en: {
+          "nav-home": "Home",
+          "nav-shop": "Shop",
+          "nav-videos": "Videos",
+          "nav-about": "About Us",
+          "nav-reviews": "Reviews",
+          "nav-contact": "Contact",
+          "nav-track": "Track Order",
+          "nav-custom-work": "Custom Work",
+          "nav-shop-cta": "Shop Now",
+          "hero-tag": "• THE COLLECTION",
+          "hero-desc": "Premium furniture built to last generations",
+          "hero-btn1": "Explore Collection",
+          "stat1-num": "147+",
+          "stat1-lbl": "Products",
+          "stat2-num": "20",
+          "stat2-lbl": "Years",
+          "stat3-num": "50K+",
+          "stat3-lbl": "Homes",
+          "hg-sofa": "Corner Sofa",
+          "hg-bed": "Bedroom Set",
+          "hg-dining": "Dining Set",
+          "hg-tv": "TV Unit",
+          "about-tag": "Our Story",
+          "about-h2": "From a Small Workshop to Something Bigger",
+          "about-p1":
+            "The story began in 1998... when our father decided to build his own business in the furniture industry, starting from a small town in Giza called El Badrashein, which has long been renowned for furniture craftsmanship.",
+          "about-p2":
+            "In the beginning, he chose to work in furniture trading, relying on products from Damietta, as it was—and continues to be—one of the most important hubs for furniture manufacturing in Egypt. As with any father, he brought us into the business when we were young. We learned every single step, living the details of the craft day by day, until it became an inseparable part of who we are.",
+          "about-p3":
+            "In 2020, we took a new step forward... we started manufacturing the furniture ourselves, alongside opening our very first showroom outside our hometown. Today, after a journey that began with a small workshop and a big dream, we have expanded to two showrooms under the name Mega Furniture, and we continue onward with the very same passion that started it all.",
+          badge1: "Free Delivery",
+          badge2: "Inspect on Delivery",
+          badge3: "Expert Assembly",
+          badge4: "Full Quality Warranty",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+          "cat1-tag": "Living",
+          "cat1-name": "Living Rooms",
+          "cat1-desc": "Statement sofas and sectionals that anchor your space.",
+          "cat1-price": "From EGP 18,900",
+          "cat2-tag": "Bedroom",
+          "cat2-name": "Bedrooms",
+          "cat2-desc": "Beds, wardrobes and dressers for deep restful living.",
+          "cat2-price": "From EGP 12,800",
+          "cat3-tag": "Dining",
+          "cat3-name": "Dining Rooms",
+          "cat3-desc":
+            "Tables and chairs where family moments become memories.",
+          "cat3-price": "From EGP 5,200",
+          "feat-title": "Our <span>Featured</span> Products",
+          "feat-see-all": "See All →",
+          "newarr-tag": "• Just In",
+          "newarr-h2-em": "New",
+          "newarr-h2-rest": "Arrivals",
+          "newarr-see-all": "See All New →",
+          "tag-new": "New",
+          "tag-best": "Best Seller",
+          "fp-name1": "Corner Sofa",
+          "fp-name2": "Complete Bedroom Set",
+          "fp-name3": "6-Seat Dining Set",
+          "prod1-desc": "Elegant cream bouclé sofa with solid beech wood legs.",
+          "prod2-desc":
+            "Upholstered platform bed with solid wood frame and gold details.",
+          "prod3-desc": "Luxury 6-seat dining set with marble finish.",
+          "vid-title": "Our <span>Latest Reels</span>",
+          "vid-see-all": "See All →",
+          "vid1-title": "Our Latest Looks",
+          "vid2-title": "How to choose a bedroom?",
+          "vid3-title": "Know your furniture ",
+          "cta-h2": "Your Dream Room Awaits",
+          "cta-p":
+            "Visit our showrooms or browse the full catalogue — free delivery across Egypt.",
+          "cta-heading": "Discover Our Full Collection",
+          "cta-sub":
+            "Premium furniture for every home and every taste — browse now and order free.",
+          "cta-btn": "Shop Now",
+          "cart-title": "Your Cart",
+          "cart-total": "Total",
+          "cart-order": "Order via WhatsApp →",
+          "cart-continue": "Continue Shopping",
+          "cart-empty": "Your cart is empty",
+          "cart-empty-sub": "Find something you love!",
+          "cart-count": "items in your cart",
+          "cart-hint":
+            "Tap the button below to review your cart and place an order.",
+          "footer-desc":
+            "Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998.",
+          "footer-shop": "Shop",
+          "footer-company": "Company",
+          "footer-support": "Support",
+          "f-living": "Living Rooms",
+          "f-bedroom": "Bedrooms",
+          "f-dining": "Dining Rooms",
+          "f-new": "New Arrivals",
+          "f-about": "About Us",
+          "f-videos": "Videos",
+          "f-returns": "Returns",
+          "f-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture. All rights reserved.",
+          "brand-since": "Est. 2020 · Experience since 1998",
+          "rs-tag": "Browse by Room",
+          "rs-h2": "Rooms That Tell Your Story",
+          "rs-see-all": "Shop All",
+          "rs-shop-btn": "Shop Now",
+          "philosophy-quote":
+            "Your home is not just a place — it is the story you tell every day without words.",
+          "philosophy-attr": "MEGA FURNITURE · Since 1998",
+          "feat-title": "Featured Products",
+          "showcase-tab-best": "Best Sellers",
+          "showcase-tab-new": "New Arrivals",
+          "showcase-tab-featured": "Featured",
+          "bundles-tag": "• Complete Sets",
+          "bundles-h2-em": "Complete",
+          "bundles-h2-rest": "Room Sets",
+          "bundles-sub": "Save more when you take the complete room at once",
+          "bundles-see-all": "View All Sets →",
+          "bundles-add": "Add Set to Cart",
+          "bundles-added": "Added!",
+          "bundles-save": "Save",
+          "cart-view": "View Cart & Order →",
+          "bundle-tag": "BUNDLE",
+          "bundle-includes": "{n} products included",
+          "cart-items-label": "items",
+          "wa-menu-sales": "Sales Team",
+          "wa-menu-web": "Web Support",
+        },
+      };
+
+      function t(k) {
+        const l = localStorage.getItem("megaLang") || "en";
+        return (TRANS[l] || TRANS.en)[k] || k;
+      }
+
+      function applyLang(lang) {
+        localStorage.setItem("megaLang", lang);
+        document.documentElement.setAttribute("lang", lang);
+        document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+        document.querySelectorAll("[data-t]").forEach((el) => {
+          const k = el.getAttribute("data-t");
+          if (TRANS[lang] && TRANS[lang][k] !== undefined)
+            el.innerHTML = TRANS[lang][k];
+        });
+        document.querySelectorAll("[data-ar],[data-en]").forEach((el) => {
+          const txt = el.getAttribute("data-" + lang);
+          if (txt != null) el.textContent = txt;
+        });
+        document.querySelectorAll(".langbtn, #langbtn, #lang-btn").forEach((btn) => {
+          btn.textContent = lang === "ar" ? "EN" : "عربي";
+          btn.setAttribute("data-short", lang === "ar" ? "EN" : "ع");
+        });
+        if (typeof renderShowcaseGrid === "function" && showcaseAllProducts && showcaseAllProducts.length) {
+          renderShowcaseGrid(currentShowcaseTab);
+        }
+        if (typeof window.renderGenAnn === "function") {
+          window.renderGenAnn();
+        }
+      }
+      function toggleLang() {
+        const cur = localStorage.getItem("megaLang") || "en";
+        applyLang(cur === "ar" ? "en" : "ar");
+      }
+
+      /* ── HERO SLIDER ── */
+      let hsSlides = [];
+      let hsCurrent = 0;
+      let hsTimer = null;
+      const HS_INTERVAL = 4500; // 4.5 seconds per slide
+
+      async function loadHeroSlider() {
+        try {
+          const res = await fetch(
+            window.location.origin + '/api/banners'
+          );
+          const banners = await res.json();
+          console.log('Banners loaded:', banners);
+          const active = banners.filter(b => b.active);
+          console.log('Active banners:', active.length);
+          if (!active.length) { showFallbackHero(); return; }
+          hsSlides = active;
+          buildSlider();
+          startSliderTimer();
+        } catch(e) {
+          console.error('Slider error:', e);
+          showFallbackHero();
+        }
+      }
+
+      function buildSlider() {
+        const track = document.getElementById('hsTrack');
+        const dots  = document.getElementById('hsDots');
+        if (!track || !dots) return;
+
+        track.innerHTML = hsSlides.map((b, i) => `
+          <div class="hs-slide" onclick="hsClick(${i})">
+            <img src="${iu(b.image)}" alt="banner ${i+1}" 
+              loading="${i===0?'eager':'lazy'}"
+              draggable="false">
+          </div>
+        `).join('');
+
+        dots.innerHTML = hsSlides.map((_, i) => 
+          `<button class="hs-dot ${i===0?'active':''}" 
+            onclick="goSlide(${i})"></button>`
+        ).join('');
+
+        const prevBtn = document.getElementById('hsPrev');
+        const nextBtn = document.getElementById('hsNext');
+        if (prevBtn && nextBtn) {
+          if (hsSlides.length <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+          } else {
+            prevBtn.style.display = '';
+            nextBtn.style.display = '';
+          }
+        }
+      }
+
+      function goSlide(idx) {
+        if (!hsSlides.length) return;
+        hsCurrent = ((idx % hsSlides.length) + hsSlides.length) % hsSlides.length;
+        
+        const track = document.getElementById('hsTrack');
+        if (track) track.style.transform = `translateX(-${hsCurrent * 100}%)`;
+        
+        document.querySelectorAll('.hs-dot').forEach((d,i) => {
+          d.classList.toggle('active', i === hsCurrent);
+        });
+      }
+
+      function slideNext() {
+        goSlide(hsCurrent + 1);
+        resetTimer();
+      }
+
+      function slidePrev() {
+        goSlide(hsCurrent - 1);
+        resetTimer();
+      }
+
+      function hsClick(idx) {
+        const b = hsSlides[idx];
+        if (b && b.link) {
+          window.location.href = b.link;
+        }
+      }
+
+      // Touch/swipe support for mobile
+      function initSliderTouch() {
+        const slider = document.getElementById('heroSlider');
+        if (!slider) return;
+        let startX = 0;
+        slider.addEventListener('touchstart', e => {
+          startX = e.touches[0].clientX;
+        }, {passive:true});
+        slider.addEventListener('touchend', e => {
+          const diff = startX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) {
+            diff > 0 ? slideNext() : slidePrev();
+          }
+        }, {passive:true});
+      }
+
+      function startSliderTimer() {
+        if (hsSlides.length <= 1) return;
+        hsTimer = setInterval(() => {
+          goSlide(hsCurrent + 1);
+        }, HS_INTERVAL);
+      }
+
+      function resetTimer() {
+        clearInterval(hsTimer);
+        startSliderTimer();
+      }
+
+      function showFallbackHero() {
+        const slider = document.getElementById('heroSlider');
+        if (!slider) return;
+        slider.innerHTML = `
+          <div class="hs-slide" style="cursor:pointer"
+            onclick="location.href='./pages/shop.html'">
+            <img src="./logos/hero.jpg" alt="Mega Furniture"
+              style="width:100%;height:100%;object-fit:cover">
+          </div>`;
+      }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        loadHeroSlider();
+        initSliderTouch();
+      });
+
+      (function () {
+        applyLang(localStorage.getItem("megaLang") || "en");
+      })();
+
+      /* ── SETTINGS FETCH (server-driven defaults for new visitors) ── */
+      (function () {
+        if (!localStorage.getItem("megaLang") || !localStorage.getItem("megaTheme")) {
+          fetch("/api/settings").then(r => r.json()).then(s => {
+            if (!localStorage.getItem("megaLang") && s.defaultLanguage) {
+              applyLang(s.defaultLanguage);
+            }
+            if (!localStorage.getItem("megaTheme") && s.defaultTheme) {
+              document.documentElement.setAttribute("data-theme", s.defaultTheme);
+              localStorage.setItem("megaTheme", s.defaultTheme);
+            }
+          }).catch(() => {});
+        }
+      })();
+
+      /* ── CART ── */
+      let cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
+      function updBadge() {
+        const n = cart.reduce((s,c) => s+c.qty, 0);
+        const badge = document.getElementById('cbadge');
+        if(badge){
+          badge.textContent = n > 0 ? n : '';
+          badge.style.display = n > 0 ? 'flex' : 'none';
+        }
+      }
+      function saveCart() {
+        localStorage.setItem("megaCart", JSON.stringify(cart));
+      }
+      function rmCartIdx(idx) {
+        cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function updQtyIdx(idx, delta) {
+        if (!cart[idx]) return;
+        cart[idx].qty += delta;
+        if (cart[idx].qty < 1) cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function renderCart() {
+        const el = document.getElementById("clist"),
+          cc = document.getElementById("cc") || document.getElementById("ccount"),
+          ft = document.getElementById("cftr"),
+          tot = document.getElementById("ctot");
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        if (cc) cc.textContent = "(" + n + ")";
+        if (!cart.length) {
+          el.innerHTML = `<div class="cemp"><div class="cemp-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><h4>${t("cart-empty")}</h4><p>${t("cart-empty-sub")}</p></div>`;
+          if (ft) {
+            ft.style.display = "none";
+            ft.classList.remove("show");
+          }
+          if (typeof clearPromo === "function") clearPromo();
+          return;
+        }
+        if (ft) {
+          ft.style.display = "flex";
+          ft.classList.add("show");
+        }
+        const lang = localStorage.getItem("megaLang") || "en";
+        el.innerHTML = cart
+          .map((item) => {
+            const nm =
+              lang === "ar"
+                ? item.nameAr || item.nameEn
+                : item.nameEn || item.nameAr;
+            const imgSrc = iu(item.mainPhoto);
+            const unitPrice = item.price || 0;
+            const lineTotal = unitPrice * item.qty;
+            const idx = cart.indexOf(item);
+            if (item.isBundle) {
+              const bundleTag = t("bundle-tag");
+              const countLbl = t("bundle-includes").replace("{n}", item.itemCount || 0);
+              const itemsList = (item.items || [])
+                .map(
+                  (p) =>
+                    "· " +
+                    (lang === "ar"
+                      ? p.nameAr || p.nameEn
+                      : p.nameEn || p.nameAr),
+                )
+                .join("<br>");
+              const priceStr =
+                unitPrice > 0
+                  ? item.qty > 1
+                    ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                    : "EGP " + Number(unitPrice).toLocaleString()
+                  : t("call-price");
+              return `<div class="cir bundle-item">
+      <div class="cir-top">
+        <div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div>
+        <div class="cin" style="flex:1;min-width:0">
+          <div><span class="bundle-tag">${bundleTag}</span></div>
+          <div class="nm">${nm}</div>
+          <div class="pr">${priceStr}</div>
+          <div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div>
+        </div>
+        <button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button>
+      </div>
+      <div class="bundle-item-count">${countLbl}</div>
+      ${itemsList ? `<div class="bundle-items-list">${itemsList}</div>` : ""}
+    </div>`;
+            }
+            const priceStr =
+              unitPrice > 0
+                ? item.qty > 1
+                  ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                  : "EGP " + Number(unitPrice).toLocaleString()
+                : t("call-price");
+            const meta = [
+              item.color || "",
+              item.size
+                ? (lang === "ar" ? item.size.nameAr : item.size.nameEn) || ""
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" · ");
+            return `<div class="cir">
+      <div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.parentElement.innerHTML='️'">` : '<span style="font-size:22px;opacity:.4">️</span>'}</div>
+      <div class="cin">
+        <div class="nm">${nm}${meta ? `<span style="font-size:10px;color:var(--tm);margin-right:4px"> · ${meta}</span>` : ""}</div>
+        <div class="pr">${priceStr}</div>
+        <div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div>
+      </div>
+      <button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button>
+    </div>`;
+          })
+          .join("");
+        if (tot)
+          tot.textContent = n + " " + t("cart-items-label");
+        if (typeof updCartFooter === "function") updCartFooter();
+      }
+      function openCart() {
+        renderCart();
+        document.getElementById("cp").classList.add("open");
+        document.getElementById("cov").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCart() {
+        document.getElementById("cp").classList.remove("open");
+        document.getElementById("cov").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      /* ── THEME (curtain wipe) ── */
+      document.getElementById("tt").addEventListener("click", function () {
+        const h = document.documentElement;
+        const cur = h.getAttribute("data-theme") || "light";
+        const next = cur === "dark" ? "light" : "dark";
+        const newBg = next === "light" ? "#F7F3EC" : "#0A0A0A";
+        const curtain = document.createElement("div");
+        curtain.style.cssText =
+          "position:fixed;inset:0;background:" +
+          newBg +
+          ";transform-origin:top;transform:scaleY(0);z-index:9997;pointer-events:none;transition:none";
+        document.body.appendChild(curtain);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            curtain.style.transition =
+              "transform 480ms cubic-bezier(0.76,0,0.24,1)";
+            curtain.style.transform = "scaleY(1)";
+          });
+        });
+        setTimeout(() => {
+          h.setAttribute("data-theme", next);
+          localStorage.setItem("megaTheme", next);
+          curtain.style.transformOrigin = "bottom";
+          curtain.style.transform = "scaleY(0)";
+          setTimeout(() => curtain.remove(), 520);
+        }, 490);
+      });
+
+      /* ── NAV ── */
+      function toggleMenu() {
+        const isOpen = document.getElementById("mm").classList.toggle("open");
+        document.getElementById("hbg").classList.toggle("open");
+        const mov = document.getElementById("mov");
+        if (mov) mov.classList.toggle("open", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+      }
+      function closeMenu() {
+        document.getElementById("mm").classList.remove("open");
+        document.getElementById("hbg").classList.remove("open");
+        const mov = document.getElementById("mov");
+        if (mov) mov.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      /* ── FEATURED PRODUCTS SCROLL ── */
+      function fpScroll(dir) {
+        const grid = document.getElementById("fp-grid");
+        if (!grid) return;
+        const card = grid.querySelector(".fpc");
+        const w = card ? card.offsetWidth + 12 : grid.offsetWidth * 0.78;
+        grid.scrollBy({ left: dir * w, behavior: "smooth" });
+      }
+
+      /* ── ROOM SHOWCASE SCROLL ── */
+      function scrollRs(dir) {
+        const container = document.getElementById("rs-cards");
+        if (!container) return;
+        const card = container.querySelector(".rs-card");
+        const cardWidth = card ? card.offsetWidth + 16 : 300;
+        container.scrollBy({ left: dir * cardWidth * 2, behavior: "smooth" });
+      }
+
+      /* ── ROOM SHOWCASE DOTS ── */
+      function initRsDots() {
+        const cards = document.getElementById("rs-cards");
+        const dotsWrap = document.getElementById("rs-dots");
+        if (!cards || !dotsWrap) return;
+        const items = cards.querySelectorAll(".rs-card");
+        if (!items.length) return;
+        dotsWrap.innerHTML = "";
+        items.forEach((_, i) => {
+          const d = document.createElement("button");
+          d.className = "rs-dot" + (i === 0 ? " active" : "");
+          d.setAttribute("aria-label", "Go to slide " + (i + 1));
+          d.onclick = () => {
+            items[i].scrollIntoView({
+              behavior: "smooth",
+              inline: "start",
+              block: "nearest",
+            });
+          };
+          dotsWrap.appendChild(d);
+        });
+        let ticking = false;
+        cards.addEventListener(
+          "scroll",
+          () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              const dots = dotsWrap.querySelectorAll(".rs-dot");
+              let closest = 0,
+                minDist = Infinity;
+              items.forEach((el, i) => {
+                const dist = Math.abs(
+                  el.getBoundingClientRect().left -
+                    cards.getBoundingClientRect().left,
+                );
+                if (dist < minDist) {
+                  minDist = dist;
+                  closest = i;
+                }
+              });
+              dots.forEach((d, i) =>
+                d.classList.toggle("active", i === closest),
+              );
+              ticking = false;
+            });
+          },
+          { passive: true },
+        );
+      }
+
+      /* ── SCROLL ── */
+      const _nav = document.querySelector("nav");
+      window.addEventListener("scroll", function () {
+        const b = document.getElementById("topb");
+        window.scrollY > 400
+          ? b.classList.add("vis")
+          : b.classList.remove("vis");
+        window.scrollY > 80
+          ? _nav.classList.add("nav-scrolled")
+          : _nav.classList.remove("nav-scrolled");
+      });
+
+      /* ── UTILS ── */
+      function iu(src) {
+        if (!src) return "";
+        return src.startsWith("http") ? src : "/uploads/" + src;
+      }
+
+      /* ── REVEAL ── */
+      const io = new IntersectionObserver(
+        (e) => {
+          e.forEach((x) => {
+            if (x.isIntersecting) {
+              x.target.classList.add("vis");
+              io.unobserve(x.target);
+            }
+          });
+        },
+        { threshold: 0.05 },
+      );
+      document.querySelectorAll(".rev").forEach((el) => io.observe(el));
+
+      /* ── TOAST ── */
+      let tt2;
+      function showToast(icon, msg) {
+        document.getElementById("ti").innerHTML = icon;
+        document.getElementById("tm2").innerHTML = msg;
+        const t = document.getElementById("toast");
+        t.style.display = "flex";
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => t.classList.add("show"));
+        });
+        clearTimeout(tt2);
+        tt2 = setTimeout(() => {
+          t.classList.remove("show");
+          setTimeout(() => {
+            t.style.display = "none";
+          }, 550);
+        }, 2500);
+      }
+
+
+
+      /* ── FEATURED PRODUCTS ── */
+      async function loadNavAndRooms() {
+        const lang = localStorage.getItem("megaLang") || "en";
+        const rsSection = document.getElementById("rs-section");
+        let allCats = [];
+        let cats = [];
+        try {
+          const res = await fetch(window.location.origin + "/api/categories");
+          if (!res.ok) throw new Error("fetch failed");
+          allCats = await res.json();
+          cats = allCats.filter((cat) => !cat.parentId);
+        } catch (e) {
+          if (rsSection) rsSection.style.display = "none";
+          return;
+        }
+        if (!Array.isArray(cats) || !cats.length) {
+          if (rsSection) rsSection.style.display = "none";
+          return;
+        }
+
+        const rsCards = document.getElementById("rs-cards");
+        if (!rsCards) return;
+        rsCards.innerHTML = cats
+          .map((cat, i) => {
+            const name = lang === "ar" ? cat.nameAr : cat.nameEn;
+            const num = String(i + 1).padStart(2, "0");
+            const arr = lang === "ar" ? "←" : "→";
+            const shopNow = lang === "ar" ? "تسوق الآن" : "Shop Now";
+            
+            const subs = allCats.filter((sub) => sub.parentId === cat.id);
+            const sliderImages = [];
+            if (cat.image) {
+              sliderImages.push({ id: 'main', src: cat.image, name: name });
+            }
+            
+            let subsHtml = "";
+            if (subs.length > 0) {
+              subs.forEach(sub => {
+                const subImg = sub.image || sub.iconUrl;
+                if (subImg) {
+                  sliderImages.push({ id: sub.id, src: subImg, name: sub.nameEn });
+                }
+              });
+
+              subsHtml = `<div class="rs-card-subs">` +
+                subs.map(sub => {
+                  const subName = lang === "ar" ? sub.nameAr : sub.nameEn;
+                  const hasImg = !!(sub.image || sub.iconUrl);
+                  const mouseOverAttr = hasImg ? `onmouseover="setCardImage(this, '${sub.id}')" onmouseout="resumeCardSlider(this)"` : "";
+                  return `<a class="rs-card-sub-link" href="./pages/shop.html?cat=${sub.slug}" ${mouseOverAttr}>` +
+                    `<span class="rs-card-sub-bullet">•</span>` +
+                    `<span data-ar="${sub.nameAr}" data-en="${sub.nameEn}">${subName}</span>` +
+                    `</a>`;
+                }).join("") +
+                `</div>`;
+            } else {
+              subsHtml = `<span class="rs-card-btn"><span data-ar="تسوق الآن" data-en="Shop Now">${shopNow}</span><span class="rs-card-arrow" data-ar="←" data-en="→">${arr}</span></span>`;
+            }
+
+            const imgHtml = sliderImages.map((img, idx) => {
+              return `<img class="rs-card-img${idx === 0 ? ' active' : ''}" data-id="${img.id}" src="${iu(img.src)}" alt="${img.name}" loading="lazy" onerror="this.style.display='none'">`;
+            }).join("");
+
+            const sliderContainerHtml = `<div class="rs-card-images">${imgHtml || '<div class="rs-card-placeholder"></div>'}</div>`;
+
+            return (
+              `<div class="rs-card rev" style="transition-delay:${i * 0.08}s" onclick="if(!event.target.closest('.rs-card-sub-link')) window.location.href='./pages/shop.html?cat=${cat.slug}'">` +
+              sliderContainerHtml +
+              `<div class="rs-card-overlay">` +
+              `<span class="rs-card-num">${num}</span>` +
+              `<span class="rs-card-name" data-ar="${cat.nameAr}" data-en="${cat.nameEn}">${name}</span>` +
+              `<div class="rs-card-sep"></div>` +
+              subsHtml +
+              `</div></div>`
+            );
+          })
+          .join("");
+        if (rsSection) {
+          rsSection.style.display = "";
+          // Allow browser to paint the section before observing for animation
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              rsCards.querySelectorAll(".rs-card.rev").forEach((c) => io.observe(c));
+            });
+          });
+        }
+        setTimeout(initRsDots, 50);
+        setTimeout(initCardSliders, 100);
+      }
+
+
+
+      function initCardSliders() {
+        const cards = document.querySelectorAll(".rs-card");
+        cards.forEach(card => {
+          const images = card.querySelectorAll(".rs-card-img");
+          if (images.length <= 1) return;
+          
+          let currentIndex = 0;
+          let intervalId = null;
+          
+          const startSlider = () => {
+            if (intervalId) return;
+            intervalId = setInterval(() => {
+              images[currentIndex].classList.remove("active");
+              currentIndex = (currentIndex + 1) % images.length;
+              images[currentIndex].classList.add("active");
+            }, 3500);
+          };
+          
+          const stopSlider = () => {
+            if (intervalId) {
+              clearInterval(intervalId);
+              intervalId = null;
+            }
+          };
+          
+          card.__startSlider = startSlider;
+          card.__stopSlider = stopSlider;
+          card.__setSliderIndex = (idx) => {
+            images[currentIndex].classList.remove("active");
+            currentIndex = idx;
+            images[currentIndex].classList.add("active");
+          };
+          
+          startSlider();
+        });
+      }
+
+      function setCardImage(el, subId) {
+        const card = el.closest(".rs-card");
+        if (!card || !card.__setSliderIndex) return;
+        card.__stopSlider();
+        const images = card.querySelectorAll(".rs-card-img");
+        const idx = Array.from(images).findIndex(img => img.getAttribute("data-id") === subId);
+        if (idx !== -1) {
+          card.__setSliderIndex(idx);
+        }
+      }
+      
+      function resumeCardSlider(el) {
+        const card = el.closest(".rs-card");
+        if (!card || !card.__startSlider) return;
+        const images = card.querySelectorAll(".rs-card-img");
+        const mainIdx = Array.from(images).findIndex(img => img.getAttribute("data-id") === "main");
+        if (mainIdx !== -1) {
+          card.__setSliderIndex(mainIdx);
+        }
+        card.__startSlider();
+      }
+
+      /* ── HOMEPAGE TABBED SHOWCASE ── */
+      var showcaseAllProducts = [];
+      var currentShowcaseTab = "best-sellers";
+
+      function filterShowcaseProducts(tab) {
+        if (!Array.isArray(showcaseAllProducts) || !showcaseAllProducts.length) {
+          return [];
+        }
+        let list = [];
+        if (tab === "featured") {
+          list = showcaseAllProducts.filter(
+            (p) => p.featured === true || p.featured === "true",
+          );
+        } else if (tab === "new-arrivals") {
+          list = showcaseAllProducts.filter(
+            (p) => p.isNew === true || p.isNew === "true",
+          );
+        } else if (tab === "best-sellers") {
+          list = showcaseAllProducts.filter(
+            (p) => p.bestSeller === true || p.bestSeller === "true",
+          );
+        } else {
+          list = showcaseAllProducts;
+        }
+        return list.slice(0, 6);
+      }
+
+      function renderShowcaseGrid(tab) {
+        const grid = document.getElementById("fp-grid");
+        if (!grid) return;
+        const l = localStorage.getItem("megaLang") || "en";
+        const items = filterShowcaseProducts(tab);
+
+        if (!items.length) {
+          grid.innerHTML = `<div style="flex: 0 0 100%; text-align: center; padding: 60px 20px; color: var(--tm); font-size: 15px; background: var(--s2); border-radius: 12px; border: 1px solid var(--b);">${l === "ar" ? "لا توجد منتجات حالياً." : "No products available at the moment."}</div>`;
+          return;
+        }
+
+        grid.innerHTML = items
+          .map((p) => {
+            const name =
+              (l === "ar" ? p.nameAr : p.nameEn) ||
+              p.nameAr ||
+              p.nameEn ||
+              "";
+            const img = p.mainPhoto || (p.photos && p.photos[0]);
+            const imgSrc = img
+              ? img.startsWith("http")
+                ? img
+                : "/uploads/" + img
+              : "";
+            const imgHtml = imgSrc
+              ? `<img src="${imgSrc}" alt="${name}" loading="lazy">`
+              : `<div class="fpcimg-ph"><svg class="fpcph-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`;
+
+            const priceNum = Number(p.price) || 0;
+            const salePriceNum = p.salePrice != null ? Number(p.salePrice) : null;
+            const hasDisc = salePriceNum != null && salePriceNum < priceNum;
+
+            const discLabelText = hasDisc
+              ? p.discountPercent != null
+                ? l === "ar"
+                  ? `خصم ${p.discountPercent}%`
+                  : `${p.discountPercent}% OFF`
+                : l === "ar"
+                ? `خصم EGP ${Number(priceNum - salePriceNum).toLocaleString()}`
+                : `SAVE EGP ${Number(priceNum - salePriceNum).toLocaleString()}`
+              : "";
+
+            const displayPrice = hasDisc
+              ? `<span style="font-size:11px;color:var(--tm);text-decoration:line-through;margin-inline-end:6px">EGP ${Number(priceNum).toLocaleString()}</span><span style="font-size:13px;color:var(--o);font-weight:700">EGP ${Number(salePriceNum).toLocaleString()}</span>`
+              : `EGP ${Number(priceNum).toLocaleString()}`;
+
+            return `<a class="fpc rev" href="./pages/product.html?id=${p.id}">
+              <div class="fpcimg">
+                ${hasDisc ? `<div class="discount-bar-red">${discLabelText}</div>` : ""}
+                ${imgHtml}
+              </div>
+              <div class="fpcb">
+                <h3>${name}</h3>
+                <p class="pr">${displayPrice}</p>
+              </div>
+            </a>`;
+          })
+          .join("");
+
+        if (typeof io !== "undefined" && io.observe) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              grid.querySelectorAll(".fpc.rev").forEach((c, i) => {
+                c.style.transitionDelay = i * 0.08 + "s";
+                io.observe(c);
+              });
+            });
+          });
+        }
+      }
+
+      function switchShowcaseTab(tab) {
+        currentShowcaseTab = tab;
+        const nav = document.querySelector(".showcase-tabs-nav");
+        if (nav) {
+          nav.querySelectorAll(".showcase-tab").forEach((btn) => {
+            if (btn.getAttribute("data-tab") === tab) {
+              btn.classList.add("active");
+            } else {
+              btn.classList.remove("active");
+            }
+          });
+        }
+        renderShowcaseGrid(tab);
+      }
+
+      function scrollFpGrid(dir) {
+        const grid = document.getElementById("fp-grid");
+        if (!grid) return;
+        const isRtl = document.documentElement.dir === "rtl";
+        const scrollAmount = grid.offsetWidth * 0.7;
+        const sign = isRtl ? -1 : 1;
+        grid.scrollBy({ left: dir * sign * scrollAmount, behavior: "smooth" });
+      }
+
+      async function loadShowcase() {
+        const grid = document.getElementById("fp-grid");
+        const sec = document.getElementById("fp-section");
+        if (!grid) return;
+        try {
+          const res = await fetch(window.location.origin + "/api/products");
+          if (!res.ok) throw new Error("fetch failed");
+          const items = await res.json();
+          if (!Array.isArray(items) || !items.length) {
+            if (sec) sec.style.display = "none";
+            return;
+          }
+          showcaseAllProducts = items;
+          renderShowcaseGrid(currentShowcaseTab);
+          if (sec) sec.style.display = "";
+        } catch (err) {
+          console.error("loadShowcase error:", err);
+          if (sec) sec.style.display = "none";
+        }
+      }
+
+      /* ── FURNITURE INTRO SCENE ── */
+      (function () {
+        const svg = document.getElementById("iso-svg");
+        if (!svg) return;
+        const U = 24,
+          ox = 204,
+          oy = 168,
+          S3H = Math.sqrt(3) / 2;
+        function iso(x, y, z) {
+          return [ox + (x - y) * S3H * U, oy + (x + y) * 0.5 * U - z * U];
+        }
+        function poly(pts, fill, stroke, sw) {
+          const el = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "polygon",
+          );
+          el.setAttribute(
+            "points",
+            pts
+              .map(function (p) {
+                return p[0].toFixed(1) + "," + p[1].toFixed(1);
+              })
+              .join(" "),
+          );
+          el.setAttribute("fill", fill);
+          if (stroke) {
+            el.setAttribute("stroke", stroke);
+            el.setAttribute("stroke-width", sw || "0.6");
+            el.setAttribute("stroke-linejoin", "round");
+          }
+          return el;
+        }
+        function box(x1, x2, y1, y2, z1, z2, t, r, f, g) {
+          const TL = iso(x1, y1, z2),
+            TR = iso(x2, y1, z2),
+            BR = iso(x2, y2, z2),
+            BL = iso(x1, y2, z2),
+            TR0 = iso(x2, y1, z1),
+            BR0 = iso(x2, y2, z1),
+            BL0 = iso(x1, y2, z1);
+          g.appendChild(poly([TL, TR, BR, BL], t, "rgba(0,0,0,0.09)"));
+          g.appendChild(poly([TR, TR0, BR0, BR], r, "rgba(0,0,0,0.07)"));
+          g.appendChild(poly([BR, BR0, BL0, BL], f, "rgba(0,0,0,0.07)"));
+        }
+        function grp(id) {
+          const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          g.id = id;
+          g.style.cssText = "opacity:0;transition:none";
+          svg.appendChild(g);
+          return g;
+        }
+        function show(g, delay) {
+          g.style.transform = "translateY(8px)";
+          setTimeout(function () {
+            g.style.cssText =
+              "opacity:1;transform:translateY(0);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1)";
+          }, delay);
+        }
+
+        /* ── FLOOR ── */
+        const gF = grp("iso-g-floor");
+        box(
+          -3.5,
+          5.0,
+          -0.5,
+          4.6,
+          -0.03,
+          0,
+          "#1c140a",
+          "#120d06",
+          "#120d06",
+          gF,
+        );
+        const rug = poly(
+          [
+            iso(-2.2, 0.2, 0.01),
+            iso(3.5, 0.2, 0.01),
+            iso(3.5, 3.9, 0.01),
+            iso(-2.2, 3.9, 0.01),
+          ],
+          "rgba(245,166,35,0.05)",
+        );
+        rug.setAttribute("stroke", "rgba(245,166,35,0.18)");
+        rug.setAttribute("stroke-width", "0.7");
+        gF.appendChild(rug);
+        /* rug border detail */
+        const rugI = poly(
+          [
+            iso(-1.9, 0.5, 0.01),
+            iso(3.2, 0.5, 0.01),
+            iso(3.2, 3.6, 0.01),
+            iso(-1.9, 3.6, 0.01),
+          ],
+          "none",
+        );
+        rugI.setAttribute("stroke", "rgba(245,166,35,0.08)");
+        rugI.setAttribute("stroke-width", "0.5");
+        gF.appendChild(rugI);
+
+        /* ── COFFEE TABLE ── */
+        const gT = grp("iso-g-table");
+        /* legs */
+        [
+          [0.08, 0.26, 0.58, 0.76],
+          [1.74, 1.92, 0.58, 0.76],
+          [0.08, 0.26, 1.24, 1.42],
+          [1.74, 1.92, 1.24, 1.42],
+        ].forEach(function (l) {
+          box(
+            l[0],
+            l[1],
+            l[2],
+            l[3],
+            0,
+            0.44,
+            "#7a4520",
+            "#562e12",
+            "#3e1f08",
+            gT,
+          );
+        });
+        /* lower shelf */
+        box(
+          0.12,
+          1.88,
+          0.62,
+          1.38,
+          0.18,
+          0.22,
+          "#9c6035",
+          "#7a4820",
+          "#5a3210",
+          gT,
+        );
+        /* tabletop — walnut */
+        box(
+          -0.18,
+          2.18,
+          0.42,
+          1.58,
+          0.44,
+          0.6,
+          "#d4906e",
+          "#a86040",
+          "#7a4022",
+          gT,
+        );
+        /* books stack on table */
+        box(
+          0.28,
+          0.76,
+          0.65,
+          1.1,
+          0.6,
+          0.75,
+          "#3a5068",
+          "#2a3a50",
+          "#1e2c3c",
+          gT,
+        );
+        box(
+          0.28,
+          0.7,
+          0.65,
+          1.1,
+          0.75,
+          0.84,
+          "#c05838",
+          "#8a3820",
+          "#601c10",
+          gT,
+        );
+        /* small tray */
+        box(
+          1.2,
+          1.85,
+          0.68,
+          1.15,
+          0.6,
+          0.65,
+          "#b89070",
+          "#8a6448",
+          "#6a4c34",
+          gT,
+        );
+        /* candle on tray */
+        box(
+          1.48,
+          1.62,
+          0.85,
+          0.99,
+          0.65,
+          0.88,
+          "#e8dcc8",
+          "#c8b898",
+          "#a89070",
+          gT,
+        );
+
+        /* ── CHAIR LEFT ── (faces right, backrest on left side x=min) */
+        const gCL = grp("iso-g-chair-l");
+        /* frame/base */
+        box(-3.1, -1.1, 0.0, 1.8, 0, 0.5, "#b87c38", "#8a5820", "#643e12", gCL);
+        /* seat cushion */
+        box(
+          -2.96,
+          -1.24,
+          0.14,
+          1.66,
+          0.5,
+          0.68,
+          "#d4a060",
+          "#a87838",
+          "#7c5420",
+          gCL,
+        );
+        /* left armrest */
+        box(
+          -3.1,
+          -1.1,
+          0.0,
+          0.25,
+          0.5,
+          0.8,
+          "#a06830",
+          "#7a4e1c",
+          "#5a380e",
+          gCL,
+        );
+        /* right armrest */
+        box(
+          -3.1,
+          -1.1,
+          1.55,
+          1.8,
+          0.5,
+          0.8,
+          "#a06830",
+          "#7a4e1c",
+          "#5a380e",
+          gCL,
+        );
+        /* backrest */
+        box(
+          -3.1,
+          -2.72,
+          0.0,
+          1.8,
+          0.5,
+          1.58,
+          "#8a5c28",
+          "#643e18",
+          "#4a2c0c",
+          gCL,
+        );
+        /* backrest cushion */
+        box(
+          -2.74,
+          -2.94,
+          0.18,
+          1.62,
+          0.5,
+          1.42,
+          "#c49050",
+          "#9a6c30",
+          "#705018",
+          gCL,
+        );
+
+        /* ── CHAIR RIGHT ── (faces left, backrest on right side x=max) */
+        const gCR = grp("iso-g-chair-r");
+        box(2.1, 4.1, 0.0, 1.8, 0, 0.5, "#b87c38", "#8a5820", "#643e12", gCR);
+        box(
+          2.26,
+          3.94,
+          0.14,
+          1.66,
+          0.5,
+          0.68,
+          "#d4a060",
+          "#a87838",
+          "#7c5420",
+          gCR,
+        );
+        box(
+          2.1,
+          4.1,
+          0.0,
+          0.25,
+          0.5,
+          0.8,
+          "#a06830",
+          "#7a4e1c",
+          "#5a380e",
+          gCR,
+        );
+        box(
+          2.1,
+          4.1,
+          1.55,
+          1.8,
+          0.5,
+          0.8,
+          "#a06830",
+          "#7a4e1c",
+          "#5a380e",
+          gCR,
+        );
+        box(
+          3.72,
+          4.1,
+          0.0,
+          1.8,
+          0.5,
+          1.58,
+          "#8a5c28",
+          "#643e18",
+          "#4a2c0c",
+          gCR,
+        );
+        box(
+          3.7,
+          3.92,
+          0.18,
+          1.62,
+          0.5,
+          1.42,
+          "#c49050",
+          "#9a6c30",
+          "#705018",
+          gCR,
+        );
+
+        /* ── SIDE TABLE (left of sofa) ── */
+        const gST = grp("iso-g-sidetable");
+        box(
+          -2.8,
+          -2.02,
+          2.0,
+          2.7,
+          0,
+          0.46,
+          "#8a6040",
+          "#643e22",
+          "#4a2c14",
+          gST,
+        );
+        box(
+          -2.7,
+          -2.12,
+          2.1,
+          2.6,
+          0.3,
+          0.34,
+          "#9a7050",
+          "#7a5030",
+          "#5a3818",
+          gST,
+        );
+        /* small plant pot on side table */
+        box(
+          -2.62,
+          -2.22,
+          2.18,
+          2.58,
+          0.46,
+          0.66,
+          "#5a4028",
+          "#3e2c18",
+          "#2c1e0e",
+          gST,
+        );
+        box(
+          -2.58,
+          -2.26,
+          2.22,
+          2.54,
+          0.66,
+          0.8,
+          "#2e4a28",
+          "#1e3018",
+          "#14200e",
+          gST,
+        );
+
+        /* ── SOFA ── */
+        const gS = grp("iso-g-sofa");
+        /* base */
+        box(-1.0, 3.0, 2.8, 4.3, 0, 0.72, "#9a8878", "#746458", "#584c40", gS);
+        /* left armrest */
+        box(
+          -1.0,
+          -0.66,
+          2.8,
+          4.3,
+          0.72,
+          1.12,
+          "#8a7868",
+          "#665848",
+          "#4e4030",
+          gS,
+        );
+        /* right armrest */
+        box(
+          2.66,
+          3.0,
+          2.8,
+          4.3,
+          0.72,
+          1.12,
+          "#8a7868",
+          "#665848",
+          "#4e4030",
+          gS,
+        );
+        /* backrest */
+        box(
+          -1.0,
+          3.0,
+          4.02,
+          4.3,
+          0.72,
+          1.78,
+          "#746458",
+          "#584c40",
+          "#42382e",
+          gS,
+        );
+        /* 3 seat cushions */
+        box(
+          -0.62,
+          0.42,
+          2.95,
+          4.0,
+          0.72,
+          0.93,
+          "#d4bca8",
+          "#b09680",
+          "#886858",
+          gS,
+        );
+        box(
+          0.58,
+          1.56,
+          2.95,
+          4.0,
+          0.72,
+          0.93,
+          "#d4bca8",
+          "#b09680",
+          "#886858",
+          gS,
+        );
+        box(
+          1.72,
+          2.62,
+          2.95,
+          4.0,
+          0.72,
+          0.93,
+          "#d4bca8",
+          "#b09680",
+          "#886858",
+          gS,
+        );
+        /* 3 back pillows */
+        box(
+          -0.58,
+          0.28,
+          3.78,
+          4.04,
+          0.93,
+          1.4,
+          "#ecd8c0",
+          "#c8a880",
+          "#9a7850",
+          gS,
+        );
+        box(
+          0.58,
+          1.42,
+          3.78,
+          4.04,
+          0.93,
+          1.4,
+          "#ecd8c0",
+          "#c8a880",
+          "#9a7850",
+          gS,
+        );
+        box(
+          1.6,
+          2.5,
+          3.78,
+          4.04,
+          0.93,
+          1.4,
+          "#ecd8c0",
+          "#c8a880",
+          "#9a7850",
+          gS,
+        );
+        /* decorative throw on armrest */
+        box(
+          2.6,
+          2.8,
+          3.0,
+          3.8,
+          1.12,
+          1.18,
+          "#c8a060",
+          "#a07840",
+          "#785828",
+          gS,
+        );
+
+        /* ── FLOOR LAMP ── */
+        const gL = grp("iso-g-lamp");
+        /* base disc */
+        box(
+          3.7,
+          3.98,
+          2.5,
+          2.78,
+          -0.01,
+          0.04,
+          "#4a3820",
+          "#322614",
+          "#22180a",
+          gL,
+        );
+        /* pole */
+        box(
+          3.8,
+          3.88,
+          2.6,
+          2.68,
+          0.04,
+          2.5,
+          "#5a4228",
+          "#3e2e1a",
+          "#2a1e10",
+          gL,
+        );
+        /* shade */
+        box(
+          3.5,
+          4.18,
+          2.3,
+          2.98,
+          2.2,
+          2.55,
+          "#e8c870",
+          "#c0a048",
+          "#8c7030",
+          gL,
+        );
+        box(
+          3.6,
+          4.08,
+          2.4,
+          2.88,
+          2.55,
+          2.62,
+          "#d4b458",
+          "#a88830",
+          "#7a6020",
+          gL,
+        );
+        /* warm glow on floor */
+        const glow = poly(
+          [
+            iso(3.0, 2.0, 0.01),
+            iso(4.6, 2.0, 0.01),
+            iso(4.6, 3.5, 0.01),
+            iso(3.0, 3.5, 0.01),
+          ],
+          "rgba(245,190,60,0.04)",
+        );
+        gL.appendChild(glow);
+
+        /* ── ANIMATE SEQUENCE ── */
+        show(gF, 60);
+        show(gT, 340);
+        show(gCL, 620);
+        show(gCR, 840);
+        show(gST, 1020);
+        show(gS, 1100);
+        show(gL, 1360);
+        setTimeout(function () {
+          const b = document.getElementById("iso-brand");
+          if (b) b.classList.add("vis");
+        }, 1700);
+      })();
+
+      /* ── ISOMETRIC INTRO DISMISS ── */
+      (function () {
+        const intro = document.getElementById("iso-intro");
+        if (!intro) return;
+        // Skip intro entirely on mobile for performance
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+          intro.remove();
+          return;
+        }
+        if (!sessionStorage.getItem("introPlayed")) {
+          sessionStorage.setItem("introPlayed", "1");
+          document.body.style.overflow = "hidden";
+          setTimeout(() => {
+            intro.classList.add("iso-exit");
+            setTimeout(() => {
+              intro.remove();
+              document.body.style.overflow = "";
+            }, 650);
+          }, 3200);
+        } else {
+          intro.remove();
+        }
+      })();
+
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeCart();
+      });
+      /* ── GENERAL ANNOUNCEMENT ── */
+      window.megaAnn = null;
+      window.renderGenAnn = function () {
+        if (!window.megaAnn || !window.megaAnn.active) return;
+        if (sessionStorage.getItem("genAnnDismissed")) return;
+        const l = localStorage.getItem("megaLang") || "en";
+        const msg = l === "ar" ? window.megaAnn.message_ar : window.megaAnn.message_en;
+        if (!msg) return;
+        let html = msg;
+        if (window.megaAnn.link) {
+          const lt =
+            l === "ar"
+              ? window.megaAnn.linkText_ar || window.megaAnn.linkText_en
+              : window.megaAnn.linkText_en || window.megaAnn.linkText_ar;
+          if (lt)
+            html += ` <a href="${window.megaAnn.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+        }
+        const msgEl = document.getElementById("gen-ann-msg");
+        if (msgEl) msgEl.innerHTML = html;
+        
+        const container = document.getElementById("gen-ann-msg-container");
+        if (container) {
+          let unitHtml = `<span class="ann-item">${html}</span><span class="ann-bullet">&bull;</span>`;
+          let half = unitHtml.repeat(4);
+          container.innerHTML = half + half;
+        }
+        
+        const bar = document.getElementById("gen-ann-bar");
+        if (bar) {
+          bar.style.display = "flex";
+          document.body.classList.add("gen-ann-visible");
+        }
+      };
+
+      (async function () {
+        try {
+          if (sessionStorage.getItem("genAnnDismissed")) return;
+          const r = await fetch(window.location.origin + "/api/announcement");
+          if (!r.ok) return;
+          window.megaAnn = await r.json();
+          window.renderGenAnn();
+        } catch {}
+      })();
+      function dismissGenAnn() {
+        sessionStorage.setItem("genAnnDismissed", "1");
+        document.getElementById("gen-ann-bar").style.display = "none";
+        document.body.classList.remove("gen-ann-visible");
+      }
+
+      function toggleWaMenu(e) {
+        if (e) e.stopPropagation();
+        const menu = document.getElementById("wa-menu");
+        if (menu) menu.classList.toggle("show");
+      }
+      document.addEventListener("click", () => {
+        const menu = document.getElementById("wa-menu");
+        if (menu) menu.classList.remove("show");
+      });
+
+      /* ── ACTIVE COLLECTION ── */
+      /* ── BUNDLES ── */
+      function renderBundleCard(b, lang) {
+        const name =
+          lang === "ar" ? b.nameAr || b.nameEn : b.nameEn || b.nameAr;
+        const imgHtml = b.image
+          ? `<img src="${b.image.startsWith("http") ? b.image : "/uploads/" + b.image}" alt="${name}" loading="lazy"/>`
+          : "";
+        const saveHtml = b.discountPct
+          ? `<span class="bc-save">${lang === "ar" ? "وفّر" : "Save"} ${b.discountPct}%</span>`
+          : "";
+        const items = b.items || [];
+        const thumbs = items
+          .slice(0, 4)
+          .map((p) => {
+            if (p.mainPhoto) {
+              const src = p.mainPhoto.startsWith("http")
+                ? p.mainPhoto
+                : "/uploads/" + p.mainPhoto;
+              return `<div class="bc-thumb" style="background-image:url('${src}')"></div>`;
+            }
+            const init = (p.nameEn || p.nameAr || "?")[0];
+            return `<div class="bc-thumb">${init}</div>`;
+          })
+          .join("");
+        const more =
+          items.length > 4
+            ? `<div class="bc-thumb">+${items.length - 4}</div>`
+            : "";
+        const origFmt = "EGP " + Number(b.originalTotal || 0).toLocaleString();
+        const bndFmt = "EGP " + Number(b.bundlePrice || 0).toLocaleString();
+        const savAmt =
+          Number(b.originalTotal || 0) - Number(b.bundlePrice || 0);
+        const countLbl =
+          lang === "ar"
+            ? `يشمل ${items.length} منتجات`
+            : `Includes ${items.length} products`;
+        const addLbl = t("bundles-add");
+        const savLbl =
+          lang === "ar"
+            ? `توفر EGP ${savAmt.toLocaleString()}`
+            : `Save EGP ${savAmt.toLocaleString()}`;
+        return `<div class="bundle-card" onclick="location.href='./pages/bundle.html?id=${b.id}'">
+          <div class="bc-img">${imgHtml}${saveHtml}</div>
+          <div class="bc-body">
+            <div class="bc-name">${name}</div>
+            <div class="bc-count">${countLbl}</div>
+            <div class="bc-thumbs">${thumbs}${more}</div>
+            <div class="bc-prices">
+              <span class="bc-original">${origFmt}</span>
+              <span class="bc-price">${bndFmt}</span>
+              ${savAmt > 0 ? `<span class="bc-savings">${savLbl}</span>` : ""}
+            </div>
+            <button class="bc-btn" onclick="event.stopPropagation();addBundleToCart('${b.id}',this)">${addLbl}</button>
+          </div>
+        </div>`;
+      }
+
+      function addBundleToCart(bundleId, btn) {
+        const lang = localStorage.getItem("megaLang") || "en";
+        const addedLbl = t("bundles-added");
+        const origLbl = btn.textContent.trim();
+        fetch(window.location.origin + "/api/bundles")
+          .then((r) => r.json())
+          .then((bundles) => {
+            const b = bundles.find((x) => x.id === bundleId);
+            if (!b) return;
+            const cartId = "bundle_" + b.id;
+            const existing = cart.find((c) => c.id === cartId);
+            if (existing) {
+              existing.qty++;
+            } else {
+              cart.push({
+                id: cartId,
+                isBundle: true,
+                bundleId: b.id,
+                qty: 1,
+                nameAr: b.nameAr,
+                nameEn: b.nameEn,
+                price: b.bundlePrice,
+                mainPhoto:
+                  b.image ||
+                  (b.items && b.items[0] && b.items[0].mainPhoto) ||
+                  null,
+                itemCount: b.items ? b.items.length : 0,
+                items: (b.items || []).map((p) => ({
+                  nameAr: p.nameAr,
+                  nameEn: p.nameEn,
+                })),
+              });
+            }
+            saveCart();
+            updBadge();
+            renderCart();
+            btn.textContent = addedLbl;
+            btn.classList.add("added");
+            setTimeout(() => {
+              btn.textContent = origLbl;
+              btn.classList.remove("added");
+            }, 2000);
+          })
+          .catch(() => {});
+      }
+
+      async function loadHomeBundles() {
+        try {
+          const res = await fetch(window.location.origin + "/api/bundles");
+          if (!res.ok) return;
+          const bundles = await res.json();
+          if (!bundles.length) return;
+          const sec = document.getElementById("home-bundles-sec");
+          const grid = document.getElementById("home-bs-grid");
+          if (!sec || !grid) return;
+          const lang = localStorage.getItem("megaLang") || "en";
+          grid.innerHTML = bundles
+            .slice(0, 3)
+            .map((b) => renderBundleCard(b, lang))
+            .join("");
+          sec.style.display = "";
+          applyLang(lang);
+        } catch {}
+      }
+
+      updBadge();
+
+
+      loadNavAndRooms();
+      loadShowcase();
+      // loadHomeBundles();
+
+      /* ── BUNDLE DETAIL MODAL ── */
+      function openBundleDetail(bundleId) {
+        location.href = './pages/bundle.html?id=' + bundleId;
+      }
+      function old_openBundleDetail(bundleId) {
+        fetch(window.location.origin + "/api/bundles")
+          .then((r) => r.json())
+          .then((bundles) => {
+            const b = bundles.find((x) => x.id === bundleId);
+            if (!b) return;
+            const lang = localStorage.getItem("megaLang") || "en";
+            const name =
+              lang === "ar" ? b.nameAr || b.nameEn : b.nameEn || b.nameAr;
+            document.getElementById("bdm-name").textContent = name;
+            const bdmImg = document.getElementById("bdm-img");
+            if (b.image) {
+              const src = b.image.startsWith("http")
+                ? b.image
+                : "/uploads/" + b.image;
+              bdmImg.style.backgroundImage = `url('${src}')`;
+            } else {
+              bdmImg.style.backgroundImage = "";
+            }
+            document.getElementById("bdm-tag").textContent = b.bundleTag || "";
+            document.getElementById("bdm-count").textContent =
+              lang === "ar"
+                ? `يشمل ${b.items.length} منتجات`
+                : `Includes ${b.items.length} products`;
+            document.getElementById("bdm-items").innerHTML = (b.items || [])
+              .map((p) => {
+                const pn =
+                  lang === "ar" ? p.nameAr || p.nameEn : p.nameEn || p.nameAr;
+                const src =
+                  p.mainPhoto && p.mainPhoto !== "<>"
+                    ? p.mainPhoto.startsWith("http")
+                      ? p.mainPhoto
+                      : "/uploads/" + p.mainPhoto
+                    : "";
+                const bg = src ? `background-image:url('${src}')` : "";
+                return `<div class="bdm-item">
+                  <div class="bdm-item-img" style="${bg}"></div>
+                  <div class="bdm-item-name">${pn}</div>
+                  <div class="bdm-item-price">EGP ${Number(p.price || 0).toLocaleString()}</div>
+                </div>`;
+              })
+              .join("");
+            const orig = Number(b.originalTotal || 0);
+            const bndl = Number(b.bundlePrice || 0);
+            const sav = orig - bndl;
+            document.getElementById("bdm-original").textContent =
+              orig > 0 ? `EGP ${orig.toLocaleString()}` : "";
+            document.getElementById("bdm-price").textContent =
+              `EGP ${bndl.toLocaleString()}`;
+            document.getElementById("bdm-savings").textContent =
+              sav > 0
+                ? lang === "ar"
+                  ? `توفر EGP ${sav.toLocaleString()} (${b.discountPct || 0}%)`
+                  : `Save EGP ${sav.toLocaleString()} (${b.discountPct || 0}%)`
+                : "";
+            const addBtn = document.getElementById("bdm-add");
+            addBtn.textContent = t("bundles-add");
+            addBtn.onclick = () => {
+              addBundleToCart(b.id, addBtn);
+              closeBundleDetail();
+            };
+            document.getElementById("bundleDetailModal").style.display = "flex";
+          })
+          .catch(() => {});
+      }
+      function closeBundleDetail() {
+        document.getElementById("bundleDetailModal").style.display = "none";
+      }
+    </script>
+
+    <!-- BUNDLE DETAIL MODAL -->
+    <div
+      class="bundle-detail-modal"
+      id="bundleDetailModal"
+      style="display: none"
+    >
+      <div class="bdm-overlay" onclick="closeBundleDetail()"></div>
+      <div class="bdm-content">
+        <button class="bdm-close" onclick="closeBundleDetail()"></button>
+        <div class="bdm-img" id="bdm-img"></div>
+        <div class="bdm-body">
+          <span class="bdm-tag" id="bdm-tag"></span>
+          <h2 class="bdm-name" id="bdm-name"></h2>
+          <p class="bdm-count" id="bdm-count"></p>
+          <div class="bdm-items" id="bdm-items"></div>
+          <div class="bdm-prices">
+            <span class="bdm-original" id="bdm-original"></span>
+            <span class="bdm-price" id="bdm-price"></span>
+            <span class="bdm-savings" id="bdm-savings"></span>
+          </div>
+          <button class="bdm-add" id="bdm-add"></button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "test-banner-1",
+    "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=1200",
+    "link": "pages/shop.html",
+    "order": 1,
+    "active": true,
+    "createdAt": "2026-07-01T10:00:00.000Z"
+  },
+  {
+    "id": "test-banner-2",
+    "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1200",
+    "link": "pages/shop.html",
+    "order": 2,
+    "active": true,
+    "createdAt": "2026-07-01T10:00:00.000Z"
+  },
+  {
+    "id": "test-banner-3",
+    "image": "https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&q=80&w=1200",
+    "link": "pages/custom-work.html",
+    "order": 3,
+    "active": true,
+    "createdAt": "2026-07-01T10:00:00.000Z"
+  }
+]

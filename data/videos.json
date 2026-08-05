@@ -1,0 +1,27 @@
+[
+  {
+    "id": "e2754a14-4768-4ee3-a23c-5db24191a09b",
+    "titleAr": "ريل ميجا فرنيتشر",
+    "titleEn": "Mega Furniture Reel",
+    "linkUrl": "https://www.instagram.com/p/DYhkT1IBu6B/",
+    "embedUrl": "https://www.instagram.com/p/DYhkT1IBu6B/embed/",
+    "platform": "instagram",
+    "active": true,
+    "order": 0,
+    "createdAt": "2026-05-18T10:01:04.485Z",
+    "updatedAt": "2026-05-18T10:01:50.314Z"
+  },
+  {
+    "id": "24c1def5-eb59-4b6a-a409-e1bd239806fd",
+    "titleAr": "Showroom Test Video Ar",
+    "titleEn": "Showroom Test Video",
+    "linkUrl": "",
+    "videoUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "embedUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "platform": "local",
+    "active": true,
+    "order": 1,
+    "createdAt": "2026-07-11T11:09:09.768Z",
+    "updatedAt": "2026-07-11T11:16:39.043Z"
+  }
+]

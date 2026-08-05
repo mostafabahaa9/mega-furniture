@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mega Furniture | Track Your Order</title>
+    <meta name="description" content="Track your Mega Furniture order status in real-time. Enter your tracking code or phone number to see delivery updates." />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500&family=Jost:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --o: #f5a623;
+        --od: #b8722a;
+        --ol: #f7b84a;
+        --bg: #0a0a0a;
+        --s: #161616;
+        --s2: #212121;
+        --s3: #2e2e2e;
+        --t: #f5f4f0;
+        --tm: #908c84;
+        --b: rgba(255, 255, 255, 0.07);
+        --bh: rgba(245, 166, 35, 0.4);
+        --nb: rgba(10, 10, 10, 0.93);
+        --sh: 0 8px 40px rgba(0, 0, 0, 0.55);
+        --font-head: "Fraunces", serif;
+        --font-body: "Outfit", sans-serif;
+      }
+      [data-theme="light"] {
+        --bg: #f7f3ec;
+        --s: #fefcf8;
+        --s2: #ede4d6;
+        --s3: #dfd2bf;
+        --t: #1a1612;
+        --tm: #6b5d4f;
+        --b: rgba(26, 22, 18, 0.08);
+        --bh: rgba(232, 150, 30, 0.28);
+        --nb: rgba(247, 243, 236, 0.95);
+        --sh: 0 8px 40px rgba(26, 22, 18, 0.1);
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; overflow-x: hidden; }
+      body {
+        background: var(--bg);
+        color: var(--t);
+        font-family: "Outfit", sans-serif;
+        overflow-x: hidden;
+        transition: background 0.3s, color 0.3s;
+        min-height: 100vh;
+      }
+
+      .css-x { position: relative; display: inline-block; width: 14px; height: 14px; }
+      .css-x::before, .css-x::after { content: ''; position: absolute; width: 100%; height: 1.5px; background: currentColor; top: 50%; left: 0; }
+      .css-x::before { transform: translateY(-50%) rotate(45deg); }
+      .css-x::after  { transform: translateY(-50%) rotate(-45deg); }
+
+      /* ── PROGRESS BAR ── */
+      .pb { position: fixed; top: 0; left: 0; height: 3px; background: var(--o); z-index: 9999; width: 0; transition: width 0.1s; pointer-events: none; }
+
+      /* ── ANNOUNCEMENT BAR ── */
+      #gen-ann-bar { position: relative; width: 100%; z-index: 10; background: #0e0d0b; color: #fff; height: 42px; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.08em; display: none; align-items: center; justify-content: center; padding: 0 48px; overflow: hidden; }
+      .ann-marquee-container { overflow: hidden; width: 100%; display: flex; align-items: center; mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent); }
+      .ann-marquee-content { display: flex; align-items: center; white-space: nowrap; animation: ann-marquee-anim 20s linear infinite; width: max-content; will-change: transform; }
+      .ann-item { display: inline-flex; align-items: center; padding: 0 20px; }
+      .ann-bullet { color: var(--o); font-weight: bold; margin-left: 20px; }
+      @keyframes ann-marquee-anim { 0% { transform: translate3d(0,0,0); } 100% { transform: translate3d(-50%,0,0); } }
+
+      /* ── MAIN ── */
+      .track-page {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 60px 24px 80px;
+      }
+      .track-hero {
+        text-align: center;
+        margin-bottom: 48px;
+      }
+      .track-hero-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, var(--o), #e08a10);
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 32px rgba(245,166,35,0.25);
+      }
+      .track-hero h1 {
+        font-family: var(--font-head);
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--t);
+      }
+      .track-hero p {
+        color: var(--tm);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      /* ── SEARCH BOX ── */
+      .track-search-box {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: var(--sh);
+        margin-bottom: 40px;
+      }
+      .track-input-wrap {
+        display: flex;
+        gap: 12px;
+      }
+      .track-input {
+        flex: 1;
+        background: var(--s2);
+        border: 1.5px solid var(--b);
+        border-radius: 14px;
+        padding: 14px 18px;
+        font-size: 15px;
+        font-family: "Outfit", sans-serif;
+        color: var(--t);
+        outline: none;
+        transition: border-color 0.2s;
+        direction: ltr;
+        text-align: left;
+      }
+      .track-input:focus {
+        border-color: var(--o);
+      }
+      .track-input::placeholder {
+        color: var(--tm);
+        opacity: 0.7;
+      }
+      .track-btn {
+        background: var(--o);
+        color: #fff;
+        border: none;
+        border-radius: 14px;
+        padding: 14px 28px;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: "Outfit", sans-serif;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.2s, transform 0.15s;
+      }
+      .track-btn:hover {
+        background: #e09010;
+        transform: translateY(-1px);
+      }
+      .track-btn:active { transform: translateY(0); }
+      .track-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      @media (max-width: 500px) {
+        .track-input-wrap { flex-direction: column; }
+        .track-btn { width: 100%; }
+        .track-hero h1 { font-size: 26px; }
+        .track-page { padding: 40px 16px 60px; }
+      }
+
+      /* ── ERROR / EMPTY ── */
+      .track-error {
+        text-align: center;
+        padding: 24px;
+        color: #e74c3c;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* ── RESULT CARD ── */
+      .track-result {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--sh);
+        animation: fadeUp 0.4s ease;
+      }
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .track-result-header {
+        background: var(--s2);
+        border-bottom: 1px solid var(--b);
+        padding: 24px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .track-code {
+        font-family: monospace;
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--o);
+        letter-spacing: 0.04em;
+      }
+      .track-status-badge {
+        display: inline-block;
+        padding: 6px 18px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.03em;
+      }
+      .badge-received { background: #F5A623; }
+      .badge-processing { background: #F5A623; }
+      .badge-shipped { background: #1e90ff; }
+      .badge-delivered { background: #2ed573; }
+      .badge-cancelled { background: #ff4757; }
+      .badge-returned { background: #ff9800; }
+
+      .track-result-body { padding: 28px 32px; }
+
+      /* ── INFO GRID ── */
+      .track-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      .track-info-item {
+        background: var(--bg);
+        border: 1px solid var(--b);
+        border-radius: 14px;
+        padding: 16px;
+      }
+      .track-info-label {
+        font-size: 11px;
+        color: var(--tm);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+      }
+      .track-info-value {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--t);
+      }
+      @media (max-width: 500px) {
+        .track-info-grid { grid-template-columns: 1fr; }
+        .track-result-header { padding: 20px 20px; }
+        .track-result-body { padding: 20px 20px; }
+      }
+
+      /* ── TIMELINE ── */
+      .track-timeline-title {
+        font-size: 12px;
+        color: var(--tm);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+      .track-timeline {
+        position: relative;
+        padding-left: 28px;
+      }
+      html[dir="rtl"] .track-timeline {
+        padding-left: 0;
+        padding-right: 28px;
+      }
+      .track-timeline::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        top: 4px;
+        bottom: 4px;
+        width: 2px;
+        background: var(--b);
+        border-radius: 2px;
+      }
+      html[dir="rtl"] .track-timeline::before {
+        left: auto;
+        right: 8px;
+      }
+      .tl-item {
+        position: relative;
+        padding-bottom: 24px;
+      }
+      .tl-item:last-child { padding-bottom: 0; }
+      .tl-dot {
+        position: absolute;
+        left: -24px;
+        top: 3px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--s3);
+        border: 2px solid var(--b);
+      }
+      html[dir="rtl"] .tl-dot {
+        left: auto;
+        right: -24px;
+      }
+      .tl-item:first-child .tl-dot {
+        background: var(--o);
+        border-color: var(--o);
+        box-shadow: 0 0 12px rgba(245,166,35,0.4);
+      }
+      .tl-status {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--t);
+        margin-bottom: 4px;
+      }
+      .tl-date {
+        font-size: 12px;
+        color: var(--tm);
+      }
+
+      /* ── ITEMS TABLE ── */
+      .track-items-title {
+        font-size: 12px;
+        color: var(--tm);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 28px 0 14px;
+        font-weight: 600;
+      }
+      .track-items {
+        background: var(--bg);
+        border: 1px solid var(--b);
+        border-radius: 14px;
+        overflow: hidden;
+      }
+      .track-item-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--b);
+        gap: 12px;
+      }
+      .track-item-row:last-child { border-bottom: none; }
+      .track-item-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--t);
+        flex: 1;
+      }
+      .track-item-meta {
+        font-size: 12px;
+        color: var(--tm);
+      }
+      .track-item-qty {
+        font-size: 13px;
+        color: var(--tm);
+        white-space: nowrap;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        padding: 60px 48px 32px;
+        transition: background 0.3s;
+      }
+      .fg {
+        max-width: 1200px;
+        margin: 0 auto 48px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+      }
+      .fbr p {
+        color: var(--tm);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-top: 12px;
+        max-width: 280px;
+      }
+      .fc h4 {
+        font-family: "Fraunces", serif;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--t);
+      }
+      .fc ul {
+        list-style: none;
+      }
+      .fc li {
+        margin-bottom: 10px;
+      }
+      .fc a {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .fc a:hover {
+        color: var(--o);
+      }
+      .fb {
+        max-width: 1200px;
+        margin: 0 auto;
+        border-top: 1px solid var(--b);
+        padding-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--tm);
+      }
+      @media (max-width: 768px) {
+        .fg { grid-template-columns: 1fr 1fr; gap: 32px; }
+      }
+      @media (max-width: 480px) {
+        .fg { grid-template-columns: 1fr; }
+        footer { padding: 48px 24px 24px; }
+      }
+
+      /* ── WHATSAPP BUTTON ── */
+      .wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 9990; }
+      .wa-float a { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: #25D366; border-radius: 50%; box-shadow: 0 4px 16px rgba(0,0,0,0.25); text-decoration: none; transition: transform 0.2s; }
+      .wa-float a:hover { transform: scale(1.08); }
+    </style>
+  </head>
+  <body>
+    <!-- GENERAL ANNOUNCEMENT BAR -->
+    <div id="gen-ann-bar">
+      <div class="ann-marquee-container">
+        <div class="ann-marquee-content" id="gen-ann-msg-container">
+          <span id="gen-ann-msg"></span>
+        </div>
+      </div>
+      <button
+        onclick="dismissGenAnn()"
+        aria-label="Dismiss"
+        style="
+          position: absolute;
+          right: 14px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          color: #fff;
+          opacity: 0.6;
+          line-height: 1;
+          padding: 0 4px;
+          z-index: 10;
+        "
+      >
+        <span class="css-x"></span>
+      </button>
+    </div>
+
+    <div class="pb" id="pb"></div>
+    <div class="toast" id="toast">
+      <span id="ti"></span><span id="tm2"></span>
+    </div>
+
+    <!-- HEADER INJECTED HERE -->
+    <script src="header.js"></script>
+
+    <!-- MAIN CONTENT -->
+    <main class="track-page">
+      <div class="track-hero">
+        <div class="track-hero-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+            <rect x="1" y="3" width="15" height="13"/>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <h1 data-t="track-title">Track Your Order</h1>
+        <p data-t="track-desc">Enter your tracking code or phone number to see the latest status of your order.</p>
+      </div>
+
+      <div class="track-search-box">
+        <form id="track-form" onsubmit="return trackOrder(event)">
+          <div class="track-input-wrap">
+            <input type="text" class="track-input" id="track-input" data-ph-ar="كود التتبع أو رقم الموبايل" data-ph-en="Tracking code or phone number" placeholder="Tracking code or phone number" autocomplete="off" />
+            <button type="submit" class="track-btn" id="track-btn" data-t="track-btn">Track</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="track-result"></div>
+    </main>
+
+    <footer>
+      <div class="fg">
+        <div class="fbr">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <img
+              src="../logos/mega-logo.jpg"
+              alt="Logo"
+              style="
+                width: 32px;
+                height: 32px;
+                border-radius: 6px;
+                object-fit: cover;
+              "
+              onerror="this.style.display = 'none'"
+            />
+            <span
+              style="
+                font-family: &quot;Fraunces&quot;, serif;
+                font-weight: 700;
+                font-size: 14px;
+                color: var(--t);
+              "
+              >MEGA <span style="color: #f5a623">FURNITURE</span></span
+            >
+          </div>
+          <p data-t="footer-desc">
+            Crafting quality furniture for Egyptian homes · Est. 2020 ·
+            Experience since 1998.
+          </p>
+        </div>
+        <div class="fc">
+          <h4 data-ar="تسوق" data-en="Shop">Shop</h4>
+          <ul>
+            <li><a href="shop.html" data-ar="غرفة المعيشة" data-en="Living Room">Living Room</a></li>
+            <li><a href="shop.html" data-ar="غرفة النوم" data-en="Bedroom">Bedroom</a></li>
+            <li><a href="shop.html" data-ar="سفرة" data-en="Dining">Dining</a></li>
+            <li><a href="shop.html" data-ar="مكتب منزلي" data-en="Home Office">Home Office</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="الشركة" data-en="Company">Company</h4>
+          <ul>
+            <li><a href="../mega-furniture.html" data-ar="من نحن" data-en="About Us">About Us</a></li>
+            <li>
+              <a
+                href="https://www.instagram.com/megafurniturehome/"
+                target="_blank"
+                data-ar="انستجرام" data-en="Instagram"
+                >Instagram</a
+              >
+            </li>
+
+            <li><a href="contact.html" data-ar="تواصل" data-en="Contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="الدعم" data-en="Support">Support</h4>
+          <ul>
+            <li><a href="contact.html" data-ar="المرتجعات" data-en="Returns">Returns</a></li>
+            <li><a href="about.html#warranty" data-t="f-warranty" data-ar="الضمان" data-en="Warranty">Warranty</a></li>
+            <li><a href="contact.html" data-ar="واتساب" data-en="WhatsApp">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fb">
+        <span data-t="footer-copy"
+          >© 2026 Mega Furniture · ميجا فرنيتشر.</span
+        >
+        <span data-t="footer-made">صُنع لمصر</span>
+      </div>
+    </footer>
+
+    <div class="wa-float">
+      <a href="https://wa.me/201040454343" target="_blank" title="WhatsApp">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+    </div>
+
+    <script>
+      const STATUS_EN = {
+        received: "Under Review",
+        processing: "In Production",
+        shipped: "Out for Delivery",
+        delivered: "Delivered",
+        cancelled: "Cancelled",
+        returned: "Returned",
+      };
+      const STATUS_AR = {
+        received: "قيد المراجعة",
+        processing: "قيد التصنيع",
+        shipped: "في الطريق",
+        delivered: "تم التوصيل",
+        cancelled: "ملغي",
+        returned: "مرتجع",
+      };
+
+      const TRANS = {
+        ar: {
+          "nav-home": "الرئيسية",
+          "nav-shop": "تسوق",
+          "nav-videos": "فيديوهات",
+          "nav-about": "من نحن",
+          "nav-reviews": "آراء",
+          "nav-contact": "تواصل",
+          "nav-custom-work": "شغل عمولة",
+          "nav-track": "تتبع الطلب",
+          "f-warranty": "الضمان",
+          "track-title": "تتبع طلبك",
+          "track-desc": "أدخل كود التتبع أو رقم موبايلك لمعرفة حالة طلبك.",
+          "track-btn": "تتبع",
+          "track-customer": "اسم العميل",
+          "track-city": "المدينة",
+          "track-total": "الإجمالي",
+          "track-payment": "طريقة الدفع",
+          "track-date": "تاريخ الطلب",
+          "track-timeline": "مراحل الطلب",
+          "track-items": "المنتجات",
+          "track-qty": "الكمية",
+          "track-not-found": "لم يتم العثور على الطلب. تأكد من كود التتبع أو رقم الموبايل.",
+          "track-error": "حدث خطأ. حاول مرة أخرى.",
+          "track-cod": "كاش عند الاستلام",
+          "footer-copy": "© 2026 Mega Furniture · ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+          "footer-desc": "أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.",
+        },
+        en: {
+          "nav-home": "Home",
+          "nav-shop": "Shop",
+          "nav-videos": "Videos",
+          "nav-about": "About Us",
+          "nav-reviews": "Reviews",
+          "nav-contact": "Contact",
+          "nav-track": "Track Order",
+          "nav-custom-work": "Custom Work",
+          "f-warranty": "Warranty",
+          "track-title": "Track Your Order",
+          "track-desc": "Enter your tracking code or phone number to see the latest status of your order.",
+          "track-btn": "Track",
+          "track-customer": "Customer",
+          "track-city": "City",
+          "track-total": "Total",
+          "track-payment": "Payment",
+          "track-date": "Order Date",
+          "track-timeline": "Order Timeline",
+          "track-items": "Items",
+          "track-qty": "Qty",
+          "track-not-found": "Order not found. Please check your tracking code or phone number.",
+          "track-error": "Something went wrong. Please try again.",
+          "track-cod": "Cash on Delivery",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+          "footer-desc": "Crafting quality furniture for Egyptian homes · Est. 2020 · Experience since 1998.",
+        }
+      };
+
+      function getLang() {
+        return localStorage.getItem("megaLang") || "en";
+      }
+      function t(key) {
+        const l = getLang();
+        return (TRANS[l] && TRANS[l][key]) || (TRANS.en && TRANS.en[key]) || key;
+      }
+
+      function toggleLang() {
+        applyLang(localStorage.getItem("megaLang") === "ar" ? "en" : "ar");
+      }
+
+      function applyLang(l) {
+        if (!l) l = getLang();
+        localStorage.setItem("megaLang", l);
+        document.querySelectorAll("[data-t]").forEach(el => {
+          const k = el.getAttribute("data-t");
+          if (TRANS[l] && TRANS[l][k] !== undefined) el.innerHTML = TRANS[l][k];
+        });
+        document.querySelectorAll("[data-ph-" + l + "]").forEach(el => {
+          el.placeholder = el.getAttribute("data-ph-" + l);
+        });
+        document.querySelectorAll("[data-ar],[data-en]").forEach((el) => {
+          const txt = el.getAttribute("data-" + l);
+          if (txt != null) el.textContent = txt;
+        });
+        
+        if (window.currentTrackOrder) {
+          renderOrder(window.currentTrackOrder);
+        }
+        
+        document.documentElement.lang = l;
+        document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+        document.body.style.fontFamily = l === "ar" ? '"Cairo", sans-serif' : '"Outfit", sans-serif';
+        const lb = document.getElementById("langbtn");
+        if (lb) {
+          lb.textContent = l === "ar" ? "EN" : "عربي";
+          lb.setAttribute("data-short", l === "ar" ? "EN" : "ع");
+        }
+        
+        if (typeof window.renderGenAnn === "function") {
+          window.renderGenAnn();
+        }
+      }
+
+      /* ── GENERAL ANNOUNCEMENT ── */
+      window.renderGenAnn = function () {
+        const ann = window.genAnnData;
+        if (!ann) return;
+        const l = localStorage.getItem("megaLang") || "en";
+        const msg = l === "ar" ? ann.message_ar : ann.message_en;
+        if (!msg) return;
+        let html = msg;
+        if (ann.link) {
+          const lt = l === "ar"
+            ? (ann.linkText_ar || ann.linkText_en)
+            : (ann.linkText_en || ann.linkText_ar);
+          if (lt) html += ` <a href="${ann.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+        }
+        const msgEl = document.getElementById("gen-ann-msg");
+        if (msgEl) msgEl.innerHTML = html;
+        
+        const container = document.getElementById("gen-ann-msg-container");
+        if (container) {
+          let unitHtml = `<span class="ann-item">${html}</span><span class="ann-bullet">&bull;</span>`;
+          let half = unitHtml.repeat(4);
+          container.innerHTML = half + half;
+        }
+        
+        const bar = document.getElementById("gen-ann-bar");
+        if (bar) bar.style.display = "flex";
+      };
+
+      (async function () {
+        try {
+          if (sessionStorage.getItem("genAnnDismissed")) return;
+          const r = await fetch(window.location.origin + "/api/announcement");
+          if (!r.ok) return;
+          const ann = await r.json();
+          if (!ann || !ann.active) return;
+          window.genAnnData = ann;
+          window.renderGenAnn();
+        } catch {}
+      })();
+
+      function dismissGenAnn() {
+        sessionStorage.setItem("genAnnDismissed", "1");
+        document.getElementById("gen-ann-bar").style.display = "none";
+      }
+
+      // Pre-fill from URL
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code") || params.get("tracking") || params.get("q") || "";
+        if (code) {
+          document.getElementById("track-input").value = code;
+          doTrack(code);
+        }
+        applyLang();
+
+        // Theme
+        if (!localStorage.getItem("megaTheme")) localStorage.setItem("megaTheme", "light");
+        document.documentElement.setAttribute("data-theme", localStorage.getItem("megaTheme"));
+      });
+
+      function trackOrder(e) {
+        e.preventDefault();
+        const q = document.getElementById("track-input").value.trim();
+        if (!q) return false;
+        doTrack(q);
+        return false;
+      }
+
+      async function doTrack(query) {
+        const btn = document.getElementById("track-btn");
+        const result = document.getElementById("track-result");
+        const lang = getLang();
+        btn.disabled = true;
+        btn.textContent = lang === "ar" ? "جاري البحث..." : "Searching...";
+        result.innerHTML = "";
+
+        try {
+          const res = await fetch(`/api/orders/track/${encodeURIComponent(query)}`);
+          if (!res.ok) {
+            result.innerHTML = `<div class="track-error">${t("track-not-found")}</div>`;
+            return;
+          }
+          const order = await res.json();
+          window.currentTrackOrder = order;
+          renderOrder(order);
+        } catch (err) {
+          result.innerHTML = `<div class="track-error">${t("track-error")}</div>`;
+        } finally {
+          btn.disabled = false;
+          btn.textContent = t("track-btn");
+        }
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement("div");
+        div.textContent = str || "";
+        return div.innerHTML;
+      }
+
+      function renderOrder(order) {
+        const lang = getLang();
+        const container = document.getElementById("track-result");
+        const statusLabel = lang === "ar"
+          ? (STATUS_AR[order.status] || order.status)
+          : (STATUS_EN[order.status] || order.status);
+        const badgeClass = "badge-" + (order.status || "received");
+
+        const date = new Date(order.createdAt);
+        const dateStr = date.toLocaleDateString(lang === "ar" ? "ar-EG" : "en-US", {
+          year: "numeric", month: "short", day: "numeric"
+        });
+
+        const paymentLabel = order.paymentMethod === "cod"
+          ? t("track-cod")
+          : escapeHtml(order.paymentMethod || "—");
+
+        // Timeline
+        const timeline = (order.timeline || []).slice().reverse();
+        const timelineHtml = timeline.length ? timeline.map((h, i) => {
+          const label = lang === "ar"
+            ? (STATUS_AR[h.status] || h.status)
+            : (STATUS_EN[h.status] || h.status);
+          const d = new Date(h.at);
+          const dStr = d.toLocaleDateString(lang === "ar" ? "ar-EG" : "en-US", {
+            year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
+          });
+          return `<div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-status">${escapeHtml(label)}</div>
+            <div class="tl-date">${escapeHtml(dStr)}</div>
+          </div>`;
+        }).join("") : "";
+
+        // Items
+        const items = order.items || [];
+        const itemsHtml = items.map(it => {
+          const name = lang === "ar"
+            ? escapeHtml(it.nameAr || it.nameEn || it.id)
+            : escapeHtml(it.nameEn || it.nameAr || it.id);
+          const meta = [
+            it.color ? (lang === "ar" ? "اللون: " : "Color: ") + escapeHtml(it.color) : "",
+          ].filter(Boolean).join(" · ");
+          return `<div class="track-item-row">
+            <div>
+              <div class="track-item-name">${name}</div>
+              ${meta ? `<div class="track-item-meta">${meta}</div>` : ""}
+            </div>
+            <div class="track-item-qty">×${it.quantity || 1}</div>
+          </div>`;
+        }).join("");
+
+        container.innerHTML = `
+          <div class="track-result">
+            <div class="track-result-header">
+              <div class="track-code">${escapeHtml(order.trackingCode)}</div>
+              <span class="track-status-badge ${badgeClass}">${escapeHtml(statusLabel)}</span>
+            </div>
+            <div class="track-result-body">
+              <div class="track-info-grid">
+                <div class="track-info-item">
+                  <div class="track-info-label">${t("track-customer")}</div>
+                  <div class="track-info-value">${escapeHtml(order.customerName)}</div>
+                </div>
+                <div class="track-info-item">
+                  <div class="track-info-label">${t("track-city")}</div>
+                  <div class="track-info-value">${escapeHtml(order.city)}</div>
+                </div>
+                <div class="track-info-item">
+                  <div class="track-info-label">${t("track-total")}</div>
+                  <div class="track-info-value" style="color:var(--o);font-weight:700">EGP ${Number(order.total || 0).toLocaleString()}</div>
+                </div>
+                <div class="track-info-item">
+                  <div class="track-info-label">${t("track-date")}</div>
+                  <div class="track-info-value">${escapeHtml(dateStr)}</div>
+                </div>
+              </div>
+
+              ${timelineHtml ? `
+                <div class="track-timeline-title">${t("track-timeline")}</div>
+                <div class="track-timeline">${timelineHtml}</div>
+              ` : ""}
+
+              ${itemsHtml ? `
+                <div class="track-items-title">${t("track-items")}</div>
+                <div class="track-items">${itemsHtml}</div>
+              ` : ""}
+            </div>
+          </div>
+        `;
+      }
+    </script>
+  </body>
+</html>

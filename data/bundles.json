@@ -1,0 +1,14 @@
+[
+  {
+    "id": "bundle-1",
+    "nameAr": "غرفة نوم كاملة",
+    "nameEn": "Complete Bedroom Set",
+    "productIds": ["prod-1", "prod-2"],
+    "discountPct": 15,
+    "originalTotal": 30000,
+    "bundlePrice": 25500,
+    "mainPhoto": "bg.jpg",
+    "active": true,
+    "createdAt": "2026-07-14T00:00:00.000Z"
+  }
+]

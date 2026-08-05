@@ -1,0 +1,12 @@
+[
+  {
+    "id": "disc-bedroom",
+    "discountScope": "category",
+    "categoryId": "bedroom",
+    "type": "percent",
+    "value": 20,
+    "label_en": "Summer Sale",
+    "label_ar": "تخفيضات الصيف",
+    "active": true
+  }
+]

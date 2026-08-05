@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mega Furniture | Terms & Conditions</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --o: #f5a623;
+        --od: #b8722a;
+        --ol: #f7b84a;
+        --bg: #0a0a0a;
+        --s: #161616;
+        --s2: #212121;
+        --s3: #2e2e2e;
+        --t: #f5f4f0;
+        --tm: #908c84;
+        --b: rgba(255, 255, 255, 0.07);
+        --bh: rgba(245, 166, 35, 0.4);
+        --nb: rgba(10, 10, 10, 0.93);
+        --sh: 0 8px 40px rgba(0, 0, 0, 0.55);
+        --font-head: "Fraunces", serif;
+        --font-body: "Outfit", sans-serif;
+      }
+      [data-theme="light"] {
+        --bg: #f7f3ec;
+        --s: #fefcf8;
+        --s2: #ede4d6;
+        --s3: #dfd2bf;
+        --t: #1a1612;
+        --tm: #6b5d4f;
+        --b: rgba(26, 22, 18, 0.08);
+        --bh: rgba(232, 150, 30, 0.28);
+        --nb: rgba(247, 243, 236, 0.95);
+        --sh: 0 8px 40px rgba(26, 22, 18, 0.1);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      body {
+        background: var(--bg);
+        color: var(--t);
+        font-family: var(--font-body);
+        overflow-x: hidden;
+        max-width: 100vw;
+        box-sizing: border-box;
+        transition: background 0.3s, color 0.3s;
+        padding-top: 80px;
+      }
+
+      /* NAV */
+      
+      .logo-box {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .logo-img {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+      .logo-txt {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--t);
+        letter-spacing: 0.04em;
+      }
+      .logo-txt span {
+        color: var(--o);
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+      }
+      .nav-link {
+        text-decoration: none;
+        color: var(--t);
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-link:hover {
+        color: var(--o);
+      }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .btn-lang, .btn-theme {
+        background: transparent;
+        border: 1px solid var(--b);
+        color: var(--t);
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-lang:hover, .btn-theme:hover {
+        border-color: var(--o);
+        color: var(--o);
+      }
+
+      /* TERMS CONTENT */
+      .terms-container {
+        max-width: 900px;
+        margin: 60px auto 100px;
+        padding: 0 24px;
+        direction: rtl;
+        text-align: right;
+      }
+      .terms-container.ltr-dir {
+        direction: ltr;
+        text-align: left;
+      }
+      .terms-header {
+        text-align: center;
+        margin-bottom: 48px;
+      }
+      .terms-header h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 300;
+        margin-bottom: 12px;
+      }
+      .terms-header h1 span {
+        color: var(--o);
+        font-style: italic;
+      }
+      .terms-section {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 24px;
+        box-shadow: var(--sh);
+      }
+      .terms-block {
+        margin-bottom: 32px;
+      }
+      .terms-block:last-child {
+        margin-bottom: 0;
+      }
+      .terms-block h3 {
+        font-family: "Fraunces", serif;
+        color: var(--o);
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--b);
+        padding-bottom: 8px;
+      }
+      .terms-block p {
+        font-size: 15px;
+        color: var(--tm);
+        line-height: 1.8;
+      }
+
+      /* FOOTER */
+      footer {
+        background: #0c0c0e;
+        color: #8a8680;
+        padding: 80px 48px 30px;
+        border-top: 1px solid var(--b);
+        font-size: 13px;
+      }
+      .footer-grid {
+        max-width: 1400px;
+        margin: 0 auto 60px;
+        display: grid;
+        grid-template-columns: 2fr repeat(3, 1fr);
+        gap: 48px;
+      }
+      .ft-title {
+        color: #fff;
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 20px;
+        letter-spacing: 0.08em;
+      }
+      .ft-links {
+        list-style: none;
+      }
+      .ft-links li {
+        margin-bottom: 12px;
+      }
+      .ft-link {
+        color: #8a8680;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .ft-link:hover {
+        color: var(--o);
+      }
+      .ft-copy {
+        max-width: 1400px;
+        margin: 0 auto;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        padding-top: 30px;
+        display: flex;
+        justify-content: space-between;
+      }
+      @media (max-width: 768px) {
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .nav-links {
+          display: none;
+        }
+        
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGATION -->
+    <script src="header.js"></script>
+
+    <!-- CONTENT -->
+    <main class="terms-container" id="terms-content">
+      <!-- Dynamic Content Rendered Here -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <h4 class="logo-txt" style="color:#fff; margin-bottom:16px;">MEGA <span style="color:var(--o)">FURNITURE</span></h4>
+          <p style="line-height:1.7;" data-t="footer-desc">أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.</p>
+        </div>
+        <div>
+          <h4 class="ft-title" data-t="footer-browse">تصفح</h4>
+          <ul class="ft-links">
+            <li><a class="ft-link" href="../mega-furniture.html" id="footer-nav-home" data-t="footer-home">الرئيسية</a></li>
+            <li><a class="ft-link" href="shop.html" id="footer-nav-shop" data-t="footer-shop">تسوق</a></li>
+            <li><a class="ft-link" href="reviews.html" id="footer-nav-reviews" data-t="footer-reviews">آراء العملاء</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="ft-title" data-t="footer-support">الدعم</h4>
+          <ul class="ft-links">
+            <li><a class="ft-link" href="contact.html" id="footer-nav-contact" data-t="footer-contact">تواصل معنا</a></li>
+            <li><a class="ft-link" href="terms.html" id="footer-nav-terms" data-t="footer-terms">الشروط والأحكام</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="ft-title" data-t="footer-guarantees">الضمانات</h4>
+          <ul class="ft-links">
+            <li data-t="footer-free-delivery">توصيل مجاني</li>
+            <li data-t="footer-warranty">الضمان ضد عيوب الصناعة</li>
+            <li data-t="footer-assembly">تركيب متخصص</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ft-copy">
+        <span data-t="footer-copy">© 2026 Mega Furniture · ميجا فرنيتشر.</span>
+        <span data-t="footer-made">صُنع لمصر</span>
+      </div>
+    </footer>
+
+    <script>
+      const CONTENT = {
+        ar: {
+          title: "الشروط <span>والأحكام</span>",
+          cancellationTitle: "1. سياسة الإلغاء (48 ساعة):",
+          cancellationBody: "يمكن إلغاء الطلبات مجانًا بالكامل خلال 48 ساعة من تأكيد الطلب. بعد مرور 48 ساعة، لا يمكننا ضمان قبول طلب الإلغاء نظرًا لأن المنتج قد يكون دخل بالفعل مرحلة التصنيع أو الشحن.",
+          returnTitle: "2. سياسة الإرجاع (14 يوم):",
+          returnBody: "نقبل المرتجعات خلال 14 يومًا من الاستلام فقط في حالة وجود عيوب صناعة واضحة (مثل تلف الهيكل، عيوب المواد، أو عيوب التشطيب). العيوب الناتجة عن سوء الاستخدام، التركيب الخاطئ من قِبل العميل، أو سوء المناولة لا يغطيها الإرجاع. يتم استرجاع وتوصيل المنتجات مجانًا في حالة عيوب الصناعة المعتمدة.",
+          generalTitle: "3. الشروط العامة والمقدم:",
+          generalBody: "نحن ملتزمون بتقديم أسعار ومواصفات دقيقة. جميع الطلبات تخضع للتأكيد الهاتفي، ويتم دفع مقدم 30% من قيمة الأوردر للبدء في التصنيع. ويتم تسليم الطلبات طبقاً للموعد المتفق عليه مع خدمة العملاء.",
+          navHome: "الرئيسية",
+          navShop: "تسوق",
+          navReviews: "التقييمات",
+          navAbout: "من نحن",
+          navContact: "تواصل",
+          "footer-desc": "أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.",
+          "footer-browse": "تصفح",
+          "footer-home": "الرئيسية",
+          "footer-shop": "تسوق",
+          "footer-reviews": "آراء العملاء",
+          "footer-support": "الدعم",
+          "footer-contact": "تواصل معنا",
+          "footer-terms": "الشروط والأحكام",
+          "footer-guarantees": "الضمانات",
+          "footer-free-delivery": "توصيل مجاني",
+          "footer-warranty": "الضمان ضد عيوب الصناعة",
+          "footer-assembly": "تركيب متخصص",
+          "footer-copy": "© 2026 Mega Furniture · ميجا فرنيتشر. جميع الحقوق محفوظة.",
+          "footer-made-for": "صُنع لمصر",
+          "last-updated": "آخر تحديث: يوليو 2026"
+        },
+        en: {
+          title: "Terms <span>& Conditions</span>",
+          cancellationTitle: "1. Cancellation Policy (48 Hours):",
+          cancellationBody: "Orders may be cancelled within 48 hours of placement at no charge. After 48 hours, cancellation requests cannot be guaranteed as your order may have entered production or shipping.",
+          returnTitle: "2. Return Policy (14 Days):",
+          returnBody: "Returns are accepted within 14 days of delivery under the condition that the item has a manufacturing defect (e.g. structural damage, flaws in materials, or finish defects). Defects resulting from customer use, assembly, or mishandling are not covered.",
+          generalTitle: "3. General Terms & Deposit:",
+          generalBody: "We make every effort to display accurate pricing and descriptions. All orders are subject to a telephone confirmation call, and a 30% deposit is required to initiate production. Delivery dates are subject to customer service scheduling.",
+          navHome: "Home",
+          navShop: "Shop",
+          navReviews: "Reviews",
+          navAbout: "About Us",
+          navContact: "Contact",
+          "footer-desc": "Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998.",
+          "footer-browse": "Browse",
+          "footer-home": "Home",
+          "footer-shop": "Shop",
+          "footer-reviews": "Customer Reviews",
+          "footer-support": "Support",
+          "footer-contact": "Contact Us",
+          "footer-terms": "Terms & Conditions",
+          "footer-guarantees": "Guarantees",
+          "footer-free-delivery": "Free Delivery",
+          "footer-warranty": "Warranty against manufacturing defects",
+          "footer-assembly": "Expert Assembly",
+          "footer-copy": "© 2026 Mega Furniture. All rights reserved.",
+          "footer-made-for": "Made for Egypt",
+          "last-updated": "Last updated: July 2026"
+        }
+      };
+
+      let lang = localStorage.getItem("megaLang") || "en";
+
+      function applyLang(l) {
+        lang = l;
+        localStorage.setItem("megaLang", l);
+        document.documentElement.lang = l;
+        document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+        document.body.dir = l === "ar" ? "rtl" : "ltr";
+        
+        document.querySelectorAll(".langbtn, #langbtn, #lang-btn").forEach((b) => {
+          b.textContent = l === "ar" ? "EN" : "عربي";
+          b.setAttribute("data-short", l === "ar" ? "EN" : "ع");
+        });
+
+        // Translate Nav Links
+        const navHome = document.getElementById("nav-home");
+        if (navHome) navHome.textContent = CONTENT[l].navHome;
+        const navShop = document.getElementById("nav-shop");
+        if (navShop) navShop.textContent = CONTENT[l].navShop;
+        const navReviews = document.getElementById("nav-reviews");
+        if (navReviews) navReviews.textContent = CONTENT[l].navReviews;
+        const navAbout = document.getElementById("nav-about");
+        if (navAbout) navAbout.textContent = CONTENT[l].navAbout;
+        const navContact = document.getElementById("nav-contact");
+        if (navContact) navContact.textContent = CONTENT[l].navContact;
+
+        // Render Content
+        const container = document.getElementById("terms-content");
+        if (l === "ar") {
+          container.classList.remove("ltr-dir");
+        } else {
+          container.classList.add("ltr-dir");
+        }
+
+        container.innerHTML = `
+          <div class="terms-header">
+            <h1>${CONTENT[l].title}</h1>
+            <p style="color:var(--tm); font-size:14px;">${CONTENT[l]["last-updated"]}</p>
+          </div>
+          
+          <div class="terms-section">
+            <div class="terms-block">
+              <h3>${CONTENT[l].cancellationTitle}</h3>
+              <p>${CONTENT[l].cancellationBody}</p>
+            </div>
+            
+            <div class="terms-block">
+              <h3>${CONTENT[l].returnTitle}</h3>
+              <p>${CONTENT[l].returnBody}</p>
+            </div>
+            
+            <div class="terms-block">
+              <h3>${CONTENT[l].generalTitle}</h3>
+              <p>${CONTENT[l].generalBody}</p>
+            </div>
+          </div>
+        `;
+        // Translate data-t elements
+        document.querySelectorAll("[data-t]").forEach((el) => {
+          const k = el.getAttribute("data-t");
+          if (CONTENT[l] && CONTENT[l][k] !== undefined) {
+            el.innerHTML = CONTENT[l][k];
+          }
+        });
+      }
+
+      function toggleLang() {
+        applyLang(lang === "ar" ? "en" : "ar");
+      }
+
+      function toggleTheme() {
+        const cur = document.documentElement.getAttribute("data-theme") || "light";
+        const next = cur === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("megaTheme", next);
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const theme = localStorage.getItem("megaTheme") || "light";
+        document.documentElement.setAttribute("data-theme", theme);
+        applyLang(lang);
+
+        /* ── SETTINGS FETCH (server-driven defaults for new visitors) ── */
+        if (!localStorage.getItem("megaLang") || !localStorage.getItem("megaTheme")) {
+          fetch("/api/settings").then(r => r.json()).then(s => {
+            if (!localStorage.getItem("megaLang") && s.defaultLanguage) {
+              applyLang(s.defaultLanguage);
+            }
+            if (!localStorage.getItem("megaTheme") && s.defaultTheme) {
+              document.documentElement.setAttribute("data-theme", s.defaultTheme);
+              localStorage.setItem("megaTheme", s.defaultTheme);
+            }
+          }).catch(() => {});
+        }
+      });
+    </script>
+  </body>
+</html>

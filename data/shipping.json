@@ -1,0 +1,30 @@
+[
+  {
+    "id": "sh-cairo",
+    "governorateAr": "القاهرة",
+    "governorateEn": "Cairo",
+    "fee": 80,
+    "etaDays": "1–3"
+  },
+  {
+    "id": "sh-giza",
+    "governorateAr": "الجيزة",
+    "governorateEn": "Giza",
+    "fee": 80,
+    "etaDays": "1–3"
+  },
+  {
+    "id": "sh-alex",
+    "governorateAr": "الإسكندرية",
+    "governorateEn": "Alexandria",
+    "fee": 120,
+    "etaDays": "2–4"
+  },
+  {
+    "id": "sh-other",
+    "governorateAr": "محافظات أخرى",
+    "governorateEn": "Other governorates",
+    "fee": 200,
+    "etaDays": "3–7"
+  }
+]

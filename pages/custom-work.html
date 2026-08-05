@@ -1,0 +1,2190 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mega Furniture | Custom Work</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500&family=Jost:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --o: #f5a623;
+        --od: #b8722a;
+        --ol: #f7b84a;
+        --bg: #0a0a0a;
+        --s: #161616;
+        --s2: #212121;
+        --s3: #2e2e2e;
+        --t: #f5f4f0;
+        --tm: #908c84;
+        --b: rgba(255, 255, 255, 0.07);
+        --bh: rgba(245, 166, 35, 0.4);
+        --nb: rgba(10, 10, 10, 0.93);
+        --sh: 0 8px 40px rgba(0, 0, 0, 0.6);
+        --gc: rgba(255, 255, 255, 0.02);
+        --font-head: "Fraunces", serif;
+        --font-body: "Outfit", sans-serif;
+      }
+      [data-theme="light"] {
+        --bg: #f7f3ec;
+        --s: #fefcf8;
+        --s2: #ede4d6;
+        --s3: #dfd2bf;
+        --t: #1a1612;
+        --tm: #6b5d4f;
+        --b: rgba(26, 22, 18, 0.08);
+        --bh: rgba(232, 150, 30, 0.28);
+        --nb: rgba(247, 243, 236, 0.95);
+        --sh: 0 8px 40px rgba(26, 22, 18, 0.1);
+        --gc: rgba(26, 22, 18, 0.02);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      body {
+        background: var(--bg);
+        color: var(--t);
+        font-family: "Outfit", sans-serif;
+        overflow-x: hidden;
+        max-width: 100vw;
+        box-sizing: border-box;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+
+      /* PROGRESS BAR */
+      .pb {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: var(--o);
+        z-index: 9999;
+        width: 0;
+        transition: width 0.1s;
+        pointer-events: none;
+      }
+
+      /* NAV */
+      
+      /* ── GENERAL ANNOUNCEMENT BAR ── */
+      #gen-ann-bar {
+        position: relative;
+        width: 100%;
+        z-index: 10;
+        background: #0e0d0b;
+        color: #fff;
+        height: 42px;
+        font-family: var(--font-body);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 0 48px;
+        overflow: hidden;
+      }
+      .ann-marquee-container {
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+      }
+      .ann-marquee-content {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        animation: ann-marquee-anim 20s linear infinite;
+        width: max-content;
+        will-change: transform;
+      }
+      .ann-marquee-content:hover {
+        animation-play-state: paused;
+      }
+      .ann-item {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 20px;
+      }
+      .ann-bullet {
+        color: var(--o, #ff9900);
+        font-weight: bold;
+        margin-left: 20px;
+      }
+      @keyframes ann-marquee-anim {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(-50%, 0, 0);
+        }
+      }
+      .nl {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .nlimg {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .nb2 {
+        font-family: "Fraunces", serif;
+        font-weight: 300;
+        font-size: 20px;
+        color: var(--t);
+        line-height: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        letter-spacing: 0.08em;
+      }
+      .nb2 .nb-fur {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        font-weight: 400;
+        color: var(--o);
+        font-family: "Outfit", sans-serif;
+        font-style: normal;
+        text-transform: uppercase;
+      }
+      .nlinks {
+        display: flex;
+        gap: 4px;
+        list-style: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .nlink {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+      }
+      .nlink:hover {
+        color: var(--t);
+        background: var(--s);
+      }
+      .nlink.active {
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.1);
+      }
+      .ncta {
+        background: var(--o);
+        color: #0e0d0b;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 100px;
+        font-family: "Outfit", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+      }
+      .ncta:hover {
+        background: var(--ol);
+        transform: scale(1.04);
+      }
+      .nr {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tt {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        flex-shrink: 0;
+        font-size: 18px;
+        line-height: 1;
+      }
+      .tt:hover {
+        background: var(--s3);
+      }
+      .t-sun {
+        display: block;
+      }
+      .t-sun svg {
+        stroke: var(--o);
+      }
+      .t-moon {
+        display: none;
+      }
+      [data-theme="light"] .t-sun {
+        display: none;
+      }
+      [data-theme="light"] .t-moon {
+        display: block;
+      }
+      .langbtn {
+        background: transparent;
+        border: 1px solid var(--b);
+        color: var(--tm);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-family: "Outfit", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+      }
+      .langbtn:hover {
+        border-color: var(--o);
+        color: var(--o);
+      }
+      .hbg {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: var(--s);
+        border: 1px solid var(--o);
+        border-radius: 50%;
+        padding: 0;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        overflow: visible;
+      }
+      .hbg span {
+        display: block;
+        width: 18px;
+        height: 2px;
+        background: var(--o);
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+      .hbg.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hbg.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hbg.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+      .mm {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(75vw, 300px);
+        height: 100dvh;
+        background: var(--bg);
+        z-index: 201;
+        display: flex;
+        flex-direction: column;
+        transform: translateX(110%);
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        border-left: 1px solid var(--b);
+        overflow-y: auto;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .mm.open {
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: all;
+      }
+      .mm-hdr {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 24px 20px;
+        border-bottom: 1px solid var(--b);
+        flex-shrink: 0;
+      }
+      .mm-brand {
+        font-family: "Fraunces", serif;
+        font-weight: 300;
+        font-size: 22px;
+        color: var(--t);
+        letter-spacing: 0.2em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      .mm-brand-sub {
+        font-size: 10px;
+        letter-spacing: 0.4em;
+        font-weight: 400;
+        color: var(--o);
+        font-family: "Outfit", sans-serif;
+        text-transform: uppercase;
+        display: block;
+        margin-top: 2px;
+      }
+      .mm-x {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        color: var(--t);
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .mm-x:hover {
+        background: var(--s3);
+      }
+      .mm .nlink {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        font-size: 18px;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--b);
+        border-radius: 0;
+        min-height: 56px;
+        color: var(--t);
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .mm .nlink:hover {
+        background: var(--s);
+      }
+      .mm .nlink.active {
+        color: var(--o);
+        background: rgba(245, 166, 35, 0.06);
+      }
+      .mm-ftr {
+        margin-top: auto;
+        padding: 16px 20px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      #mov {
+        z-index: 200;
+      }
+      .ov {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        z-index: 199;
+      }
+      .ov.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .pw {
+        padding-top: 68px;
+      }
+
+      /* PAGE HERO */
+      .phero {
+        position: relative;
+        padding: 72px 56px 56px;
+        max-width: 100%;
+        overflow: hidden;
+        background: radial-gradient(
+          ellipse 80% 60% at 20% 50%,
+          rgba(245, 166, 35, 0.07) 0%,
+          transparent 65%
+        );
+      }
+      .phero-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .stag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--o);
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      .stag::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--o);
+        animation: blink 2s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      .stitle {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: clamp(36px, 5vw, 68px);
+        letter-spacing: -0.03em;
+        margin-bottom: 12px;
+        line-height: 1.05;
+        color: var(--t);
+      }
+      .stitle span {
+        color: var(--o);
+      }
+      .sdesc {
+        color: var(--tm);
+        font-size: 16px;
+        line-height: 1.6;
+        max-width: 520px;
+      }
+
+      /* MAIN CONTENT */
+      .cw-page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 56px 80px;
+      }
+      .cw-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: start;
+      }
+      .cw-left {
+        padding-top: 8px;
+      }
+      .cw-title {
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: clamp(28px, 3.5vw, 48px);
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        color: var(--t);
+        margin-bottom: 14px;
+      }
+      .cw-title span {
+        color: var(--o);
+      }
+      .cw-desc {
+        color: var(--tm);
+        font-size: 15px;
+        line-height: 1.75;
+        margin-bottom: 32px;
+      }
+      .cw-features {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 40px;
+      }
+      .cw-feat {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 15px;
+        color: var(--tm);
+      }
+      .cw-feat span:first-child {
+        color: var(--o);
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+      .cw-trust {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 40px;
+      }
+      .cw-trust-card {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 16px;
+        padding: 20px 16px;
+        text-align: center;
+      }
+      .cw-trust-icon {
+        margin-bottom: 8px;
+        color: var(--o);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cw-trust-label {
+        font-size: 12px;
+        color: var(--tm);
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      /* FORM */
+      .cw-form-wrap {
+        background: var(--s);
+        border: 1px solid rgba(245, 166, 35, 0.2);
+        border-radius: 24px;
+        padding: 40px;
+        position: sticky;
+        top: 88px;
+      }
+      .cw-form-title {
+        font-family: "Fraunces", serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--t);
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--b);
+      }
+      .cw-frow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .cw-fg {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .cw-fg label {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--t);
+        opacity: 0.7;
+      }
+      .cw-inp {
+        background: var(--s2);
+        border: 1px solid var(--b);
+        color: var(--t);
+        padding: 11px 14px;
+        border-radius: 10px;
+        font-family: "Outfit", sans-serif;
+        font-size: 14px;
+        width: 100%;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .cw-inp:focus {
+        border-color: var(--o);
+      }
+      select.cw-inp option {
+        background: var(--bg);
+      }
+      .cw-color-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .cw-color-chip {
+        border: 2px solid transparent;
+        border-radius: 100px;
+        padding: 5px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Outfit", sans-serif;
+        position: relative;
+      }
+      .cw-color-chip.on {
+        border-color: var(--o);
+        box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.3);
+      }
+      .cw-color-tooltip {
+        display: none;
+        position: absolute;
+        bottom: 135%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        padding: 10px;
+        z-index: 999;
+        width: 200px;
+        color: #111;
+        text-align: start;
+        font-family: "Outfit", "Segoe UI", sans-serif;
+        box-sizing: border-box;
+        pointer-events: none;
+      }
+      [data-theme="dark"] .cw-color-tooltip {
+        background: rgba(20, 20, 22, 0.98);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #eee;
+      }
+      .cw-color-chip:hover .cw-color-tooltip {
+        display: block;
+      }
+      .cw-upload-box {
+        border: 2px dashed rgba(245, 166, 35, 0.25);
+        border-radius: 12px;
+        padding: 24px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+        position: relative;
+      }
+      .cw-upload-box:hover {
+        border-color: var(--o);
+        background: rgba(245, 166, 35, 0.04);
+      }
+      .cw-upload-box input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+      }
+      .cw-upload-ico {
+        font-size: 28px;
+        opacity: 0.5;
+        margin-bottom: 6px;
+      }
+      .cw-upload-box p {
+        font-size: 13px;
+        color: var(--tm);
+      }
+      .cw-thumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .cw-thumb {
+        width: 72px;
+        height: 72px;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 1px solid var(--b);
+      }
+      .cw-submit {
+        width: 100%;
+        padding: 15px;
+        background: var(--o);
+        color: #0e0d0b;
+        border: none;
+        border-radius: 100px;
+        font-family: "Outfit", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 8px;
+      }
+      .cw-submit:hover {
+        background: var(--ol);
+        transform: scale(1.02);
+      }
+      .cw-submit:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .cw-success {
+        text-align: center;
+        padding: 60px 20px;
+      }
+      .cw-success h3 {
+        font-family: "Fraunces", serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--t);
+        margin-bottom: 10px;
+      }
+      .cw-success p {
+        color: var(--tm);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      /* TOAST */
+      .toast {
+        position: fixed;
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: var(--s2);
+        border: 1px solid var(--b);
+        color: var(--t);
+        padding: 12px 24px;
+        border-radius: 100px;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 9999;
+        opacity: 0;
+        transition: all 0.3s;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        padding: 60px 48px 32px;
+        transition: background 0.3s;
+      }
+      .fg {
+        max-width: 1260px;
+        margin: 0 auto 48px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+      }
+      .fbr p {
+        color: var(--tm);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-top: 12px;
+        max-width: 280px;
+      }
+      .fc h4 {
+        font-family: "Fraunces", serif;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--t);
+      }
+      .fc ul {
+        list-style: none;
+      }
+      .fc li {
+        margin-bottom: 10px;
+      }
+      .fc a {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .fc a:hover {
+        color: var(--o);
+      }
+      .fb {
+        max-width: 1260px;
+        margin: 0 auto;
+        border-top: 1px solid var(--b);
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        color: var(--tm);
+      }
+
+      /* FLOATING BUTTONS */
+      .fbtns {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 200;
+      }
+      .fbtn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .topb {
+        background: var(--s2);
+        border: 1px solid var(--b);
+        color: var(--t);
+        font-size: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .topb.vis {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .wab {
+        background: #25d366;
+      }
+      /* Floating WhatsApp Menu Styles */
+      .wa-menu-container {
+        position: relative;
+      }
+      .wa-menu {
+        position: absolute;
+        bottom: 56px;
+        right: 0;
+        background: var(--nb);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        padding: 6px 0;
+        display: none;
+        flex-direction: column;
+        min-width: 240px;
+        z-index: 999;
+      }
+      .wa-menu.show {
+        display: flex;
+      }
+      .wa-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        color: var(--t);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: background 0.2s, color 0.2s;
+        text-align: right;
+        direction: rtl;
+        border-bottom: 1px solid var(--b);
+      }
+      .wa-menu-item:last-child {
+        border-bottom: none;
+      }
+      html[lang="en"] .wa-menu-item {
+        text-align: left;
+        direction: ltr;
+      }
+      .wa-menu-item:hover {
+        background: var(--b);
+        color: var(--o);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 1024px) {
+        .cw-inner {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .cw-form-wrap {
+          position: static;
+        }
+        .cw-trust {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        
+        .nr {
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+        .tt,
+        .hbg {
+          width: 38px;
+          height: 38px;
+          min-width: 38px;
+          flex-shrink: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-size: 16px;
+          border-radius: 50%;
+          background: var(--s2);
+          border: 1px solid var(--b);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--t);
+          transition: all 0.2s ease;
+        }
+        .tt:active,
+        .hbg:active {
+          background: var(--s3);
+          transform: scale(0.95);
+        }
+        .langbtn {
+          width: auto;
+          min-width: auto;
+          height: 38px;
+          padding: 0 14px;
+          font-size: 11px;
+          border-radius: 999px;
+          background: var(--s2);
+          border: 1px solid var(--b);
+          color: var(--t);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          transition: all 0.2s ease;
+        }
+        .langbtn:active {
+          background: var(--s3);
+          transform: scale(0.95);
+        }
+        .ncta {
+          display: none;
+        }
+        .nlinks {
+          display: none;
+        }
+        .hbg {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .hbg span {
+          width: 16px;
+          height: 2px;
+          background: var(--t);
+          border-radius: 1px;
+          transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s;
+        }
+        .hbg.open span:nth-child(1) {
+          transform: translateY(6px) rotate(45deg);
+        }
+        .hbg.open span:nth-child(2) {
+          opacity: 0;
+        }
+        .hbg.open span:nth-child(3) {
+          transform: translateY(-6px) rotate(-45deg);
+        }
+        .phero {
+          padding: 48px 20px 36px;
+        }
+        .cw-page {
+          padding: 0 20px 60px;
+        }
+        .cw-form-wrap {
+          padding: 24px 20px;
+        }
+        .cw-frow {
+          grid-template-columns: 1fr;
+        }
+        .cw-trust {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        footer {
+          padding: 40px 24px 24px;
+        }
+        .fg {
+          grid-template-columns: 1fr 1fr;
+        }
+        .fb {
+          flex-direction: column;
+          gap: 8px;
+          text-align: center;
+        }
+      }
+      @media (max-width: 480px) {
+        .fg {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- GENERAL ANNOUNCEMENT BAR -->
+    <div id="gen-ann-bar">
+      <div class="ann-marquee-container">
+        <div class="ann-marquee-content" id="gen-ann-msg-container">
+          <span id="gen-ann-msg"></span>
+        </div>
+      </div>
+      <button
+        onclick="dismissGenAnn()"
+        aria-label="Dismiss"
+        style="
+          position: absolute;
+          right: 14px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          color: #fff;
+          opacity: 0.6;
+          line-height: 1;
+          padding: 0 4px;
+          z-index: 10;
+        "
+      >
+        ✕
+      </button>
+    </div>
+    <div class="pb" id="pb"></div>
+
+    <script src="header.js"></script>
+
+    <div class="ov" id="cov" onclick="closeCart()"></div>
+    <aside class="cpa" id="cpa">
+      <div class="chdr">
+        <h3 data-t="cart-title">السلة <span id="cc"></span></h3>
+        <button class="cx" onclick="closeCart()"><span class="css-x"></span></button>
+      </div>
+      <div class="clist" id="clist"></div>
+      <div class="cftr" id="cftr" style="display: none">
+        <a
+          class="bp"
+          style="width: 100%; justify-content: center"
+          href="shop.html"
+          data-t="cart-view"
+          >عرض السلة ←</a
+        >
+      </div>
+    </aside>
+
+    <div class="pw">
+      <!-- PAGE HERO -->
+      <div class="phero">
+        <div class="phero-inner">
+          <div class="stag" data-t="cw-tag">شغل عمولة</div>
+          <h1 class="stitle" data-t="cw-page-h1">
+            صمّم أثاثك <span>بنفسك</span>
+          </h1>
+          <p class="sdesc" data-t="cw-page-desc">
+            مش لاقي اللي يناسبك؟ ابعتلنا فكرتك ونعملهالك بالمقاس والشكل اللي
+            بتحبه — جودة ميجا بتصميمك.
+          </p>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="cw-page">
+        <div class="cw-inner">
+          <!-- LEFT: INFO -->
+          <div class="cw-left">
+            <h2 class="cw-title" data-t="cw-title">
+              صمّم أثاثك <span>بنفسك</span>
+            </h2>
+            <p class="cw-desc" data-t="cw-desc">
+              مش لاقي اللي يناسبك؟ ابعتلنا فكرتك ونعملهالك بالمقاس والشكل اللي
+              بتحبه.
+            </p>
+            <div class="cw-features">
+              <div class="cw-feat">
+                <span>✦</span><span data-t="cw-f1">تصميم حسب طلبك</span>
+              </div>
+              <div class="cw-feat">
+                <span>✦</span><span data-t="cw-f2">تواصل مباشر مع الفريق</span>
+              </div>
+              <div class="cw-feat">
+                <span>✦</span><span data-t="cw-f3">سعر يناسب ميزانيتك</span>
+              </div>
+              <div class="cw-feat">
+                <span>✦</span><span data-t="cw-f4">تنفيذ بأعلى جودة</span>
+              </div>
+              <div class="cw-feat">
+                <span>✦</span><span data-t="cw-f5">رد خلال 24 ساعة</span>
+              </div>
+            </div>
+            <div class="cw-trust">
+              <div class="cw-trust-card">
+                <div class="cw-trust-icon">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="13.5" cy="6.5" r="0.5" fill="currentColor" />
+                    <circle cx="17.5" cy="10.5" r="0.5" fill="currentColor" />
+                    <circle cx="8.5" cy="7.5" r="0.5" fill="currentColor" />
+                    <circle cx="6.5" cy="12.5" r="0.5" fill="currentColor" />
+                    <path
+                      d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c0.83 0 1.5-0.67 1.5-1.5 0-0.39-0.15-0.74-0.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8z"
+                    />
+                  </svg>
+                </div>
+                <div class="cw-trust-label" data-t="cw-t1">تصميم فريد 100%</div>
+              </div>
+              <div class="cw-trust-card">
+                <div class="cw-trust-icon">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M21 6H3" />
+                    <path d="M21 12H3" />
+                    <path d="M21 18H3" />
+                    <path d="M8 3v18" />
+                  </svg>
+                </div>
+                <div class="cw-trust-label" data-t="cw-t2">بالمقاس المطلوب</div>
+              </div>
+              <div class="cw-trust-card">
+                <div class="cw-trust-icon">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                    />
+                  </svg>
+                </div>
+                <div class="cw-trust-label" data-t="cw-t3">ضمان الجودة</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: FORM -->
+          <div class="cw-right">
+            <div class="cw-form-wrap" id="cw-form-wrap">
+              <div class="cw-form-title" data-t="cw-form-title">أرسل طلبك</div>
+              <form id="cw-form" onsubmit="submitCustomOrder(event)">
+                <div class="cw-frow">
+                  <div class="cw-fg">
+                    <label data-t="cw-name">الاسم</label>
+                    <input
+                      class="cw-inp"
+                      id="cw-name"
+                      type="text"
+                      required
+                      data-ph-ar="اسمك الكريم"
+                      data-ph-en="Your name"
+                    />
+                  </div>
+                  <div class="cw-fg">
+                    <label data-t="cw-phone">رقم التليفون</label>
+                    <input
+                      class="cw-inp"
+                      id="cw-phone"
+                      type="tel"
+                      required
+                      data-ph-ar="01xxxxxxxxx"
+                      data-ph-en="01xxxxxxxxx"
+                    />
+                  </div>
+                </div>
+
+                <div class="cw-fg" style="margin-bottom: 16px">
+                  <label data-t="cw-email">البريد الإلكتروني</label>
+                  <input
+                    class="cw-inp"
+                    id="cw-email"
+                    type="email"
+                    autocomplete="email"
+                    data-ph-ar="example@email.com"
+                    data-ph-en="example@email.com"
+                  />
+                </div>
+
+                <div class="cw-fg" style="margin-bottom: 16px">
+                  <label data-t="cw-type">نوع الأثاث</label>
+                  <select class="cw-inp" id="cw-type" required>
+                    <option
+                      value=""
+                      data-ar="اختر نوع الأثاث"
+                      data-en="Select furniture type"
+                    >
+                      اختر نوع الأثاث
+                    </option>
+                    <option
+                      value="living-room"
+                      data-ar="غرفة معيشة / ركنة"
+                      data-en="Living Room / Sofa"
+                    >
+                      غرفة معيشة / ركنة
+                    </option>
+                    <option
+                      value="bedroom"
+                      data-ar="غرفة نوم"
+                      data-en="Bedroom Set"
+                    >
+                      غرفة نوم
+                    </option>
+                    <option
+                      value="dining-room"
+                      data-ar="غرفة سفرة"
+                      data-en="Dining Room"
+                    >
+                      غرفة سفرة
+                    </option>
+                    <option
+                      value="wardrobe"
+                      data-ar="دولاب / خزانة"
+                      data-en="Wardrobe"
+                    >
+                      دولاب / خزانة
+                    </option>
+                    <option
+                      value="tv-unit"
+                      data-ar="وحدة تلفزيون"
+                      data-en="TV Unit"
+                    >
+                      وحدة تلفزيون
+                    </option>
+                    <option
+                      value="kids-room"
+                      data-ar="غرفة أطفال"
+                      data-en="Kids Room"
+                    >
+                      غرفة أطفال
+                    </option>
+                    <option
+                      value="office"
+                      data-ar="مكتب / أوفيس"
+                      data-en="Office / Desk"
+                    >
+                      مكتب / أوفيس
+                    </option>
+                    <option value="other" data-ar="أخرى" data-en="Other">
+                      أخرى
+                    </option>
+                  </select>
+                </div>
+
+                <div class="cw-fg" style="margin-bottom: 16px">
+                  <label data-t="cw-colors">الألوان المفضلة</label>
+                  <div class="cw-color-row" id="cw-color-row"></div>
+                  <div
+                    id="cw-custom-chips"
+                    style="
+                      display: flex;
+                      flex-wrap: wrap;
+                      gap: 6px;
+                      margin-top: 8px;
+                    "
+                  ></div>
+                </div>
+
+                <div class="cw-fg" style="margin-bottom: 16px">
+                  <label data-t="cw-desc-label">وصف الفكرة</label>
+                  <textarea
+                    class="cw-inp"
+                    id="cw-description"
+                    style="min-height: 100px; resize: vertical"
+                    data-ph-ar="اوصف تصميمك، الحجم، الخامة، أي تفاصيل تانية..."
+                    data-ph-en="Describe your design, dimensions, material, any details..."
+                  ></textarea>
+                </div>
+
+                <div class="cw-fg" style="margin-bottom: 24px">
+                  <label data-t="cw-photos"
+                    >صور مرجعية
+                    <span style="opacity: 0.5; font-weight: 400"
+                      >(اختياري — حتى 5 صور)</span
+                    ></label
+                  >
+                  <div class="cw-upload-box" id="cw-upload-box">
+                    <input
+                      type="file"
+                      id="cw-photos"
+                      accept="image/*"
+                      multiple
+                      onchange="cwPreviewPhotos(this)"
+                    />
+                    <div class="cw-upload-ico">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect
+                          x="3"
+                          y="3"
+                          width="18"
+                          height="18"
+                          rx="2"
+                          ry="2"
+                        />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" /></svg
+                      >️
+                    </div>
+                    <p data-t="cw-upload-hint">
+                      ارفع صور مرجعية أو إلهام للتصميم
+                    </p>
+                    <p style="font-size: 11px; opacity: 0.5; margin-top: 4px">
+                      JPG, PNG, WEBP — حد أقصى 8MB لكل صورة
+                    </p>
+                  </div>
+                  <div class="cw-thumbs" id="cw-thumbs"></div>
+                </div>
+
+                <button
+                  class="cw-submit"
+                  type="submit"
+                  id="cw-submit"
+                  data-t="cw-submit"
+                >
+                  إرسال الطلب
+                </button>
+              </form>
+
+              <div class="cw-success" id="cw-success" style="display: none">
+                <div style="font-size: 52px; margin-bottom: 16px"></div>
+                <h3 data-t="cw-succ-h">طلبك وصلنا!</h3>
+                <p data-t="cw-succ-p">
+                  هيتواصل معاك فريقنا خلال 24 ساعة لمناقشة التفاصيل وتقديم عرض
+                  سعر.
+                </p>
+                <div
+                  id="cw-succ-email-note"
+                  style="
+                    display: none;
+                    margin-top: 16px;
+                    background: rgba(245, 166, 35, 0.1);
+                    border: 1px solid rgba(245, 166, 35, 0.3);
+                    border-radius: 10px;
+                    padding: 12px 16px;
+                    font-size: 13px;
+                    color: var(--tm);
+                    align-items: center;
+                    gap: 8px;
+                  "
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <span id="cw-succ-email-text"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="fg">
+        <div class="fbr">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              margin-bottom: 4px;
+            "
+          >
+            <img
+              src="../logos/mega-logo.jpg"
+              style="
+                width: 32px;
+                height: 32px;
+                border-radius: 6px;
+                object-fit: cover;
+              "
+              onerror="this.style.display = 'none'"
+            />
+            <div
+              style="
+                font-family: &quot;Fraunces&quot;, serif;
+                font-size: 13px;
+                font-weight: 700;
+                color: var(--t);
+              "
+            >
+              MEGA <span style="color: var(--o)">FURNITURE</span>
+            </div>
+          </div>
+          <p data-t="footer-about">
+            أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.
+          </p>
+        </div>
+        <div class="fc">
+          <h4 data-t="footer-nav">تصفح</h4>
+          <ul>
+            <li>
+              <a href="../mega-furniture.html" data-t="nav-home">الرئيسية</a>
+            </li>
+            <li><a href="shop.html" data-t="nav-shop">تسوق</a></li>
+            <li>
+              <a href="reviews.html" data-t="nav-reviews">آراء العملاء</a>
+            </li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-t="footer-support">الدعم</h4>
+          <ul>
+            <li><a href="contact.html" data-t="nav-contact">تواصل معنا</a></li>
+            <li>
+              <a
+                href="https://www.instagram.com/megafurniturehome/"
+                target="_blank"
+                >Instagram</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-t="footer-promise">ضمانات</h4>
+          <ul>
+            <li><a href="#" data-t="ft-delivery">توصيل مجاني</a></li>
+            <li><a href="about.html#warranty" data-t="ft-warranty">الضمان ضد عيوب الصناعة</a></li>
+            <li><a href="#" data-t="ft-install">تركيب متخصص</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fb">
+        <span>© 2026 Mega Furniture · ميجا فرنيتشر.</span>
+        <span data-t="footer-made">صُنع لمصر</span>
+      </div>
+    </footer>
+
+    <div class="fbtns">
+      <button
+        class="fbtn topb"
+        id="topb"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      >
+        ↑
+      </button>
+      <div class="wa-menu-container">
+        <div class="wa-menu" id="wa-menu">
+          <a href="https://wa.me/201040454343" target="_blank" class="wa-menu-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-t="wa-menu-sales">Sales Team</span>
+          </a>
+          <a href="https://wa.me/201105343715" target="_blank" class="wa-menu-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-t="wa-menu-web">Web Support</span>
+          </a>
+        </div>
+        <button
+          onclick="toggleWaMenu(event)"
+          class="fbtn wab"
+          aria-label="WhatsApp"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* THEME */
+      (function () {
+        const s = localStorage.getItem("megaTheme");
+        if (s) document.documentElement.setAttribute("data-theme", s);
+      })();
+      function toggleTheme() {
+        const h = document.documentElement;
+        const cur = h.getAttribute("data-theme") || "light";
+        const next = cur === "dark" ? "light" : "dark";
+        const newBg = next === "light" ? "#F7F3EC" : "#0A0A0A";
+        const curtain = document.createElement("div");
+        curtain.style.cssText =
+          "position:fixed;inset:0;background:" +
+          newBg +
+          ";transform-origin:top;transform:scaleY(0);z-index:9997;pointer-events:none;transition:none";
+        document.body.appendChild(curtain);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            curtain.style.transition =
+              "transform 480ms cubic-bezier(0.76,0,0.24,1)";
+            curtain.style.transform = "scaleY(1)";
+          });
+        });
+        setTimeout(() => {
+          h.setAttribute("data-theme", next);
+          localStorage.setItem("megaTheme", next);
+          curtain.style.transformOrigin = "bottom";
+          curtain.style.transform = "scaleY(0)";
+          setTimeout(() => curtain.remove(), 520);
+        }, 490);
+      }
+
+      /* TRANSLATIONS */
+      const TRANS = {
+        ar: {
+          "nav-home": "الرئيسية",
+          "nav-shop": "تسوق",
+          "nav-reviews": "آراء",
+          "nav-videos": "فيديوهات",
+          "nav-about": "من نحن",
+          "nav-custom-work": "شغل عمولة",
+          "nav-contact": "تواصل",
+          "nav-shop-cta": "تسوق الآن",
+          "cw-tag": "شغل عمولة",
+          "cw-page-h1": "صمّم أثاثك <span>بنفسك</span>",
+          "cw-page-desc":
+            "مش لاقي اللي يناسبك؟ ابعتلنا فكرتك ونعملهالك بالمقاس والشكل اللي بتحبه — جودة ميجا بتصميمك.",
+          "cw-title": "صمّم أثاثك <span>بنفسك</span>",
+          "cw-desc":
+            "مش لاقي اللي يناسبك؟ ابعتلنا فكرتك ونعملهالك بالمقاس والشكل اللي بتحبه.",
+          "cw-f1": "تصميم حسب طلبك",
+          "cw-f2": "تواصل مباشر مع الفريق",
+          "cw-f3": "سعر يناسب ميزانيتك",
+          "cw-f4": "تنفيذ بأعلى جودة",
+          "cw-f5": "رد خلال 24 ساعة",
+          "cw-t1": "تصميم فريد 100%",
+          "cw-t2": "بالمقاس المطلوب",
+          "cw-t3": "ضمان الجودة",
+          "cw-form-title": "أرسل طلبك",
+          "cw-name": "الاسم",
+          "cw-phone": "رقم التليفون",
+          "cw-email": "البريد الإلكتروني",
+          "cw-type": "نوع الأثاث",
+          "cw-colors": "الألوان المفضلة",
+          "cw-custom-color-label": "لون مخصوص",
+          "cw-desc-label": "وصف الفكرة",
+          "cw-photos": "صور مرجعية",
+          "cw-upload-hint": "ارفع صور مرجعية أو إلهام للتصميم",
+          "cw-submit": "إرسال الطلب",
+          "cw-succ-h": "طلبك وصلنا!",
+          "cw-succ-p":
+            "هيتواصل معاك فريقنا خلال 24 ساعة لمناقشة التفاصيل وتقديم عرض سعر.",
+          "footer-about":
+            "أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.",
+          "footer-nav": "تصفح",
+          "footer-support": "الدعم",
+          "footer-promise": "ضمانات",
+          "ft-delivery": "توصيل مجاني",
+          "ft-warranty": "الضمان ضد عيوب الصناعة",
+          "ft-install": "تركيب متخصص",
+          "footer-made": "صُنع لمصر",
+          "wa-menu-sales": "فريق المبيعات",
+          "wa-menu-web": "الدعم والطلبات (الموقع)",
+          "cart-title": "السلة",
+          "cart-empty": "سلتك فاضية",
+          "cart-empty-sub": "ضيف منتجات للسلة وهتظهر هنا",
+          "cart-view": "عرض السلة ←",
+          "bundle-tag": "عرض ووفر",
+          "bundle-includes": "يحتوي على {n} قطع",
+        },
+        en: {
+          "nav-home": "Home",
+          "nav-shop": "Shop",
+          "nav-reviews": "Reviews",
+          "nav-videos": "Videos",
+          "nav-about": "About Us",
+          "nav-custom-work": "Custom Work",
+          "nav-contact": "Contact",
+          "nav-track": "Track Order",
+          "nav-shop-cta": "Shop Now",
+          "cw-tag": "Custom Work",
+          "cw-page-h1": "Design Your Own <span>Furniture</span>",
+          "cw-page-desc":
+            "Can't find what you're looking for? Send us your idea and we'll build it to your exact size and style — Mega quality, your design.",
+          "cw-title": "Design Your Own <span>Furniture</span>",
+          "cw-desc":
+            "Can't find what you're looking for? Send us your idea and we'll build it to your exact size and style.",
+          "cw-f1": "Designed to your specs",
+          "cw-f2": "Direct contact with our team",
+          "cw-f3": "Price that fits your budget",
+          "cw-f4": "Highest quality execution",
+          "cw-f5": "Reply within 24 hours",
+          "cw-t1": "100% Unique Design",
+          "cw-t2": "Custom Dimensions",
+          "cw-t3": "Quality Guaranteed",
+          "cw-form-title": "Send Your Request",
+          "cw-name": "Your Name",
+          "cw-phone": "Phone Number",
+          "cw-email": "Email Address",
+          "cw-type": "Furniture Type",
+          "cw-colors": "Preferred Colors",
+          "cw-custom-color-label": "Custom Color",
+          "cw-desc-label": "Describe Your Idea",
+          "cw-photos": "Reference Photos",
+          "cw-upload-hint": "Upload reference photos or design inspiration",
+          "cw-submit": "Send Request",
+          "cw-succ-h": "Request Received!",
+          "cw-succ-p":
+            "Our team will contact you within 24 hours to discuss details and provide a quote.",
+          "footer-about":
+            "Premium Egyptian furniture · Est. 2020 · Experience since 1998.",
+          "footer-nav": "Browse",
+          "footer-support": "Support",
+          "footer-promise": "Guarantees",
+          "ft-delivery": "Free Delivery",
+          "ft-warranty": "Warranty against manufacturing defects",
+          "ft-install": "Expert Assembly",
+          "footer-made": "Made for Egypt",
+          "wa-menu-sales": "Sales Team",
+          "wa-menu-web": "Web Support",
+          "cart-title": "Cart",
+          "cart-empty": "Your cart is empty",
+          "cart-empty-sub": "Add items to your cart to see them here",
+          "cart-view": "View Cart ←",
+          "bundle-tag": "Bundle Offer",
+          "bundle-includes": "Includes {n} items",
+        },
+      };
+      let lang = localStorage.getItem("megaLang") || "en";
+      function t(k) {
+        return (TRANS[lang] && TRANS[lang][k]) || k;
+      }
+      function applyLang(l) {
+        lang = l;
+        localStorage.setItem("megaLang", l);
+        document.documentElement.setAttribute("lang", l);
+        document.querySelectorAll("[data-t]").forEach((el) => {
+          const k = el.getAttribute("data-t");
+          if (TRANS[l] && TRANS[l][k] !== undefined) el.innerHTML = TRANS[l][k];
+        });
+        document.querySelectorAll("[data-ph-ar],[data-ph-en]").forEach((el) => {
+          el.placeholder =
+            l === "ar" ? el.dataset.phAr || "" : el.dataset.phEn || "";
+        });
+        document
+          .querySelectorAll("#cw-color-row .cw-color-chip")
+          .forEach((btn) => {
+            btn.textContent =
+              l === "ar" ? btn.dataset.ar || "" : btn.dataset.en || "";
+          });
+        document.querySelectorAll("[data-ar][data-en]").forEach((el) => {
+          if (!el.closest("#cw-color-row")) {
+            el.textContent =
+              l === "ar" ? el.dataset.ar || "" : el.dataset.en || "";
+          }
+        });
+        document.querySelectorAll("#cw-type option").forEach((o) => {
+          o.textContent =
+            l === "ar"
+              ? o.dataset.ar || o.textContent
+              : o.dataset.en || o.textContent;
+        });
+        document.querySelectorAll(".langbtn, #langbtn, #lang-btn").forEach((b) => {
+          b.textContent = l === "ar" ? "EN" : "عربي";
+          b.setAttribute("data-short", l === "ar" ? "EN" : "ع");
+        });
+        document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+        renderAllChips();
+      }
+      function toggleLang() {
+        applyLang(lang === "ar" ? "en" : "ar");
+      }
+
+      /* MOBILE MENU */
+      function toggleMenu() {
+        document.getElementById("hbg").classList.toggle("open");
+        document.getElementById("mm").classList.toggle("open");
+        document.getElementById("mov").classList.toggle("open");
+        document.body.style.overflow = document
+          .getElementById("mm")
+          .classList.contains("open")
+          ? "hidden"
+          : "";
+      }
+      function closeMenu() {
+        document.getElementById("hbg").classList.remove("open");
+        document.getElementById("mm").classList.remove("open");
+        document.getElementById("mov").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      /* SCROLL */
+      window.addEventListener("scroll", () => {
+        const topb = document.getElementById("topb");
+        if (topb) topb.classList.toggle("vis", window.scrollY > 300);
+        const pb = document.getElementById("pb");
+        if (pb) {
+          const p =
+            (window.scrollY /
+              (document.body.scrollHeight - window.innerHeight)) *
+            100;
+          pb.style.width = p + "%";
+        }
+      });
+
+      /* TOAST */
+      function showToast(ico, msg) {
+        const el = document.getElementById("toast");
+        el.textContent = ico + " " + msg;
+        el.classList.add("show");
+        setTimeout(() => el.classList.remove("show"), 3000);
+      }
+
+      /* CUSTOM WORK */
+      let cwSelectedColors = []; // {key, hex, label}
+      let cwCustomColors = []; // "hex:label"
+
+      function toggleColor(btn) {
+        const key = btn.dataset.color;
+        const existing = cwSelectedColors.findIndex((x) => x.key === key);
+        if (existing !== -1) {
+          cwSelectedColors.splice(existing, 1);
+          btn.classList.remove("on");
+        } else {
+          const hex = btn.style.background;
+          const label = (btn.dataset.ar || btn.textContent).trim();
+          cwSelectedColors.push({
+            key,
+            hex,
+            labelAr: btn.dataset.ar || btn.textContent.trim(),
+            labelEn: btn.dataset.en || btn.textContent.trim(),
+          });
+          btn.classList.add("on");
+        }
+        renderAllChips();
+      }
+
+      function removeReadyColor(key) {
+        cwSelectedColors = cwSelectedColors.filter((x) => x.key !== key);
+        // un-highlight the button
+        document
+          .querySelectorAll("#cw-color-row .cw-color-chip")
+          .forEach((b) => {
+            if (b.dataset.color === key) b.classList.remove("on");
+          });
+        renderAllChips();
+      }
+
+      function updateColorPickerPreview(inp) {
+        inp.style.outline = "3px solid " + inp.value;
+      }
+
+      function addCustomColor() {
+        const picker = document.getElementById("cw-color-picker");
+        const textInp = document.getElementById("cw-colors-other");
+        const hex = picker.value;
+        const label = textInp.value.trim() || hex;
+        const key = hex + ":" + label;
+        if (cwCustomColors.includes(key)) return;
+        cwCustomColors.push(key);
+        textInp.value = "";
+        renderAllChips();
+      }
+
+      function removeCustomColor(key) {
+        cwCustomColors = cwCustomColors.filter((x) => x !== key);
+        renderAllChips();
+      }
+
+      function renderAllChips() {
+        const box = document.getElementById("cw-custom-chips");
+        const readyHtml = cwSelectedColors
+          .map(({ key, hex, labelAr, labelEn }) => {
+            const label = lang === "ar" ? labelAr : labelEn;
+            const light = (() => {
+              try {
+                const c = hex.replace(/[^0-9a-f]/gi, "");
+                return (
+                  parseInt(c.length >= 6 ? c.slice(0, 6) : c, 16) > 0xaaaaaa
+                );
+              } catch {
+                return false;
+              }
+            })();
+            const safeKey = key.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+            return `<span style="display:inline-flex;align-items:center;gap:5px;background:${hex};color:${light ? "#111" : "#fff"};font-size:12px;font-weight:600;padding:4px 10px 4px 7px;border-radius:100px;border:2px solid rgba(245,166,35,.5)">
+            <span style="width:9px;height:9px;border-radius:50%;background:${hex};border:1px solid rgba(${light ? "0,0,0" : "255,255,255"},.35);flex-shrink:0"></span>
+            ${label}
+            <button type="button" onclick="removeReadyColor('${safeKey}')" style="background:none;border:none;color:inherit;cursor:pointer;font-size:13px;line-height:1;padding:0;margin-left:1px;opacity:.75">✕</button>
+          </span>`;
+          })
+          .join("");
+
+        const customHtml = cwCustomColors
+          .map((k) => {
+            const [hex, label] = k.split(/:(.+)/);
+            const light = parseInt(hex.slice(1), 16) > 0xaaaaaa;
+            const safeK = k.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+            return `<span style="display:inline-flex;align-items:center;gap:5px;background:${hex};color:${light ? "#111" : "#fff"};font-size:12px;font-weight:600;padding:4px 10px 4px 7px;border-radius:100px;border:2px solid var(--o)">
+            <span style="width:9px;height:9px;border-radius:50%;background:${hex};border:1px solid rgba(255,255,255,.4);flex-shrink:0"></span>
+            ${label}
+            <button type="button" onclick="removeCustomColor('${safeK}')" style="background:none;border:none;color:inherit;cursor:pointer;font-size:13px;line-height:1;padding:0;margin-left:1px;opacity:.75">✕</button>
+          </span>`;
+          })
+          .join("");
+
+        box.innerHTML = readyHtml + customHtml;
+      }
+      function cwPreviewPhotos(inp) {
+        const box = document.getElementById("cw-thumbs");
+        box.innerHTML = "";
+        [...inp.files].slice(0, 5).forEach((f) => {
+          const img = document.createElement("img");
+          img.className = "cw-thumb";
+          img.src = URL.createObjectURL(f);
+          box.appendChild(img);
+        });
+      }
+      async function submitCustomOrder(e) {
+        e.preventDefault();
+        const btn = document.getElementById("cw-submit");
+        const name = document.getElementById("cw-name").value.trim();
+        const phone = document.getElementById("cw-phone").value.trim();
+        const type = document.getElementById("cw-type").value;
+        if (!name || !phone || !type) return;
+        btn.disabled = true;
+        btn.textContent = lang === "ar" ? "جارٍ الإرسال..." : "Sending...";
+        const fd = new FormData();
+        fd.append("customerName", name);
+        fd.append("phone", phone);
+        fd.append(
+          "email",
+          (document.getElementById("cw-email").value || "").trim(),
+        );
+        fd.append("furnitureType", type);
+        fd.append(
+          "description",
+          document.getElementById("cw-description").value.trim(),
+        );
+        const otherColorsEl = document.getElementById("cw-colors-other");
+        const otherColors = otherColorsEl ? otherColorsEl.value.trim() : "";
+        const customColorLabels = (cwCustomColors || []).map((k) => {
+          const [hex, label] = k.split(/:(.+)/);
+          if (label && label.trim() !== hex) return `${label.trim()} (${hex})`;
+          return hex;
+        });
+        const allColors = [
+          ...(cwSelectedColors || []).map((x) => x.key),
+          ...customColorLabels,
+          ...(otherColors ? [otherColors] : []),
+        ].join(", ");
+        fd.append("colors", allColors);
+        const photos = document.getElementById("cw-photos").files;
+        [...photos].slice(0, 5).forEach((f) => fd.append("photos", f));
+        try {
+          const res = await fetch(
+            window.location.origin + "/api/custom-orders",
+            {
+              method: "POST",
+              body: fd,
+            },
+          );
+          if (!res.ok) throw new Error();
+          document.getElementById("cw-form").style.display = "none";
+          document.getElementById("cw-success").style.display = "block";
+          const emailVal = document.getElementById("cw-email").value.trim();
+          if (emailVal) {
+            const note = document.getElementById("cw-succ-email-note");
+            document.getElementById("cw-succ-email-text").textContent =
+              lang === "ar"
+                ? `بعتناك إيميل تأكيد على ${emailVal}`
+                : `We've sent a confirmation email to ${emailVal}`;
+            note.style.display = "flex";
+          }
+        } catch {
+          btn.disabled = false;
+          btn.textContent = t("cw-submit");
+          showToast(
+            '<span class="css-x"></span>',
+            lang === "ar"
+              ? "حدث خطأ، حاول مرة أخرى"
+              : "Something went wrong, please try again",
+          );
+        }
+      }
+
+      /* ── GENERAL ANNOUNCEMENT ── */
+      (async function () {
+        try {
+          if (sessionStorage.getItem("genAnnDismissed")) return;
+          const r = await fetch(window.location.origin + "/api/announcement");
+          if (!r.ok) return;
+          const ann = await r.json();
+          if (!ann || !ann.active) return;
+          const l = localStorage.getItem("megaLang") || "en";
+          const msg = l === "ar" ? ann.message_ar : ann.message_en;
+          if (!msg) return;
+          let html = msg;
+          if (ann.link) {
+            const lt =
+              l === "ar"
+                ? ann.linkText_ar || ann.linkText_en
+                : ann.linkText_en || ann.linkText_ar;
+            if (lt)
+              html += ` <a href="${ann.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+          }
+          const msgEl = document.getElementById("gen-ann-msg");
+          if (msgEl) msgEl.innerHTML = html;
+          
+          const container = document.getElementById("gen-ann-msg-container");
+          if (container) {
+            let unitHtml = `<span class="ann-item">${html}</span><span class="ann-bullet">&bull;</span>`;
+            let half = unitHtml.repeat(4);
+            container.innerHTML = half + half;
+          }
+          
+          const bar = document.getElementById("gen-ann-bar");
+          bar.style.display = "flex";
+          document.body.classList.add("gen-ann-visible");
+        } catch {}
+      })();
+      function dismissGenAnn() {
+        sessionStorage.setItem("genAnnDismissed", "1");
+        document.getElementById("gen-ann-bar").style.display = "none";
+        document.body.classList.remove("gen-ann-visible");
+      }
+
+      /* ── DYNAMIC PALETTE COLORS ── */
+      async function loadPaletteColors() {
+        try {
+          const r = await fetch(window.location.origin + "/api/colors");
+          if (!r.ok) return;
+          const colors = await r.json();
+          const cwColors = colors.filter(c => c.showInCustomWork);
+          const row = document.getElementById("cw-color-row");
+          if (!row || !cwColors.length) return;
+
+          function iu(src) {
+            if (!src) return "";
+            if (src.startsWith("http") || src.startsWith("/")) return src;
+            return "/uploads/" + src;
+          }
+
+          row.innerHTML = cwColors.map(c => {
+            const hex = c.colorHex || "#ccc";
+            const light = parseInt(hex.replace("#", ""), 16) > 0xaaaaaa;
+            const textColor = light ? "#111" : "#fff";
+            const label = lang === "ar" ? (c.nameAr || c.nameEn) : (c.nameEn || c.nameAr);
+            const statsText = lang === "ar" ? (c.fabricStatsAr || c.fabricStatsEn || "") : (c.fabricStatsEn || c.fabricStatsAr || "");
+            const paletteName = lang === "ar" ? (c.paletteNameAr || c.paletteNameEn || "") : (c.paletteNameEn || c.paletteNameAr || "");
+
+            let tooltipHtml = "";
+            if (paletteName || c.fabricCode || statsText || c.image) {
+              const imgHtml = c.image ? `<img src="${iu(c.image)}" style="width:100%;height:60px;object-fit:cover;border-radius:6px;margin-bottom:6px" onerror="this.style.display='none'" />` : "";
+              tooltipHtml = `<div class="cw-color-tooltip">
+                ${imgHtml}
+                ${paletteName ? `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#F5A623;margin-bottom:4px">${paletteName}</div>` : ""}
+                <div style="font-size:12px;font-weight:600;margin-bottom:2px">${c.nameAr || ""} / ${c.nameEn || ""}</div>
+                ${c.fabricCode ? `<div style="font-size:10px;opacity:.7;margin-bottom:4px">Code: ${c.fabricCode}</div>` : ""}
+                ${statsText ? `<div style="font-size:10px;line-height:1.5;opacity:.8">${statsText}</div>` : ""}
+              </div>`;
+            }
+
+            return `<button type="button" class="cw-color-chip" data-color="${c.nameAr || ""} / ${c.nameEn || ""}" data-ar="${c.nameAr || ""}" data-en="${c.nameEn || ""}" style="background:${hex};color:${textColor}" onclick="toggleColor(this)">
+              ${label}
+              ${tooltipHtml}
+            </button>`;
+          }).join("");
+        } catch (e) {
+          console.warn("Failed to load palette colors:", e);
+        }
+      }
+
+      /* CART FUNCTIONS */
+      let cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
+      
+      function saveCart() {
+        localStorage.setItem("megaCart", JSON.stringify(cart));
+      }
+      function updBadge() {
+        const badge = document.getElementById("cbadge");
+        if (badge) {
+          badge.textContent = cart.reduce((s, c) => s + c.qty, 0);
+        }
+      }
+      function rmCartIdx(idx) {
+        cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function updQtyIdx(idx, delta) {
+        if (!cart[idx]) return;
+        cart[idx].qty += delta;
+        if (cart[idx].qty < 1) cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function renderCart() {
+        const el = document.getElementById("clist"),
+          cc = document.getElementById("cc"),
+          ft = document.getElementById("cftr");
+        if (!el) return;
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        if (cc) cc.textContent = "(" + n + ")";
+        if (!cart.length) {
+          el.innerHTML = `<div class="cemp"><div class="big"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><p>${t("cart-empty")}</p><small>${t("cart-empty-sub")}</small></div>`;
+          if (ft) ft.style.display = "none";
+          return;
+        }
+        if (ft) ft.style.display = "flex";
+        const lang = localStorage.getItem("megaLang") || "en";
+        
+        function getCartItemPhoto(item) {
+          const photo = item.mainPhoto || "";
+          if (!photo) return "";
+          if (photo.startsWith("http") || photo.startsWith("data:")) return photo;
+          if (photo.startsWith("/")) return ".." + photo;
+          return "../uploads/" + photo;
+        }
+
+        el.innerHTML = cart
+          .map((item) => {
+            const nm =
+              lang === "ar"
+                ? item.nameAr || item.nameEn
+                : item.nameEn || item.nameAr;
+            const imgSrc = getCartItemPhoto(item);
+            const unitPrice = item.price || 0;
+            const lineTotal = unitPrice * item.qty;
+            const idx = cart.indexOf(item);
+            if (item.isBundle) {
+              const bundleTag = t("bundle-tag");
+              const countLbl = t("bundle-includes").replace("{n}", item.itemCount || 0);
+              const itemsList = (item.items || [])
+                .map(
+                  (p) =>
+                    "· " +
+                    (lang === "ar"
+                      ? p.nameAr || p.nameEn
+                      : p.nameEn || p.nameAr),
+                )
+                .join("<br>");
+              const priceStr =
+                unitPrice > 0
+                  ? item.qty > 1
+                    ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                    : "EGP " + Number(unitPrice).toLocaleString()
+                  : "";
+              return `<div class="cir bundle-item"><div class="cir-top"><div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div><div class="cin" style="flex:1;min-width:0"><div><span class="bundle-tag">${bundleTag}</span></div><div class="nm">${nm}</div><div class="pr">${priceStr}</div><div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div></div><button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button></div><div class="bundle-item-count">${countLbl}</div>${itemsList ? `<div class="bundle-items-list">${itemsList}</div>` : ""}</div>`;
+            }
+            const priceStr =
+              unitPrice > 0
+                ? item.qty > 1
+                  ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                  : "EGP " + Number(unitPrice).toLocaleString()
+                : "";
+            const meta = [
+              item.color || "",
+              item.size
+                ? (lang === "ar" ? item.size.nameAr : item.size.nameEn) || ""
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" · ");
+            return `<div class="cir"><div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div><div class="cin"><div class="nm">${nm}${meta ? `<span style="font-size:10px;color:var(--tm);margin-right:4px"> · ${meta}</span>` : ""}</div><div class="pr">${priceStr}</div><div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div></div><button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button></div>`;
+          })
+          .join("");
+      }
+      function openCart() {
+        renderCart();
+        const panel = document.getElementById("cpa");
+        const overlay = document.getElementById("cov");
+        if (panel) panel.classList.add("open");
+        if (overlay) overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCart() {
+        const panel = document.getElementById("cpa");
+        const overlay = document.getElementById("cov");
+        if (panel) panel.classList.remove("open");
+        if (overlay) overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      /* INIT */
+      loadPaletteColors();
+      applyLang(localStorage.getItem("megaLang") || "en");
+      updBadge();
+
+      /* ── SETTINGS FETCH (server-driven defaults for new visitors) ── */
+      (function () {
+        if (!localStorage.getItem("megaLang") || !localStorage.getItem("megaTheme")) {
+          fetch("/api/settings").then(r => r.json()).then(s => {
+            if (!localStorage.getItem("megaLang") && s.defaultLanguage) {
+              applyLang(s.defaultLanguage);
+            }
+            if (!localStorage.getItem("megaTheme") && s.defaultTheme) {
+              document.documentElement.setAttribute("data-theme", s.defaultTheme);
+              localStorage.setItem("megaTheme", s.defaultTheme);
+            }
+          }).catch(() => {});
+        }
+      })();
+
+      function toggleWaMenu(e) {
+        if (e) e.stopPropagation();
+        const menu = document.getElementById("wa-menu");
+        if (menu) menu.classList.toggle("show");
+      }
+      document.addEventListener("click", () => {
+        const menu = document.getElementById("wa-menu");
+        if (menu) menu.classList.remove("show");
+      });
+    </script>
+  </body>
+</html>

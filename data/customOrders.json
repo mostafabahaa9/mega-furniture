@@ -1,0 +1,22 @@
+[
+  {
+    "id": "bbd48621-a2f3-4ff8-91ea-988faedba4f5",
+    "customerName": "مصطفي بهاء احمد",
+    "phone": "01118544997",
+    "email": "baaaam456@gmail.com",
+    "furnitureType": "bedroom",
+    "description": "شيبشسيب",
+    "colors": "كريمي / Cream",
+    "budget": null,
+    "photos": [
+      "5da91dca-652a-460a-a6df-ac986ad3a781.jpeg",
+      "3137c121-9fd3-465a-be5b-4dfcc2df517b.jpeg",
+      "29558d19-53fd-42cf-ab09-773a21256732.jpeg",
+      "7ef1a1d0-4496-4e25-947f-317b2dc9316b.jpeg",
+      "6fa15576-ff39-4068-b4a6-52fd4d69c085.jpeg"
+    ],
+    "status": "new",
+    "adminNotes": "",
+    "createdAt": "2026-05-19T23:53:14.995Z"
+  }
+]
