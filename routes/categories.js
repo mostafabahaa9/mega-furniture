@@ -47,6 +47,7 @@ function normalizeCategory(c) {
     defaultProductCareAr: c.defaultProductCareAr || "",
     defaultProductCareEn: c.defaultProductCareEn || "",
     defaultFeatureBanner: c.defaultFeatureBanner || null,
+    showInDreamRoom: c.showInDreamRoom !== false,
   };
 }
 
@@ -111,6 +112,7 @@ router.post("/admin/categories", adminAuth, (req, res) => {
     defaultProductCareAr,
     defaultProductCareEn,
     defaultFeatureBanner,
+    showInDreamRoom,
   } = req.body;
   if (!nameAr || !nameEn || !slug)
     return res
@@ -143,6 +145,7 @@ router.post("/admin/categories", adminAuth, (req, res) => {
     defaultProductCareAr: defaultProductCareAr || "",
     defaultProductCareEn: defaultProductCareEn || "",
     defaultFeatureBanner: defaultFeatureBanner || null,
+    showInDreamRoom: showInDreamRoom !== undefined ? showInDreamRoom : true,
     createdAt: new Date().toISOString(),
   });
   categories.push(category);
@@ -180,6 +183,7 @@ router.put("/admin/categories/:id", adminAuth, (req, res) => {
     defaultProductCareAr,
     defaultProductCareEn,
     defaultFeatureBanner,
+    showInDreamRoom,
   } = req.body;
   if (
     slug &&
@@ -217,6 +221,7 @@ router.put("/admin/categories/:id", adminAuth, (req, res) => {
     defaultProductCareAr: defaultProductCareAr !== undefined ? defaultProductCareAr : categories[idx].defaultProductCareAr,
     defaultProductCareEn: defaultProductCareEn !== undefined ? defaultProductCareEn : categories[idx].defaultProductCareEn,
     defaultFeatureBanner: defaultFeatureBanner !== undefined ? defaultFeatureBanner : categories[idx].defaultFeatureBanner,
+    showInDreamRoom: showInDreamRoom !== undefined ? showInDreamRoom : categories[idx].showInDreamRoom,
     ...icon,
   });
   write("categories", categories);

@@ -177,6 +177,9 @@ app.use("/api", require("./routes/bundles"));
 app.use("/api", require("./routes/colors"));
 app.use("/api", require("./routes/banners"));
 app.use("/admin", require("./routes/banners"));
+app.use("/api", require("./routes/promoBanners"));
+app.use("/api", require("./routes/offersBanners"));
+app.use("/api", require("./routes/shopTheLook"));
 app.use("/api", require("./routes/announcement"));
 app.use("/api", require("./routes/admin"));
 

@@ -13,8 +13,11 @@ function fileUrl(f) {
 
 /* Public: approved reviews */
 router.get("/reviews", (req, res) => {
-  const { productId } = req.query;
+  const { productId, featured } = req.query;
   let reviews = read("reviews").filter((r) => r.approved);
+  if (featured === 'true') {
+    reviews = reviews.filter((r) => r.featuredOnHome);
+  }
   if (productId) {
     reviews = reviews.filter((r) => r.productId === productId);
   }
@@ -58,6 +61,7 @@ router.post("/reviews", uploadNoSvg.single("photo"), (req, res) => {
     comment: (comment || "").trim(),
     photo: req.file ? fileUrl(req.file) : null,
     approved: false,
+    featuredOnHome: false,
     createdAt: new Date().toISOString(),
   };
 
@@ -88,6 +92,7 @@ router.get("/review-quick", (req, res) => {
     source: "email",
     trackingCode: tracking,
     approved: false,
+    featuredOnHome: false,
     createdAt: new Date().toISOString(),
   };
   const reviews = read("reviews");
@@ -126,6 +131,16 @@ router.put("/admin/reviews/:id/approve", adminAuth, (req, res) => {
   const idx = reviews.findIndex((r) => r.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: "Not found" });
   reviews[idx].approved = true;
+  write("reviews", reviews);
+  res.json(reviews[idx]);
+});
+
+/* Admin: toggle feature on home */
+router.put("/admin/reviews/:id/feature", adminAuth, (req, res) => {
+  const reviews = read("reviews");
+  const idx = reviews.findIndex((r) => r.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: "Not found" });
+  reviews[idx].featuredOnHome = !reviews[idx].featuredOnHome;
   write("reviews", reviews);
   res.json(reviews[idx]);
 });

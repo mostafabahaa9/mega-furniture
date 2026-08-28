@@ -1674,6 +1674,46 @@
               <line x1="9" y1="21" x2="9" y2="9" /></svg
             >Banners
           </button>
+          <button class="slink" onclick="goto('promo-banners')">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <line x1="21" y1="9" x2="3" y2="9" />
+              <line x1="9" y1="21" x2="9" y2="9" /></svg
+            >Promo Banners
+          </button>
+          <button class="slink" onclick="goto('offers-banners')">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <line x1="21" y1="9" x2="3" y2="9" />
+              <line x1="9" y1="21" x2="9" y2="9" /></svg
+            >Offers Banners
+          </button>
+          <button class="slink" onclick="goto('shop-the-look')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <circle cx="12" cy="11" r="3"/>
+            </svg>Shop the Look
+          </button>
           <button class="slink" onclick="goto('shipping')">
             <svg
               width="16"
@@ -1808,7 +1848,7 @@
               onclick="toggleSidebar()"
               style="display: none; padding: 9px 12px"
             >
-              ☰
+              <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='3' y1='12' x2='21' y2='12'></line><line x1='3' y1='6' x2='21' y2='6'></line><line x1='3' y1='18' x2='21' y2='18'></line></svg>
             </button>
             <div>
               <div class="page-title" id="page-title">Dashboard</div>
@@ -2187,8 +2227,8 @@
                 <option value="">All Statuses</option>
                 <option value="new">New</option>
                 <option value="in-progress">In Progress</option>
-                <option value="completed">✅ Completed</option>
-                <option value="cancelled">❌ Cancelled</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
               </select>
             </div>
             <div class="table-wrap">
@@ -2390,7 +2430,7 @@
                     color: var(--text);
                   "
                 >
-                  ✕
+                  <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>
                 </button>
               </div>
               <div style="padding: 24px; display: grid; gap: 16px">
@@ -2549,7 +2589,7 @@
                     color: var(--text);
                   "
                 >
-                  ✕
+                  <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>
                 </button>
               </div>
               <div style="padding: 24px">
@@ -3042,6 +3082,83 @@
             </div>
           </div>
 
+          <!-- PROMO BANNERS -->
+          <div class="panel" id="panel-promo-banners">
+            <div class="section-hdr">
+              <h3>Promo Banners</h3>
+              <button class="tbtn primary" onclick="openPromoBannerModal()">
+                + Add Promo Banner
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Title AR</th>
+                    <th>Title EN</th>
+                    <th>Link URL</th>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="promo-banner-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          
+          <!-- OFFERS BANNERS -->
+          <div class="panel" id="panel-offers-banners">
+            <div class="section-hdr">
+              <h3>Offers Banners</h3>
+              <button class="tbtn primary" onclick="openOffersBannerModal()">
+                + Add Offers Banner
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Title AR</th>
+                    <th>Title EN</th>
+                    <th>Link URL</th>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="offers-banner-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SHOP THE LOOK -->
+          <div class="panel" id="panel-shop-the-look">
+            <div class="section-hdr">
+              <h3>Shop the Look</h3>
+              <button class="tbtn primary" onclick="openStlModal()">
+                + Add Shop the Look
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Hotspots</th>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="stl-body"></tbody>
+              </table>
+            </div>
+          </div>
+
           <!-- BANNERS -->
           <div class="panel" id="panel-banners">
             <div class="section-hdr">
@@ -3295,7 +3412,7 @@
       <div class="modal" style="max-width: 860px">
         <div class="modal-hdr">
           <h3 id="bundle-modal-title">Add Bundle</h3>
-          <button class="modal-x" onclick="closeBundleModal()">✕</button>
+          <button class="modal-x" onclick="closeBundleModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -3319,6 +3436,61 @@
             </div>
             <div class="form-grid cols2">
               <div class="field">
+                
+            <div class="form-grid cols2">
+              <div class="field">
+                <label>Tier</label>
+                <select id="bm-tier">
+                  <option value="">None</option>
+                  <option value="starter">Starter</option>
+                  <option value="complete">Complete</option>
+                  <option value="signature">Signature</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Order / Priority (Number)</label>
+                <input type="number" id="bm-order" value="0" />
+              </div>
+            </div>
+            
+            <div class="form-grid cols2">
+              <div class="field">
+                <label>Badge text (Ar)</label>
+                <input type="text" id="bm-badge-ar" placeholder="أوفر بداية" />
+              </div>
+              <div class="field">
+                <label>Badge text (En)</label>
+                <input type="text" id="bm-badge-en" placeholder="Best Value" />
+              </div>
+            </div>
+            
+            <div class="form-grid cols2">
+              <div class="field">
+                <label>Badge Icon</label>
+                <select id="bm-badge-icon">
+                  <option value="star">Star</option>
+                  <option value="fire">Fire</option>
+                  <option value="crown">Crown</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Room Count</label>
+                <input type="number" id="bm-room-count" value="0" />
+              </div>
+            </div>
+            
+            
+            
+
+            
+            <div class="form-grid cols2">
+              <div class="field" style="display:flex;align-items:center;gap:10px;">
+                <input type="checkbox" id="bm-featured" style="width:16px;height:16px;"/>
+                <label for="bm-featured" style="margin:0;">Featured</label>
+              </div>
+              <div class="field"></div>
+            </div>
+
                 <label>Discount %</label>
                 <input
                   type="number"
@@ -3349,6 +3521,8 @@
                 >
               </div>
             </div>
+
+            
 
             <!-- Bundle Photo -->
             <div class="field">
@@ -3441,7 +3615,7 @@
       <div class="modal">
         <div class="modal-hdr">
           <h3 id="prod-modal-title">Add Product</h3>
-          <button class="modal-x" onclick="closeProdModal()">✕</button>
+          <button class="modal-x" onclick="closeProdModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -3499,8 +3673,8 @@
                 <div style="font-size:10px;color:var(--tm)">Paste stored templates directly from the selected category</div>
               </div>
               <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button type="button" onclick="autoFillDescription()" class="tbtn" style="font-size:11px;font-weight:700">✍️ Auto Desc</button>
-                <button type="button" onclick="autoFillCategorySpecs()" class="tbtn" style="font-size:11px;font-weight:700">✨ Auto Specs</button>
+                <button type="button" onclick="autoFillDescription()" class="tbtn" style="font-size:11px;font-weight:700"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M12 20h9'></path><path d='M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z'></path></svg> Auto Desc</button>
+                <button type="button" onclick="autoFillCategorySpecs()" class="tbtn" style="font-size:11px;font-weight:700"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z'></path></svg> Auto Specs</button>
                 <button type="button" onclick="autoFillFeatureBanner()" class="tbtn" style="font-size:11px;font-weight:700">🖼️ Auto Banner</button>
                 <button type="button" onclick="autoFillAllCategoryDefaults()" style="background:var(--o);color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer">🚀 Auto-Fill Everything</button>
               </div>
@@ -3515,11 +3689,11 @@
               <div class="pm-section-body" id="feat-banner-body" style="display:none">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:10px 14px;background:rgba(155,89,182,0.08);border:1px dashed rgba(155,89,182,0.4);border-radius:10px">
                   <div>
-                    <div style="font-size:12px;font-weight:700;color:#9b59b6">✨ Auto-Generate Feature Banner</div>
+                    <div style="font-size:12px;font-weight:700;color:#9b59b6"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z'></path></svg> Auto-Generate Feature Banner</div>
                     <div style="font-size:10px;color:var(--tm)">Populates Header, Description, 4 Features & picks an existing gallery photo</div>
                   </div>
                   <button type="button" onclick="autoFillFeatureBanner()" style="background:#9b59b6;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:700;font-size:11px">
-                    <span>✨ Generate Banner</span>
+                    <span><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z'></path></svg> Generate Banner</span>
                   </button>
                 </div>
                 
@@ -3586,11 +3760,11 @@
               <div class="pm-section-body" id="specs-care-body" style="display:none">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:10px 14px;background:rgba(245,166,35,0.08);border:1px dashed rgba(245,166,35,0.4);border-radius:10px">
                   <div>
-                    <div style="font-size:13px;font-weight:700;color:var(--o)">✨ Auto-Fill Specs & Care</div>
+                    <div style="font-size:13px;font-weight:700;color:var(--o)"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z'></path></svg> Auto-Fill Specs & Care</div>
                     <div style="font-size:11px;color:var(--tm)">Fills Structure, Fabric, Filling, Care & Notes based on selected category</div>
                   </div>
                   <button type="button" onclick="autoFillCategorySpecs()" style="background:var(--o);color:#fff;border:none;padding:7px 14px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12px;display:flex;align-items:center;gap:6px">
-                    <span>✨ Generate Specs & Care</span>
+                    <span><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z'></path></svg> Generate Specs & Care</span>
                   </button>
                 </div>
                 <!-- Structure -->
@@ -3836,6 +4010,45 @@
                 </div>
               </div>
             </div>
+            <div
+              class="pm-toggle-row"
+              style="
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                background: rgba(245, 166, 35, 0.05);
+                border: 1px solid rgba(245, 166, 35, 0.2);
+                border-radius: 10px;
+                padding: 12px 16px;
+              "
+            >
+              <input
+                type="checkbox"
+                id="pm-marquee"
+                style="
+                  width: 18px;
+                  height: 18px;
+                  accent-color: var(--o);
+                  cursor: pointer;
+                  flex-shrink: 0;
+                "
+              />
+              <div>
+                <label
+                  for="pm-marquee"
+                  style="
+                    font-weight: 600;
+                    color: var(--t);
+                    cursor: pointer;
+                    margin: 0;
+                  "
+                  >Featured in Marquee</label
+                >
+                <div style="font-size: 12px; color: var(--tm); margin-top: 2px">
+                  Show this product in the scrolling marquee on the home page
+                </div>
+              </div>
+            </div>
             <!-- Orientation / Mechanism Settings -->
             <div style="grid-column: 1 / -1; background: var(--s2); border: 1px solid var(--b); border-radius: 8px; padding: 16px;">
               <h4 style="margin: 0 0 12px; font-family: 'Outfit', sans-serif;">Orientation / Mechanism Options</h4>
@@ -3887,6 +4100,13 @@
                 border-radius: var(--rd);
               "
             >
+            <!-- Add-Ons Settings -->
+            <div style="grid-column: 1 / -1; background: var(--s2); border: 1px solid var(--b); border-radius: 8px; padding: 16px;">
+              <h4 style="margin: 0 0 12px; font-family: 'Outfit', sans-serif;">Add-Ons (Optional)</h4>
+              <div id="addon-rows" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;"></div>
+              <button type="button" onclick="addAddOnRow()" style="padding: 8px 16px; background: var(--s); border: 1px dashed var(--tm); border-radius: 8px; color: var(--t); cursor: pointer; font-size: 13px; font-weight: 600;">+ Add Add-On</button>
+            </div>
+
               <input
                 type="checkbox"
                 id="pm-visible"
@@ -4036,7 +4256,7 @@
       <div class="modal" style="max-width: 500px">
         <div class="modal-hdr">
           <h3 id="color-modal-title">Add Fabric/Color</h3>
-          <button class="modal-x" onclick="closeColorModal()">✕</button>
+          <button class="modal-x" onclick="closeColorModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -4121,7 +4341,7 @@
       <div class="modal" style="max-width: 480px">
         <div class="modal-hdr">
           <h3>Select Fabric/Color</h3>
-          <button class="modal-x" onclick="closeSwatchPicker()">✕</button>
+          <button class="modal-x" onclick="closeSwatchPicker()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; max-height: 350px; overflow-y: auto; padding: 4px;" id="swatch-picker-grid">
@@ -4136,7 +4356,7 @@
       <div class="modal" style="max-width: 680px">
         <div class="modal-hdr">
           <h3 id="cat-modal-title">Add Category</h3>
-          <button class="modal-x" onclick="closeCatModal()">✕</button>
+          <button class="modal-x" onclick="closeCatModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body" style="max-height: 80vh; overflow-y: auto">
           <div class="form-grid">
@@ -4248,11 +4468,19 @@
               </div>
             </div>
 
+            <!-- Show in Dream Room -->
+            <div class="field" style="grid-column: 1 / -1; margin-top: 10px;">
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" id="cm-show-dream-room" checked />
+                Show in "Your Dream Room" Section on Home Page
+              </label>
+            </div>
+
             <!-- Auto-Fill Category Defaults Section -->
             <div class="field" style="grid-column: 1 / -1; margin-top: 10px;">
               <div style="background:var(--s2); border:1px solid var(--b); border-radius:10px; padding:14px">
                 <div style="font-weight:700; font-size:13px; margin-bottom:10px; color:var(--o); display:flex; align-items:center; justify-content:space-between">
-                  <span>⚡ Category Auto-Fill Templates (قوالب الملء التلقائي)</span>
+                  <span><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'></polygon></svg> Category Auto-Fill Templates (قوالب الملء التلقائي)</span>
                   <span style="font-size:11px; color:var(--tm); font-weight:400">تُنقل للمنتجات بنقرة زر</span>
                 </div>
 
@@ -4333,7 +4561,7 @@
       <div class="modal" style="max-width: 420px">
         <div class="modal-hdr">
           <h3>إرسال إشعار للعميل</h3>
-          <button class="modal-x" onclick="closeNotifyModal()">✕</button>
+          <button class="modal-x" onclick="closeNotifyModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div
@@ -4409,7 +4637,7 @@
       <div class="modal" style="max-width: 620px">
         <div class="modal-hdr">
           <h3>Order Details</h3>
-          <button class="modal-x" onclick="closeOrderModal()">✕</button>
+          <button class="modal-x" onclick="closeOrderModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body" id="order-modal-body"></div>
       </div>
@@ -4420,7 +4648,7 @@
       <div class="modal" style="max-width: 640px">
         <div class="modal-hdr">
           <h3>Custom Order Details</h3>
-          <button class="modal-x" onclick="closeCoDetail()">✕</button>
+          <button class="modal-x" onclick="closeCoDetail()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body" id="co-detail-body"></div>
       </div>
@@ -4471,7 +4699,7 @@
           justify-content: center;
         "
       >
-        ✕
+        <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>
       </button>
     </div>
 
@@ -4480,7 +4708,7 @@
       <div class="modal" style="max-width: 520px">
         <div class="modal-hdr">
           <h3 id="coupon-modal-title">إضافة كوبون</h3>
-          <button class="modal-x" onclick="closeCouponModal()">✕</button>
+          <button class="modal-x" onclick="closeCouponModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -4641,7 +4869,7 @@
       <div class="modal" style="max-width: 460px">
         <div class="modal-hdr">
           <h3 id="discount-modal-title">إضافة خصم قسم</h3>
-          <button class="modal-x" onclick="closeDiscountModal()">✕</button>
+          <button class="modal-x" onclick="closeDiscountModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -4730,7 +4958,7 @@
       <div class="modal" style="max-width: 440px">
         <div class="modal-hdr">
           <h3 id="ship-modal-title">Add zone</h3>
-          <button class="modal-x" onclick="closeShipModal()">✕</button>
+          <button class="modal-x" onclick="closeShipModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -4766,7 +4994,7 @@
       <div class="modal" style="max-width: 480px">
         <div class="modal-hdr">
           <h3 id="video-modal-title">Add Video</h3>
-          <button class="modal-x" onclick="closeVideoModal()">✕</button>
+          <button class="modal-x" onclick="closeVideoModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -4892,7 +5120,7 @@
       <div class="modal" style="max-width: 500px">
         <div class="modal-hdr">
           <h3 id="collection-modal-title">Add Collection</h3>
-          <button class="modal-x" onclick="closeCollectionModal()">✕</button>
+          <button class="modal-x" onclick="closeCollectionModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -4956,12 +5184,207 @@
       </div>
     </div>
 
+    <!-- PROMO BANNER MODAL -->
+    <div class="modal-bg" id="promo-banner-modal">
+      <div class="modal" style="max-width: 480px">
+        <div class="modal-hdr">
+          <h3 id="promo-banner-modal-title">Add Promo Banner</h3>
+          <button class="modal-x" onclick="closePromoBannerModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>Promo Banner Photo</label>
+              <input
+                type="file"
+                id="pbm-photo"
+                accept="image/*"
+                onchange="handlePromoBannerPhotoSelect()"
+              />
+              <div
+                id="pbm-photo-preview"
+                style="
+                  margin-top: 10px;
+                  display: none;
+                  border-radius: 8px;
+                  overflow: hidden;
+                  max-width: 200px;
+                  aspect-ratio: 16/9;
+                  background: var(--s2);
+                  border: 1px solid var(--b);
+                "
+              >
+                <img
+                  id="pbm-photo-img"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                  "
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label>Title (AR)</label>
+              <input
+                type="text"
+                id="pbm-titleAr"
+                placeholder="خصم ٢٠٪ على..."
+              />
+            </div>
+            <div class="field">
+              <label>Title (EN)</label>
+              <input
+                type="text"
+                id="pbm-titleEn"
+                placeholder="20% Off..."
+              />
+            </div>
+            <div class="field">
+              <label>Link URL</label>
+              <input
+                type="text"
+                id="pbm-link"
+                placeholder="pages/shop.html?cat=living-room"
+              />
+            </div>
+            <div class="field">
+              <label>Order Number</label>
+              <input
+                type="number"
+                id="pbm-order"
+                placeholder="1"
+                min="0"
+                value="1"
+              />
+            </div>
+            <div class="field">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding-top: 10px;">
+                <input
+                  type="checkbox"
+                  id="pbm-active"
+                  checked
+                  style="width: 16px; height: 16px; cursor: pointer"
+                />
+                Active (visible on site)
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="tbtn" onclick="closePromoBannerModal()">Cancel</button>
+          <button class="tbtn primary" onclick="savePromoBanner()">
+            Save Promo Banner
+          </button>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- OFFERS BANNER MODAL -->
+    <div class="modal-bg" id="offers-banner-modal">
+      <div class="modal" style="max-width: 480px">
+        <div class="modal-hdr">
+          <h3 id="offers-banner-modal-title">Add Offers Banner</h3>
+          <button class="modal-x" onclick="closeOffersBannerModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>Offers Banner Photo</label>
+              <input
+                type="file"
+                id="obm-photo"
+                accept="image/*"
+                onchange="handleOffersBannerPhotoSelect()"
+              />
+              <div
+                id="obm-photo-preview"
+                style="
+                  margin-top: 10px;
+                  display: none;
+                  border-radius: 8px;
+                  overflow: hidden;
+                  max-width: 200px;
+                  aspect-ratio: 16/9;
+                  background: var(--s2);
+                  border: 1px solid var(--b);
+                "
+              >
+                <img
+                  id="obm-photo-img"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                  "
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label>Title (AR)</label>
+              <input
+                type="text"
+                id="obm-titleAr"
+                placeholder="خصم ٢٠٪ على..."
+              />
+            </div>
+            <div class="field">
+              <label>Title (EN)</label>
+              <input
+                type="text"
+                id="obm-titleEn"
+                placeholder="20% Off..."
+              />
+            </div>
+            <div class="field">
+              <label>Link URL</label>
+              <input
+                type="text"
+                id="obm-link"
+                placeholder="pages/shop.html?cat=living-room"
+              />
+            </div>
+            <div class="field">
+              <label>Order Number</label>
+              <input
+                type="number"
+                id="obm-order"
+                placeholder="1"
+                min="0"
+                value="1"
+              />
+            </div>
+            <div class="field">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding-top: 10px;">
+                <input
+                  type="checkbox"
+                  id="obm-active"
+                  checked
+                  style="width: 16px; height: 16px; cursor: pointer"
+                />
+                Active (visible on site)
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="tbtn" onclick="closeOffersBannerModal()">Cancel</button>
+          <button class="tbtn primary" onclick="saveOffersBanner()">
+            Save Offers Banner
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- BANNER MODAL -->
     <div class="modal-bg" id="banner-modal">
       <div class="modal" style="max-width: 480px">
         <div class="modal-hdr">
           <h3 id="banner-modal-title">Add Banner</h3>
-          <button class="modal-x" onclick="closeBannerModal()">✕</button>
+          <button class="modal-x" onclick="closeBannerModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="modal-body">
           <div class="form-grid">
@@ -5037,6 +5460,51 @@
       </div>
     </div>
 
+    <!-- SHOP THE LOOK MODAL -->
+    <div class="modal-bg" id="stl-modal">
+      <div class="modal" style="max-width: 600px">
+        <div class="modal-hdr">
+          <h3 id="stl-modal-title">Add Shop the Look</h3>
+          <button class="modal-x" onclick="closeStlModal()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>Room Photo</label>
+              <input type="file" id="stm-photo" accept="image/*" onchange="handleStlPhotoSelect()" />
+              <div id="stm-photo-preview" style="margin-top: 10px; display: none; border-radius: 8px; overflow: hidden; max-width: 100%; aspect-ratio: 16/9; background: var(--s2); border: 1px solid var(--b); position: relative; cursor: crosshair;" onclick="addStlHotspot(event)">
+                <img id="stm-photo-img" style="width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; pointer-events: none;" />
+                <div id="stm-hotspots-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+              </div>
+              <p style="font-size: 12px; color: var(--tm); margin-top: 8px;">Click on the image to add a product hotspot.</p>
+            </div>
+            
+            <div class="field">
+              <label>Hotspots</label>
+              <div id="stm-hotspots-list" style="background: var(--s); border: 1px solid var(--b); border-radius: 6px; padding: 12px; max-height: 200px; overflow-y: auto;">
+                <div style="color: var(--tm); font-size: 13px;">No hotspots added yet. Click the image above to add one.</div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Order Number</label>
+              <input type="number" id="stm-order" placeholder="1" min="0" value="1" />
+            </div>
+            <div class="field">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding-top: 10px;">
+                <input type="checkbox" id="stm-active" checked style="width: 16px; height: 16px; cursor: pointer" />
+                Active (visible on site)
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="tbtn" onclick="closeStlModal()">Cancel</button>
+          <button class="tbtn primary" onclick="saveStl()">Save</button>
+        </div>
+      </div>
+    </div>
+
     <script>
       const API = window.location.origin + "/api";
       let TOKEN = localStorage.getItem("mgAdminToken") || "";
@@ -5052,6 +5520,8 @@
         allBundles = [],
         allCollections = [],
         allBanners = [],
+        allPromoBanners = [],
+        allOffersBanners = [],
         allColors = [];
       let editingProdId = null,
         editingCatId = null,
@@ -5062,8 +5532,12 @@
         editingBundleId = null,
         editingCollectionId = null,
         editingColorId = null,
-        editingBannerId = null;
-      let __photoOrder = [],
+        editingBannerId = null,
+        editingPromoBannerId = null,
+        editingOffersBannerId = null;
+      let promoBannerPhotoData = null,
+        offersBannerPhotoData = null,
+        __photoOrder = [],
         photoColorMap = {},
         photoSideMap = {},
         lastOrderPollIso = null,
@@ -5194,9 +5668,12 @@
         loadBundles();
         loadCollections();
         loadBanners();
+        loadPromoBanners();
+        loadOffersBanners();
         loadAnnouncement();
         loadDiscounts();
         loadNotifyEmails();
+        loadStl();
         startOrderPoll();
         
         // Refresh photo strip selections dynamically on selector change
@@ -5296,6 +5773,12 @@
         collections: {
           title: "Collections",
           sub: "Manage custom seasonal collections and their products",
+          addBtn: false,
+        },
+        "offers-banners": { title: "Offers Banners", sub: "Manage offers page banners" },
+        "promo-banners": {
+          title: "Promo Banners",
+          sub: "Manage rotating promo banners",
           addBtn: false,
         },
         banners: {
@@ -5399,7 +5882,7 @@
         document.getElementById("toast-ico").innerHTML = ok 
           ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>'
           : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-        document.getElementById("toast-msg").textContent = String(msg).replace(/^[✅❌⚠️]\s*/, '');
+        document.getElementById("toast-msg").textContent = String(msg).replace(/^[⚠️]\s*/, "");
         const t = document.getElementById("toast");
         t.classList.add("show");
         clearTimeout(tt);
@@ -6008,9 +6491,9 @@
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(u);
-          toast("✅ Order Excel exported");
+          toast("Order Excel exported");
         } catch (err) {
-          toast("❌ Export failed: " + err.message, false);
+          toast("Export failed: " + err.message, false);
         }
       }
 
@@ -6302,7 +6785,7 @@
               <div class="ph" data-i="${i}" style="width:145px; height:auto; display:flex; flex-direction:column; gap:4px; padding:6px; background:var(--s2); border-radius:8px; border:1px solid var(--b); position:relative; box-sizing:border-box;">
                 <div style="position:relative; width:100%; aspect-ratio:4/3; border-radius:6px; overflow:hidden;">
                   <img src="${iu(fn)}" style="width:100%; height:100%; object-fit:cover;">
-                  <button type="button" style="position:absolute; top:2px; left:2px; background:#ef4444; color:#fff; border:none; border-radius:4px; font-size:10px; cursor:pointer; width:18px; height:18px; display:flex; align-items:center; justify-content:center; padding:0; line-height:1; z-index:5;" onclick="event.stopPropagation();phDelete(${i})">✕</button>
+                  <button type="button" style="position:absolute; top:2px; left:2px; background:#ef4444; color:#fff; border:none; border-radius:4px; font-size:10px; cursor:pointer; width:18px; height:18px; display:flex; align-items:center; justify-content:center; padding:0; line-height:1; z-index:5;" onclick="event.stopPropagation();phDelete(${i})"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
                   <div class="mv" style="top:2px; right:2px;">
                     <button type="button" onclick="event.stopPropagation();phMove(${i},-1)">◀</button>
                     <button type="button" onclick="event.stopPropagation();phMove(${i},1)">▶</button>
@@ -6406,6 +6889,68 @@
         }
         return result;
       }
+
+        function getAddOnsFromUI() {
+          const result = [];
+          document.querySelectorAll(".pm-addon-row").forEach(row => {
+            const nameEn = row.querySelector(".pm-addon-name-en").value.trim();
+            const nameAr = row.querySelector(".pm-addon-name-ar").value.trim();
+            const price = parseFloat(row.querySelector(".pm-addon-price").value) || 0;
+            const photo = row.querySelector(".pm-addon-photo").value.trim();
+            const id = row.dataset.id || crypto.randomUUID();
+            if (nameEn || nameAr) {
+              result.push({ id, nameEn, nameAr, price, photo, dimensionL: parseFloat(row.querySelector('.pm-addon-dim-l').value) || null, dimensionW: parseFloat(row.querySelector('.pm-addon-dim-w').value) || null, dimensionD: parseFloat(row.querySelector('.pm-addon-dim-d').value) || null, dimensionH: parseFloat(row.querySelector('.pm-addon-dim-h').value) || null });
+            }
+          });
+          return result;
+        }
+
+        async function uploadAddOnPhoto(input) {
+          const row = input.closest(".pm-addon-row");
+          if (!input.files[0] || !row) return;
+          const form = new FormData();
+          form.append("photo", input.files[0]);
+          try {
+            const r = await fetch(API + "/admin/upload-photo", {
+              method: "POST",
+              headers: { Authorization: "Bearer " + TOKEN },
+              body: form,
+            });
+            const data = await r.json();
+            if (!data.url) throw new Error("Upload failed");
+            row.querySelector(".pm-addon-photo").value = data.url;
+            row.querySelector(".pm-addon-preview").innerHTML = `<img src="${data.url}" style="width:36px;height:36px;object-fit:cover;border-radius:5px;border:1px solid var(--b)">`;
+          } catch (e) {
+            toast("Upload failed", false);
+          }
+        }
+
+        function addAddOnRow(data = {}) {
+          const list = document.getElementById("addon-rows");
+          if (!list) return;
+          const row = document.createElement("div");
+          row.className = "pm-addon-row";
+          row.dataset.id = data.id || crypto.randomUUID();
+          row.style.cssText = "display: flex; gap: 6px; align-items: center; background: rgba(0,0,0,0.02); padding: 8px; border-radius: 6px; border: 1px solid var(--b); flex-wrap: wrap;";
+          row.innerHTML = `
+            <div class="pm-addon-preview" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--s);border:1px solid var(--b);border-radius:5px;">
+              ${data.photo ? `<img src="${iu(data.photo)}" style="width:36px;height:36px;object-fit:cover;border-radius:5px;">` : '<span style="font-size:10px;color:var(--tm)">Img</span>'}
+            </div>
+            <input type="file" accept="image/*" style="display:none;" onchange="uploadAddOnPhoto(this)" />
+            <button type="button" onclick="this.previousElementSibling.click()" style="padding: 6px 10px; background: var(--s2); border: 1px solid var(--b); border-radius: 4px; font-size: 12px; cursor: pointer;">Upload</button>
+            <input type="hidden" class="pm-addon-photo" value="${data.photo || ''}" />
+            <input type="text" class="pm-addon-name-en" placeholder="Name (EN)" value="${data.nameEn || ''}" style="flex: 1; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t); min-width: 100px;" />
+            <input type="text" class="pm-addon-name-ar" placeholder="الاسم (عربي)" dir="rtl" value="${data.nameAr || ''}" style="flex: 1; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t); min-width: 100px;" />
+            <input type="number" class="pm-addon-price" placeholder="Price (EGP)" min="0" step="1" value="${data.price != null ? data.price : ''}" style="width: 90px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <input type="number" class="pm-addon-dim-l" placeholder="L (cm)" min="0" step="0.1" value="${data.dimensionL || ''}" style="width: 55px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <input type="number" class="pm-addon-dim-w" placeholder="W (cm)" min="0" step="0.1" value="${data.dimensionW || ''}" style="width: 55px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <input type="number" class="pm-addon-dim-d" placeholder="D (cm)" min="0" step="0.1" value="${data.dimensionD || ''}" style="width: 55px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <input type="number" class="pm-addon-dim-h" placeholder="H (cm)" min="0" step="0.1" value="${data.dimensionH || ''}" style="width: 55px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; color: #ff4757; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 4px;">&times;</button>
+          `;
+          list.appendChild(row);
+        }
+
       function addDimPieceRow(data = {}) {
         const list = document.getElementById("pm-dims-list");
         if (!list) return;
@@ -6419,7 +6964,7 @@
           <input type="number" class="pm-dim-width" placeholder="W (cm)" min="0" step="0.1" value="${data.width != null ? data.width : ''}" style="width: 60px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
           <input type="number" class="pm-dim-depth" placeholder="D (cm)" min="0" step="0.1" value="${data.depth != null ? data.depth : ''}" style="width: 60px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
           <input type="number" class="pm-dim-height" placeholder="H (cm)" min="0" step="0.1" value="${data.height != null ? data.height : ''}" style="width: 60px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
-          <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; color: #ff4757; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 4px;">✕</button>
+          <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; color: #ff4757; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 4px;"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         `;
         list.appendChild(row);
       }
@@ -6590,9 +7135,9 @@
           const wrap = row.querySelector(".cr-photo-wrap");
           if (wrap)
             wrap.innerHTML = `<img src="${data.url}" style="width:36px;height:28px;object-fit:cover;border-radius:5px;border:1px solid var(--b)">`;
-          toast("✅ صورة اللون اتحملت");
+          toast("صورة اللون اتحملت");
         } catch (e) {
-          toast("❌ " + e.message, false);
+          toast("" + e.message, false);
         }
       }
       function updateSgProfit(input) {
@@ -7167,7 +7712,7 @@
           return `
             <div onclick="selectFbGalleryPhoto('${url}')" style="cursor:pointer;position:relative;border-radius:6px;overflow:hidden;${borderStyle};transition:all 0.2s" title="Click to use as Feature Banner photo">
               <img src="${iu(url)}" style="width:48px;height:48px;object-fit:cover;display:block">
-              ${isSelected ? `<span style="position:absolute;top:2px;right:2px;background:var(--o);color:#fff;font-size:9px;padding:1px 3px;border-radius:3px;font-weight:700">✓</span>` : ''}
+              ${isSelected ? `<span style="position:absolute;top:2px;right:2px;background:var(--o);color:#fff;font-size:9px;padding:1px 3px;border-radius:3px;font-weight:700"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polyline points='20 6 9 17 4 12'></polyline></svg></span>` : ''}
             </div>
           `;
         }).join('');
@@ -7326,12 +7871,12 @@
             document.getElementById('pm-fb-photo-url').value = url;
             document.getElementById('pm-fb-photo-img').src = iu(url);
             document.getElementById('pm-fb-photo-preview').style.display = 'block';
-            toast("✅ Feature banner image uploaded");
+            toast("Feature banner image uploaded");
           } else {
             throw new Error("Upload failed");
           }
         } catch (e) {
-          toast("❌ " + e.message, false);
+          toast("" + e.message, false);
         }
       }
 
@@ -7420,6 +7965,7 @@
 
 
         document.getElementById("pm-featured").checked = false;
+        document.getElementById("pm-marquee").checked = false;
         document.getElementById("pm-visible").checked = true;
         document.getElementById("pm-isnew").checked = false;
         document.querySelectorAll('input[name="pm-side-choice-type"]').forEach(r => {
@@ -7434,6 +7980,8 @@
 
             document.getElementById("pm-featured").checked =
               p.featured === true;
+            document.getElementById("pm-marquee").checked =
+              p.featuredInMarquee === true;
             document.getElementById("pm-visible").checked =
               p.visible !== false;
             document.getElementById("pm-isnew").checked = p.isNew === true;
@@ -7463,6 +8011,12 @@
             document.getElementById("pm-height").value = dims.height || "";
             if (dims.pieces && Array.isArray(dims.pieces)) {
               dims.pieces.forEach((piece) => addDimPieceRow(piece));
+
+              document.getElementById("addon-rows").innerHTML = "";
+              if (p.addOns && Array.isArray(p.addOns)) {
+                p.addOns.forEach(addon => addAddOnRow(addon));
+              }
+
             }
 
             // Load specifications & care
@@ -7589,7 +8143,7 @@
             const btn = document.createElement("button");
             btn.type = "button";
             btn.className = "upi-rm";
-            btn.textContent = "✕";
+            btn.textContent = "<svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>";
             btn.onclick = () => {
               _selPhotos.splice(i, 1);
               renderPhotoPreview();
@@ -7704,6 +8258,10 @@
             document.getElementById("pm-featured").checked ? "true" : "false",
           );
           form.append(
+            "featuredInMarquee",
+            document.getElementById("pm-marquee").checked ? "true" : "false",
+          );
+          form.append(
             "visible",
             document.getElementById("pm-visible").checked ? "true" : "false",
           );
@@ -7726,6 +8284,10 @@
           form.append("sideChoiceEnabled", sideType !== "none" ? "true" : "false");
           form.append("sideChoiceType", sideType);
           form.append("sideOptions", JSON.stringify(sideOptions));
+
+            const addOns = getAddOnsFromUI();
+            form.append("addOns", JSON.stringify(addOns));
+
           const colorPhotos = {};
           const sidePhotos = {};
           __photoOrder.forEach(fn => {
@@ -7873,7 +8435,7 @@
                 <div style="max-width:200px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${c.fabricStatsAr || ''}">${c.fabricStatsAr || '—'}</div>
                 <div style="max-width:200px;font-size:11px;color:var(--tm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${c.fabricStatsEn || ''}">${c.fabricStatsEn || '—'}</div>
               </td>
-              <td>${c.showInCustomWork ? '✅ Yes' : '❌ No'}</td>
+              <td>${c.showInCustomWork ? 'Yes' : 'No'}</td>
               <td>
                 <div class="act-row">
                   <button class="act-btn" onclick="editColor('${c.id}')">Edit</button>
@@ -8007,9 +8569,9 @@
           document.getElementById(`colm-${field}`).value = d.url;
           document.getElementById(`colm-${field}-preview-el`).src = iu(d.url);
           document.getElementById(`colm-${field}-preview`).style.display = "block";
-          toast("✅ Swatch uploaded");
+          toast("Swatch uploaded");
         } catch (e) {
-          toast("❌ " + e.message, false);
+          toast("" + e.message, false);
         }
       }
 
@@ -8126,6 +8688,7 @@
         populateIconSelect();
         document.getElementById("cm-parent").value = "";
         document.getElementById("cm-icon-key").value = "default";
+        document.getElementById("cm-show-dream-room").checked = true;
         setCatIconType("library");
         document.getElementById("cm-img-preview").innerHTML = "";
         updateCatIconPreview();
@@ -8159,6 +8722,8 @@
         document.getElementById("cm-spec-dims-note-en").value = c.defaultSpecDimensionsNoteEn || "";
         document.getElementById("cm-spec-care-ar").value = c.defaultProductCareAr || "";
         document.getElementById("cm-spec-care-en").value = c.defaultProductCareEn || "";
+        
+        document.getElementById("cm-show-dream-room").checked = c.showInDreamRoom !== false;
 
         const fb = c.defaultFeatureBanner || {};
         document.getElementById("cm-fb-title-ar").value = fb.titleAr || "";
@@ -8280,6 +8845,7 @@
         const defaultProductCareAr = document.getElementById("cm-spec-care-ar").value.trim();
         const defaultProductCareEn = document.getElementById("cm-spec-care-en").value.trim();
         const defaultFeatureBanner = getCatFeatBannerData();
+        const showInDreamRoom = document.getElementById("cm-show-dream-room").checked;
 
         if (!nameEn || !slug)
           return toast("English name and slug are required", false);
@@ -8293,7 +8859,7 @@
             defaultSpecFillingAr, defaultSpecFillingEn,
             defaultSpecDimensionsNoteAr, defaultSpecDimensionsNoteEn,
             defaultProductCareAr, defaultProductCareEn,
-            defaultFeatureBanner
+            defaultFeatureBanner, showInDreamRoom
           };
           if (editingCatId) {
             await api(`/admin/categories/${editingCatId}`, {
@@ -8514,9 +9080,9 @@
           x.download = format === "excel" ? "orders-factory.xlsx" : "orders-factory.csv";
           x.click();
           URL.revokeObjectURL(u);
-          toast("✅ Orders exported successfully");
+          toast("Orders exported successfully");
         } catch (err) {
-          toast("❌ Export failed: " + err.message, false);
+          toast("Export failed: " + err.message, false);
         }
       }
       let _pendingStatusId = null,
@@ -8599,11 +9165,11 @@
           if (!email) {
             toast("Status updated");
           } else if (er && er.sent) {
-            toast("✅ Status updated · إيميل اتبعت للعميل");
+            toast("Status updated · إيميل اتبعت للعميل");
           } else if (er && er.skipped) {
-            toast("Status updated ⚠️ إيميل مش محفّظ — تحقق من SMTP", false);
+            toast("Status updated إيميل مش محفّظ — تحقق من SMTP", false);
           } else if (er && er.error) {
-            toast(`Status updated ❌ إيميل فشل: ${er.error}`, false);
+            toast(`Status updated إيميل فشل: ${er.error}`, false);
           } else {
             toast("Status updated");
           }
@@ -8720,7 +9286,7 @@
           });
           const o = allOrders.find((x) => x.id === orderId);
           if (o) o.email = email.trim() || null;
-          toast(email ? "✅ إيميل اتحفظ" : "تم مسح الإيميل");
+          toast(email ? "إيميل اتحفظ" : "تم مسح الإيميل");
         } catch (e) {
           toast(e.message, false);
         }
@@ -8764,7 +9330,7 @@
           ? `أوردر ${o.trackingCode || id} — ${o.customerName}`
           : `الأوردر`;
         const confirmed = confirm(
-          `⚠️ حذف ${label}؟\n\nهذه العملية لا يمكن التراجع عنها.`,
+          `حذف ${label}؟\n\nهذه العملية لا يمكن التراجع عنها.`,
         );
         if (!confirmed) return;
         try {
@@ -8777,7 +9343,7 @@
           allOrders = allOrders.filter((x) => x.id !== id);
           renderOrders(allOrders);
           if (fromModal) closeOrderModal();
-          toast("✅ تم حذف الأوردر بنجاح");
+          toast("تم حذف الأوردر بنجاح");
         } catch (e) {
           toast(e.message, false);
         }
@@ -8822,12 +9388,13 @@
             return `<tr>
       <td>${r.customerName}</td>
       <td style="color:var(--tm);font-size:12px" title="${pName || ''}">${productLabel}</td>
-      <td>${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</td>
+      <td>${"<svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg>".repeat(r.rating)}${"<svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg>".repeat(5 - r.rating)}</td>
       <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.comment || "—"}</td>
       <td><span class="badge ${r.approved ? "badge-green" : "badge-orange"}">${r.approved ? "Approved" : "Pending"}</span></td>
       <td>${new Date(r.createdAt).toLocaleDateString()}</td>
       <td><div class="act-row">
         ${!r.approved ? `<button class="act-btn success" onclick="approveReview('${r.id}')">Approve</button>` : ""}
+        ${r.approved ? `<button class="act-btn ${r.featuredOnHome ? 'danger' : 'success'}" onclick="featureReview('${r.id}')">${r.featuredOnHome ? 'Unfeature' : 'Feature'}</button>` : ""}
         <button class="act-btn danger" onclick="deleteReview('${r.id}')">Delete</button>
       </div></td>
     </tr>`;
@@ -8857,6 +9424,15 @@
           toast("Review approved ✓");
           loadReviews();
           loadStats();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function featureReview(id) {
+        try {
+          await api(`/admin/reviews/${id}/feature`, { method: "PUT" });
+          toast("Review feature status updated ✓");
+          loadReviews();
         } catch (e) {
           toast(e.message, false);
         }
@@ -8906,7 +9482,7 @@
               ? `<span style="font-size:11px;color:var(--tm)">Min EGP ${Number(c.minOrderAmount).toLocaleString()}</span>`
               : `<span style="color:var(--tm);font-size:11px">—</span>`;
             const expLabel = c.expiresAt
-              ? `<span style="color:${expired ? "#ff4757" : "var(--tm)"};font-size:11px">${new Date(c.expiresAt).toLocaleDateString("ar-EG")}${expired ? " ✗" : ""}</span>`
+              ? `<span style="color:${expired ? "#ff4757" : "var(--tm)"};font-size:11px">${new Date(c.expiresAt).toLocaleDateString("ar-EG")}${expired ? " <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>" : ""}</span>`
               : '<span style="color:var(--tm);font-size:11px">دائم</span>';
             const usedLabel = `${c.usedCount || 0}${c.maxUses != null ? " / " + c.maxUses : " / ∞"}`;
             const statusBadge = expired
@@ -9043,13 +9619,13 @@
               method: "PUT",
               body: JSON.stringify(payload),
             });
-            toast("تم تعديل الكوبون ✅");
+            toast("تم تعديل الكوبون ");
           } else {
             await api("/admin/coupons", {
               method: "POST",
               body: JSON.stringify(payload),
             });
-            toast("تم حفظ الكوبون ✅");
+            toast("تم حفظ الكوبون ");
           }
           closeCouponModal();
           loadCoupons();
@@ -9105,7 +9681,7 @@
                 : `<span style="color:var(--o);font-weight:700">EGP ${Number(d.value).toLocaleString()}</span>`;
             const labelText = d.label_ar || d.label_en || "—";
             const expLabel = d.expiresAt
-              ? `<span style="color:${expired ? "#ff4757" : "var(--tm)"};font-size:11px">${new Date(d.expiresAt).toLocaleDateString("ar-EG")}${expired ? " ✗" : ""}</span>`
+              ? `<span style="color:${expired ? "#ff4757" : "var(--tm)"};font-size:11px">${new Date(d.expiresAt).toLocaleDateString("ar-EG")}${expired ? " <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>" : ""}</span>`
               : '<span style="color:var(--tm);font-size:11px">دائم</span>';
             const statusBadge = expired
               ? `<span style="background:#ff475722;color:#ff4757;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;border:1px solid #ff475755">منتهي</span>`
@@ -9199,13 +9775,13 @@
               method: "PUT",
               body: JSON.stringify(payload),
             });
-            toast("تم تعديل الخصم ✅");
+            toast("تم تعديل الخصم ");
           } else {
             await api("/admin/discounts", {
               method: "POST",
               body: JSON.stringify(payload),
             });
-            toast("تم حفظ الخصم ✅");
+            toast("تم حفظ الخصم ");
           }
           closeDiscountModal();
           loadDiscounts();
@@ -9408,7 +9984,7 @@
           const c = allCust.find((x) => x.phone === phone);
           if (c) c.tier = tier;
           renderCust();
-          toast("✅ تم تحديث الـ Tier");
+          toast("تم تحديث الـ Tier");
         } catch (e) {
           toast(e.message, false);
         }
@@ -9501,7 +10077,7 @@
               customerName: c ? c.customerName : "",
             }),
           });
-          toast("✅ تم إرسال الإيميل بنجاح");
+          toast("تم إرسال الإيميل بنجاح");
           closeCustEmail();
         } catch (e) {
           toast(e.message, false);
@@ -9569,7 +10145,7 @@
           allTiers = res.tiers || tiers;
           renderCust();
           closeTierManager();
-          toast("✅ تم حفظ الـ Tiers");
+          toast("تم حفظ الـ Tiers");
         } catch (e) {
           toast(e.message, false);
         }
@@ -9758,13 +10334,13 @@
               label: "متوفر",
               val: inv.healthy || 0,
               color: "#2ed573",
-              ico: "✅",
+              ico: "",
             },
             {
               label: "قرب ينفذ",
               val: inv.lowStock || 0,
               color: "#ffa502",
-              ico: "⚠️",
+              ico: "<svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'></path><line x1='12' y1='9' x2='12' y2='13'></line><line x1='12' y1='17' x2='12.01' y2='17'></line></svg>",
             },
             {
               label: "نفذ",
@@ -9836,7 +10412,7 @@
               newPassword: newPass || undefined,
             }),
           });
-          toast("✅ تم حفظ بيانات الدخول");
+          toast("تم حفظ بيانات الدخول");
           ["cr-cur", "cr-new", "cr-user"].forEach(
             (f) => (document.getElementById(f).value = ""),
           );
@@ -9884,7 +10460,7 @@
             method: "PUT",
             body: JSON.stringify({ emails: _notifyEmails }),
           });
-          toast("✅ تم حفظ الإيميلات");
+          toast("تم حفظ الإيميلات");
         } catch (e) {
           toast(e.message, false);
         }
@@ -9901,10 +10477,10 @@
             method: "POST",
             body: JSON.stringify({ to }),
           });
-          if (r.success) toast("✅ " + r.message);
-          else toast("⚠️ " + (r.message || r.error), false);
+          if (r.success) toast("" + r.message);
+          else toast("" + (r.message || r.error), false);
         } catch (e) {
-          toast("❌ " + e.message, false);
+          toast("" + e.message, false);
         } finally {
           btn.disabled = false;
           btn.textContent = "إرسال إيميل تجريبي";
@@ -10017,11 +10593,11 @@
           if (!res.ok) throw new Error(data.error || "Upload failed");
           
           document.getElementById("vm-video-url").value = data.filename;
-          status.textContent = "✅ Video uploaded successfully!";
+          status.textContent = "Video uploaded successfully!";
           status.style.color = "#2ed573";
         } catch (err) {
           console.error(err);
-          status.textContent = "❌ " + err.message;
+          status.textContent = "" + err.message;
           status.style.color = "#ff4757";
           input.value = "";
           document.getElementById("vm-video-url").value = "";
@@ -10398,8 +10974,8 @@
               <select style="background:var(--s2);border:1px solid var(--b);color:${color};padding:5px 8px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer" onchange="updateCoStatus('${o.id}',this.value)">
                 <option value="new" ${o.status === "new" ? "selected" : ""}>New</option>
                 <option value="in-progress" ${o.status === "in-progress" ? "selected" : ""}>In Progress</option>
-                <option value="completed" ${o.status === "completed" ? "selected" : ""}>✅ Completed</option>
-                <option value="cancelled" ${o.status === "cancelled" ? "selected" : ""}>❌ Cancelled</option>
+                <option value="completed" ${o.status === "completed" ? "selected" : ""}>Completed</option>
+                <option value="cancelled" ${o.status === "cancelled" ? "selected" : ""}>Cancelled</option>
               </select>
             </td>
             <td style="font-size:12px;color:var(--tm)">${new Date(o.createdAt).toLocaleDateString("en-GB")}</td>
@@ -10449,8 +11025,8 @@
         const STATUS_LABELS = {
           new: "New",
           "in-progress": "In Progress",
-          completed: "✅ Completed",
-          cancelled: "❌ Cancelled",
+          completed: "Completed",
+          cancelled: "Cancelled",
         };
         const photos = (o.photos || [])
           .map(
@@ -10479,6 +11055,93 @@
       }
 
       /* ── BUNDLES ── */
+
+      
+
+
+
+      
+
+let bundleRoomsData = [];
+
+      function renderBundleRooms() {
+        const container = document.getElementById("bundle-rooms-container");
+        if(!bundleRoomsData.length) {
+          container.innerHTML = '<div style="color:var(--tm); font-size:14px;">No rooms added. Use this to explicitly define rooms and their products.</div>';
+          return;
+        }
+        let html = '';
+        bundleRoomsData.forEach((r, i) => {
+          let options = allProducts.map(p => {
+            const selected = (r.productIds || []).includes(p.id) ? 'selected' : '';
+            return `<option value="${p.id}" ${selected}>${p.nameEn || p.nameAr}</option>`;
+          }).join('');
+          
+          html += `
+          <div style="background:var(--s2); padding:16px; border-radius:8px; border:1px solid var(--b); display:grid; gap:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size: 14px;">Room ${i+1}</strong>
+              <button type="button" class="act-btn danger" style="padding:4px 8px; font-size:12px;" onclick="removeBundleRoom(${i})">Remove</button>
+            </div>
+            <div class="form-grid cols2">
+              <div>
+                <label style="font-size:12px; margin-bottom:4px;">Name (En)</label>
+                <input type="text" placeholder="e.g. Master Bedroom" value="${r.nameEn || ''}" oninput="updateBundleRoom(${i}, 'nameEn', this.value)">
+              </div>
+              <div>
+                <label style="font-size:12px; margin-bottom:4px;">Name (Ar)</label>
+                <input type="text" placeholder="e.g. غرفة نوم رئيسية" value="${r.nameAr || ''}" oninput="updateBundleRoom(${i}, 'nameAr', this.value)">
+              </div>
+            </div>
+            <div class="form-grid cols2">
+              <div>
+                <label style="font-size:12px; margin-bottom:4px;">Room Icon</label>
+                <select onchange="updateBundleRoom(${i}, 'icon', this.value)">
+                  <option value="bed" ${r.icon==='bed'?'selected':''}>Bed (Bedroom)</option>
+                  <option value="sofa" ${r.icon==='sofa'?'selected':''}>Sofa (Living)</option>
+                  <option value="dining" ${r.icon==='dining'?'selected':''}>Dining (Dining Room)</option>
+                  <option value="baby" ${r.icon==='baby'?'selected':''}>Baby/Kids (Kids Room)</option>
+                  <option value="youth" ${r.icon==='youth'?'selected':''}>Youth (Youth Room)</option>
+                  <option value="armchair" ${r.icon==='armchair'?'selected':''}>Armchair (Reception)</option>
+                </select>
+              </div>
+              <div>
+                
+              </div>
+            </div>
+          </div>`;
+        });
+        container.innerHTML = html;
+      }
+
+      function addBundleRoom() {
+        bundleRoomsData.push({ icon: 'bed', nameEn: '', nameAr: '', productIds: [] });
+        renderBundleRooms();
+        renderBundleSelected();
+      }
+
+      function removeBundleRoom(i) {
+        bundleRoomsData.splice(i, 1);
+        renderBundleRooms();
+        renderBundleSelected();
+      }
+
+      function updateBundleRoom(i, field, val) {
+        bundleRoomsData[i][field] = val;
+      }
+
+      function updateBundleRoomProducts(i, selectElement) {
+        bundleRoomsData[i].productIds = Array.from(selectElement.selectedOptions).map(opt => opt.value);
+        // Sync with flat products list so discount/totals calculate automatically
+        bundleRoomsData[i].productIds.forEach(pid => {
+           const p = allProducts.find(x => x.id === pid);
+           if(p && !bundleSelectedProducts.some(existing => existing.id === pid)) {
+               bundleSelectedProducts.push(p);
+           }
+        });
+        renderBundleSelected();
+      }
+
       let _bpActiveCat = "all";
       let bundlePhotoData = null;
 
@@ -10493,9 +11156,14 @@
         document.getElementById("bm-discount").value = b
           ? b.discountPct || ""
           : "";
-        document.getElementById("bm-active").checked = b
-          ? b.active !== false
-          : true;
+        document.getElementById("bm-active").checked = b ? b.active !== false : true;
+          document.getElementById("bm-tier").value = b && b.tier ? b.tier : "starter";
+          document.getElementById("bm-order").value = b && b.order !== undefined ? b.order : 0;
+          document.getElementById("bm-badge-ar").value = b && b.badgeAr ? b.badgeAr : "";
+          document.getElementById("bm-badge-en").value = b && b.badgeEn ? b.badgeEn : "";
+          document.getElementById("bm-badge-icon").value = b && b.badgeIcon ? b.badgeIcon : "gift";
+          document.getElementById("bm-room-count").value = b && b.roomCount !== undefined ? b.roomCount : 0;
+          document.getElementById("bm-featured").checked = b ? b.featured !== false : true;
         
         // Handle bundle photo
         bundlePhotoData = b?.mainPhoto || null;
@@ -10508,18 +11176,29 @@
         }
         document.getElementById("bm-photo").value = "";
         
+        
+        bundleItemCounts = {};
         if (b && b.productIds) {
-          bundleSelectedProducts = b.productIds
-            .map((pid) => allProducts.find((p) => p.id === pid))
+          b.productIds.forEach(pid => {
+             bundleItemCounts[pid] = (bundleItemCounts[pid] || 0) + 1;
+          });
+          bundleSelectedProducts = Object.keys(bundleItemCounts)
+            .map(pid => allProducts.find(p => p.id === pid))
             .filter(Boolean);
         } else {
           bundleSelectedProducts = [];
         }
+
         _bpActiveCat = "all";
         buildBpTabs();
         renderBpList();
         renderBundleSelected();
-        document.getElementById("bundle-modal").classList.add("open");
+        
+        
+        bundleRoomsData = b && b.rooms ? JSON.parse(JSON.stringify(b.rooms)) : [];
+          renderBundleRooms();
+          document.getElementById("bundle-modal").classList.add("open");
+    
       }
 
       function closeBundleModal() {
@@ -10548,7 +11227,7 @@
       }
 
       function renderBpList() {
-        const selectedIds = new Set(bundleSelectedProducts.map((p) => p.id));
+        
         const list =
           _bpActiveCat === "all"
             ? allProducts
@@ -10562,12 +11241,13 @@
         }
         document.getElementById("bp-list").innerHTML = list
           .map((p) => {
-            const added = selectedIds.has(p.id);
+            const count = bundleSelectedProducts.filter(x => x.id === p.id).length;
+            const btnText = count > 0 ? "+ Add (" + count + ")" : "+ Add";
             const thumb = p.mainPhoto
               ? `<img class="bp-thumb" src="${iu(p.mainPhoto)}" onerror="this.style.display='none'">`
               : `<div class="bp-thumb-ph"></div>`;
             return `<div class="bp-row">
-              <button class="bp-add" onclick="bpAdd('${p.id}')" ${added ? 'disabled title="Already added"' : ""}>${added ? "✓" : "+ Add"}</button>
+              <button class="bp-add" onclick="bpAdd('${p.id}')">${btnText}</button>
               ${thumb}
               <div class="bp-name">${p.nameEn || p.nameAr}</div>
               <div class="bp-price">${p.price ? "EGP " + Number(p.price).toLocaleString() : "—"}</div>
@@ -10577,29 +11257,54 @@
       }
 
       let bundleSelectedProducts = [];
+      let bundleItemCounts = {};
 
       function bpAdd(id) {
-        const p = allProducts.find((x) => x.id === id);
-        if (p && !bundleSelectedProducts.find((x) => x.id === id)) {
-          bundleSelectedProducts.push(p);
-          renderBpList();
-          renderBundleSelected();
+        if (!bundleItemCounts[id]) {
+          const p = allProducts.find((x) => x.id === id);
+          if (p) {
+            bundleSelectedProducts.push(p);
+            bundleItemCounts[id] = 1;
+          }
+        } else {
+          bundleItemCounts[id]++;
         }
-      }
-
-      function bpRemove(id) {
-        bundleSelectedProducts = bundleSelectedProducts.filter(
-          (p) => p.id !== id,
-        );
         renderBpList();
         renderBundleSelected();
       }
 
+      function bpRemove(id) {
+        bundleSelectedProducts = bundleSelectedProducts.filter(p => p.id !== id);
+        delete bundleItemCounts[id];
+        renderBpList();
+        renderBundleSelected();
+      }
+      
+      function bpChangeQty(id, delta) {
+        if (!bundleItemCounts[id]) return;
+        bundleItemCounts[id] += delta;
+        if (bundleItemCounts[id] <= 0) {
+           bpRemove(id);
+        } else {
+           renderBpList();
+           renderBundleSelected();
+        }
+      }
+
       function renderBundleSelected() {
-        const total = bundleSelectedProducts.reduce(
-          (s, p) => s + (Number(p.price) || 0),
+        let total = bundleSelectedProducts.reduce(
+          (s, p) => s + ((Number(p.price) || 0) * (bundleItemCounts[p.id] || 1)),
           0,
         );
+        
+        bundleRoomsData.forEach(r => {
+            if (r.productIds) {
+                r.productIds.forEach(pid => {
+                    const p = allProducts.find(x => x.id === pid);
+                    if (p) total += Number(p.price) || 0;
+                });
+            }
+        });
         const disc = Number(document.getElementById("bm-discount").value) || 0;
         const bundlePrice = disc ? Math.round(total * (1 - disc / 100)) : null;
 
@@ -10610,11 +11315,16 @@
           document.getElementById("bp-selected").innerHTML =
             bundleSelectedProducts
               .map(
-                (p) => `<div class="bp-row">
-              <div class="bp-name">${p.nameEn || p.nameAr}</div>
-              <div class="bp-price">${p.price ? "EGP " + Number(p.price).toLocaleString() : "—"}</div>
-              <button class="bp-rm" onclick="bpRemove('${p.id}')" title="Remove">✕</button>
-            </div>`,
+                (p) => `<div class="bp-row" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                  <div class="bp-name" style="flex:1; min-width:150px;">${p.nameEn || p.nameAr}</div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                     <button type="button" style="width:24px; height:24px; border-radius:4px; border:1px solid var(--b); background:var(--s2); cursor:pointer;" onclick="bpChangeQty('${p.id}', -1)">-</button>
+                     <span style="font-size:14px; min-width:20px; text-align:center;">${bundleItemCounts[p.id]}</span>
+                     <button type="button" style="width:24px; height:24px; border-radius:4px; border:1px solid var(--b); background:var(--s2); cursor:pointer;" onclick="bpChangeQty('${p.id}', 1)">+</button>
+                  </div>
+                  <div class="bp-price" style="width:100px; text-align:right;">${p.price ? "EGP " + (Number(p.price) * bundleItemCounts[p.id]).toLocaleString() : "—"}</div>
+                  <button class="bp-rm" onclick="bpRemove('${p.id}')" title="Remove"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
+                </div>`
               )
               .join("");
         }
@@ -10685,25 +11395,54 @@
           toast("Bundle name is required", false);
           return;
         }
-        if (bundleSelectedProducts.length < 2) {
-          toast("Add at least 2 products to create a bundle", false);
-          return;
-        }
+        
+        if (bundleSelectedProducts.length === 0 && bundleRoomsData.length === 0) {
+            toast("Add at least some products or rooms", false);
+            return;
+          }
+    
         const disc = Number(document.getElementById("bm-discount").value) || 0;
-        const total = bundleSelectedProducts.reduce(
-          (s, p) => s + (Number(p.price) || 0),
+        let total = bundleSelectedProducts.reduce(
+          (s, p) => s + ((Number(p.price) || 0) * (bundleItemCounts[p.id] || 1)),
           0,
         );
+        // Include room products in total
+        bundleRoomsData.forEach(r => {
+          if (r.productIds) {
+            r.productIds.forEach(pid => {
+              const p = allProducts.find(x => x.id === pid);
+              if (p) total += Number(p.price) || 0;
+            });
+          }
+        });
+        
+        const productIds = [];
+        bundleSelectedProducts.forEach(p => {
+           const qty = bundleItemCounts[p.id] || 1;
+           for(let i=0; i<qty; i++) productIds.push(p.id);
+        });
+
         const body = {
+          
+          
           nameAr,
           nameEn,
-          productIds: bundleSelectedProducts.map((p) => p.id),
+          productIds: productIds,
+            rooms: bundleRoomsData,
           discountPct: disc,
           originalTotal: total,
           bundlePrice: disc ? Math.round(total * (1 - disc / 100)) : total,
           mainPhoto: bundlePhotoData || null,
           active: document.getElementById("bm-active").checked,
+          tier: document.getElementById("bm-tier").value || undefined,
+          order: Number(document.getElementById("bm-order").value) || 0,
+          badgeAr: document.getElementById("bm-badge-ar").value.trim(),
+          badgeEn: document.getElementById("bm-badge-en").value.trim(),
+          badgeIcon: document.getElementById("bm-badge-icon").value,
+          roomCount: Number(document.getElementById("bm-room-count").value) || 0,
+          featured: document.getElementById("bm-featured").checked,
         };
+        
         try {
           if (editingBundleId) {
             await api(`/admin/bundles/${editingBundleId}`, {
@@ -10719,8 +11458,8 @@
           toast("Bundle saved!", true);
           closeBundleModal();
           loadBundles();
-        } catch (e) {
-          toast(e.message, false);
+        } catch(e) {
+          toast(e.message || "Failed to save bundle", false);
         }
       }
 
@@ -11044,12 +11783,501 @@
         }
       }
       
+      // ── PROMO BANNERS ──
+      async function loadPromoBanners() {
+        try {
+          allPromoBanners = await api("/admin/promo-banners");
+          renderPromoBanners();
+        } catch {
+          allPromoBanners = [];
+          renderPromoBanners();
+        }
+      }
+      function renderPromoBanners() {
+        const tbody = document.getElementById("promo-banner-body");
+        if (!tbody) return;
+        if (!allPromoBanners.length) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--tm)">No promo banners yet. Click "+ Add Promo Banner" to create one.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = allPromoBanners
+          .map((b) => {
+            const imgUrl = b.image ? (b.image.startsWith("http") ? b.image : `/uploads/${b.image}`) : "";
+            const photoHtml = imgUrl ? `<img src="${imgUrl}" style="height:45px; width:90px; object-fit:cover; border-radius:6px; border: 1px solid var(--b);">` : "—";
+            const truncatedLink = b.link ? (b.link.length > 30 ? b.link.substring(0, 30) + "..." : b.link) : "—";
+            return `<tr>
+              <td>${photoHtml}</td>
+              <td>${b.titleAr || "—"}</td>
+              <td>${b.titleEn || "—"}</td>
+              <td><code>${truncatedLink}</code></td>
+              <td>${b.sortOrder || 0}</td>
+              <td><span class="badge ${b.active ? "badge-green" : "badge-grey"}">${b.active ? "Active" : "Inactive"}</span></td>
+              <td>
+                <button class="act-btn" onclick="openPromoBannerModal('${b.id}')">Edit</button>
+                <button class="act-btn danger" onclick="deletePromoBanner('${b.id}')">Delete</button>
+              </td>
+            </tr>`;
+          })
+          .join("");
+      }
+      function openPromoBannerModal(id) {
+        editingPromoBannerId = id || null;
+        const b = id ? allPromoBanners.find((x) => x.id === id) : null;
+        document.getElementById("promo-banner-modal-title").textContent = id ? "Edit Promo Banner" : "Add Promo Banner";
+        document.getElementById("pbm-titleAr").value = b ? b.titleAr || "" : "";
+        document.getElementById("pbm-titleEn").value = b ? b.titleEn || "" : "";
+        document.getElementById("pbm-link").value = b ? b.link || "" : "";
+        document.getElementById("pbm-order").value = b ? b.sortOrder || "1" : "1";
+        document.getElementById("pbm-active").checked = b ? b.active !== false : true;
+        
+        promoBannerPhotoData = b?.image || null;
+        const preview = document.getElementById("pbm-photo-preview");
+        if (promoBannerPhotoData) {
+          const imgUrl = promoBannerPhotoData.startsWith("http") ? promoBannerPhotoData : `/uploads/${promoBannerPhotoData}`;
+          document.getElementById("pbm-photo-img").src = imgUrl;
+          preview.style.display = "block";
+        } else {
+          preview.style.display = "none";
+        }
+        document.getElementById("pbm-photo").value = "";
+        document.getElementById("promo-banner-modal").classList.add("open");
+      }
+      function closePromoBannerModal() {
+        document.getElementById("promo-banner-modal").classList.remove("open");
+      }
+      function handlePromoBannerPhotoSelect() {
+        const fileInput = document.getElementById("pbm-photo");
+        const file = fileInput.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch(window.location.origin + "/api/admin/promo-banners/upload/photo", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Authorization": "Bearer " + TOKEN,
+          },
+        })
+          .then((r) => r.json())
+          .then((res) => {
+            if (res.error) {
+              toast("Error: " + res.error, false);
+              return;
+            }
+            promoBannerPhotoData = res.filename;
+            const imgUrl = promoBannerPhotoData.startsWith("http") ? promoBannerPhotoData : `/uploads/${promoBannerPhotoData}`;
+            document.getElementById("pbm-photo-img").src = imgUrl;
+            document.getElementById("pbm-photo-preview").style.display = "block";
+            toast("Photo uploaded!", true);
+          })
+          .catch((e) => {
+            console.error("Upload error:", e);
+            toast("Upload failed: " + e.message, false);
+          });
+      }
+      async function savePromoBanner() {
+        if (!promoBannerPhotoData) {
+          toast("Promo banner photo is required", false);
+          return;
+        }
+        const titleAr = document.getElementById("pbm-titleAr").value;
+        const titleEn = document.getElementById("pbm-titleEn").value;
+        const link = document.getElementById("pbm-link").value;
+        const order = document.getElementById("pbm-order").value;
+        const body = {
+          image: promoBannerPhotoData,
+          titleAr: titleAr,
+          titleEn: titleEn,
+          link: link,
+          sortOrder: order,
+          active: document.getElementById("pbm-active").checked,
+        };
+        try {
+          if (editingPromoBannerId) {
+            await api(`/admin/promo-banners/${editingPromoBannerId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+            });
+          } else {
+            await api("/admin/promo-banners", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+          }
+          toast("Promo banner saved!", true);
+          closePromoBannerModal();
+          loadPromoBanners();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deletePromoBanner(id) {
+        if (!confirm("Delete this promo banner?")) return;
+        try {
+          await api(`/admin/promo-banners/${id}`, { method: "DELETE" });
+          toast("Promo banner deleted", true);
+          loadPromoBanners();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      
       async function deleteBundle(id) {
         if (!confirm("Delete this bundle?")) return;
         try {
           await api(`/admin/bundles/${id}`, { method: "DELETE" });
           toast("Bundle deleted", true);
           loadBundles();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      // ── OFFERS BANNERS ──
+      async function loadOffersBanners() {
+        try {
+          allOffersBanners = await api("/admin/offers-banners");
+          renderOffersBanners();
+        } catch {
+          allOffersBanners = [];
+          renderOffersBanners();
+        }
+      }
+      function renderOffersBanners() {
+        const tbody = document.getElementById("offers-banner-body");
+        if (!tbody) return;
+        if (!allOffersBanners.length) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--tm)">No promo banners yet. Click "+ Add Offers Banner" to create one.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = allOffersBanners
+          .map((b) => {
+            const imgUrl = b.image ? (b.image.startsWith("http") ? b.image : `/uploads/${b.image}`) : "";
+            const photoHtml = imgUrl ? `<img src="${imgUrl}" style="height:45px; width:90px; object-fit:cover; border-radius:6px; border: 1px solid var(--b);">` : "—";
+            const truncatedLink = b.link ? (b.link.length > 30 ? b.link.substring(0, 30) + "..." : b.link) : "—";
+            return `<tr>
+              <td>${photoHtml}</td>
+              <td>${b.titleAr || "—"}</td>
+              <td>${b.titleEn || "—"}</td>
+              <td><code>${truncatedLink}</code></td>
+              <td>${b.sortOrder || 0}</td>
+              <td><span class="badge ${b.active ? "badge-green" : "badge-grey"}">${b.active ? "Active" : "Inactive"}</span></td>
+              <td>
+                <button class="act-btn" onclick="openOffersBannerModal('${b.id}')">Edit</button>
+                <button class="act-btn danger" onclick="deleteOffersBanner('${b.id}')">Delete</button>
+              </td>
+            </tr>`;
+          })
+          .join("");
+      }
+      function openOffersBannerModal(id) {
+        editingOffersBannerId = id || null;
+        const b = id ? allOffersBanners.find((x) => x.id === id) : null;
+        document.getElementById("offers-banner-modal-title").textContent = id ? "Edit Offers Banner" : "Add Offers Banner";
+        document.getElementById("obm-titleAr").value = b ? b.titleAr || "" : "";
+        document.getElementById("obm-titleEn").value = b ? b.titleEn || "" : "";
+        document.getElementById("obm-link").value = b ? b.link || "" : "";
+        document.getElementById("obm-order").value = b ? b.sortOrder || "1" : "1";
+        document.getElementById("obm-active").checked = b ? b.active !== false : true;
+        
+        offersBannerPhotoData = b?.image || null;
+        const preview = document.getElementById("obm-photo-preview");
+        if (offersBannerPhotoData) {
+          const imgUrl = offersBannerPhotoData.startsWith("http") ? offersBannerPhotoData : `/uploads/${offersBannerPhotoData}`;
+          document.getElementById("obm-photo-img").src = imgUrl;
+          preview.style.display = "block";
+        } else {
+          preview.style.display = "none";
+        }
+        document.getElementById("obm-photo").value = "";
+        document.getElementById("offers-banner-modal").classList.add("open");
+      }
+      function closeOffersBannerModal() {
+        document.getElementById("offers-banner-modal").classList.remove("open");
+      }
+      function handleOffersBannerPhotoSelect() {
+        const fileInput = document.getElementById("obm-photo");
+        const file = fileInput.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch(window.location.origin + "/api/admin/offers-banners/upload/photo", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Authorization": "Bearer " + TOKEN,
+          },
+        })
+          .then((r) => r.json())
+          .then((res) => {
+            if (res.error) {
+              toast("Error: " + res.error, false);
+              return;
+            }
+            offersBannerPhotoData = res.filename;
+            const imgUrl = offersBannerPhotoData.startsWith("http") ? offersBannerPhotoData : `/uploads/${offersBannerPhotoData}`;
+            document.getElementById("obm-photo-img").src = imgUrl;
+            document.getElementById("obm-photo-preview").style.display = "block";
+            toast("Photo uploaded!", true);
+          })
+          .catch((e) => {
+            console.error("Upload error:", e);
+            toast("Upload failed: " + e.message, false);
+          });
+      }
+      async function saveOffersBanner() {
+        if (!offersBannerPhotoData) {
+          toast("Offers banner photo is required", false);
+          return;
+        }
+        const titleAr = document.getElementById("obm-titleAr").value;
+        const titleEn = document.getElementById("obm-titleEn").value;
+        const link = document.getElementById("obm-link").value;
+        const order = document.getElementById("obm-order").value;
+        const body = {
+          image: offersBannerPhotoData,
+          titleAr: titleAr,
+          titleEn: titleEn,
+          link: link,
+          sortOrder: order,
+          active: document.getElementById("obm-active").checked,
+        };
+        try {
+          if (editingOffersBannerId) {
+            await api(`/admin/offers-banners/${editingOffersBannerId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+            });
+          } else {
+            await api("/admin/offers-banners", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+          }
+          toast("Offers banner saved!", true);
+          closeOffersBannerModal();
+          loadOffersBanners();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteOffersBanner(id) {
+        if (!confirm("Delete this promo banner?")) return;
+        try {
+          await api(`/admin/offers-banners/${id}`, { method: "DELETE" });
+          toast("Offers banner deleted", true);
+          loadOffersBanners();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      
+      async function deleteBundle(id) {
+        if (!confirm("Delete this bundle?")) return;
+        try {
+          await api(`/admin/bundles/${id}`, { method: "DELETE" });
+          toast("Bundle deleted", true);
+          loadBundles();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      // --- SHOP THE LOOK JS ---
+      let allStl = [];
+      let editingStlId = null;
+      let stlPhotoData = null;
+      let stlHotspots = [];
+
+      async function loadStl() {
+        try {
+          allStl = await api("/admin/shop-the-look");
+          renderStl();
+        } catch (e) {
+          console.error("Failed to load shop the look:", e);
+        }
+      }
+
+      function renderStl() {
+        const tbody = document.getElementById("stl-body");
+        if (!allStl || allStl.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5"><div class="empty" style="padding:40px"><div class="eico" style="font-size:36px"></div><h4>No items yet</h4></div></td></tr>';
+          return;
+        }
+        tbody.innerHTML = allStl
+          .map((s) => {
+            const imgUrl = iu(s.image);
+            const hotspotsCount = (s.hotspots || []).length;
+            const badge = s.active
+              ? `<span class="badge badge-green">Active</span>`
+              : `<span class="badge badge-orange">Inactive</span>`;
+            return `<tr>
+              <td><div style="width:120px;height:67px;background:#eee;border-radius:4px;overflow:hidden">
+                <img src="${imgUrl}" style="width:100%;height:100%;object-fit:cover">
+              </div></td>
+              <td>${hotspotsCount} hotspot(s)</td>
+              <td>${s.sortOrder}</td>
+              <td>${badge}</td>
+              <td><div class="act-row">
+                <button class="act-btn" onclick="editStl('${s.id}')">Edit</button>
+                <button class="act-btn danger" onclick="deleteStl('${s.id}')">Delete</button>
+              </div></td>
+            </tr>`;
+          })
+          .join("");
+      }
+
+      function openStlModal() {
+        editingStlId = null;
+        stlPhotoData = null;
+        stlHotspots = [];
+        document.getElementById("stl-modal-title").textContent = "Add Shop the Look";
+        document.getElementById("stm-photo").value = "";
+        document.getElementById("stm-photo-preview").style.display = "none";
+        document.getElementById("stm-order").value = "1";
+        document.getElementById("stm-active").checked = true;
+        renderStlHotspotsList();
+        document.getElementById("stl-modal").style.display = "flex";
+      }
+
+      function closeStlModal() {
+        document.getElementById("stl-modal").style.display = "none";
+      }
+
+      function editStl(id) {
+        const s = allStl.find((x) => x.id === id);
+        if (!s) return;
+        editingStlId = id;
+        stlPhotoData = s.image;
+        stlHotspots = JSON.parse(JSON.stringify(s.hotspots || []));
+        document.getElementById("stl-modal-title").textContent = "Edit Shop the Look";
+        document.getElementById("stm-photo").value = "";
+        const imgUrl = iu(s.image);
+        document.getElementById("stm-photo-img").src = imgUrl;
+        document.getElementById("stm-photo-preview").style.display = "block";
+        document.getElementById("stm-order").value = s.sortOrder;
+        document.getElementById("stm-active").checked = s.active;
+        renderStlHotspotsList();
+        document.getElementById("stl-modal").style.display = "flex";
+      }
+
+      function handleStlPhotoSelect() {
+        const file = document.getElementById("stm-photo").files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch(window.location.origin + "/api/admin/shop-the-look/upload/photo", {
+          method: "POST",
+          body: formData,
+          headers: { "Authorization": "Bearer " + TOKEN },
+        })
+          .then((r) => r.json())
+          .then((res) => {
+            if (res.error) {
+              toast("Error: " + res.error, false);
+              return;
+            }
+            stlPhotoData = res.filename;
+            document.getElementById("stm-photo-img").src = iu(stlPhotoData);
+            document.getElementById("stm-photo-preview").style.display = "block";
+            toast("Photo uploaded!", true);
+          })
+          .catch((e) => {
+            console.error("Upload error:", e);
+            toast("Upload failed: " + e.message, false);
+          });
+      }
+
+      function addStlHotspot(e) {
+        if (!stlPhotoData) {
+          toast("Upload a photo first", false);
+          return;
+        }
+        const rect = e.target.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        stlHotspots.push({ id: 'hs-' + Date.now(), productId: "", x: x.toFixed(2), y: y.toFixed(2) });
+        renderStlHotspotsList();
+      }
+
+      function removeStlHotspot(idx) {
+        stlHotspots.splice(idx, 1);
+        renderStlHotspotsList();
+      }
+
+      function updateStlHotspotProduct(idx, val) {
+        stlHotspots[idx].productId = val;
+      }
+
+      function renderStlHotspotsList() {
+        const listEl = document.getElementById("stm-hotspots-list");
+        const overlay = document.getElementById("stm-hotspots-overlay");
+        
+        if (stlHotspots.length === 0) {
+          listEl.innerHTML = '<div style="color:var(--tm);font-size:13px">No hotspots added yet. Click the image above to add one.</div>';
+          overlay.innerHTML = '';
+          return;
+        }
+        
+        let overlayHtml = '';
+        let listHtml = '';
+        const prodOptions = allProducts.map(p => `<option value="${p.id}">${p.sku ? p.sku + ' - ' : ''}${p.nameEn || p.nameAr}</option>`).join('');
+
+        stlHotspots.forEach((hs, idx) => {
+          overlayHtml += `<div style="position:absolute;left:${hs.x}%;top:${hs.y}%;width:20px;height:20px;background:#fff;border:3px solid var(--o);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 2px 5px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;color:var(--o);">${idx+1}</div>`;
+          
+          listHtml += `
+            <div style="background:#fff;padding:8px;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;gap:10px;border:1px solid #e0e0e0">
+              <div style="width:24px;height:24px;background:var(--o);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;flex-shrink:0;">${idx+1}</div>
+              <select style="flex:1;min-width:0" onchange="updateStlHotspotProduct(${idx}, this.value)">
+                <option value="">Select a Product</option>
+                ${allProducts.map(p => `<option value="${p.id}" ${p.id === hs.productId ? 'selected' : ''}>${p.sku ? p.sku + ' - ' : ''}${p.nameEn || p.nameAr}</option>`).join('')}
+              </select>
+              <button class="act-btn danger" onclick="removeStlHotspot(${idx})"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
+            </div>
+          `;
+        });
+        
+        overlay.innerHTML = overlayHtml;
+        listEl.innerHTML = listHtml;
+      }
+
+      async function saveStl() {
+        if (!stlPhotoData) {
+          toast("Photo is required", false);
+          return;
+        }
+        const order = document.getElementById("stm-order").value;
+        const body = {
+          image: stlPhotoData,
+          sortOrder: order,
+          active: document.getElementById("stm-active").checked,
+          hotspots: stlHotspots
+        };
+        try {
+          if (editingStlId) {
+            await api(`/admin/shop-the-look/${editingStlId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+            });
+          } else {
+            await api("/admin/shop-the-look", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+          }
+          toast("Shop the Look saved!", true);
+          closeStlModal();
+          loadStl();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      async function deleteStl(id) {
+        if (!confirm("Delete this shop the look item?")) return;
+        try {
+          await api(`/admin/shop-the-look/${id}`, { method: "DELETE" });
+          toast("Deleted successfully", true);
+          loadStl();
         } catch (e) {
           toast(e.message, false);
         }

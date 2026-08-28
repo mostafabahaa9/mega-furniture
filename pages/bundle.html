@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+  <script>
+    (function () {
+      if (!localStorage.getItem('megaTheme')) localStorage.setItem('megaTheme', 'light');
+      document.documentElement.setAttribute('data-theme', localStorage.getItem('megaTheme'));
+    })();
+  </script>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mega Furniture | Bundle Detail</title>
+        
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --o: #e8961e;
+        --od: #c07a18;
+        --ol: #f0a830;
+        --bg: #f7f3ec;
+        --s: #fefcf8;
+        --s2: #ede4d6;
+        --s3: #dfd2bf;
+        --t: #1a1612;
+        --tm: #6b5d4f;
+        --b: rgba(26, 22, 18, 0.08);
+        --bh: rgba(232, 150, 30, 0.28);
+        --nb: rgba(247, 243, 236, 0.95);
+        --sh: 0 8px 40px rgba(26, 22, 18, 0.1);
+        --font-head: "Fraunces", serif;
+        --font-body: "Outfit", sans-serif;
+      }
+      [data-theme="dark"] {
+        --bg: #0a0a0a;
+        --s: #141414;
+        --s2: #1e1e1e;
+        --s3: #2a2a2a;
+        --t: #f0f0f0;
+        --tm: #a0a0a0;
+        --b: rgba(255, 255, 255, 0.1);
+        --nb: rgba(10, 10, 10, 0.95);
+        --sh: 0 8px 40px rgba(0, 0, 0, 0.6);
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: var(--bg); color: var(--t); font-family: var(--font-body); }
+      
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+      
+      .breadcrumb { font-size: 12px; color: var(--tm); margin: 24px 0; display: flex; gap: 8px; }
+      .breadcrumb a { color: var(--tm); text-decoration: none; }
+      
+      /* Hero Section */
+      .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+      .hero-img { border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; background: var(--s2); }
+      .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+      
+      .hero-content { display: flex; flex-direction: column; justify-content: center; text-align: right; }
+      .badge-top { background: var(--o); color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 14px; align-self: flex-start; margin-bottom: 16px; }
+      .h-title { font-size: 42px; font-weight: 700; color: var(--t); margin-bottom: 8px; line-height: 1.1; }
+      .h-subtitle { font-size: 18px; color: var(--tm); margin-bottom: 32px; }
+      
+      .price-box { border-top: 1px solid var(--b); border-bottom: 1px solid var(--b); padding: 24px 0; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; }
+      .price-old { font-size: 14px; color: var(--tm); }
+      .price-old span { text-decoration: line-through; display: block; font-size: 18px; }
+      .price-new { text-align: left; }
+      .price-new span { font-size: 36px; font-weight: 700; color: var(--o); display: block; }
+      
+      .btn-primary { background: var(--o); color: #fff; border: none; padding: 16px; border-radius: 8px; font-size: 18px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 12px; transition: transform 0.2s; }
+      .btn-secondary { background: #25d366; color: #fff; border: 1px solid #25d366; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; display: flex; justify-content: center; gap: 8px; align-items: center; }
+      
+      /* Trust Bar */
+      .trust-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; background: var(--s2); padding: 24px; border-radius: 12px; margin-bottom: 64px; text-align: center; }
+      .t-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+      .t-icon { color: var(--o); }
+      .t-icon svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+      .t-title { font-weight: 700; font-size: 14px; }
+      .t-sub { font-size: 12px; color: var(--tm); }
+      
+      /* Section Headers */
+      .sec-head { text-align: center; margin-bottom: 40px; font-size: 28px; font-weight: 700; }
+      
+      /* Rooms Grid */
+      .rooms-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 80px; }
+      .room-card { background: var(--s); border: 1px solid var(--b); border-radius: 12px; overflow: hidden; padding-bottom: 16px; text-align: center; }
+      .rc-img { aspect-ratio: 1; background: var(--s2); margin-bottom: 16px; position: relative; }
+      .rc-img img { width: 100%; height: 100%; object-fit: cover; }
+      .rc-icon { position: absolute; bottom: -20px; right: 24px; background: var(--o); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+      .rc-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+      .rc-title { font-weight: 700; font-size: 18px; margin-bottom: 4px; }
+      .rc-sub { font-size: 12px; color: var(--tm); margin-bottom: 16px; padding: 0 12px; }
+      .rc-link { display: inline-block; padding: 8px 16px; border: 1px solid var(--o); color: var(--o); border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none; margin-bottom: 8px; }
+      .rc-link-alt { color: var(--tm); font-size: 12px; text-decoration: underline; display: block; }
+      
+      /* Steps */
+      .steps-section { background: var(--s2); padding: 64px 24px; border-radius: 16px; margin-bottom: 80px; }
+      .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+      .step-item { display: flex; flex-direction: column; align-items: center; }
+      .step-num { width: 32px; height: 32px; background: var(--o); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 16px; }
+      .step-title { font-weight: 700; margin-bottom: 16px; }
+      .step-img { width: 100%; aspect-ratio: 1; border-radius: 12px; object-fit: cover; border: 4px solid var(--s); }
+      
+      /* Materials */
+      .mat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 80px; }
+      .mat-item { text-align: center; }
+      .mat-img { width: 100%; aspect-ratio: 1; border-radius: 12px; margin-bottom: 16px; object-fit: cover; }
+      .mat-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+      .mat-sub { font-size: 11px; color: var(--tm); }
+      
+      /* Why Mega */
+      .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 80px; text-align: center; }
+      
+      /* Bottom CTA */
+      .bottom-cta { background: var(--s2); padding: 48px; border-radius: 16px; text-align: center; margin-bottom: 40px; display: flex; flex-direction: column; align-items: center; }
+      .bc-title { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+      .bc-sub { color: var(--tm); margin-bottom: 32px; }
+      .bc-actions { display: flex; gap: 16px; justify-content: center; width: 100%; max-width: 500px; }
+      
+      @media (max-width: 900px) {
+        .hero, .rooms-grid, .steps-grid, .mat-grid, .why-grid, .trust-bar { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 600px) {
+        .hero, .rooms-grid, .steps-grid, .mat-grid, .why-grid, .trust-bar { grid-template-columns: 1fr; }
+        .hero-content { text-align: center; }
+        .badge-top { align-self: center; }
+        .bc-actions { flex-direction: column; }
+      }
+    
+      .badge-signature { background: linear-gradient(135deg, #d4af37, #f3e5ab); color: #000 !important; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
+      .room-items-list { list-style: none; padding: 0; margin: 10px 0 0 0; text-align: right; border-top: 1px solid var(--b); padding-top: 10px; }
+      [dir="ltr"] .room-items-list { text-align: left; }
+      .room-items-list li { font-size: 13px; color: var(--t); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+      .room-items-list li::before { content: "•"; color: var(--o); }
+
+      .bc-room-icon-wrap {
+        width: 48px;
+        height: 48px;
+        background: var(--bg);
+        border: 2px solid var(--o);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--o);
+      }
+      .bc-room-icon-wrap svg { width: 24px; height: 24px; }
+
+      /* ── MOBILE BUNDLE PAGE POLISH ── */
+      @media (max-width: 600px) {
+        .container { padding: 0 12px; }
+        .breadcrumb { font-size: 11px; margin: 12px 0; }
+        
+        /* Hero */
+        .hero { grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px; }
+        .hero-img { border-radius: 12px; aspect-ratio: 16/10; }
+        .hero-content { text-align: center; }
+        .badge-top { align-self: center; font-size: 13px; padding: 5px 14px; margin-bottom: 10px; }
+        .h-title { font-size: 28px; margin-bottom: 4px; }
+        .h-subtitle { font-size: 14px; margin-bottom: 16px; }
+        
+        /* Price */
+        .price-box { padding: 14px 0; margin-bottom: 16px; }
+        .price-old span { font-size: 16px; }
+        .price-new span { font-size: 28px; }
+        .price-old, .price-new { font-size: 12px; }
+        
+        /* Buttons */
+        .btn-primary { padding: 12px; font-size: 16px; margin-bottom: 8px; }
+        .btn-secondary { padding: 12px; font-size: 14px; }
+        
+        /* Trust Bar — keep 4 columns but compact */
+        .trust-bar { grid-template-columns: repeat(4, 1fr) !important; gap: 8px; padding: 14px 8px; margin-bottom: 32px; }
+        .t-icon svg { width: 22px; height: 22px; }
+        .t-title { font-size: 11px; }
+        .t-sub { font-size: 9px; }
+        
+        /* Section Headers */
+        .sec-head { font-size: 20px; margin-bottom: 20px; }
+        
+        /* Rooms Grid — 2 columns like reference */
+        .rooms-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; margin-bottom: 32px; }
+        .rc-img { aspect-ratio: 4/3; }
+        .rc-title { font-size: 14px; }
+        .rc-sub { font-size: 10px; margin-bottom: 10px; padding: 0 8px; }
+        .rc-link { font-size: 11px; padding: 6px 12px; }
+        .rc-link-alt { font-size: 10px; }
+        .rc-icon { width: 32px; height: 32px; bottom: -16px; right: 16px; }
+        .rc-icon svg { width: 16px; height: 16px; }
+        
+        /* Steps — keep 4 columns but compact */
+        .steps-section { padding: 32px 16px; margin-bottom: 32px; }
+        .steps-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 12px; }
+        .step-title { font-size: 11px; margin-bottom: 8px; }
+        .step-num { width: 24px; height: 24px; font-size: 12px; margin-bottom: 8px; }
+        
+        /* Materials — keep 5 columns */
+        .mat-grid { grid-template-columns: repeat(5, 1fr) !important; gap: 8px; margin-bottom: 32px; }
+        .mat-title { font-size: 11px; }
+        .mat-sub { font-size: 9px; }
+        
+        /* Why Grid */
+        .why-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; margin-bottom: 32px; }
+        
+        /* Bottom CTA */
+        .bottom-cta { padding: 24px 16px; margin-bottom: 24px; }
+        .bc-title { font-size: 22px; }
+        .bc-sub { font-size: 13px; margin-bottom: 16px; }
+        .bc-actions { flex-direction: column; gap: 8px; }
+      }
+</style>
+  
+  <style>
+    .product-card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); }
+  </style>
+</head>
+
+  <body>
+    <script src="header.js"></script>
+
+    <div class="container" id="bundle-content" style="display:none; margin-top: 40px;">
+      
+      <div class="breadcrumb">
+        <a href="../mega-furniture.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a> &gt; 
+        <a href="offers.html#bundles" data-ar="الباقات" data-en="Bundles">الباقات</a> &gt; 
+        <span id="bc-name"></span>
+      </div>
+      
+      <div class="hero">
+        <div class="hero-img">
+          <img id="h-img" alt="Bundle image" onerror="this.src='../logos/mega-logo.jpg'; this.style.opacity=1;" style="opacity:1; transition:opacity 0.2s;" />
+        </div>
+        <div class="hero-content">
+          <div class="badge-top" id="h-badge"></div>
+          <h1 class="h-title" id="h-title"></h1>
+          <p class="h-subtitle" id="h-sub"></p>
+          
+          <div class="price-box">
+            <div class="price-old">
+              <span data-ar="السعر قبل الخصم" data-en="Price before discount">السعر قبل الخصم</span>
+              <span id="h-old"></span>
+            </div>
+            <div class="price-new">
+              <div data-ar="السعر بعد الخصم" data-en="Price after discount" style="font-size:12px; color:var(--tm); margin-bottom:4px;">السعر بعد الخصم</div>
+              <span id="h-new"></span>
+            </div>
+          </div>
+          
+          <button class="btn-primary" id="btn-add" data-ar="اختار الباقة >" data-en="Choose Bundle >">اختار الباقة &gt;</button>
+          <button class="btn-secondary" onclick="handleWhatsAppOrder()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.385 0 0 5.385 0 12.03c0 2.124.553 4.195 1.604 6.015L.175 23.279l5.378-1.41A12.001 12.001 0 0012.03 24c6.645 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0z"/></svg>
+            <span data-ar="اسألنا عن التفاصيل" data-en="Ask for details">اسألنا عن التفاصيل</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="trust-bar">
+        <div class="t-item">
+          <div class="t-icon"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg></div>
+          <div class="t-title" data-ar="أخشاب طبيعية" data-en="Natural Wood">أخشاب طبيعية</div>
+          <div class="t-sub" data-ar="جودة تدوم لسنين" data-en="Lasting quality">جودة تدوم لسنين</div>
+        </div>
+        <div class="t-item">
+          <div class="t-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg></div>
+          <div class="t-title" data-ar="اختيار الألوان" data-en="Color Options">اختيار الألوان</div>
+          <div class="t-sub" data-ar="والقماش" data-en="And fabrics">والقماش</div>
+        </div>
+        <div class="t-item">
+          <div class="t-icon"><svg viewBox="0 0 24 24"><line x1="21" y1="4" x2="14" y2="4"></line><line x1="10" y1="4" x2="3" y2="4"></line><line x1="21" y1="12" x2="12" y2="12"></line><line x1="8" y1="12" x2="3" y2="12"></line><line x1="21" y1="20" x2="16" y2="20"></line><line x1="12" y1="20" x2="3" y2="20"></line><line x1="14" y1="2" x2="14" y2="6"></line><line x1="8" y1="10" x2="8" y2="14"></line><line x1="16" y1="18" x2="16" y2="22"></line></svg></div>
+          <div class="t-title" data-ar="تعديل المقاسات" data-en="Custom Sizes">تعديل المقاسات</div>
+          <div class="t-sub" data-ar="حسب مساحتك" data-en="To fit your space">حسب مساحتك</div>
+        </div>
+        <div class="t-item">
+          <div class="t-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg></div>
+          <div class="t-title" data-ar="ضمان معتمد" data-en="Warranty Included">ضمان معتمد</div>
+          <div class="t-sub" data-ar="تختلف المدة حسب المنتج" data-en="Varies by product">تختلف المدة حسب المنتج</div>
+        </div>
+      </div>
+      
+      <h2 class="sec-head" id="rooms-head"></h2>
+      
+      <div class="rooms-grid" id="r-grid"></div>
+      
+      <div class="steps-section">
+        <h2 class="sec-head" data-ar="مش لازم بيتك يبقى زي الصورة <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>" data-en="Your home doesn't have to look like the picture <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>">مش لازم بيتك يبقى زي الصورة <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg></h2>
+        <div style="text-align: center; color: var(--tm); margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto;" data-ar="اختار الموديل واللون والقماش والمقاسات اللي تناسب مساحتك، وإحنا ننفذ الباقة على ذوقك." data-en="Choose the design, color, fabric, and sizes that fit your space.">اختار الموديل واللون والقماش والمقاسات اللي تناسب مساحتك، وإحنا ننفذ الباقة على ذوقك.</div>
+        
+        <div class="steps-grid">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-title" data-ar="اختار التصميم" data-en="Choose Design">اختار التصميم</div>
+            <img class="step-img" src="../logos/steps_1.jpg" style="opacity:1" alt="Step 1" />
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-title" data-ar="اختار اللون" data-en="Choose Color">اختار اللون</div>
+            <img class="step-img" src="../logos/steps_2.jpg" style="opacity:1" alt="Step 2" />
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-title" data-ar="حدد المقاسات" data-en="Set Sizes">حدد المقاسات</div>
+            <img class="step-img" src="../logos/steps_3.jpg" style="opacity:1" alt="Step 3" />
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-title" data-ar="تابع التنفيذ" data-en="Follow Execution">تابع التنفيذ</div>
+            <img class="step-img" src="../logos/steps_4.jpg" style="opacity:1" alt="Step 4" />
+          </div>
+        </div>
+      </div>
+      
+      <h2 class="sec-head" data-ar="شوف الخامات قبل ما تختار" data-en="See materials before choosing">شوف الخامات قبل ما تختار</h2>
+      <div class="mat-grid">
+        <div class="mat-item">
+          <img class="mat-img" src="../logos/mat_1.webp" alt="Natural Wood" />
+          <div class="mat-title" data-ar="أخشاب طبيعية" data-en="Natural Wood">أخشاب طبيعية</div>
+          <div class="mat-sub" data-ar="أجود أنواع الأخشاب الطبيعية" data-en="Premium quality natural wood">أجود أنواع الأخشاب الطبيعية</div>
+        </div>
+        <div class="mat-item">
+          <img class="mat-img" src="../logos/mat_2.jpg" alt="Luxury Fabrics" />
+          <div class="mat-title" data-ar="أقمشة فاخرة" data-en="Luxury Fabrics">أقمشة فاخرة</div>
+          <div class="mat-sub" data-ar="أنواع متعددة وسهلة التنظيف" data-en="Various types, easy to clean">أنواع متعددة وسهلة التنظيف</div>
+        </div>
+        <div class="mat-item">
+          <img class="mat-img" src="../logos/mat_3.jpg" alt="High-Quality Foam" />
+          <div class="mat-title" data-ar="إسفنج عالي الجودة" data-en="High-Quality Foam">إسفنج عالي الجودة</div>
+          <div class="mat-sub" data-ar="راحة تدوم لسنين" data-en="Comfort that lasts for years">راحة تدوم لسنين</div>
+        </div>
+        <div class="mat-item">
+          <img class="mat-img" src="../logos/mat_4.jpg" alt="Safe Paints" />
+          <div class="mat-title" data-ar="دهانات آمنة" data-en="Safe Paints">دهانات آمنة</div>
+          <div class="mat-sub" data-ar="ألوان ثابتة وصديقة للبيئة" data-en="Colorfast and eco-friendly">ألوان ثابتة وصديقة للبيئة</div>
+        </div>
+        <div class="mat-item">
+          <img class="mat-img" src="../logos/mat_5.webp" alt="Professional Finish" onerror="this.src='../logos/mega-logo.jpg'; this.style.opacity=0.2" />
+          <div class="mat-title" data-ar="تشطيب احترافي" data-en="Professional Finish">تشطيب احترافي</div>
+          <div class="mat-sub" data-ar="تفاصيل دقيقة وجودة في التنفيذ" data-en="Precise details and quality execution">تفاصيل دقيقة وجودة في التنفيذ</div>
+        </div>
+      </div>
+      
+      <h2 class="sec-head" data-ar="ليه ميجا؟" data-en="Why Mega?">ليه ميجا؟</h2>
+      <div class="why-grid">
+        <div class="t-item">
+          <div class="t-icon"><svg viewBox="0 0 24 24"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M17 18h1"></path><path d="M12 18h1"></path><path d="M7 18h1"></path></svg></div>
+          <div class="t-title" data-ar="تصنيع في مصانعنا" data-en="Manufactured in our factories">تصنيع في مصانعنا</div>
+          <div class="t-sub" data-ar="إشراف على كل خطوة" data-en="Supervision at every step">إشراف على كل خطوة</div>
+        </div>
+        <div class="t-item">
+          <div class="t-icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg></div>
+          <div class="t-title" data-ar="متابعة شخصية" data-en="Personal Follow-up">متابعة شخصية</div>
+          <div class="t-sub" data-ar="من التصميم للتسليم" data-en="From design to delivery">من التصميم للتسليم</div>
+        </div>
+        <div class="t-item">
+          <div class="t-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>
+          <div class="t-title" data-ar="توصيل وتركيب" data-en="Delivery & Assembly">توصيل وتركيب</div>
+          <div class="t-sub" data-ar="في جميع المحافظات" data-en="In all governorates">في جميع المحافظات</div>
+        </div>
+        <div class="t-item">
+          <div class="t-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="4.93" x2="9.17" y1="4.93" y2="9.17"></line><line x1="14.83" x2="19.07" y1="14.83" y2="19.07"></line><line x1="14.83" x2="19.07" y1="9.17" y2="4.93"></line><line x1="4.93" x2="9.17" y1="19.07" y2="14.83"></line></svg></div>
+          <div class="t-title" data-ar="خدمة ما بعد البيع" data-en="After-Sales Service">خدمة ما بعد البيع</div>
+          <div class="t-sub" data-ar="دعم دائم بعد التسليم" data-en="Continuous support after delivery">دعم دائم بعد التسليم</div>
+        </div>
+      </div>
+      
+      <div class="bottom-cta">
+        <div class="bc-title" data-ar="جاهز تبدأ تجهيز بيتك <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>" data-en="Ready to furnish your home <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>">جاهز تبدأ تجهيز بيتك <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg></div>
+        <div class="bc-sub" data-ar="اختار الباقة وسيب الباقي التفاصيل علينا." data-en="Choose the bundle and leave the rest to us.">اختار الباقة وسيب الباقي التفاصيل علينا.</div>
+        <div class="bc-actions">
+          <button class="btn-primary" style="margin:0;" onclick="window.scrollTo(0,0)" data-ar="احجز معاينة في المعرض" data-en="Book Showroom Visit">احجز معاينة في المعرض</button>
+          <button class="btn-secondary" style="margin:0;" onclick="handleWhatsAppOrder()" data-ar="كلمنا على واتساب" data-en="Chat on WhatsApp">كلمنا على واتساب</button>
+        </div>
+      </div>
+      
+    </div>
+
+    <script>
+      const lang = localStorage.getItem("megaLang") || "en";
+      function applyLang(l) {
+        document.documentElement.lang = l;
+        document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+        document.querySelectorAll("[data-ar][data-en]").forEach((el) => {
+          el.innerHTML = l === "ar" ? el.getAttribute("data-ar") : el.getAttribute("data-en");
+        });
+      }
+      
+      const originalToggleLang = window.toggleLang;
+      window.toggleLang = function() {
+        if(originalToggleLang) {
+            originalToggleLang();
+            window.location.reload();
+        } else {
+          const cl = localStorage.getItem("megaLang") || "en";
+          const nl = cl === "en" ? "ar" : "en";
+          localStorage.setItem("megaLang", nl);
+          applyLang(nl);
+          window.location.reload();
+        }
+      };
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const bundleId = urlParams.get('id');
+      let currentBundle = null;
+
+      async function loadBundle() {
+        if (!bundleId) return;
+        try {
+          const res = await fetch("/api/bundles");
+          if (!res.ok) throw new Error("Failed to load");
+          const bundles = await res.json();
+          currentBundle = bundles.find(b => b.id === bundleId);
+          if (!currentBundle) return;
+
+          const nm = lang === "ar" ? currentBundle.nameAr || currentBundle.nameEn : currentBundle.nameEn || currentBundle.nameAr;
+          const bdg = lang === "ar" ? currentBundle.badgeAr : currentBundle.badgeEn;
+          const mainImg = currentBundle.image ? (currentBundle.image.startsWith("http") ? currentBundle.image : "../uploads/" + currentBundle.image) : "";
+          
+          const itemCount2 = (currentBundle.items || []).length;
+          document.getElementById('bc-name').textContent = nm + " - " + itemCount2 + (lang === "ar" ? " قطع" : " Items");
+          
+          document.getElementById('h-badge').textContent = bdg || (lang === "ar" ? "باقة" : "Bundle");
+          if(currentBundle.tier === 'signature') {
+              document.getElementById('h-badge').classList.add('badge-signature');
+          } else {
+              document.getElementById('h-badge').classList.remove('badge-signature');
+          }
+
+          document.getElementById('h-title').textContent = (currentBundle.items || []).length + (lang === "ar" ? " قطع لبيت متكامل على ذوقك" : " Items for a complete home");
+          document.getElementById('h-sub').textContent = lang === "ar" ? "كل اللي تحتاجه لبيت مريح وأنيق" : "Everything you need for a comfortable and elegant home";
+          document.getElementById('h-old').textContent = "EGP " + Number(currentBundle.originalTotal || 0).toLocaleString();
+          document.getElementById('h-new').textContent = "EGP " + Number(currentBundle.bundlePrice || 0).toLocaleString();
+          
+          if(mainImg) document.getElementById('h-img').src = mainImg;
+          
+          document.getElementById('rooms-head').textContent = lang === "ar" ? "الباقة دي بتجهزلك " + (currentBundle.roomCount || 0) + " غرف <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>" : "This bundle furnishes " + (currentBundle.roomCount || 0) + " rooms <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>";
+          
+          const itemsList = (currentBundle.items || []).map(p => {
+              const pName = lang === 'ar' ? p.nameAr || p.nameEn : p.nameEn || p.nameAr;
+              const pImg = p.mainPhoto ? (p.mainPhoto.startsWith("http") ? p.mainPhoto : "../uploads/" + p.mainPhoto) : "";
+              const imgHtml = pImg ? `<img src="${pImg}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">` : `<div style="width:100%; height:100%; background:var(--s2);"></div>`;
+              const priceText = p.price ? "EGP " + Number(p.price).toLocaleString() : "";
+              
+              // Standard Product Card Design
+              return `<a href="product.html?id=${p.id}" style="display:block; text-decoration:none; color:inherit; background:var(--s); border:1px solid var(--b); border-radius:10px; overflow:hidden; transition:transform 0.2s, box-shadow 0.2s;" class="product-card-hover">
+                 <div style="width:100%; aspect-ratio:1; background:var(--s2); position:relative;">
+                    ${imgHtml}
+                 </div>
+                 <div style="padding:10px;">
+                    <div style="font-weight:600; font-size:13px; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${pName}</div>
+                    <div style="color:var(--o); font-weight:700; font-size:12px;">${priceText}</div>
+                 </div>
+              </a>`;
+          }).join('');
+          
+          const title = lang === 'ar' ? 'محتويات الباقة' : 'Bundle Contents';
+          
+          const roomsHtml = `<div style="width:100%; max-width:1200px; margin:0 auto;">
+              <h3 style="font-size:24px; margin-bottom:20px; text-align:center; font-family:'Fraunces', serif;">${title}</h3>
+              <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:10px;" dir="${lang==='ar'?'rtl':'ltr'}">
+                ${itemsList}
+              </div>
+            </div>`;
+          
+          const grid = document.getElementById('r-grid');
+          grid.style.display = 'block'; 
+          grid.innerHTML = roomsHtml;
+          document.getElementById('rooms-head').style.display = 'none';
+
+          // Populate step/material images
+          for(let i=1; i<=4; i++) {
+              let imgEl = document.getElementById('step-img-'+i);
+              if(imgEl) {
+                  let dynamicSrc = currentBundle.stepsImages && currentBundle.stepsImages[i-1];
+                  if(dynamicSrc) imgEl.src = dynamicSrc.startsWith("http") ? dynamicSrc : "../uploads/" + dynamicSrc;
+                  imgEl.style.opacity = dynamicSrc ? "1" : "0.2";
+              }
+          }
+          for(let i=1; i<=5; i++) {
+              let imgEl = document.getElementById('mat-img-'+i);
+              if(imgEl) {
+                  let dynamicSrc = currentBundle.materialsImages && currentBundle.materialsImages[i-1];
+                  if(dynamicSrc) imgEl.src = dynamicSrc.startsWith("http") ? dynamicSrc : "../uploads/" + dynamicSrc;
+                  imgEl.style.opacity = dynamicSrc ? "1" : "0.2";
+              }
+          }
+
+          document.getElementById('bundle-content').style.display = 'block';
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      document.getElementById('btn-add').addEventListener('click', async () => {
+        if (!currentBundle) return;
+        const btn = document.getElementById('btn-add');
+        btn.disabled = true;
+        const origHtml = btn.innerHTML;
+        btn.innerHTML = lang === 'ar' ? 'جاري الإضافة...' : 'Adding...';
+        await new Promise(resolve => setTimeout(resolve, 400));
+        let cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
+        const bNmAr = currentBundle.nameAr || currentBundle.nameEn;
+        const bNmEn = currentBundle.nameEn || currentBundle.nameAr;
+        const cartId = "bundle_" + currentBundle.id;
+        const ex = cart.find(x => x.id === cartId);
+        if (ex) { ex.qty = (ex.qty || 1) + 1; } 
+        else {
+          cart.push({
+            id: cartId, bundleId: currentBundle.id, isBundle: true,
+            nameAr: bNmAr, nameEn: bNmEn, price: Number(currentBundle.bundlePrice || 0),
+            photo: currentBundle.image, qty: 1
+          });
+        }
+        localStorage.setItem("megaCart", JSON.stringify(cart));
+        if (window.updBadge) window.updBadge();
+        if (window.openCart) window.openCart();
+        else {
+          btn.innerHTML = lang === 'ar' ? 'تمت الإضافة' : 'Added to Cart';
+          btn.style.background = '#10b981';
+          setTimeout(() => { btn.innerHTML = origHtml; btn.style.background = ''; btn.disabled=false; }, 2000);
+        }
+      });
+
+      function handleWhatsAppOrder() {
+        if (!currentBundle) return;
+        const bNm = lang === "ar" ? currentBundle.nameAr || currentBundle.nameEn : currentBundle.nameEn || currentBundle.nameAr;
+        const price = Number(currentBundle.bundlePrice || 0);
+        let msg = lang === "ar" 
+          ? `مرحباً! أود طلب هذا الطقم:\n- الطقم: ${bNm}\n- السعر: EGP ${price.toLocaleString()}\n- الرابط: ${window.location.href}`
+          : `Hello! I'd like to order:\n- Bundle: ${bNm}\n- Price: EGP ${price.toLocaleString()}\n- Link: ${window.location.href}`;
+        window.open("https://wa.me/201201111979?text=" + encodeURIComponent(msg), "_blank");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        applyLang(lang);
+        loadBundle();
+      });
+    </script>
+  </body>
+</html>

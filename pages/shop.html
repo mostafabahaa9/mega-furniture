@@ -1,11 +1,17 @@
 <!doctype html>
 <html lang="en" dir="ltr" data-theme="light">
   <head>
+  <script>
+    (function () {
+      if (!localStorage.getItem('megaTheme')) localStorage.setItem('megaTheme', 'light');
+      document.documentElement.setAttribute('data-theme', localStorage.getItem('megaTheme'));
+    })();
+  </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Mega Furniture | تسوق</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500&family=Jost:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -691,6 +697,7 @@
       .cat-browse-section {
         width: 100%;
         animation: catSectionIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        position: relative;
       }
       @keyframes catSectionIn {
         from { opacity: 0; transform: translateY(12px); }
@@ -734,29 +741,69 @@
         display: flex;
         align-items: flex-start;
         gap: 14px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
+        padding-bottom: 4px;
+      }
+      .cat-browse-strip::-webkit-scrollbar {
+        display: none;
+      }
+      .cat-browse-strip > .cat-card,
+      .cat-browse-strip > .subcat-card {
+        scroll-snap-align: start;
+        flex-shrink: 0;
+      }
+      .cat-arr {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 50%;
+        color: var(--t);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: all 0.2s;
+        margin-top: 14px;
+      }
+      .cat-arr:hover {
+        background: var(--t);
+        color: var(--s);
+      }
+      .cat-arr-left {
+        left: -20px;
+      }
+      .cat-arr-right {
+        right: -20px;
+      }
+      html[dir="rtl"] .cat-arr-left {
+        left: auto;
+        right: -20px;
+      }
+      html[dir="rtl"] .cat-arr-right {
+        right: auto;
+        left: -20px;
       }
       @media (max-width: 768px) {
+        .cat-arr {
+          display: none !important;
+        }
         .cat-browse-strip {
-          flex-wrap: nowrap;
-          overflow-x: auto;
-          overflow-y: hidden;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
           scroll-snap-type: x proximity;
-          padding-bottom: 4px;
           margin: 0 -12px;
           padding-left: 12px;
           padding-right: 12px;
-        }
-        .cat-browse-strip::-webkit-scrollbar {
-          display: none;
-        }
-        .cat-browse-strip > .cat-card,
-        .cat-browse-strip > .subcat-card {
-          scroll-snap-align: start;
-          flex-shrink: 0;
         }
       }
 
@@ -1115,6 +1162,9 @@
       }
 
       /* PRODUCT GRID */
+      
+      .pswatch { width:24px; height:24px; border:1px solid var(--b); border-radius:4px; cursor:pointer; padding:2px; background:var(--s); flex-shrink:0; transition: border-color 0.2s; }
+      .pswatch img, .pswatch div { width:100%; height:100%; border-radius:2px; object-fit:cover; }
       .pgrid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -3732,20 +3782,7 @@
       </div>
 
       <!-- BUNDLES ANCHOR + SECTION -->
-      <div id="bundles"></div>
-      <section class="bundles-sec" id="shop-bundles-sec" style="display: none">
-        <div class="bs-inner">
-          <div class="bs-head">
-            <span class="bs-tag" data-t="bundles-tag"></span>
-            <h2 class="bs-h2">
-              <em data-t="bundles-h2-em"></em>
-              <span data-t="bundles-h2-rest"></span>
-            </h2>
-            <p class="bs-sub" data-t="bundles-sub"></p>
-          </div>
-          <div class="bs-grid" id="shop-bs-grid"></div>
-        </div>
-      </section>
+      
 
       <!-- FILTER BAR -->
       <div class="fbar rev">
@@ -3801,7 +3838,7 @@
               font-weight: 600;
             "
           >
-            ✦ <span data-t="cw-btn-ar">شغل عمولة</span>
+            <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'></path></svg> <span data-t="cw-btn-ar">شغل عمولة</span>
           </button>
         </div>
       </div>
@@ -3855,13 +3892,13 @@
           </p>
           <div class="cw-features">
             <div class="cw-feat">
-              <span>✦</span><span data-t="cw-f1">تصميم حسب طلبك</span>
+              <span><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'></path></svg></span><span data-t="cw-f1">تصميم حسب طلبك</span>
             </div>
             <div class="cw-feat">
-              <span>✦</span><span data-t="cw-f2">تواصل مباشر مع الفريق</span>
+              <span><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'></path></svg></span><span data-t="cw-f2">تواصل مباشر مع الفريق</span>
             </div>
             <div class="cw-feat">
-              <span>✦</span><span data-t="cw-f3">سعر يناسب ميزانيتك</span>
+              <span><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'></path></svg></span><span data-t="cw-f3">سعر يناسب ميزانيتك</span>
             </div>
           </div>
         </div>
@@ -4149,84 +4186,52 @@
       </div>
     </div>
 
-    <footer>
+            <footer>
       <div class="fg">
         <div class="fbr">
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              gap: 10px;
-              margin-bottom: 4px;
-            "
-          >
-            <img
-              src="../logos/mega-logo.jpg"
-              style="
-                width: 40px;
-                height: 40px;
-                border-radius: 9px;
-                object-fit: cover;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-              "
-              onerror="this.style.display = 'none'"
-            />
-            <div
-              style="
-                font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
-                font-size: 20px;
-                font-weight: 800;
-                letter-spacing: 0.12em;
-                color: var(--t);
-                line-height: 1;
-              "
-            >
-              MEGA <span style="color: var(--o); font-size: 9.5px; letter-spacing: 0.38em; font-weight: 700; display: block; margin-top: 2px;">FURNITURE</span>
-            </div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <img src="../logos/mega-logo.jpg" alt="Logo" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;" onerror="this.style.display = 'none'" />
+            <div class="logo-wordmark">MEGA <span>FURNITURE</span></div>
           </div>
-          <p data-t="footer-about">
-            أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.
+          <p data-ar="أثاث فاخر للبيوت المصرية · تأسست 2020 · خبرة منذ 1998" data-en="Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998">
+            Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998
           </p>
+          <div class="f-soc" style="display: flex; gap: 12px; margin-top: 16px;">
+            <a href="https://www.instagram.com/megafurniturehome/" target="_blank" title="Instagram" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="https://www.facebook.com/search/top?q=mega%20furniture&locale=ar_AR" target="_blank" title="Facebook" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" title="TikTok" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
+          </div>
         </div>
         <div class="fc">
-          <h4 data-t="footer-nav">تصفح</h4>
+          <h4 data-ar="تسوق" data-en="Shop">Shop</h4>
           <ul>
-            <li>
-              <a href="../mega-furniture.html" data-t="nav-home">الرئيسية</a>
-            </li>
-            <li><a href="shop.html" data-t="nav-shop">تسوق</a></li>
-            <li>
-              <a href="reviews.html" data-t="nav-reviews">آراء العملاء</a>
-            </li>
+            <li><a href="../pages/shop.html?cat=living-room" data-ar="غرف معيشة" data-en="Living Rooms">Living Rooms</a></li>
+            <li><a href="../pages/shop.html?cat=bedroom" data-ar="غرف نوم" data-en="Bedrooms">Bedrooms</a></li>
+            <li><a href="../pages/shop.html?cat=dining" data-ar="سفرة" data-en="Dining Rooms">Dining Rooms</a></li>
+            <li><a href="../pages/shop.html?cat=home-office" data-ar="غرف مكتب" data-en="Home Office">Home Office</a></li>
           </ul>
         </div>
         <div class="fc">
-          <h4 data-t="footer-support">الدعم</h4>
+          <h4 data-ar="الشركة" data-en="Company">Company</h4>
           <ul>
-            <li><a href="contact.html" data-t="nav-contact">تواصل معنا</a></li>
-            <li><a href="terms.html">الشروط والأحكام / Terms</a></li>
-            <li>
-              <a
-                href="https://www.instagram.com/megafurniturehome/"
-                target="_blank"
-                >Instagram</a
-              >
-            </li>
+            <li><a href="../pages/about.html" data-ar="عن ميجا" data-en="About Us">About Us</a></li>
+            <li><a href="https://www.instagram.com/megafurniturehome/" target="_blank" data-ar="انستجرام" data-en="Instagram">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" data-ar="تيك توك" data-en="TikTok">TikTok</a></li>
+            <li><a href="../pages/videos.html" data-ar="فيديوهات" data-en="Videos">Videos</a></li>
           </ul>
         </div>
         <div class="fc">
-          <h4 data-t="footer-promise">ضمانات</h4>
+          <h4 data-ar="دعم" data-en="Support">Support</h4>
           <ul>
-            <li><a href="#" data-t="ft-delivery">توصيل مجاني</a></li>
-            <li><a href="about.html#warranty" data-t="ft-warranty">الضمان ضد عيوب الصناعة</a></li>
-            <li><a href="#" data-t="ft-install">تركيب متخصص</a></li>
-
+            <li><a href="../pages/contact.html" data-ar="الاسترجاع" data-en="Returns">Returns</a></li>
+            <li><a href="../pages/about.html#warranty" data-ar="الضمان" data-en="Warranty">Warranty</a></li>
+            <li><a href="../pages/contact.html" data-ar="واتساب" data-en="WhatsApp">WhatsApp</a></li>
           </ul>
         </div>
       </div>
       <div class="fb">
-        <span>© 2026 Mega Furniture · ميجا فرنيتشر.</span>
-        <span data-t="footer-made">صُنع لمصر</span>
+        <span data-ar="© 2026 ميجا فرنيتشر." data-en="© 2026 Mega Furniture.">© 2026 Mega Furniture.</span>
+        <span data-ar="صُنع لمصر" data-en="Made for Egypt">Made for Egypt</span>
       </div>
     </footer>
 
@@ -4265,14 +4270,7 @@
 
     <script>
       /* THEME */
-      (function () {
-        if (!localStorage.getItem("megaTheme"))
-          localStorage.setItem("megaTheme", "light");
-        document.documentElement.setAttribute(
-          "data-theme",
-          localStorage.getItem("megaTheme"),
-        );
-      })();
+      
       function toggleTheme() {
         const h = document.documentElement;
         const cur = h.getAttribute("data-theme") || "light";
@@ -4303,8 +4301,21 @@
       /* TRANSLATIONS */
       const TRANS = {
         ar: {
+          "footer-desc": "أثاث فاخر للبيوت المصرية - تأسست 2020 - خبرة منذ 1998.",
+          "ft-shop": "تسوق",
+          "ft-living": "غرف المعيشة",
+          "ft-bed": "غرف النوم",
+          "ft-dining": "غرف السفرة",
+          "ft-company": "الشركة",
+          "ft-about": "عن ميجا",
+          "ft-support": "الدعم",
+          "ft-warranty": "ضمان ضد عيوب الصناعة",
+          "footer-copy": "© 2026 ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+
           "nav-home": "الرئيسية",
           "nav-shop": "تسوق",
+          "nav-offers": "العروض",
           "nav-videos": "فيديوهات",
           "nav-about": "من نحن",
           "nav-reviews": "آراء",
@@ -4396,8 +4407,21 @@
           "loading-regions": "جارٍ تحميل المناطق…",
         },
         en: {
+          "footer-desc": "Premium furniture for Egyptian homes - Est. 2020 - Experience since 1998.",
+          "ft-shop": "SHOP",
+          "ft-living": "Living Rooms",
+          "ft-bed": "Bedrooms",
+          "ft-dining": "Dining Rooms",
+          "ft-company": "COMPANY",
+          "ft-about": "About Us",
+          "ft-support": "SUPPORT",
+          "ft-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+
           "nav-home": "Home",
           "nav-shop": "Shop",
+          "nav-offers": "Offers",
           "nav-videos": "Videos",
           "nav-about": "About Us",
           "nav-reviews": "Reviews",
@@ -4594,13 +4618,13 @@
 
       function getWish() {
         try {
-          return JSON.parse(localStorage.getItem("megaWishlist") || "[]");
+          return JSON.parse(localStorage.getItem("megaWish") || "[]");
         } catch {
           return [];
         }
       }
       function setWish(a) {
-        localStorage.setItem("megaWishlist", JSON.stringify(a));
+        localStorage.setItem("megaWish", JSON.stringify(a));
         updWbadge();
       }
       function toggleWish(id, e) {
@@ -4636,7 +4660,7 @@
           }
           try {
             const subtotal = cart.reduce(
-              (s, c) => s + (c.price || 0) * c.qty,
+              (s, c) => { let ao=0; if(c.selectedAddOns&&c.selectedAddOns.length)c.selectedAddOns.forEach(a=>ao+=(parseFloat(a.price)||0)); return s+((c.price||0)+ao)*c.qty; },
               0,
             );
             const productIds = cart.map((c) => c.id);
@@ -4715,7 +4739,13 @@
         tot.textContent =
           n + " " + (lang === "ar" ? "منتج" : "item" + (n !== 1 ? "s" : ""));
 
-        const subtotal = cart.reduce((s, c) => s + (c.price || 0) * c.qty, 0);
+        const subtotal = cart.reduce((s, c) => {
+            let addOnSum = 0;
+            if (c.selectedAddOns && c.selectedAddOns.length > 0) {
+              c.selectedAddOns.forEach(a => addOnSum += (parseFloat(a.price) || 0));
+            }
+            return s + ((c.price || 0) + addOnSum) * c.qty;
+          }, 0);
         const subRow = document.getElementById("csub-row");
         const subEl = document.getElementById("csub");
         if (subRow && subEl) {
@@ -4766,6 +4796,18 @@
       /* PRODUCTS */
       const CATMAP = {
         ar: {
+          "footer-desc": "أثاث فاخر للبيوت المصرية - تأسست 2020 - خبرة منذ 1998.",
+          "ft-shop": "تسوق",
+          "ft-living": "غرف المعيشة",
+          "ft-bed": "غرف النوم",
+          "ft-dining": "غرف السفرة",
+          "ft-company": "الشركة",
+          "ft-about": "عن ميجا",
+          "ft-support": "الدعم",
+          "ft-warranty": "ضمان ضد عيوب الصناعة",
+          "footer-copy": "© 2026 ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+
           "living-room": "غرف المعيشة",
           bedroom: "غرف النوم",
           "dining-room": "غرف السفرة",
@@ -4774,6 +4816,18 @@
           office: "مكاتب",
         },
         en: {
+          "footer-desc": "Premium furniture for Egyptian homes - Est. 2020 - Experience since 1998.",
+          "ft-shop": "SHOP",
+          "ft-living": "Living Rooms",
+          "ft-bed": "Bedrooms",
+          "ft-dining": "Dining Rooms",
+          "ft-company": "COMPANY",
+          "ft-about": "About Us",
+          "ft-support": "SUPPORT",
+          "ft-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+
           "living-room": "Living Room",
           bedroom: "Bedroom",
           "dining-room": "Dining Room",
@@ -5117,6 +5171,14 @@
       let showNewOnly =
         new URLSearchParams(window.location.search).get("new") === "1";
 
+      function scrollCatStrip(btn, dir) {
+        const strip = btn.parentElement.querySelector('.cat-browse-strip');
+        if (strip) {
+          const itemWidth = 124 + 14;
+          const scrollAmount = itemWidth * 3;
+          strip.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
+        }
+      }
       function categoryDisplayName(category) {
         return lang === "ar" ? category.nameAr || category.nameEn || category.slug : category.nameEn || category.nameAr || category.slug;
       }
@@ -5146,7 +5208,7 @@
           ${children.length ? '<span class="cat-has-children"></span>' : ""}
           <span class="cat-card-icon">${icon}</span>
           <span class="cat-card-name">${label}${children.length ? '<svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>' : ""}</span>
-          <span class="cat-card-count">${count} ${lang === "ar" ? "منتج" : "items"}</span>
+          <span class="cat-card-count">${count} ${count === 1 ? (lang === "ar" ? "منتج" : "item") : (lang === "ar" ? "منتجات" : "items")}</span>
         </button>`;
       }
       function renderSubCategorySection(parent, children) {
@@ -5158,6 +5220,12 @@
             <div class="cat-browse-title">${lang === "ar" ? "داخل" : "Inside"} ${parentLabel}</div>
             <button class="subcat-pill${!selectedSubCat ? " active" : ""}" type="button" onclick="setCat('${parentValue}')">${lang === "ar" ? "الكل" : "All"} ${parentLabel}</button>
           </div>
+          <button class="cat-arr cat-arr-left" onclick="scrollCatStrip(this, lang === 'ar' ? 1 : -1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button class="cat-arr cat-arr-right" onclick="scrollCatStrip(this, lang === 'ar' ? -1 : 1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
           <div id="cat-sub-row" class="open cat-browse-strip">
             ${children.map((category, i) => {
               const value = category.slug || category.id;
@@ -5168,7 +5236,7 @@
               return `<button class="subcat-card${active ? " active" : ""}" style="animation:catCardIn 0.4s ${(i * 0.06).toFixed(2)}s cubic-bezier(0.22,1,0.36,1) both" onclick="setSubCat('${value}')">
                 <span class="cat-card-icon">${icon}</span>
                 <span class="cat-card-name">${label}</span>
-                <span class="cat-card-count">${count} ${lang === "ar" ? "منتج" : "items"}</span>
+                <span class="cat-card-count">${count} ${count === 1 ? (lang === "ar" ? "منتج" : "item") : (lang === "ar" ? "منتجات" : "items")}</span>
               </button>`;
             }).join("")}
           </div>
@@ -5199,6 +5267,12 @@
           <div class="cat-browse-head">
             <div class="cat-browse-title">${lang === "ar" ? "الفئات الرئيسية" : "Main categories"}</div>
           </div>
+          <button class="cat-arr cat-arr-left" onclick="scrollCatStrip(this, lang === 'ar' ? 1 : -1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button class="cat-arr cat-arr-right" onclick="scrollCatStrip(this, lang === 'ar' ? -1 : 1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
           <div class="cat-browse-strip">
             ${[renderCategoryCard(null, { index: 0 })]
               .concat(topCats.map((c, i) => renderCategoryCard(c, { index: i + 1 })))
@@ -5470,19 +5544,38 @@
         el.parentElement.innerHTML = PH;
       }
 
+      /* PAGINATION STATE */
+      let currentFilteredList = [];
+      let loadMoreCount = 24;
+
+      function loadMoreProducts() {
+        loadMoreCount += 24;
+        renderProducts(currentFilteredList, true);
+      }
+
       /* RENDER PRODUCTS */
-      function renderProducts(list) {
+      function renderProducts(list, isLoadMore = false) {
+        if (!isLoadMore) {
+          currentFilteredList = list;
+          loadMoreCount = 24;
+        }
+
         const g = document.getElementById("pgrid");
         const rc = document.getElementById("rcount");
+        
+        const listToRender = isLoadMore ? currentFilteredList.slice(loadMoreCount - 24, loadMoreCount) : currentFilteredList.slice(0, loadMoreCount);
+
         if (selectedCat === "sets") {
-          if (rc) {
+          if (!isLoadMore && rc) {
             rc.innerHTML = `<strong>${list.length}</strong> ${lang === "ar" ? "أطقم كاملة" : "complete sets"}`;
           }
-          if (!list.length) {
-            g.innerHTML = `<div class="gstate"><div class="gstate-icon">️</div><p style="color:var(--tm);font-size:15px">${t("no-results")}</p></div>`;
+          if (!isLoadMore && !list.length) {
+            g.innerHTML = `<div class="gstate"><div class="gstate-icon">🛋️</div><p style="color:var(--tm);font-size:15px">${t("no-results")}</p></div>`;
+            updateLoadMoreButton();
             return;
           }
-          g.innerHTML = list.map((s) => {
+          
+          const html = listToRender.map((s) => {
             const nm = lang === "ar" ? s.nameAr || s.nameEn : s.nameEn || s.nameAr;
             const imgSrc = iu(s.heroPhoto || s.mainPhoto);
             let originalTotal = 0;
@@ -5504,9 +5597,9 @@
             return `<div class="pcard rev" onclick="location.href='set.html?id=${s.id}'">
               <div class="pcimg">
                 ${discount > 0 ? `<div class="discount-bar-red">${discLabelText}</div>` : ""}
-                ${imgSrc ? `<img src="${imgSrc}" alt="${nm}" loading="lazy" onerror="_ph(this)">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.12">️</div>`}
+                ${imgSrc ? `<img src="${imgSrc}" alt="${nm}" loading="lazy" onerror="_ph(this)">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.12">🛋️</div>`}
                 <div style="position:absolute;top:8px;left:8px;z-index:3;display:flex;flex-direction:column;gap:4px;align-items:flex-start">
-                  <span style="background:rgba(10,10,10,.72);color:rgba(255,255,255,.9);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);white-space:nowrap">${lang === "ar" ? "طقم كامل" : "ROOM SET"}</span>
+                  <span style="background:rgba(10,10,10,.72);color:rgba(255,255,255,.9);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);white-space:nowrap">${lang === "ar" ? "طقم غرفة" : "ROOM SET"}</span>
                 </div>
                 <div class="pcov">
                   <button class="pcov-btn" onclick="event.stopPropagation();location.href='set.html?id=${s.id}'">${lang === "ar" ? "عرض الطقم" : "View Set"}</button>
@@ -5518,20 +5611,31 @@
               </div>
             </div>`;
           }).join("");
+          
+          if (isLoadMore) {
+            g.insertAdjacentHTML("beforeend", html);
+          } else {
+            g.innerHTML = html;
+          }
+          
+          updateLoadMoreButton();
           return;
         }
-        if (rc)
+        
+        if (!isLoadMore && rc) {
           rc.innerHTML =
             list.length === products.length
               ? `<strong>${list.length}</strong> ${lang === "ar" ? "منتج" : "products"}`
               : `<strong>${list.length}</strong> ${t("results-of")} ${products.length}`;
-        if (!list.length) {
-          g.innerHTML = `<div class="gstate"><div class="gstate-icon">️</div><p style="color:var(--tm);font-size:15px">${t("no-results")}</p></div>`;
+        }
+        if (!isLoadMore && !list.length) {
+          g.innerHTML = `<div class="gstate"><div class="gstate-icon">🛋️</div><p style="color:var(--tm);font-size:15px">${t("no-results")}</p></div>`;
+          updateLoadMoreButton();
           return;
         }
         const nm = (p) => (lang === "ar" ? p.nameAr : p.nameEn);
-        const ct = (p) => (p.categories || []).map(catLabel).join(" · ") || "";
-        g.innerHTML = list
+        const ct = (p) => (p.categories || []).map(catLabel).join(" • ") || "";
+        const htmlStr = listToRender
           .map((p) => {
             const inCart = cart.some((c) => c.id === p.id);
             const imgSrc = iu(p.mainPhoto);
@@ -5551,6 +5655,25 @@
           ? (lang === "ar" ? p.discountLabel_ar : p.discountLabel_en) || ""
           : "";
         const wOn = getWish().includes(p.id);
+        
+        let swatchesHtml = "";
+        if (p.colors && p.colors.length > 0) {
+          const displayColors = p.colors.slice(0, 5);
+          const extra = p.colors.length > 5 ? p.colors.length - 5 : 0;
+          const swatchItems = displayColors.map((c, idx) => {
+            const cImg = c.photo ? iu(c.photo) : null;
+            let bgStyle = `background-color: ${c.hex || '#ccc'}`;
+            if (c.hex2) bgStyle = `background: linear-gradient(135deg, ${c.hex} 50%, ${c.hex2} 50%)`;
+            const inner = cImg ? `<img src="${cImg}">` : `<div style="${bgStyle}"></div>`;
+            const srcToSwap = cImg || imgSrc;
+            const bcolor = idx === 0 ? 'var(--t)' : 'var(--b)';
+            const cName = c.nameEn || c.name;
+            return `<div class="pswatch" style="border-color:${bcolor}" onclick="event.stopPropagation(); changeCardImg('img-shop-${p.id}', '${srcToSwap}', this, '${cName.replace(/'/g, "\'")}', '${p.id}')" title="${cName}">${inner}</div>`;
+          }).join("");
+          const extraHtml = extra > 0 ? `<div style="font-size:11px;color:var(--tm);align-self:center;margin-left:4px">+${extra}</div>` : "";
+          swatchesHtml = `<div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;">${swatchItems}${extraHtml}</div>`;
+        }
+
         return `<div class="pcard rev" onclick="location.href='product.html?id=${p.id}'">
       <div class="pcimg">
         <div style="position:absolute;top:${hasDisc ? '32px' : '10px'};right:10px;z-index:4;" onclick="event.stopPropagation()">
@@ -5559,7 +5682,7 @@
           </button>
         </div>
         ${hasDisc ? `<div class="discount-bar-red">${discLabelText}</div>` : ""}
-        ${imgSrc ? `<img src="${imgSrc}" alt="${nm(p)}" loading="lazy" onerror="_ph(this)">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.12">🛋️</div>`}
+        ${imgSrc ? `<img id="img-shop-${p.id}" src="${imgSrc}" alt="${nm(p)}" loading="lazy" onerror="_ph(this)">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--s2);"><img src="../logos/mega-logo.jpg" style="width:50%;opacity:0.2;"></div>`}
         <div style="position:absolute;top:${hasDisc ? '32px' : '10px'};left:10px;z-index:3;">
           ${ct(p) ? `<span class="pctag">${ct(p)}</span>` : ""}
         </div>
@@ -5575,7 +5698,38 @@
     </div>`;
           })
           .join("");
-        document.querySelectorAll(".pcard.rev").forEach((el) => ro.observe(el));
+          
+        if (isLoadMore) {
+          g.insertAdjacentHTML("beforeend", htmlStr);
+        } else {
+          g.innerHTML = htmlStr;
+        }
+        
+        // Re-observe only the new items
+        document.querySelectorAll(".pcard.rev:not([data-observed])").forEach((el) => {
+          el.dataset.observed = "true";
+          ro.observe(el);
+        });
+        
+        updateLoadMoreButton();
+      }
+      
+      function updateLoadMoreButton() {
+        let lmc = document.getElementById("load-more-container");
+        if (!lmc) {
+          const btnHtml = `<div id="load-more-container" style="text-align: center; margin-top: 32px; margin-bottom: 40px; grid-column: 1 / -1; width: 100%;">
+            <button class="btn btn-p" onclick="loadMoreProducts()" style="padding: 12px 40px; font-size: 14px; font-weight: 600; border-radius: 8px; background: var(--t); color: var(--s); border: none; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              ${lang === "ar" ? "عرض المزيد" : "Load More"}
+            </button>
+          </div>`;
+          document.getElementById("pgrid").insertAdjacentHTML("afterend", btnHtml);
+          lmc = document.getElementById("load-more-container");
+        }
+        if (loadMoreCount < currentFilteredList.length) {
+          lmc.style.display = "block";
+        } else {
+          lmc.style.display = "none";
+        }
       }
 
       /* CART STATE */
@@ -5583,6 +5737,26 @@
       function saveCart() {
         localStorage.setItem("megaCart", JSON.stringify(cart));
       }
+      
+      window.changeCardImg = function(imgId, src, elem, colorName, prodId) {
+        const img = document.getElementById(imgId);
+        if (img) img.src = src;
+        if (elem) {
+          const container = elem.parentElement;
+          container.querySelectorAll('.pswatch').forEach(el => el.style.borderColor = 'var(--b)');
+          elem.style.borderColor = 'var(--t)';
+          // Update the card's onclick to pass the color
+          const card = elem.closest('.pcard');
+          if (card) {
+            card.setAttribute('onclick', `location.href='product.html?id=${prodId}&color=${encodeURIComponent(colorName)}'`);
+          }
+          // Also update the Add to cart button
+          const btn = card ? card.querySelector('.pcov-btn') : null;
+          if (btn) {
+            btn.setAttribute('onclick', `event.stopPropagation();location.href='product.html?id=${prodId}&color=${encodeURIComponent(colorName)}'`);
+          }
+        }
+      };
       function variantsToLegacy(variants) {
         const colorMap = new Map();
         const sizeMap = new Map();
@@ -5769,8 +5943,32 @@
 
       let activeProdId = null;
       const DESCS = {
-        ar: {},
+        ar: {
+          "footer-desc": "أثاث فاخر للبيوت المصرية - تأسست 2020 - خبرة منذ 1998.",
+          "ft-shop": "تسوق",
+          "ft-living": "غرف المعيشة",
+          "ft-bed": "غرف النوم",
+          "ft-dining": "غرف السفرة",
+          "ft-company": "الشركة",
+          "ft-about": "عن ميجا",
+          "ft-support": "الدعم",
+          "ft-warranty": "ضمان ضد عيوب الصناعة",
+          "footer-copy": "© 2026 ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+},
         en: {
+          "footer-desc": "Premium furniture for Egyptian homes - Est. 2020 - Experience since 1998.",
+          "ft-shop": "SHOP",
+          "ft-living": "Living Rooms",
+          "ft-bed": "Bedrooms",
+          "ft-dining": "Dining Rooms",
+          "ft-company": "COMPANY",
+          "ft-about": "About Us",
+          "ft-support": "SUPPORT",
+          "ft-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+
           // kept for backward compat
           armchair:
             "كرسي بذراعين فاخر — مثالي لقراءة كتاب أو الاسترخاء في غرفة المعيشة.",
@@ -5809,6 +6007,18 @@
             "تنظيم داخلي للدولاب — اختار التصميم المناسب لاحتياجاتك.",
         },
         en: {
+          "footer-desc": "Premium furniture for Egyptian homes - Est. 2020 - Experience since 1998.",
+          "ft-shop": "SHOP",
+          "ft-living": "Living Rooms",
+          "ft-bed": "Bedrooms",
+          "ft-dining": "Dining Rooms",
+          "ft-company": "COMPANY",
+          "ft-about": "About Us",
+          "ft-support": "SUPPORT",
+          "ft-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+
           armchair:
             "A luxurious armchair — perfect for reading or relaxing in your living room.",
           "bed-frame":
@@ -6819,20 +7029,27 @@
         }
       }
 
-      function renderCart() {
+            function renderCart() {
         const el = document.getElementById("clist"),
-          cc = document.getElementById("ccount"),
+          cc = document.getElementById("cc") || document.getElementById("ccount"),
           ft = document.getElementById("cftr"),
           tot = document.getElementById("ctot");
         const n = cart.reduce((s, c) => s + c.qty, 0);
         if (cc) cc.textContent = "(" + n + ")";
         if (!cart.length) {
           el.innerHTML = `<div class="cemp"><div class="cemp-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><h4>${t("cart-empty")}</h4><p>${t("cart-empty-sub")}</p></div>`;
-          if (ft) ft.classList.remove("show");
-          clearPromo();
+          if (ft) {
+            ft.style.display = "none";
+            ft.classList.remove("show");
+          }
+          if (typeof clearPromo === "function") clearPromo();
           return;
         }
-        if (ft) ft.classList.add("show");
+        if (ft) {
+          ft.style.display = "flex";
+          ft.classList.add("show");
+        }
+        const lang = localStorage.getItem("megaLang") || "en";
         el.innerHTML = cart
           .map((item) => {
             const nm =
@@ -6840,7 +7057,9 @@
                 ? item.nameAr || item.nameEn
                 : item.nameEn || item.nameAr;
             const imgSrc = iu(item.mainPhoto);
-            const unitPrice = item.price || 0;
+            let _itemAoSum = 0;
+            if (item.selectedAddOns && item.selectedAddOns.length) item.selectedAddOns.forEach(a => _itemAoSum += (parseFloat(a.price) || 0));
+            const unitPrice = (item.price || 0) + _itemAoSum;
             const lineTotal = unitPrice * item.qty;
             const idx = cart.indexOf(item);
             if (item.isBundle) {
@@ -6903,7 +7122,7 @@
           .join("");
         if (tot)
           tot.textContent = n + " " + t("cart-items-label");
-        updCartFooter();
+        if (typeof updCartFooter === "function") updCartFooter();
       }
 
       function openCart() {
@@ -7070,7 +7289,7 @@
               <h3 style="font-family: 'Fraunces', serif; color: var(--o); font-size: 20px; font-weight: 600; margin: 0;">
                 ${isAr ? 'الشروط والأحكام وسياسات الإرجاع والإلغاء' : 'Terms & Conditions, Return & Cancellation Policies'}
               </h3>
-              <button onclick="document.getElementById('termsModal').remove()" style="background: transparent; border: none; color: var(--tm); font-size: 24px; cursor: pointer; padding: 0 4px;">✕</button>
+              <button onclick="document.getElementById('termsModal').remove()" style="background: transparent; border: none; color: var(--tm); font-size: 24px; cursor: pointer; padding: 0 4px;"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
             </div>
             
             <div style="font-size: 14px; line-height: 1.8; display: flex; flex-direction: column; gap: 16px;">
@@ -7235,8 +7454,14 @@
               l === "ar"
                 ? ann.linkText_ar || ann.linkText_en
                 : ann.linkText_en || ann.linkText_ar;
-            if (lt)
-              html += ` <a href="${ann.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+            if (lt) {
+              let finalLink = ann.link;
+              const isSale = msg.toLowerCase().match(/sale|discount|offer|خصم|عرض|تخفيض/);
+              if (isSale && finalLink.includes("shop.html")) {
+                finalLink = "offers.html";
+              }
+              html += ` <a href="${finalLink}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+            }
           }
           const msgEl = document.getElementById("gen-ann-msg");
           if (msgEl) msgEl.innerHTML = html;
@@ -7311,7 +7536,7 @@
             <div class="bc-name">${name}</div>
             <div class="bc-count">${countLbl}</div>
             <div style="font-size: 11px; color: var(--o); margin-bottom: 12px; font-weight: 500; letter-spacing: 0.02em;">
-              ${lang === 'ar' ? '✦ متوفر كطقم كامل أو قطع منفردة' : '✦ Available as Set or Individual Pieces'}
+              ${lang === 'ar' ? `<svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'></path></svg> متوفر كطقم كامل أو قطع منفردة` : `<svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'></path></svg> Available as Set or Individual Pieces`}
             </div>
             <div class="bc-thumbs">${thumbs}${more}</div>
             <div class="bc-prices">
@@ -7397,8 +7622,6 @@
       updBadge();
       updWbadge();
       loadProducts();
-      // loadShopBundles();
-
       /* ── SETTINGS FETCH (server-driven defaults for new visitors) ── */
       (function () {
         if (!localStorage.getItem("megaLang") || !localStorage.getItem("megaTheme")) {

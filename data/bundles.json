@@ -1,14 +1,182 @@
 [
   {
     "id": "bundle-1",
-    "nameAr": "غرفة نوم كاملة",
-    "nameEn": "Complete Bedroom Set",
-    "productIds": ["prod-1", "prod-2"],
-    "discountPct": 15,
-    "originalTotal": 30000,
-    "bundlePrice": 25500,
+    "nameAr": "باقة البداية",
+    "nameEn": "EDITED Bundle 1",
+    "tier": "starter",
+    "badgeAr": "أوفر بداية",
+    "badgeEn": "Best Value",
+    "badgeIcon": "star",
+    "roomCount": 4,
+    "rooms": [
+      {
+        "icon": "bed",
+        "nameAr": "غرفة نوم رئيسية",
+        "nameEn": "Master Bedroom",
+        "productIds": [
+          "prod-1"
+        ]
+      },
+      {
+        "icon": "baby",
+        "nameAr": "غرفة نوم أطفال",
+        "nameEn": "Kids Bedroom",
+        "productIds": [
+          "prod-2"
+        ]
+      },
+      {
+        "icon": "sofa",
+        "nameAr": "انتريه",
+        "nameEn": "Living Room",
+        "productIds": [
+          "prod-3"
+        ]
+      },
+      {
+        "icon": "dining",
+        "nameAr": "سفرة",
+        "nameEn": "Dining Room",
+        "productIds": [
+          "prod-4"
+        ]
+      }
+    ],
+    "discountPct": 14,
+    "originalTotal": 128000,
+    "bundlePrice": 109000,
     "mainPhoto": "bg.jpg",
     "active": true,
+    "featured": true,
+    "order": 1,
     "createdAt": "2026-07-14T00:00:00.000Z"
+  },
+  {
+    "id": "bundle-2",
+    "nameAr": "باقة البيت الكامل",
+    "nameEn": "Complete Home Bundle",
+    "tier": "complete",
+    "badgeAr": "الأكثر اختياراً",
+    "badgeEn": "Most Popular",
+    "badgeIcon": "fire",
+    "roomCount": 5,
+    "rooms": [
+      {
+        "icon": "bed",
+        "nameAr": "غرفة نوم رئيسية",
+        "nameEn": "Master Bedroom",
+        "productIds": [
+          "prod-1"
+        ]
+      },
+      {
+        "icon": "baby",
+        "nameAr": "غرفة نوم أطفال",
+        "nameEn": "Kids Bedroom",
+        "productIds": [
+          "prod-2"
+        ]
+      },
+      {
+        "icon": "sofa",
+        "nameAr": "انتريه",
+        "nameEn": "Living Room",
+        "productIds": [
+          "prod-3"
+        ]
+      },
+      {
+        "icon": "dining",
+        "nameAr": "سفرة",
+        "nameEn": "Dining Room",
+        "productIds": [
+          "prod-4"
+        ]
+      },
+      {
+        "icon": "youth",
+        "nameAr": "غرفة شباب",
+        "nameEn": "Youth Bedroom",
+        "productIds": [
+          "prod-5"
+        ]
+      }
+    ],
+    "discountPct": 14,
+    "originalTotal": 158000,
+    "bundlePrice": 135000,
+    "mainPhoto": "bg.jpg",
+    "active": true,
+    "featured": true,
+    "order": 2,
+    "createdAt": "2026-07-15T00:00:00.000Z"
+  },
+  {
+    "id": "bundle-3",
+    "nameAr": "باقة Signature",
+    "nameEn": "Signature Bundle",
+    "tier": "signature",
+    "badgeAr": "أكبر توفير",
+    "badgeEn": "Biggest Savings",
+    "badgeIcon": "crown",
+    "roomCount": 6,
+    "rooms": [
+      {
+        "icon": "bed",
+        "nameAr": "غرفة نوم رئيسية",
+        "nameEn": "Master Bedroom",
+        "productIds": [
+          "prod-1"
+        ]
+      },
+      {
+        "icon": "baby",
+        "nameAr": "غرفة نوم أطفال",
+        "nameEn": "Kids Bedroom",
+        "productIds": [
+          "prod-2"
+        ]
+      },
+      {
+        "icon": "youth",
+        "nameAr": "غرفة شباب",
+        "nameEn": "Youth Bedroom",
+        "productIds": [
+          "prod-5"
+        ]
+      },
+      {
+        "icon": "sofa",
+        "nameAr": "انتريه",
+        "nameEn": "Living Room",
+        "productIds": [
+          "prod-3"
+        ]
+      },
+      {
+        "icon": "dining",
+        "nameAr": "سفرة",
+        "nameEn": "Dining Room",
+        "productIds": [
+          "prod-4"
+        ]
+      },
+      {
+        "icon": "armchair",
+        "nameAr": "غرفة معيشة",
+        "nameEn": "Reception",
+        "productIds": [
+          "prod-6"
+        ]
+      }
+    ],
+    "discountPct": 15,
+    "originalTotal": 188000,
+    "bundlePrice": 159000,
+    "mainPhoto": "bg.jpg",
+    "active": true,
+    "featured": true,
+    "order": 3,
+    "createdAt": "2026-07-16T00:00:00.000Z"
   }
 ]

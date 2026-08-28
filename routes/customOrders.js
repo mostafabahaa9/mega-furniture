@@ -330,7 +330,7 @@ router.put("/admin/custom-orders/:id", adminAuth, async (req, res) => {
         text: `أهلاً ${order.customerName}،\n\nطلبك للشغل المخصوص انتقل إلى: ${label}\n\n${CO_STATUS_DESC[status] || ""}\n\nللتواصل: megafurniturestores@gmail.com`,
         html: buildStatusEmail(order, status),
       });
-      console.log(`[mail] custom order status → ${order.email} : ${status} ✅`);
+      console.log(`[mail] custom order status → ${order.email} : ${status} `);
     } catch (err) {
       console.error("[mail] custom order status email failed:", err.message);
     }

@@ -52,7 +52,7 @@ async function sendMail({ to, subject, text, html, bcc }) {
   }
 
   const data = await res.json();
-  console.log("[mail] sent ✅ to:", to, "| msgId:", data.messageId);
+  console.log("[mail] sent to:", to, "| msgId:", data.messageId);
   return { sent: true, messageId: data.messageId };
 }
 

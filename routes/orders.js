@@ -844,7 +844,7 @@ router.put("/admin/orders/:id/status", adminAuth, async (req, res) => {
         ? { sent: false, skipped: true, error: "SMTP not configured" }
         : { sent: true, skipped: false, error: null, messageId: r.messageId };
       console.log(
-        `[mail] status email → ${custEmail} : ${emailResult.sent ? "sent ✅" : "skipped ⚠️"}`,
+        `[mail] status email → ${custEmail} : ${emailResult.sent ? "sent " : "skipped ⚠️"}`,
       );
     } catch (err) {
       emailResult = { sent: false, skipped: false, error: err.message };
@@ -887,10 +887,10 @@ router.post("/admin/test-email", adminAuth, async (req, res) => {
   try {
     const r = await sendMail({
       to,
-      subject: "Mega Furniture — SMTP Test ✅",
+      subject: "Mega Furniture — SMTP Test ",
       html: `<div style="font-family:sans-serif;padding:24px;direction:rtl">
         <h2 style="color:#F5A623">ميجا فرنيتشر</h2>
-        <p>✅ إعدادات الإيميل شغالة صح!</p>
+        <p>إعدادات الإيميل شغالة صح!</p>
         <p style="color:#888;font-size:13px">هذه رسالة اختبار تلقائية.</p>
       </div>`,
     });
@@ -1227,8 +1227,8 @@ router.post("/paymob-webhook", (req, res) => {
     .digest('hex');
 
   if (generatedHmac !== receivedHmac) {
-    console.error("Paymob Webhook HMAC mismatch! Proceeding anyway for debugging. Generated:", generatedHmac, "Received:", receivedHmac);
-    // return res.status(401).send("Invalid HMAC");
+    console.error("Paymob Webhook HMAC mismatch!");
+    return res.status(401).send("Invalid HMAC");
   }
 
   // Handle the transaction

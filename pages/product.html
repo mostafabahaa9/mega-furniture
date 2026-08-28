@@ -1,11 +1,17 @@
 <!doctype html>
 <html lang="en" dir="ltr" data-theme="light">
   <head>
+  <script>
+    (function () {
+      if (!localStorage.getItem('megaTheme')) localStorage.setItem('megaTheme', 'light');
+      document.documentElement.setAttribute('data-theme', localStorage.getItem('megaTheme'));
+    })();
+  </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Mega Furniture | Product Details</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -1188,6 +1194,24 @@
       .actions-row {
         display: flex;
         gap: 16px;
+        align-items: center;
+      }
+      .wish-circle {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid var(--b);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+      .wish-circle:hover {
+        transform: scale(1.1);
       }
       .btn-add-cart {
         flex: 2;
@@ -2457,19 +2481,25 @@
     <!-- MAIN PRODUCT SCRIPTS -->
     <script>
       /* ── CORE LANGUAGE & THEME SYSTEM ── */
-      (function () {
-        if (!localStorage.getItem("megaTheme"))
-          localStorage.setItem("megaTheme", "light");
-        document.documentElement.setAttribute(
-          "data-theme",
-          localStorage.getItem("megaTheme")
-        );
-      })();
+      
 
       const TRANS = {
         ar: {
+          "footer-desc": "أثاث فاخر للبيوت المصرية - تأسست 2020 - خبرة منذ 1998.",
+          "ft-shop": "تسوق",
+          "ft-living": "غرف المعيشة",
+          "ft-bed": "غرف النوم",
+          "ft-dining": "غرف السفرة",
+          "ft-company": "الشركة",
+          "ft-about": "عن ميجا",
+          "ft-support": "الدعم",
+          "ft-warranty": "ضمان ضد عيوب الصناعة",
+          "footer-copy": "© 2026 ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+
           "nav-home": "الرئيسية",
           "nav-shop": "تسوق",
+          "nav-offers": "العروض",
           "nav-reviews": "آراء",
           "nav-videos": "فيديوهات",
           "nav-about": "من نحن",
@@ -2524,8 +2554,21 @@
           "dim-height": "الارتفاع",
         },
         en: {
+          "footer-desc": "Premium furniture for Egyptian homes - Est. 2020 - Experience since 1998.",
+          "ft-shop": "SHOP",
+          "ft-living": "Living Rooms",
+          "ft-bed": "Bedrooms",
+          "ft-dining": "Dining Rooms",
+          "ft-company": "COMPANY",
+          "ft-about": "About Us",
+          "ft-support": "SUPPORT",
+          "ft-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+
           "nav-home": "Home",
           "nav-shop": "Shop",
+          "nav-offers": "Offers",
           "nav-reviews": "Reviews",
           "nav-videos": "Videos",
           "nav-about": "About Us",
@@ -2709,24 +2752,37 @@
         document.getElementById("cov").classList.remove("open");
         document.body.style.overflow = "";
       }
-      function renderCart() {
+            function renderCart() {
         const el = document.getElementById("clist"),
-          cc = document.getElementById("cc"),
-          ft = document.getElementById("cftr");
+          cc = document.getElementById("cc") || document.getElementById("ccount"),
+          ft = document.getElementById("cftr"),
+          tot = document.getElementById("ctot");
         const n = cart.reduce((s, c) => s + c.qty, 0);
         if (cc) cc.textContent = "(" + n + ")";
         if (!cart.length) {
-          el.innerHTML = `<div class="cemp"><div class="big"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><p>${t("cart-empty")}</p><small>${t("cart-empty-sub")}</small></div>`;
-          if (ft) ft.style.display = "none";
+          el.innerHTML = `<div class="cemp"><div class="cemp-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><h4>${t("cart-empty")}</h4><p>${t("cart-empty-sub")}</p></div>`;
+          if (ft) {
+            ft.style.display = "none";
+            ft.classList.remove("show");
+          }
+          if (typeof clearPromo === "function") clearPromo();
           return;
         }
-        if (ft) ft.style.display = "flex";
-        
+        if (ft) {
+          ft.style.display = "flex";
+          ft.classList.add("show");
+        }
+        const lang = localStorage.getItem("megaLang") || "en";
         el.innerHTML = cart
           .map((item) => {
-            const nm = lang === "ar" ? item.nameAr || item.nameEn : item.nameEn || item.nameAr;
+            const nm =
+              lang === "ar"
+                ? item.nameAr || item.nameEn
+                : item.nameEn || item.nameAr;
             const imgSrc = iu(item.mainPhoto);
-            const unitPrice = item.price || 0;
+            let _itemAoSum = 0;
+            if (item.selectedAddOns && item.selectedAddOns.length) item.selectedAddOns.forEach(a => _itemAoSum += (parseFloat(a.price) || 0));
+            const unitPrice = (item.price || 0) + _itemAoSum;
             const lineTotal = unitPrice * item.qty;
             const idx = cart.indexOf(item);
             if (item.isBundle) {
@@ -2746,15 +2802,28 @@
                   ? item.qty > 1
                     ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
                     : "EGP " + Number(unitPrice).toLocaleString()
-                  : "";
-              return `<div class="cir bundle-item"><div class="cir-top"><div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div><div class="cin" style="flex:1;min-width:0"><div><span class="bundle-tag">${bundleTag}</span></div><div class="nm">${nm}</div><div class="pr">${priceStr}</div><div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div></div><button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button></div><div class="bundle-item-count">${countLbl}</div>${itemsList ? `<div class="bundle-items-list">${itemsList}</div>` : ""}</div>`;
+                  : t("call-price");
+              return `<div class="cir bundle-item">
+      <div class="cir-top">
+        <div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div>
+        <div class="cin" style="flex:1;min-width:0">
+          <div><span class="bundle-tag">${bundleTag}</span></div>
+          <div class="nm">${nm}</div>
+          <div class="pr">${priceStr}</div>
+          <div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div>
+        </div>
+        <button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button>
+      </div>
+      <div class="bundle-item-count">${countLbl}</div>
+      ${itemsList ? `<div class="bundle-items-list">${itemsList}</div>` : ""}
+    </div>`;
             }
             const priceStr =
               unitPrice > 0
                 ? item.qty > 1
                   ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
                   : "EGP " + Number(unitPrice).toLocaleString()
-                : "";
+                : t("call-price");
             const meta = [
               item.color || "",
               item.size
@@ -2763,9 +2832,20 @@
             ]
               .filter(Boolean)
               .join(" · ");
-            return `<div class="cir"><div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div><div class="cin"><div class="nm">${nm}${meta ? `<span style="font-size:10px;color:var(--tm);margin-inline-start:4px"> · ${meta}</span>` : ""}</div><div class="pr">${priceStr}</div><div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div></div><button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button></div>`;
+            return `<div class="cir">
+      <div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.parentElement.innerHTML='️'">` : '<span style="font-size:22px;opacity:.4">️</span>'}</div>
+      <div class="cin">
+        <div class="nm">${nm}${meta ? `<span style="font-size:10px;color:var(--tm);margin-right:4px"> · ${meta}</span>` : ""}</div>
+        <div class="pr">${priceStr}</div>
+        <div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div>
+      </div>
+      <button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button>
+    </div>`;
           })
           .join("");
+        if (tot)
+          tot.textContent = n + " " + t("cart-items-label");
+        if (typeof updCartFooter === "function") updCartFooter();
       }
 
       function iu(src) {
@@ -2818,6 +2898,7 @@
       let selectedOrientation = "Left";
       let activeImageIndex = 0;
       let paletteColors = [];
+      let selectedAddOnsIds = [];
 
       const urlParams = new URLSearchParams(window.location.search);
       const productId = urlParams.get("id");
@@ -2850,7 +2931,9 @@
               selectedSize = legacy.sizes[0].nameAr; // Size tracking key
             }
             if (legacy.colors.length) {
-              selectedColor = legacy.colors[0].name; // Color tracking key
+              const urlColor = urlParams.get("color");
+              const matchedColor = urlColor ? legacy.colors.find(c => c.name === urlColor || c.nameEn === urlColor) : null;
+              selectedColor = matchedColor ? matchedColor.name : legacy.colors[0].name; // Color tracking key
             }
           }
 
@@ -3071,6 +3154,7 @@
       function renderProductDetails() {
         const container = document.getElementById("product-details-content");
         if (!container || !prodData) return;
+        if (typeof renderWishBtn === "function") renderWishBtn();
 
         const name = lang === "ar" ? prodData.nameAr || prodData.nameEn : prodData.nameEn || prodData.nameAr;
         const description = lang === "ar" ? prodData.descriptionAr || prodData.descriptionEn : prodData.descriptionEn || prodData.descriptionAr;
@@ -3121,6 +3205,42 @@
           `;
         } else {
           priceHtml = `<div class="price-current">EGP ${Number(priceInfo.price).toLocaleString()}</div>`;
+        }
+
+        // Add-on price adjustment
+        let addOnsTotal = 0;
+        if (selectedAddOnsIds.length > 0 && prodData.addOns) {
+          prodData.addOns.forEach(a => {
+            if (selectedAddOnsIds.includes(a.id)) addOnsTotal += (parseFloat(a.price) || 0);
+          });
+        }
+        if (addOnsTotal > 0) {
+          const basePrice = priceInfo.hasDiscount ? priceInfo.salePrice : priceInfo.price;
+          const totalWithAddOns = basePrice + addOnsTotal;
+          const addOnsCountLabel = selectedAddOnsIds.length === 1 
+            ? (lang === 'ar' ? 'إضافة واحدة' : '1 add-on') 
+            : (lang === 'ar' ? selectedAddOnsIds.length + ' إضافات' : selectedAddOnsIds.length + ' add-ons');
+          if (priceInfo.hasDiscount) {
+            const saveValue = priceInfo.originalPrice - priceInfo.salePrice;
+            const savePercent = prodData.discountPercent ? prodData.discountPercent + "%" : "EGP " + saveValue.toLocaleString();
+            priceHtml = `
+              <div class="price-current">EGP ${Number(totalWithAddOns).toLocaleString()}</div>
+              <div class="price-original">EGP ${Number(priceInfo.originalPrice).toLocaleString()}</div>
+              <div class="price-savings">${t("save-lbl")} ${savePercent}</div>
+              <div style="font-size:12px;color:var(--tm);margin-top:4px;display:flex;align-items:center;gap:4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                ${lang === 'ar' ? 'يشمل' : 'Includes'} ${addOnsCountLabel} (+EGP ${Number(addOnsTotal).toLocaleString()})
+              </div>
+            `;
+          } else {
+            priceHtml = `
+              <div class="price-current">EGP ${Number(totalWithAddOns).toLocaleString()}</div>
+              <div style="font-size:12px;color:var(--tm);margin-top:4px;display:flex;align-items:center;gap:4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                ${lang === 'ar' ? 'يشمل' : 'Includes'} ${addOnsCountLabel} (+EGP ${Number(addOnsTotal).toLocaleString()})
+              </div>
+            `;
+          }
         }
 
         // Selection variables
@@ -3236,7 +3356,7 @@
         if (reviewsCount > 0) {
           ratingSummaryHtml = `
             <div class="top-rating-badge" onclick="scrollToReviews()" style="display:inline-flex; align-items:center; gap:6px; cursor:pointer; margin-top:8px; margin-bottom:12px; padding:4px 12px; background:rgba(232, 150, 30, 0.1); border-radius:100px; border:1px solid rgba(232, 150, 30, 0.25); transition:transform 0.2s ease;">
-              <span style="color:#e8961e; font-size:14px; font-weight:800;">★ ${avgRating}</span>
+              <span style="color:#e8961e; font-size:14px; font-weight:800;"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg> ${avgRating}</span>
               <span style="color:var(--tm); font-size:12px; font-weight:500;">(${reviewsCount} ${lang === 'ar' ? 'تقييم' : 'reviews'})</span>
               <span style="color:var(--o); font-size:12px; font-weight:700; text-decoration:underline; margin-inline-start:4px;">${lang === 'ar' ? 'عرض التقييمات' : 'See Reviews'} ↓</span>
             </div>
@@ -3244,7 +3364,7 @@
         } else {
           ratingSummaryHtml = `
             <div class="top-rating-badge" onclick="scrollToReviews()" style="display:inline-flex; align-items:center; gap:6px; cursor:pointer; margin-top:8px; margin-bottom:12px; padding:4px 12px; background:var(--s2); border-radius:100px; border:1px solid var(--b);">
-              <span style="color:#e8961e; font-size:14px;">★★★★★</span>
+              <span style="color:#e8961e; font-size:14px;"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg></span>
               <span style="color:var(--tm); font-size:12px;">${lang === 'ar' ? 'كن أول من يضيف تقييمًا' : 'Be the first to review'}</span>
               <span style="color:var(--o); font-size:12px; font-weight:700; text-decoration:underline; margin-inline-start:4px;">${lang === 'ar' ? 'أضف تقييم' : 'Write Review'} ↓</span>
             </div>
@@ -3258,7 +3378,7 @@
           const pct = reviewsCount > 0 ? Math.round((count / reviewsCount) * 100) : 0;
           breakdownHtml += `
             <div class="breakdown-row" onclick="filterReviewsTab('${star}')" style="cursor:pointer;" title="Filter by ${star} stars">
-              <span style="width:40px; font-weight:600;">${star} ★</span>
+              <span style="width:40px; font-weight:600;">${star} <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg></span>
               <div class="breakdown-bar-track">
                 <div class="breakdown-bar-fill" style="width:${pct}%;"></div>
               </div>
@@ -3369,7 +3489,7 @@
           reviewsListHtml = reviews.map(r => {
             let itemStars = "";
             for (let i = 1; i <= 5; i++) {
-              itemStars += i <= r.rating ? "★" : "☆";
+              itemStars += i <= r.rating ? "<svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg>" : "<svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg>";
             }
             const dateStr = new Date(r.createdAt).toLocaleDateString(lang === "ar" ? "ar-EG" : "en-US", {
               year: 'numeric', month: 'long', day: 'numeric'
@@ -3386,7 +3506,7 @@
                     <div>
                       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
                         <span class="review-cust" style="font-weight:700; font-size:13px; color:var(--t);">${r.customerName}</span>
-                        <span class="verified-badge" style="font-size:10px;">✔ ${lang === 'ar' ? 'مشتري مؤكد' : 'Verified Buyer'}</span>
+                        <span class="verified-badge" style="font-size:10px;"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polyline points='20 6 9 17 4 12'></polyline></svg> ${lang === 'ar' ? 'مشتري مؤكد' : 'Verified Buyer'}</span>
                       </div>
                       <div class="review-meta" style="font-size:11px; color:var(--tm); margin-top:1px;">${dateStr}${location}</div>
                     </div>
@@ -3418,7 +3538,7 @@
               <div class="avg-rating-box" style="text-align:center; min-width:140px;">
                 <div class="avg-rating-num" style="font-size:52px; font-weight:800; font-family:'Fraunces',serif; color:var(--o); line-height:1;">${reviewsCount > 0 ? avgRating : "5.0"}</div>
                 <div class="stars-row" style="color:#e8961e; font-size:20px; margin:8px 0;">
-                  ${"★".repeat(Math.round(reviewsCount > 0 ? avgRating : 5))}${"☆".repeat(5 - Math.round(reviewsCount > 0 ? avgRating : 5))}
+                  ${"<svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg>".repeat(Math.round(reviewsCount > 0 ? avgRating : 5))}${"<svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg>".repeat(5 - Math.round(reviewsCount > 0 ? avgRating : 5))}
                 </div>
                 <div class="reviews-count-lbl" style="font-size:13px; color:var(--tm); font-weight:500;">
                   ${reviewsCount} ${lang === 'ar' ? 'تقييم من عملاء مؤكدين' : 'verified customer reviews'}
@@ -3453,11 +3573,11 @@
                   <input type="hidden" id="rev-rating" value="5" />
                   <div style="display:flex; align-items:center; gap:16px; margin-top:4px;">
                     <div class="star-picker" id="star-picker" style="display:flex; gap:6px; cursor:pointer; font-size:28px;">
-                      <span class="star-item active" data-val="1" onclick="setStarRating(1)" onmouseover="hoverStarRating(1)" onmouseout="resetStarRating()">★</span>
-                      <span class="star-item active" data-val="2" onclick="setStarRating(2)" onmouseover="hoverStarRating(2)" onmouseout="resetStarRating()">★</span>
-                      <span class="star-item active" data-val="3" onclick="setStarRating(3)" onmouseover="hoverStarRating(3)" onmouseout="resetStarRating()">★</span>
-                      <span class="star-item active" data-val="4" onclick="setStarRating(4)" onmouseover="hoverStarRating(4)" onmouseout="resetStarRating()">★</span>
-                      <span class="star-item active" data-val="5" onclick="setStarRating(5)" onmouseover="hoverStarRating(5)" onmouseout="resetStarRating()">★</span>
+                      <span class="star-item active" data-val="1" onclick="setStarRating(1)" onmouseover="hoverStarRating(1)" onmouseout="resetStarRating()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg></span>
+                      <span class="star-item active" data-val="2" onclick="setStarRating(2)" onmouseover="hoverStarRating(2)" onmouseout="resetStarRating()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg></span>
+                      <span class="star-item active" data-val="3" onclick="setStarRating(3)" onmouseover="hoverStarRating(3)" onmouseout="resetStarRating()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg></span>
+                      <span class="star-item active" data-val="4" onclick="setStarRating(4)" onmouseover="hoverStarRating(4)" onmouseout="resetStarRating()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg></span>
+                      <span class="star-item active" data-val="5" onclick="setStarRating(5)" onmouseover="hoverStarRating(5)" onmouseout="resetStarRating()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg></span>
                     </div>
                     <span id="star-picker-label" style="font-size:13px; font-weight:700; color:var(--o);">
                       ${lang === 'ar' ? 'ممتاز (5/5)' : 'Excellent (5/5)'}
@@ -3496,13 +3616,13 @@
                 ${lang === 'ar' ? 'الكل' : 'All'} (${reviewsCount})
               </button>
               <button type="button" class="filter-pill" data-star="5" onclick="filterReviewsTab('5', this)">
-                5 ★ (${ratingCounts[5]})
+                5 <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg> (${ratingCounts[5]})
               </button>
               <button type="button" class="filter-pill" data-star="4" onclick="filterReviewsTab('4', this)">
-                4 ★ (${ratingCounts[4]})
+                4 <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg> (${ratingCounts[4]})
               </button>
               <button type="button" class="filter-pill" data-star="3" onclick="filterReviewsTab('3', this)">
-                3 ★ (${ratingCounts[3]})
+                3 <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg> (${ratingCounts[3]})
               </button>
               ${photoCount > 0 ? `<button type="button" class="filter-pill" data-star="photos" onclick="filterReviewsTab('photos', this)">${lang === 'ar' ? 'بالصور' : 'With Photos'} (${photoCount})</button>` : ''}
             </div>
@@ -3575,6 +3695,41 @@
           `;
         }
 
+        let addOnsHtml = "";
+        if (prodData.addOns && prodData.addOns.length > 0) {
+          addOnsHtml = `
+            <div class="addons-section" style="margin: 24px 0; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.06);">
+              <h3 style="font-size: 16px; font-weight: 700; color: var(--t); margin-bottom: 14px; display:flex; align-items:center; gap:8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--o);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                ${lang === 'ar' ? 'أكمل الطقم (إضافات اختيارية)' : 'Complete the Set (Optional Add-Ons)'}
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                ${prodData.addOns.map(a => {
+                  const isSelected = selectedAddOnsIds.includes(a.id);
+                  const aName = lang === 'ar' ? (a.nameAr || a.nameEn) : (a.nameEn || a.nameAr);
+                  return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: ${isSelected ? 'var(--s)' : 'transparent'}; border: 1px solid ${isSelected ? 'var(--t)' : 'var(--b)'}; border-radius: 10px; transition: all 0.25s; box-shadow: ${isSelected ? '0 4px 12px rgba(0,0,0,0.05)' : 'none'};">
+                      <div style="display: flex; align-items: center; gap: 14px;">
+                        ${a.photo ? `<img src="${iu(a.photo)}" onclick="event.stopPropagation(); openAddOnPhoto('${iu(a.photo)}', '${aName.replace(/'/g, "\\'")}')"
+ style="width: 54px; height: 54px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(0,0,0,0.04); cursor: pointer; transition: transform 0.2s;" 
+ onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">` : ''}
+                        <div>
+                          <div style="font-weight: 600; font-size: 14px; color: var(--t);">${aName}</div>
+                          <div style="font-size: 13px; color: var(--o); font-weight: 700; margin-top: 4px;">+ EGP ${Number(a.price || 0).toLocaleString()}</div>
+                          ${(a.dimensionL || a.dimensionW || a.dimensionD || a.dimensionH) ? `<div style="font-size: 11px; color: var(--tm); margin-top: 2px;">${[a.dimensionL, a.dimensionW, a.dimensionD, a.dimensionH].filter(Boolean).join(' × ')} ${lang === 'ar' ? 'سم' : 'cm'}</div>` : ''}
+                        </div>
+                      </div>
+                      <button type="button" onclick="toggleAddOn('${a.id}')" style="padding: 8px 16px; font-size: 13px; font-weight: 600; border-radius: 20px; cursor: pointer; transition: all 0.2s; ${isSelected ? 'background: var(--t); color: var(--s); border: 1px solid var(--t);' : 'background: transparent; color: var(--t); border: 1px solid var(--t);'}">
+                        ${isSelected ? (lang === 'ar' ? `مضاف <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polyline points='20 6 9 17 4 12'></polyline></svg>` : `Added <svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polyline points='20 6 9 17 4 12'></polyline></svg>`) : (lang === 'ar' ? '+ إضافة' : '+ Add')}
+                      </button>
+                    </div>
+                  `;
+                }).join("")}
+              </div>
+            </div>
+          `;
+        }
+
         // Generate entire Grid Markup
         container.innerHTML = `
           <!-- LEFT GALLERY COLUMN -->
@@ -3629,6 +3784,7 @@
             ${sizeDetailsHtml}
             ${colorsHtml}
             ${sideHtml}
+            ${addOnsHtml}
 
             <!-- QUANTITY AND ACTION BUTTONS -->
             <div class="purchase-section">
@@ -3642,6 +3798,11 @@
               </div>
 
               <div class="actions-row">
+                <button type="button" class="wish-circle" title="Wishlist" id="prod-wish-btn" onclick="toggleWish(prodData.id, event)">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                </button>
                 <button class="btn-add-cart" id="main-add-to-cart-btn" onclick="handleAddCartClick()">
                   <span>${t("prod-add-to-cart")}</span>
                 </button>
@@ -4237,6 +4398,31 @@
         renderProductDetails();
       }
 
+      function toggleAddOn(addOnId) {
+        const idx = selectedAddOnsIds.indexOf(addOnId);
+        if (idx > -1) {
+          selectedAddOnsIds.splice(idx, 1);
+        } else {
+          selectedAddOnsIds.push(addOnId);
+        }
+        renderProductDetails();
+      }
+
+      function openAddOnPhoto(src, name) {
+        const existing = document.getElementById('addon-photo-lightbox');
+        if (existing) existing.remove();
+        const overlay = document.createElement('div');
+        overlay.id = 'addon-photo-lightbox';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;cursor:pointer;animation:fadeIn 0.2s ease;';
+        overlay.onclick = () => overlay.remove();
+        overlay.innerHTML = `
+          <img src="${src}" style="max-width:90%;max-height:75vh;object-fit:contain;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);" onclick="event.stopPropagation()">
+          <div style="color:#fff;font-size:16px;font-weight:600;text-align:center;">${name}</div>
+          <button onclick="this.parentElement.remove()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
+        `;
+        document.body.appendChild(overlay);
+      }
+
       function scrollToReviews() {
         const block = document.getElementById("reviews-block");
         if (block) {
@@ -4253,6 +4439,40 @@
         
         if (qty < 1) qty = 1;
         inp.value = qty;
+      }
+
+      /* ── WISHLIST LOGIC ── */
+      function getWish() {
+        try {
+          return JSON.parse(localStorage.getItem("megaWish") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function setWish(a) {
+        localStorage.setItem("megaWish", JSON.stringify(a));
+        if (typeof updWbadge === "function") updWbadge();
+      }
+      function toggleWish(id, e) {
+        if (e) e.stopPropagation();
+        let w = getWish();
+        const i = w.indexOf(id);
+        if (i >= 0) w.splice(i, 1);
+        else w.push(id);
+        setWish(w);
+        renderWishBtn();
+        if (typeof showToast === "function") {
+          showToast("", i >= 0 ? "Removed" : "Saved");
+        }
+      }
+      function renderWishBtn() {
+        const btn = document.getElementById("prod-wish-btn");
+        if (!btn || !prodData) return;
+        const w = getWish();
+        const wOn = w.includes(prodData.id);
+        btn.innerHTML = wOn
+          ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
+          : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
       }
 
       /* ── ADD TO CART LOGIC ── */
@@ -4312,14 +4532,16 @@
           price: finalUnitPrice,
           color: cartColorString,
           size: cartSizeObj,
-          sku: prodData.sku
+          sku: prodData.sku,
+          selectedAddOns: selectedAddOnsIds.length > 0 && prodData.addOns ? prodData.addOns.filter(a => selectedAddOnsIds.includes(a.id)) : []
         };
 
         // Check if item already exists in cart with same configurations
         const matchIdx = cart.findIndex(item => 
           item.id === cartItem.id && 
           item.color === cartItem.color && 
-          JSON.stringify(item.size) === JSON.stringify(cartItem.size)
+          JSON.stringify(item.size) === JSON.stringify(cartItem.size) &&
+          JSON.stringify((item.selectedAddOns || []).map(a => a.id).sort()) === JSON.stringify((cartItem.selectedAddOns || []).map(a => a.id).sort())
         );
 
         if (matchIdx !== -1) {
@@ -4340,7 +4562,7 @@
         }
 
         openCart();
-        toast(lang === "ar" ? "✅ تم إضافة المنتج إلى السلة" : "✅ Product added to cart");
+        toast(lang === "ar" ? "تم إضافة المنتج إلى السلة" : "Product added to cart");
       }
 
       window.addRoomProductToCart = async function (prodId, btnId) {
@@ -4395,7 +4617,7 @@
           
           saveCartAndRefresh();
           openCart();
-          toast(lang === "ar" ? "✅ تم إضافة المنتج إلى السلة" : "✅ Product added to cart");
+          toast(lang === "ar" ? "تم إضافة المنتج إلى السلة" : "Product added to cart");
         } catch (err) {
           toast(err.message);
         } finally {
@@ -4777,8 +4999,14 @@
               l === "ar"
                 ? ann.linkText_ar || ann.linkText_en
                 : ann.linkText_en || ann.linkText_ar;
-            if (lt)
-              html += ` <a href="${ann.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+            if (lt) {
+              let finalLink = ann.link;
+              const isSale = msg.toLowerCase().match(/sale|discount|offer|خصم|عرض|تخفيض/);
+              if (isSale && finalLink.includes("shop.html")) {
+                finalLink = "offers.html";
+              }
+              html += ` <a href="${finalLink}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+            }
           }
           const msgEl = document.getElementById("gen-ann-msg");
           if (msgEl) msgEl.innerHTML = html;

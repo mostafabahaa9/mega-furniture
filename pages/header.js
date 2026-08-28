@@ -2,6 +2,7 @@
   const isSubPage = window.location.pathname.includes("/pages/");
   const homePath = isSubPage ? "../mega-furniture.html" : "mega-furniture.html";
   const shopPath = isSubPage ? "shop.html" : "pages/shop.html";
+  const offersPath = isSubPage ? "offers.html" : "pages/offers.html";
   const reviewsPath = isSubPage ? "reviews.html" : "pages/reviews.html";
   const videosPath = isSubPage ? "videos.html" : "pages/videos.html";
   const aboutPath = isSubPage ? "about.html" : "pages/about.html";
@@ -1070,6 +1071,7 @@
     const curPath = window.location.pathname;
     const isHome = curPath.endsWith("/") || curPath.includes("mega-furniture.html") || (!curPath.includes("/pages/") && curPath.length <= 1);
     const isShop = curPath.includes("shop.html");
+    const isOffers = curPath.includes("offers.html");
     const isReviews = curPath.includes("reviews.html");
     const isVideos = curPath.includes("videos.html");
     const isAbout = curPath.includes("about.html");
@@ -1153,6 +1155,7 @@
           <ul class="nav-links-row-2">
             <li><a class="nlink-r2 ${isHome ? 'active' : ''}" href="${homePath}" data-t="nav-home">Home</a></li>
             <li><a class="nlink-r2 ${isShop ? 'active' : ''}" href="${shopPath}" data-t="nav-shop">Shop</a></li>
+            <li><a class="nlink-r2 ${isOffers ? 'active' : ''}" href="${offersPath}" data-t="nav-offers" style="position:relative;">Offers<span class="offers-dot" style="display:none;position:absolute;top:2px;right:-4px;width:6px;height:6px;background:var(--o);border-radius:50%;"></span></a></li>
             <li><a class="nlink-r2 ${isReviews ? 'active' : ''}" href="${reviewsPath}" data-t="nav-reviews">Reviews</a></li>
             <li><a class="nlink-r2 ${isVideos ? 'active' : ''}" href="${videosPath}" data-t="nav-videos">Videos</a></li>
             <li><a class="nlink-r2 ${isAbout ? 'active' : ''}" href="${aboutPath}" data-t="nav-about">About us</a></li>
@@ -1175,13 +1178,14 @@
       <div class="mob-drawer" id="mob-drawer">
         <div class="mob-drawer-hdr">
           <div class="logo-wordmark">MEGA <span>FURNITURE</span></div>
-          <button class="mob-drawer-close" onclick="toggleMobDrawer()">✕</button>
+          <button class="mob-drawer-close" onclick="toggleMobDrawer()"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
         </div>
         <div class="mob-drawer-body">
           <!-- Page Links -->
           <ul class="mob-links-list">
             <li><a class="mob-nav-link ${isHome ? 'active' : ''}" href="${homePath}" data-t="nav-home" onclick="toggleMobDrawer()">Home</a></li>
             <li><a class="mob-nav-link ${isShop ? 'active' : ''}" href="${shopPath}" data-t="nav-shop" onclick="toggleMobDrawer()">Shop</a></li>
+            <li><a class="mob-nav-link ${isOffers ? 'active' : ''}" href="${offersPath}" data-t="nav-offers" onclick="toggleMobDrawer()" style="position:relative;">Offers<span class="offers-dot" style="display:none;position:absolute;top:14px;right:14px;width:6px;height:6px;background:var(--o);border-radius:50%;"></span></a></li>
             <li><a class="mob-nav-link ${isReviews ? 'active' : ''}" href="${reviewsPath}" data-t="nav-reviews" onclick="toggleMobDrawer()">Reviews</a></li>
             <li><a class="mob-nav-link ${isVideos ? 'active' : ''}" href="${videosPath}" data-t="nav-videos" onclick="toggleMobDrawer()">Videos</a></li>
             <li><a class="mob-nav-link ${isAbout ? 'active' : ''}" href="${aboutPath}" data-t="nav-about" onclick="toggleMobDrawer()">About us</a></li>
@@ -1285,11 +1289,18 @@
   Promise.all([
     fetch(apiBase + "/api/categories").then((r) => r.json()).catch(() => []),
     fetch(apiBase + "/api/products").then((r) => r.json()).catch(() => []),
-  ]).then(([cats, prods]) => {
+    fetch(apiBase + "/api/bundles").then((r) => r.json()).catch(() => []),
+  ]).then(([cats, prods, bndls]) => {
     categories = cats;
     products = prods;
     renderMegaMenu();
     renderMobCategories();
+    
+    const hasDiscount = prods.some(p => p.discountPercent > 0 || (p.salePrice && p.salePrice < p.price));
+    const hasActiveBundle = bndls && bndls.some(b => b.active !== false);
+    if (hasDiscount || hasActiveBundle) {
+      document.querySelectorAll('.offers-dot').forEach(el => el.style.display = 'block');
+    }
   });
 
   function clientCategoryMatches(product, category) {
@@ -1492,7 +1503,14 @@
              let html = msg;
              if (ann.link) {
                const lt = l === "ar" ? (ann.linkText_ar || ann.linkText_en) : (ann.linkText_en || ann.linkText_ar);
-               if (lt) html += ` <a href="${ann.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+               if (lt) {
+                 let finalLink = ann.link;
+                 const isSale = msg.toLowerCase().match(/sale|discount|offer|خصم|عرض|تخفيض/);
+                 if (isSale && finalLink.includes("shop.html")) {
+                   finalLink = isSubPage ? "offers.html" : "pages/offers.html";
+                 }
+                 html += ` <a href="${finalLink}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+               }
              }
              const container = document.getElementById("gen-ann-msg-container");
              if (container) {

@@ -10,12 +10,6 @@ function requireAdmin(req, res, next) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  // Direct check for ADMIN_SECRET_TOKEN
-  const adminSecret = process.env.ADMIN_SECRET_TOKEN;
-  if (adminSecret && token === adminSecret) {
-    req.admin = { role: "admin" };
-    return next();
-  }
 
   // Verify JWT token signature
   try {

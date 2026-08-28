@@ -75,6 +75,8 @@ function normalizeProduct(raw) {
     sideOptions: Array.isArray(raw.sideOptions) ? raw.sideOptions : (raw.sideOptions ? safeParseJSON(raw.sideOptions, []) : (parseSideChoiceEnabled(raw) ? ["left", "right"] : [])),
     colorPhotos: raw.colorPhotos || {},
     sidePhotos: raw.sidePhotos || {},
+    featuredInMarquee: raw.featuredInMarquee === true,
+    addOns: Array.isArray(raw.addOns) ? raw.addOns : [],
   };
 }
 
@@ -164,6 +166,8 @@ router.get("/products", (req, res) => {
     req.query;
 
   products = products.filter((p) => p.visible !== false);
+  if (req.query.marquee === "true")
+    products = products.filter((p) => p.featuredInMarquee === true);
   if (featured === "true")
     products = products.filter((p) => p.featured === true);
   if (category && category !== "all") {
@@ -380,6 +384,9 @@ function parseExtras(body, existing = {}) {
   const sidePhotosParsed = safeParseJSON(body.sidePhotos, undefined);
   const sidePhotos = sidePhotosParsed !== undefined ? sidePhotosParsed : (existing.sidePhotos ?? null);
 
+  const addOnsParsed = safeParseJSON(body.addOns, undefined);
+  const addOns = addOnsParsed !== undefined ? addOnsParsed : (existing.addOns ?? []);
+
   return {
     costPrice,
     colors: Array.isArray(colors) ? colors : [],
@@ -391,6 +398,7 @@ function parseExtras(body, existing = {}) {
     sideOptions,
     colorPhotos: colorPhotos || {},
     sidePhotos: sidePhotos || {},
+    addOns: Array.isArray(addOns) ? addOns : [],
   };
 }
 
@@ -446,6 +454,7 @@ router.post(
       photos,
       mainPhoto: photos[0] || null,
       featured: req.body.featured === "true" || req.body.featured === true,
+      featuredInMarquee: req.body.featuredInMarquee === "true" || req.body.featuredInMarquee === true,
       isNew: req.body.isNew === "true" || req.body.isNew === true,
       bestSeller: req.body.bestSeller === "true" || req.body.bestSeller === true,
       visible: req.body.visible !== "false" && req.body.visible !== false,
@@ -529,6 +538,10 @@ router.put(
         req.body.featured !== undefined
           ? req.body.featured === "true" || req.body.featured === true
           : cur.featured === true,
+      featuredInMarquee:
+        req.body.featuredInMarquee !== undefined
+          ? req.body.featuredInMarquee === "true" || req.body.featuredInMarquee === true
+          : cur.featuredInMarquee === true,
       isNew:
         req.body.isNew !== undefined
           ? req.body.isNew === "true" || req.body.isNew === true

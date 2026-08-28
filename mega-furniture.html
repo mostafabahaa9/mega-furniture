@@ -1,11 +1,23 @@
 <!doctype html>
 <html lang="en" dir="ltr" data-theme="light">
   <head>
+  <script>
+    (function () {
+      if (!localStorage.getItem('megaTheme')) localStorage.setItem('megaTheme', 'light');
+      document.documentElement.setAttribute('data-theme', localStorage.getItem('megaTheme'));
+    })();
+  </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Mega Furniture | الرئيسية</title>
+    <title data-t="page-title">Mega Furniture</title>
+    <meta name="description" content="Shop premium modern furniture for your living room, bedroom, and more. Quality craftsmanship designed in Egypt for a modern lifestyle." />
+    <meta property="og:title" content="Mega Furniture - Modern Egyptian Furniture" />
+    <meta property="og:description" content="Shop premium modern furniture for your living room, bedroom, and more. Quality craftsmanship designed in Egypt." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://res.cloudinary.com/dmvj1y14r/image/upload/v1786957076/mega-furniture/hero_en.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -109,7 +121,6 @@
         width: 100%;
         max-width: 100%;
         margin: 0;
-        height: auto;
         aspect-ratio: 16 / 9;
         overflow: hidden;
         background: var(--s);
@@ -119,7 +130,8 @@
       }
       .hs-track {
         display: flex;
-        height: 100%;
+        position: absolute;
+        inset: 0;
         transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
         will-change: transform;
       }
@@ -223,11 +235,7 @@
           max-height: none;
         }
         .hs-arrow {
-          display: flex;
-          opacity: 0.9;
-          visibility: visible;
-          width: 36px;
-          height: 36px;
+          display: none !important;
         }
         .hs-prev {
           left: 12px;
@@ -241,6 +249,354 @@
         }
         .hs-dots {
           bottom: 12px;
+        }
+      }
+
+      /* PROMO BANNER SLIDER */
+      .pb-slider {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: var(--s);
+        padding: 0;
+        border-radius: 8px;
+        display: block;
+      }
+      .pb-track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform;
+      }
+      .pb-slide {
+        flex-shrink: 0;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        cursor: pointer;
+      }
+      .pb-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+      .pb-slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 60%,
+          rgba(0, 0, 0, 0.6) 100%
+        );
+        pointer-events: none;
+      }
+      .pb-title {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        right: 24px;
+        color: #fff;
+        font-family: var(--font-head);
+        font-size: clamp(18px, 3vw, 24px);
+        font-weight: 500;
+        z-index: 5;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      }
+      /* ARROWS */
+      .pb-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--s);
+        border: 1px solid var(--b);
+        color: var(--t);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        box-shadow: var(--sh);
+      }
+      .pb-slider:hover .pb-arrow {
+        opacity: 0.85;
+        visibility: visible;
+      }
+      .pb-prev { left: 24px; }
+      .pb-next { right: 24px; }
+      .pb-arrow:hover {
+        opacity: 1 !important;
+        background: var(--s);
+        color: var(--o);
+        transform: translateY(-50%) scale(1.08);
+      }
+      .pb-arrow:active { transform: translateY(-50%) scale(0.95); }
+      .pb-dots { display: none !important; }
+      @media (max-width: 768px) {
+        .pb-slider {
+          width: calc(100% - 24px);
+          margin: 12px auto 0;
+          border-radius: 8px;
+        }
+        .pb-arrow {
+          display: none !important;
+        }
+        .pb-prev { left: 12px; }
+        .pb-next { right: 12px; }
+        .pb-arrow svg { width: 16px; height: 16px; }
+        .pb-title { bottom: 16px; left: 16px; right: 16px; font-size: 16px; }
+      }
+
+      /* REVIEWS MARQUEE */
+      .rm-section {
+        padding: 60px 0;
+        background: transparent;
+        overflow: hidden;
+        border-top: 1px solid var(--b);
+        border-bottom: 1px solid var(--b);
+      }
+      .rm-header {
+        text-align: center;
+        margin-bottom: 32px;
+        font-family: var(--font-head);
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(24px, 3vw, 32px);
+        color: var(--t);
+      }
+      .rm-track-container {
+        display: flex;
+        overflow: hidden;
+        position: relative;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+      }
+      .rm-track {
+        display: flex;
+        gap: 20px;
+        width: max-content;
+        animation: marquee 30s linear infinite;
+        padding: 0 10px;
+      }
+      .rm-track:hover {
+        animation-play-state: paused;
+      }
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      html[dir="rtl"] .rm-track {
+        animation: marqueeRtl 30s linear infinite;
+      }
+      @keyframes marqueeRtl {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(50%); }
+      }
+      .rm-card {
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 8px;
+        padding: 24px;
+        width: min(85vw, 340px);
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        white-space: normal;
+      }
+      .rm-stars {
+        color: #F5A623;
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      .rm-text {
+        font-size: 15px;
+        color: var(--t);
+        line-height: 1.6;
+        margin-bottom: 16px;
+        font-style: italic;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .rm-author {
+        font-weight: 500;
+        font-size: 14px;
+        color: var(--t);
+      }
+      .rm-product {
+        font-size: 12px;
+        color: var(--tm);
+        margin-top: 4px;
+      }
+      .rm-photo {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-bottom: 16px;
+        display: block;
+      }
+
+      /* SHOP THE LOOK */
+      .stl-section {
+        margin: 80px auto;
+        max-width: 1200px;
+        padding: 0 24px;
+      }
+      .stl-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+      .stl-header h2 {
+        font-family: var(--font-head);
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(22px, 3vw, 36px);
+        letter-spacing: -0.01em;
+        color: var(--t);
+      }
+      .stl-slider {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--s2);
+      }
+      .stl-track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .stl-slide {
+        flex-shrink: 0;
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .stl-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+      .stl-hotspot {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        background: #fff;
+        border: 2px solid var(--o);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .stl-hotspot:hover {
+        transform: translate(-50%, -50%) scale(1.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      }
+      .stl-hotspot::after {
+        content: "";
+        position: absolute;
+        inset: 4px;
+        background: var(--o);
+        border-radius: 50%;
+      }
+      /* Keyframes pulse removed in favor of hover transition */
+      .stl-tooltip {
+        position: absolute;
+        background: var(--s);
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        width: 200px;
+        z-index: 20;
+        transform: translateX(-50%);
+        margin-top: 16px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+        border: 1px solid var(--b);
+        text-decoration: none;
+      }
+      .stl-tooltip.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      .stl-tooltip::before {
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        width: 10px;
+        height: 10px;
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        border-left: 1px solid var(--b);
+      }
+      .stl-tooltip.stl-tooltip-up::before {
+        top: auto;
+        bottom: -6px;
+        border-top: none;
+        border-left: none;
+        border-bottom: 1px solid var(--b);
+        border-right: 1px solid var(--b);
+      }
+      .stl-tt-img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        background: var(--s);
+      }
+      .stl-tt-name {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--t);
+        margin-bottom: 4px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .stl-tt-price {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--o);
+      }
+      
+      @media (max-width: 768px) {
+        .stl-section {
+          margin: 40px auto;
+          padding: 0 16px;
+        }
+        .stl-slider {
+          aspect-ratio: 4/5;
+        }
+        .stl-hotspot {
+          width: 20px;
+          height: 20px;
+        }
+        .stl-hotspot::after {
+          inset: 3px;
         }
       }
       
@@ -873,12 +1229,6 @@
         transform: translateY(-2px);
       }
       /* ABOUT */
-      .as {
-        max-width: 960px;
-        margin: 160px auto;
-        padding: 0 48px;
-        text-align: center;
-      }
       .stag {
         font-size: 11px;
         letter-spacing: 0.22em;
@@ -886,34 +1236,6 @@
         color: var(--tm);
         font-weight: 400;
         margin-bottom: 20px;
-      }
-      .as h2 {
-        font-family: var(--font-head);
-        font-style: italic;
-        font-weight: 300;
-        font-size: clamp(28px, 4vw, 52px);
-        letter-spacing: -0.01em;
-        margin-bottom: 24px;
-        line-height: 1.1;
-        color: var(--t);
-      }
-      .as h2 span {
-        color: var(--o);
-      }
-      .as p {
-        color: var(--tm);
-        font-size: 16px;
-        line-height: 1.85;
-        margin-bottom: 14px;
-        max-width: 640px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .abadges {
-        display: none;
-      }
-      .avis {
-        display: none;
       }
       /* CATEGORIES */
       .sec {
@@ -1057,10 +1379,10 @@
         color: var(--t, #111111);
       }
       .showcase-tab.active {
-        background: var(--t, #111111);
-        color: #ffffff;
-        border-color: var(--t, #111111);
-        font-weight: 600;
+        background: var(--o);
+        color: var(--bg);
+        border-color: var(--o);
+        font-weight: 500;
       }
       .fph h2 {
         font-family: var(--font-head);
@@ -1094,13 +1416,13 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: 44px;
-        height: 44px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         background: var(--nb);
         border: 1px solid var(--b);
         color: var(--t);
-        font-size: 16px;
+        font-size: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1134,7 +1456,9 @@
         left: -22px;
       }
       @media (max-width: 768px) {
-        .fp-nav-btn { display: none !important; }
+        .fp-nav-btn { 
+          display: none !important;
+        }
       }
       .fpc {
         background: transparent;
@@ -1227,7 +1551,16 @@
         text-align: center;
       }
       .fg {
-        display: none;
+        max-width: 1260px;
+        margin: 0 auto 48px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+      }
+      .fbr p {
+        color: var(--tm);
+        font-size: 14px;
+        line-height: 1.7;
       }
       .f-min {
         max-width: 600px;
@@ -1411,6 +1744,21 @@
         }
       }
 
+      
+      .btn-text {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        color: var(--o);
+        text-decoration: none;
+        font-size: 16px;
+        transition: opacity 0.2s;
+      }
+      .btn-text:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+      }
       @media (max-width: 900px) {
         
         .nl {
@@ -1504,13 +1852,6 @@
         .hdesc {
           max-width: 100%;
         }
-        .as {
-          grid-template-columns: 1fr;
-          padding: 0 24px;
-        }
-        .avis {
-          display: none;
-        }
         .cgrid {
           grid-template-columns: 1fr 1fr;
         }
@@ -1557,6 +1898,93 @@
           font-size: 11px;
           font-weight: 700;
           letter-spacing: 0.04em;
+        }
+      }
+
+      /* ── PRODUCT MARQUEE ── */
+      .pm-section {
+        margin: 60px 0;
+        overflow: hidden;
+      }
+      .pm-section:hover .fp-nav-btn {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .pm-track-container {
+        width: 100%;
+        position: relative;
+      }
+      .pm-track-container .fp-nav-btn.prev {
+        left: 24px;
+      }
+      .pm-track-container .fp-nav-btn.next {
+        right: 24px;
+      }
+      html[dir="rtl"] .pm-track-container .fp-nav-btn.prev {
+        left: auto;
+        right: 24px;
+      }
+      html[dir="rtl"] .pm-track-container .fp-nav-btn.next {
+        right: auto;
+        left: 24px;
+      }
+      .pm-track {
+        display: flex;
+        gap: 24px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding-bottom: 24px;
+        scroll-behavior: smooth;
+      }
+      .pm-track::-webkit-scrollbar {
+        display: none;
+      }
+      .pm-card {
+        width: 240px;
+        flex-shrink: 0;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        scroll-snap-align: start;
+      }
+      .pm-card img {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        background: #f4f4f4;
+      }
+      .pm-card-name {
+        font-family: var(--font-head);
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--t);
+        margin-bottom: 4px;
+      }
+      .pm-card-price {
+        font-family: var(--font-main);
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--o);
+      }
+      
+      @media (max-width: 768px) {
+        .pm-section {
+          margin: 40px 0;
+        }
+        .pm-card {
+          width: 140px;
+        }
+        .pm-card-name {
+          font-size: 13px;
+        }
+        .pm-card-price {
+          font-size: 12px;
+        }
+        .pm-track {
+          gap: 16px;
         }
       }
 
@@ -1829,10 +2257,6 @@
         .rs-card:hover img {
           transform: none;
         }
-        .as {
-          margin: 80px auto;
-          padding: 0 20px;
-        }
         .sec {
           padding: 80px 20px;
         }
@@ -1914,19 +2338,6 @@
           min-height: 48px;
         }
 
-        /* ABOUT */
-        .as {
-          padding: 0 16px;
-          margin: 40px auto;
-        }
-        .abadges {
-          gap: 8px;
-        }
-        .abadge {
-          font-size: 13px;
-          padding: 8px 14px;
-        }
-
         /* CATEGORIES */
         .sec {
           padding: 40px 16px;
@@ -1953,12 +2364,13 @@
 
         /* FEATURED PRODUCTS — horizontal snap slider */
         .fprods {
-          padding: 0 16px;
+          padding: 0;
         }
         .fph {
           margin-bottom: 12px;
           flex-wrap: wrap;
           gap: 10px;
+          padding: 0 16px;
         }
         .showcase-tabs-nav {
           width: 100%;
@@ -1971,7 +2383,7 @@
           overflow-x: auto;
           scroll-snap-type: x mandatory;
           gap: 12px;
-          padding: 0 16px 12px 0;
+          padding: 0 16px 12px 16px;
           scrollbar-width: none;
           -webkit-overflow-scrolling: touch;
           align-items: flex-start;
@@ -2565,212 +2977,221 @@
       }
       /* ── BUNDLES SECTION ── */
       .bundles-sec {
-        padding: 100px 0;
+        padding: 0 0 80px 0;
         background: var(--bg);
       }
       .bundles-sec .bs-inner {
-        max-width: 1400px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 0 48px;
+        padding: 0 24px;
       }
-      .bundles-sec .bs-head {
+      .bs-head {
         text-align: center;
-        margin-bottom: 52px;
+        margin-bottom: 48px;
       }
-      .bs-tag {
-        font-family: var(--font-body);
-        font-size: 10px;
-        letter-spacing: 0.38em;
+      .bs-icon {
+        font-size: 32px;
         color: var(--o);
-        text-transform: uppercase;
-        display: block;
-        margin-bottom: 14px;
+        margin-bottom: 8px;
       }
       .bs-h2 {
-        font-family: var(--font-head);
-        font-weight: 300;
-        font-size: clamp(28px, 4vw, 44px);
-        letter-spacing: 0.04em;
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: clamp(24px, 4vw, 36px);
         color: var(--t);
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
-      .bs-h2 em {
-        font-style: italic;
+      .bs-h2 span.highlight {
         color: var(--o);
       }
       .bs-sub {
         font-family: var(--font-body);
-        font-weight: 300;
-        font-size: 15px;
+        font-size: 16px;
         color: var(--tm);
-        letter-spacing: 0.04em;
       }
       .bs-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 24px;
         margin-bottom: 40px;
+        align-items: stretch;
       }
       .bundle-card {
-        border: 1px solid var(--b);
-        border-radius: 16px;
-        overflow: hidden;
         background: var(--s);
-        transition:
-          transform 0.35s ease,
-          box-shadow 0.35s ease;
-        cursor: pointer;
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
       }
       .bundle-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
       }
-      .bc-img {
-        aspect-ratio: 4/3;
+      .bundle-card.highlight {
+        border: 2px solid var(--o);
+        box-shadow: 0 8px 24px rgba(245,166,35,0.15);
+      }
+      .bc-img-wrapper {
         position: relative;
-        overflow: hidden;
-        background: linear-gradient(135deg, #f0e8dc, #d4c8b8);
+        aspect-ratio: 4/3;
+        background: var(--s2);
       }
-      .bc-img img {
+      .bc-img-wrapper img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.6s ease;
       }
-      .bundle-card:hover .bc-img img {
-        transform: scale(1.04);
-      }
-      .bc-tag {
+      .bc-badge {
         position: absolute;
-        top: 12px;
-        left: 12px;
-        background: var(--t);
-        color: var(--bg);
-        font-family: var(--font-body);
-        font-size: 9px;
-        font-weight: 400;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-        padding: 4px 12px;
-        border-radius: 999px;
-      }
-      .bc-save {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        background: var(--o);
-        color: #fff;
-        font-family: var(--font-body);
-        font-size: 9px;
-        font-weight: 400;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        padding: 4px 12px;
-        border-radius: 999px;
-      }
-      .bc-body {
-        padding: 20px;
-      }
-      .bc-name {
-        font-family: var(--font-head);
-        font-weight: 300;
-        font-size: 18px;
-        color: var(--t);
-        margin-bottom: 6px;
-        letter-spacing: 0.03em;
-      }
-      .bc-count {
-        font-family: var(--font-body);
+        top: 16px;
+        left: 16px;
+        background: #fff;
+        color: var(--od);
         font-size: 12px;
-        color: var(--tm);
-        letter-spacing: 0.08em;
-        margin-bottom: 14px;
-      }
-      .bc-thumbs {
-        display: flex;
-        margin-bottom: 16px;
-      }
-      .bc-thumb {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: 2px solid var(--s);
-        margin-right: -8px;
-        background: var(--b);
-        background-size: cover;
-        background-position: center;
-        font-size: 11px;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 20px;
         display: flex;
         align-items: center;
+        gap: 6px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+      .bundle-card.highlight .bc-badge {
+        background: var(--o);
+        color: #fff;
+      }
+      .bc-body {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        text-align: center;
+      }
+      .bc-name {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--t);
+        margin-bottom: 4px;
+      }
+      .bc-room-count {
+        font-size: 18px;
+        color: var(--o);
+        font-weight: 600;
+        margin-bottom: 24px;
+      }
+      .bc-rooms-list {
+        display: flex;
         justify-content: center;
+        gap: 12px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        border-bottom: 1px solid var(--b);
+        padding-bottom: 24px;
+      }
+      .bc-room-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
         color: var(--tm);
-        font-family: var(--font-body);
+        width: 45px;
+      }
+      .bc-room-item svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--tm);
+        stroke-width: 1.5;
+        fill: none;
       }
       .bc-prices {
-        margin-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        text-align: right;
       }
-      .bc-original {
-        font-family: var(--font-body);
-        font-size: 12px;
+      .bc-price-col {
+        display: flex;
+        flex-direction: column;
+      }
+      .bc-price-label {
+        font-size: 11px;
+        color: var(--tm);
+        margin-bottom: 4px;
+      }
+      .bc-price-old {
+        font-size: 16px;
         color: var(--tm);
         text-decoration: line-through;
-        opacity: 0.6;
-        display: block;
+        font-weight: 500;
       }
-      .bc-price {
-        font-family: var(--font-head);
-        font-weight: 300;
-        font-size: 24px;
+      .bc-price-new {
+        font-size: 22px;
         color: var(--o);
-        display: block;
-        margin-top: 2px;
-      }
-      .bc-savings {
-        font-family: var(--font-body);
-        font-size: 12px;
-        color: #4caf50;
-        display: block;
-        margin-top: 3px;
+        font-weight: 700;
       }
       .bc-btn {
         width: 100%;
-        padding: 12px;
-        background: var(--t);
-        color: var(--bg);
-        border: none;
-        border-radius: 999px;
-        font-family: var(--font-body);
-        font-weight: 300;
-        font-size: 11px;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: background 0.3s ease;
-      }
-      .bc-btn:hover {
-        background: var(--o);
-      }
-      .bc-btn.added {
-        background: #4caf50;
-      }
-      .bs-footer {
-        text-align: center;
-      }
-      .btn-text {
-        font-family: var(--font-body);
-        font-size: 12px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
+        background: transparent;
         color: var(--o);
-        text-decoration: none;
+        border: 1px solid var(--o);
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: auto;
       }
-      .btn-text:hover {
-        text-decoration: underline;
+      .bundle-card.highlight .bc-btn, .bc-btn:hover {
+        background: var(--o);
+        color: #fff;
+      }
+      .bs-trust-bar {
+        display: flex;
+        justify-content: space-between;
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        padding: 24px 32px;
+        margin-top: 24px;
+      }
+      .bs-trust-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .bs-trust-icon {
+        color: var(--o);
+      }
+      .bs-trust-icon svg {
+        width: 32px;
+        height: 32px;
+        stroke: currentColor;
+        fill: none;
+      }
+      .bs-trust-text {
+        text-align: right;
+      }
+      .bs-trust-title {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--t);
+      }
+      .bs-trust-sub {
+        font-size: 12px;
+        color: var(--tm);
       }
       @media (max-width: 1024px) {
-        .bs-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
+        .bs-grid { grid-template-columns: repeat(2, 1fr); }
+        .bs-trust-bar { flex-wrap: wrap; gap: 24px; }
+      }
+      @media (max-width: 768px) {
+        .bs-grid { grid-template-columns: 1fr; }
+        .bs-trust-item { width: 100%; }
       }
       @media (max-width: 640px) {
         .bundles-sec .bs-inner {
@@ -2950,6 +3371,8 @@
       
       html[dir="rtl"] .hero-slider,
       html[dir="rtl"] .hs-track,
+      html[dir="rtl"] .pb-slider,
+      html[dir="rtl"] .pb-track,
       html[dir="rtl"] .rs-cards {
         direction: ltr !important;
       }
@@ -2962,15 +3385,18 @@
         order: -1;
       }
 
-      html[dir="rtl"] .hs-prev {
+      html[dir="rtl"] .hs-prev,
+      html[dir="rtl"] .pb-prev {
         left: auto;
         right: 24px;
       }
-      html[dir="rtl"] .hs-next {
+      html[dir="rtl"] .hs-next,
+      html[dir="rtl"] .pb-next {
         right: auto;
         left: 24px;
       }
-      html[dir="rtl"] .hs-arrow svg {
+      html[dir="rtl"] .hs-arrow svg,
+      html[dir="rtl"] .pb-arrow svg {
         transform: scaleX(-1);
       }
 
@@ -2986,7 +3412,35 @@
       html[dir="rtl"] .cp.open { transform: translateX(0); }
       html[dir="rtl"] .cx { right: auto; left: 20px; }
       html[dir="rtl"] .breadcrumb-item:not(:last-child)::after { content: "‹"; }
-    </style>
+    
+      .bc-badge-signature {
+        background: linear-gradient(135deg, #d4af37, #f3e5ab) !important;
+        color: #000 !important;
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+      }
+      .bc-badge-signature svg { stroke: #000 !important; }
+
+      .bc-room-icon-wrap {
+        width: 44px;
+        height: 44px;
+        background: var(--s2);
+        border: 1px solid var(--b);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--o);
+        margin-bottom: 4px;
+        transition: all 0.3s ease;
+      }
+      .bundle-card:hover .bc-room-icon-wrap {
+        background: var(--o);
+        color: #fff;
+        border-color: var(--o);
+      }
+      .bc-room-item span { font-weight: 600; color: var(--t); font-size: 12px; text-align: center; }
+      .bc-room-icon-wrap svg { width: 22px; height: 22px; }
+</style>
   </head>
   <body>
     <!-- FURNITURE INTRO OVERLAY -->
@@ -3078,52 +3532,47 @@
     </section>
 
     <div class="pw">
-      <!-- DYNAMIC BANNER CONTAINER -->
-      <div id="dynamic-banners-container" style="display: none; margin: 40px auto 20px; max-width: 1200px; padding: 0 24px;">
-        <!-- Banners will be rendered dynamically here -->
-      </div>
-
-      <!-- BRAND STORY: DO NOT MODIFY THIS TEXT -->
-      <div class="as rev">
-        <div class="stag" data-t="about-tag">قصتنا</div>
-        <h2 data-t="about-h2">من ورشة صغيرة لحاجة أكبر</h2>
-        <p data-t="about-p1">
-          بدأت الحكاية سنة 1998… لما والدنا قرر يبني شغله بنفسه في مجال الأثاث، من بلد صغيرة في الجيزة اسمها البدرشين، واللي كانت معروفة من زمان بصناعة الموبيليا.
-        </p>
-        <p data-t="about-p2">
-          في البداية اختار يشتغل في تجارة الأثاث، وكان بيعتمد على منتجات دمياط، لأنها كانت وما زالت من أهم مدن صناعة الأثاث في مصر. وكعادة أي أب، دخلنا معاه الشغل من وإحنا صغيرين. اتعلمنا كل خطوة، وعشنا تفاصيل المهنة يوم بيوم، لحد ما بقت جزء من شخصيتنا.
-        </p>
-        <p data-t="about-p3">
-          وفي سنة 2020، خدنا خطوة جديدة… وبدأنا نصنع الأثاث بنفسنا، بالتوازي مع افتتاح أول فرع خارج بلدنا. والنهارده، بعد رحلة بدأت من ورشة صغيرة وحلم كبير، بقينا موجودين بفرعين باسم Mega Furniture، ولسه مكملين بنفس الشغف اللي بدأت بيه الحكاية.
-        </p>
-        <div
-          style="
-            margin-top: 36px;
-            padding-top: 28px;
-            border-top: 1px solid var(--b);
-          "
-        >
-          <div
-            style="
-              font-family: var(--font-head);
-              font-weight: 300;
-              font-size: 12px;
-              color: var(--t);
-              letter-spacing: 0.18em;
-              text-transform: uppercase;
-              margin-bottom: 4px;
-            "
-          >
-            MEGA <span style="color: var(--o)">FURNITURE</span>
+      <!-- PRODUCT MARQUEE -->
+      <section class="pm-section" id="pm-section" style="display: none">
+        <div class="pm-track-container">
+          <button class="fp-nav-btn prev" onclick="scrollPmTrack(-1)" aria-label="Previous">❮</button>
+          <div class="pm-track" id="pm-track">
+            <!-- Products injected by JS -->
           </div>
-          <div
-            style="font-size: 12px; color: var(--tm); letter-spacing: 0.08em"
-            data-t="brand-since"
-          >
-            تأسست 2020 · بخبرة من 1998
+          <button class="fp-nav-btn next" onclick="scrollPmTrack(1)" aria-label="Next">❯</button>
+        </div>
+      </section>
+
+      <!-- PROMO BANNERS -->
+      <div id="dynamic-banners-container" style="display: none; margin: 40px auto 20px; max-width: 1200px; padding: 0 24px;">
+        <section class="pb-slider" id="promoSlider">
+          <div class="pb-track" id="pbTrack">
+            <!-- slides injected by JS -->
+          </div>
+          <!-- Navigation arrows -->
+          <button class="pb-arrow pb-prev" id="pbPrev" onclick="promoPrev()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="15,18 9,12 15,6"/>
+            </svg>
+          </button>
+          <button class="pb-arrow pb-next" id="pbNext" onclick="promoNext()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </button>
+          <!-- Dots -->
+          <div class="pb-dots" id="pbDots"></div>
+        </section>
+      </div>
+      <section class="rm-section" id="rm-section" style="display: none">
+        <h2 class="rm-header" data-t="rm-title">What Our Customers Say</h2>
+        <div class="rm-track-container">
+          <div class="rm-track" id="rm-track">
+            <!-- Reviews injected by JS -->
           </div>
         </div>
-      </div>
+      </section>
+
       <!-- ROOM SHOWCASE -->
       <section class="rs-section" id="rs-section" style="display: none">
         <div class="rs-header">
@@ -3143,13 +3592,36 @@
               href="./pages/shop.html"
               style="font-size: 11px; padding: 10px 22px; letter-spacing: 0.2em"
               data-t="rs-see-all"
-              >تسوق الكل</a
+              >تسوق ال<span data-t="chk-all">All</span></a
             >
           </div>
         </div>
         <div class="rs-cards" id="rs-cards"></div>
         <div class="rs-dots" id="rs-dots"></div>
       </section>
+
+      <!-- SHOP THE LOOK -->
+      <section class="stl-section" id="stl-section" style="display: none">
+        <div class="stl-header">
+          <h2 data-t="stl-title">Visualize Your Space</h2>
+        </div>
+        <div class="stl-slider">
+          <div class="stl-track" id="stlTrack">
+            <!-- slides injected by JS -->
+          </div>
+          <button class="pb-arrow pb-prev" id="stlPrev" onclick="stlPrev()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="15,18 9,12 15,6"/>
+            </svg>
+          </button>
+          <button class="pb-arrow pb-next" id="stlNext" onclick="stlNext()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+
 
       <div class="fprods" id="fp-section" style="display: none">
         <div class="fph">
@@ -3164,7 +3636,7 @@
             href="./pages/shop.html"
             style="font-size: 11px; padding: 10px 22px; letter-spacing: 0.2em"
             data-t="feat-see-all"
-            >تسوق الكل</a
+            >تسوق ال<span data-t="chk-all">All</span></a
           >
         </div>
         <div style="position: relative;">
@@ -3199,7 +3671,7 @@
         >
           <img
             src="./logos/img-ad.jpg"
-            alt="عروض ميجا فرنيتشر"
+            alt="عروض Mega Furniture"
             style="
               width: 100%;
               height: 100%;
@@ -3214,27 +3686,7 @@
 
 
 
-    <!-- BUNDLES -->
-    <section class="bundles-sec" id="home-bundles-sec" style="display: none">
-      <div class="bs-inner">
-        <div class="bs-head">
-          <span class="bs-tag" data-t="bundles-tag"></span>
-          <h2 class="bs-h2">
-            <em data-t="bundles-h2-em"></em>
-            <span data-t="bundles-h2-rest"></span>
-          </h2>
-          <p class="bs-sub" data-t="bundles-sub"></p>
-        </div>
-        <div class="bs-grid" id="home-bs-grid"></div>
-        <div class="bs-footer">
-          <a
-            href="./pages/shop.html#bundles"
-            class="btn-text"
-            data-t="bundles-see-all"
-          ></a>
-        </div>
-      </div>
-    </section>
+    
 
     <!-- PHILOSOPHY -->
     <section class="philosophy rev">
@@ -3282,74 +3734,58 @@
           "
           data-t="cta-sub"
         >
-          أثاث فاخر يناسب كل بيت وكل ذوق — تصفح الآن واطلب مجاناً.
+          أثاث فاخر يناسب <span data-t="chk-all">All</span> بيت و<span data-t="chk-all">All</span> ذوق — تصفح الآن واطلب مجاناً.
         </p>
         <a class="bp" href="./pages/shop.html" data-t="cta-btn">تسوق الآن</a>
       </div>
     </div>
 
-    <footer>
-      <div class="f-min">
-        <div class="f-min-brand">
-          MEGA <span style="color: var(--o)">FURNITURE</span>
-        </div>
+            <footer>
+      <div class="fg">
         <div class="fbr">
-          <p data-t="footer-desc">
-            أثاث فاخر للبيت المصري · تأسست 2020 · بخبرة من 1998.
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <img src="./logos/mega-logo.jpg" alt="Logo" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;" onerror="this.style.display = 'none'" />
+            <div class="logo-wordmark">MEGA <span>FURNITURE</span></div>
+          </div>
+          <p data-ar="أثاث فاخر للبيوت المصرية · تأسست 2020 · خبرة منذ 1998" data-en="Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998">
+            Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998
           </p>
+          <div class="f-soc" style="display: flex; gap: 12px; margin-top: 16px;">
+            <a href="https://www.instagram.com/megafurniturehome/" target="_blank" title="Instagram" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="https://www.facebook.com/search/top?q=mega%20furniture&locale=ar_AR" target="_blank" title="Facebook" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" title="TikTok" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
+          </div>
         </div>
-        <ul class="f-min-links">
-          <li>
-            <a href="./pages/shop.html" data-t="footer-shop">تسوق</a>
-          </li>
-          <li>
-            <a href="./pages/about.html" data-t="footer-company">عنّا</a>
-          </li>
-          <li>
-            <a href="./pages/contact.html" data-t="footer-support">تواصل</a>
-          </li>
-        </ul>
-        <div class="f-soc">
-          <a
-            href="https://www.instagram.com/megafurniturehome/"
-            target="_blank"
-            title="Instagram"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://www.facebook.com/search/top?q=mega%20furniture&locale=ar_AR"
-            target="_blank"
-            title="Facebook"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://www.tiktok.com/@khaledmohyrashdan"
-            target="_blank"
-            title="TikTok"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"
-              />
-            </svg>
-          </a>
+        <div class="fc">
+          <h4 data-ar="تسوق" data-en="Shop">Shop</h4>
+          <ul>
+            <li><a href="./pages/shop.html?cat=living-room" data-ar="غرف معيشة" data-en="Living Rooms">Living Rooms</a></li>
+            <li><a href="./pages/shop.html?cat=bedroom" data-ar="غرف نوم" data-en="Bedrooms">Bedrooms</a></li>
+            <li><a href="./pages/shop.html?cat=dining" data-ar="سفرة" data-en="Dining Rooms">Dining Rooms</a></li>
+            <li><a href="./pages/shop.html?cat=home-office" data-ar="غرف مكتب" data-en="Home Office">Home Office</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="الشركة" data-en="Company">Company</h4>
+          <ul>
+            <li><a href="./pages/about.html" data-ar="عن ميجا" data-en="About Us">About Us</a></li>
+            <li><a href="https://www.instagram.com/megafurniturehome/" target="_blank" data-ar="انستجرام" data-en="Instagram">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" data-ar="تيك توك" data-en="TikTok">TikTok</a></li>
+            <li><a href="./pages/videos.html" data-ar="فيديوهات" data-en="Videos">Videos</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="دعم" data-en="Support">Support</h4>
+          <ul>
+            <li><a href="./pages/contact.html" data-ar="الاسترجاع" data-en="Returns">Returns</a></li>
+            <li><a href="./pages/about.html#warranty" data-ar="الضمان" data-en="Warranty">Warranty</a></li>
+            <li><a href="./pages/contact.html" data-ar="واتساب" data-en="WhatsApp">WhatsApp</a></li>
+          </ul>
         </div>
       </div>
       <div class="fb">
-        <span data-t="footer-copy"
-          >© 2026 Mega Furniture · ميجا فرنيتشر.</span
-        >
-        <span data-t="footer-made">صُنع لمصر</span>
+        <span data-ar="© 2026 ميجا فرنيتشر." data-en="© 2026 Mega Furniture.">© 2026 Mega Furniture.</span>
+        <span data-ar="صُنع لمصر" data-en="Made for Egypt">Made for Egypt</span>
       </div>
     </footer>
 
@@ -3400,20 +3836,28 @@
     </div>
 
     <script>
-      (function () {
-        if (!localStorage.getItem("megaTheme"))
-          localStorage.setItem("megaTheme", "light");
-        document.documentElement.setAttribute(
-          "data-theme",
-          localStorage.getItem("megaTheme"),
-        );
-      })();
+      
 
       /* ── LANGUAGE SYSTEM ── */
       const TRANS = {
         ar: {
+          "footer-desc": "أثاث فاخر للبيوت المصرية - تأسست 2020 - خبرة منذ 1998.",
+          "ft-shop": "تسوق",
+          "ft-living": "غرف المعيشة",
+          "ft-bed": "غرف النوم",
+          "ft-dining": "غرف السفرة",
+          "ft-company": "الشركة",
+          "ft-about": "عن ميجا",
+          "ft-support": "الدعم",
+          "ft-warranty": "ضمان ضد عيوب الصناعة",
+          "footer-copy": "© 2026 ميجا فرنيتشر.",
+          "footer-made": "صُنع لمصر",
+
           "nav-home": "الرئيسية",
+          "page-title": "Mega Furniture | الرئيسية",
+          "page-title": "Mega Furniture | الرئيسية",
           "nav-shop": "تسوق",
+          "nav-offers": "العروض",
           "nav-videos": "فيديوهات",
           "nav-about": "من نحن",
           "nav-reviews": "آراء",
@@ -3433,19 +3877,11 @@
           "hg-bed": "غرفة نوم",
           "hg-dining": "سفرة",
           "hg-tv": "وحدة TV",
-          "about-tag": "قصتنا",
-          "about-h2": "من ورشة صغيرة لحاجة أكبر",
-          "about-p1":
-            "بدأت الحكاية سنة 1998… لما والدنا قرر يبني شغله بنفسه في مجال الأثاث، من بلد صغيرة في الجيزة اسمها البدرشين، واللي كانت معروفة من زمان بصناعة الموبيليا.",
-          "about-p2":
-            "في البداية اختار يشتغل في تجارة الأثاث، وكان بيعتمد على منتجات دمياط، لأنها كانت وما زالت من أهم مدن صناعة الأثاث في مصر. وكعادة أي أب، دخلنا معاه الشغل من وإحنا صغيرين. اتعلمنا كل خطوة، وعشنا تفاصيل المهنة يوم بيوم، لحد ما بقت جزء من شخصيتنا.",
-          "about-p3":
-            "وفي سنة 2020، خدنا خطوة جديدة… وبدأنا نصنع الأثاث بنفسنا، بالتوازي مع افتتاح أول فرع خارج بلدنا. والنهارده، بعد رحلة بدأت من ورشة صغيرة وحلم كبير، بقينا موجودين بفرعين باسم Mega Furniture، ولسه مكملين بنفس الشغف اللي بدأت بيه الحكاية.",
           badge1: "توصيل مجاني",
           badge2: "المعاينة قبل الاستلام",
           badge3: "تركيب متخصص",
           badge4: "ضمان شامل للجودة",
-          "footer-copy": "© 2026 Mega Furniture · ميجا فرنيتشر.",
+          "footer-copy": "© 2026 Mega Furniture · Mega Furniture.",
           "footer-made": "صُنع لمصر",
           "cat1-tag": "معيشة",
           "cat1-name": "غرف المعيشة",
@@ -3459,7 +3895,7 @@
           "cat3-name": "غرف السفرة",
           "cat3-desc": "طاولات وكراسي تحوّل وجبة العيلة لذكرى.",
           "cat3-price": "من EGP 5,200",
-          "feat-title": "منتجاتنا <span>المميزة</span>",
+          "feat-title": "منتجاتنا المميزة",
           "feat-see-all": "تسوق الكل ←",
           "tag-new": "جديد",
           "tag-best": "الأكثر مبيعاً",
@@ -3469,6 +3905,8 @@
           "prod1-desc": "كنبة بوكليه كريمية بأرجل خشب زان صلب.",
           "prod2-desc": "سرير مبطن بإطار خشب مصمت وتفاصيل ذهبية.",
           "prod3-desc": "طاولة سفرة فاخرة بـ6 كراسي وتشطيب رخام.",
+          "rm-title": "رأي عملائنا",
+          "stl-title": "تخيل مساحتك",
           "vid-title": "من <span>ريلزنا</span>",
           "vid-see-all": "شوف الكل ←",
           "vid1-title": "أحدث عروضنا",
@@ -3495,13 +3933,7 @@
           "f-bedroom": "غرف النوم",
           "f-dining": "غرف السفرة",
           "f-new": "جديد",
-          "f-about": "من نحن",
-          "f-videos": "فيديوهاتنا",
-          "f-returns": "إرجاع",
-          "f-warranty": "الضمان ضد عيوب الصناعة",
-          "footer-copy":
-            "© 2026 Mega Furniture · ميجا فرنيتشر. جميع الحقوق محفوظة.",
-          "brand-since": "تأسست 2020 · بخبرة من 1998",
+          "brand-store": "MEGA FURNITURE",
           "rs-tag": "تصفح حسب الغرفة",
           "rs-h2": "غرف تحكي قصتك",
           "rs-see-all": "تسوق الكل",
@@ -3509,7 +3941,6 @@
           "philosophy-quote":
             "بيتك مش مجرد مكان — هو القصة اللي تحكيها كل يوم بدون كلام.",
           "philosophy-attr": "MEGA FURNITURE · منذ 1998",
-          "feat-title": "منتجاتنا المميزة",
           "showcase-tab-best": "الأكثر مبيعاً",
           "showcase-tab-new": "وصل حديثاً",
           "showcase-tab-featured": "المميزة",
@@ -3533,8 +3964,23 @@
           "wa-menu-web": "الدعم والطلبات (الموقع)",
         },
         en: {
+          "footer-desc": "Premium furniture for Egyptian homes - Est. 2020 - Experience since 1998.",
+          "ft-shop": "SHOP",
+          "ft-living": "Living Rooms",
+          "ft-bed": "Bedrooms",
+          "ft-dining": "Dining Rooms",
+          "ft-company": "COMPANY",
+          "ft-about": "About Us",
+          "ft-support": "SUPPORT",
+          "ft-warranty": "Warranty against manufacturing defects",
+          "footer-copy": "© 2026 Mega Furniture.",
+          "footer-made": "Made for Egypt",
+
           "nav-home": "Home",
+          "page-title": "Mega Furniture | Home",
+          "page-title": "Mega Furniture | Home",
           "nav-shop": "Shop",
+          "nav-offers": "Offers",
           "nav-videos": "Videos",
           "nav-about": "About Us",
           "nav-reviews": "Reviews",
@@ -3555,14 +4001,6 @@
           "hg-bed": "Bedroom Set",
           "hg-dining": "Dining Set",
           "hg-tv": "TV Unit",
-          "about-tag": "Our Story",
-          "about-h2": "From a Small Workshop to Something Bigger",
-          "about-p1":
-            "The story began in 1998... when our father decided to build his own business in the furniture industry, starting from a small town in Giza called El Badrashein, which has long been renowned for furniture craftsmanship.",
-          "about-p2":
-            "In the beginning, he chose to work in furniture trading, relying on products from Damietta, as it was—and continues to be—one of the most important hubs for furniture manufacturing in Egypt. As with any father, he brought us into the business when we were young. We learned every single step, living the details of the craft day by day, until it became an inseparable part of who we are.",
-          "about-p3":
-            "In 2020, we took a new step forward... we started manufacturing the furniture ourselves, alongside opening our very first showroom outside our hometown. Today, after a journey that began with a small workshop and a big dream, we have expanded to two showrooms under the name Mega Furniture, and we continue onward with the very same passion that started it all.",
           badge1: "Free Delivery",
           badge2: "Inspect on Delivery",
           badge3: "Expert Assembly",
@@ -3597,6 +4035,8 @@
           "prod2-desc":
             "Upholstered platform bed with solid wood frame and gold details.",
           "prod3-desc": "Luxury 6-seat dining set with marble finish.",
+          "rm-title": "What Our Customers Say",
+          "stl-title": "Visualize Your Space",
           "vid-title": "Our <span>Latest Reels</span>",
           "vid-see-all": "See All →",
           "vid1-title": "Our Latest Looks",
@@ -3620,19 +4060,11 @@
             "Tap the button below to review your cart and place an order.",
           "footer-desc":
             "Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998.",
+          "footer-desc": "Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998.",
           "footer-shop": "Shop",
           "footer-company": "Company",
           "footer-support": "Support",
-          "f-living": "Living Rooms",
-          "f-bedroom": "Bedrooms",
-          "f-dining": "Dining Rooms",
-          "f-new": "New Arrivals",
-          "f-about": "About Us",
-          "f-videos": "Videos",
-          "f-returns": "Returns",
-          "f-warranty": "Warranty against manufacturing defects",
-          "footer-copy": "© 2026 Mega Furniture. All rights reserved.",
-          "brand-since": "Est. 2020 · Experience since 1998",
+          "brand-store": "MEGA FURNITURE",
           "rs-tag": "Browse by Room",
           "rs-h2": "Rooms That Tell Your Story",
           "rs-see-all": "Shop All",
@@ -3677,7 +4109,7 @@
         });
         document.querySelectorAll("[data-ar],[data-en]").forEach((el) => {
           const txt = el.getAttribute("data-" + lang);
-          if (txt != null) el.textContent = txt;
+          if (txt != null) el.innerHTML = txt;
         });
         document.querySelectorAll(".langbtn, #langbtn, #lang-btn").forEach((btn) => {
           btn.textContent = lang === "ar" ? "EN" : "عربي";
@@ -3688,6 +4120,9 @@
         }
         if (typeof window.renderGenAnn === "function") {
           window.renderGenAnn();
+        }
+        if (typeof renderPromoTitles === "function") {
+          renderPromoTitles();
         }
       }
       function toggleLang() {
@@ -3819,10 +4254,355 @@
           </div>`;
       }
 
+      /* ── PROMO BANNER SLIDER ── */
+      let pbSlides = [];
+      let pbCurrent = 0;
+      let pbTimer = null;
+      const PB_INTERVAL = 3800; // 3.8 seconds per slide
+
+      async function loadPromoSlider() {
+        try {
+          const res = await fetch(window.location.origin + '/api/promo-banners');
+          const banners = await res.json();
+          const active = banners.filter(b => b.active);
+          if (!active.length) {
+            document.getElementById('dynamic-banners-container').style.display = 'none';
+            return;
+          }
+          pbSlides = active;
+          document.getElementById('dynamic-banners-container').style.display = 'block';
+          buildPromoSlider();
+          startPromoTimer();
+        } catch(e) {
+          console.error('Promo slider error:', e);
+          document.getElementById('dynamic-banners-container').style.display = 'none';
+        }
+      }
+
+      function buildPromoSlider() {
+        const track = document.getElementById('pbTrack');
+        const dots  = document.getElementById('pbDots');
+        if (!track || !dots) return;
+        const currentLang = localStorage.getItem("megaLang") || "en";
+
+        track.innerHTML = pbSlides.map((b, i) => {
+          const title = currentLang === 'ar' ? (b.titleAr || '') : (b.titleEn || '');
+          const titleHtml = title ? `<div class="pb-title">${title}</div>` : '';
+          return `
+          <div class="pb-slide" onclick="pbClick(${i})">
+            <img src="${iu(b.image)}" alt="promo ${i+1}" loading="lazy" draggable="false">
+            ${titleHtml}
+          </div>
+        `}).join('');
+
+        dots.innerHTML = pbSlides.map((_, i) => 
+          `<button class="hs-dot ${i===0?'active':''}" onclick="goPromoSlide(${i})"></button>`
+        ).join('');
+
+        const prevBtn = document.getElementById('pbPrev');
+        const nextBtn = document.getElementById('pbNext');
+        if (prevBtn && nextBtn) {
+          if (pbSlides.length <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+          } else {
+            prevBtn.style.display = '';
+            nextBtn.style.display = '';
+          }
+        }
+      }
+
+      function goPromoSlide(idx) {
+        if (!pbSlides.length) return;
+        pbCurrent = ((idx % pbSlides.length) + pbSlides.length) % pbSlides.length;
+        const track = document.getElementById('pbTrack');
+        if (track) track.style.transform = `translateX(-${pbCurrent * 100}%)`;
+        document.querySelectorAll('#pbDots .hs-dot').forEach((d,i) => {
+          d.classList.toggle('active', i === pbCurrent);
+        });
+      }
+
+      function promoNext() { goPromoSlide(pbCurrent + 1); resetPromoTimer(); }
+      function promoPrev() { goPromoSlide(pbCurrent - 1); resetPromoTimer(); }
+      function pbClick(idx) {
+        const b = pbSlides[idx];
+        if (b && b.link) window.location.href = b.link;
+      }
+
+      function initPromoTouch() {
+        const slider = document.getElementById('promoSlider');
+        if (!slider) return;
+        let startX = 0;
+        slider.addEventListener('touchstart', e => {
+          startX = e.touches[0].clientX;
+        }, {passive:true});
+        slider.addEventListener('touchend', e => {
+          const diff = startX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) diff > 0 ? promoNext() : promoPrev();
+        }, {passive:true});
+      }
+
+      function startPromoTimer() {
+        if (pbSlides.length <= 1) return;
+        pbTimer = setInterval(() => goPromoSlide(pbCurrent + 1), PB_INTERVAL);
+      }
+      function resetPromoTimer() {
+        clearInterval(pbTimer);
+        startPromoTimer();
+      }
+
+      function renderPromoTitles() {
+        const currentLang = localStorage.getItem("megaLang") || "en";
+        const slides = document.querySelectorAll('.pb-slide');
+        slides.forEach((slide, i) => {
+          const b = pbSlides[i];
+          if (!b) return;
+          const title = currentLang === 'ar' ? (b.titleAr || '') : (b.titleEn || '');
+          const titleEl = slide.querySelector('.pb-title');
+          if (titleEl) {
+            titleEl.textContent = title;
+          } else if (title) {
+            slide.insertAdjacentHTML('beforeend', `<div class="pb-title">${title}</div>`);
+          }
+        });
+      }
+
+      async function loadProductMarquee() {
+        try {
+          const res = await fetch('/api/products?marquee=true');
+          const products = await res.json();
+          const section = document.getElementById('pm-section');
+          const track = document.getElementById('pm-track');
+          if (!products.length) {
+            section.style.display = 'none';
+            return;
+          }
+          section.style.display = 'block';
+
+          const currentLang = localStorage.getItem("megaLang") || "en";
+          
+          let htmlStr = '';
+          const buildCard = (p) => {
+            const name = currentLang === 'ar' ? (p.nameAr || p.nameEn) : (p.nameEn || p.nameAr);
+            const priceHtml = p.salePrice ? `<span style="color:var(--o);">LE ${p.salePrice.toLocaleString()}</span> <span style="text-decoration:line-through;color:var(--tm);font-size:0.9em;margin-left:4px;">LE ${p.originalPrice.toLocaleString()}</span>` : `LE ${(p.price || 0).toLocaleString()}`;
+            return `
+              <a href="./pages/shop.html?product=${p.id}" class="pm-card">
+                <img src="${iu(p.mainPhoto)}" loading="lazy" alt="${name}">
+                <div class="pm-card-name" data-t-pid="${p.id}" data-ar="${p.nameAr || p.nameEn}" data-en="${p.nameEn || p.nameAr}">${name}</div>
+                <div class="pm-card-price">${priceHtml}</div>
+              </a>
+            `;
+          };
+
+          let chunkHtml = '';
+          products.forEach(p => chunkHtml += buildCard(p));
+          track.innerHTML = chunkHtml;
+          
+          setTimeout(() => {
+            if (track.scrollWidth <= track.clientWidth) {
+              const container = document.querySelector('.pm-track-container');
+              if (container) {
+                container.querySelectorAll('.fp-nav-btn').forEach(btn => btn.style.display = 'none');
+              }
+            }
+          }, 100);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      /* ── REVIEWS MARQUEE ── */
+      async function loadReviewsMarquee() {
+        try {
+          const res = await fetch('/api/reviews?featured=true');
+          const reviews = await res.json();
+          const track = document.getElementById('rm-track');
+          const section = document.getElementById('rm-section');
+          if (!reviews || !reviews.length) {
+            if (section) section.style.display = 'none';
+            return;
+          }
+          if (section) section.style.display = 'block';
+          if (track) {
+            let chunk = [...reviews];
+            while (chunk.length < 8) {
+              chunk = [...chunk, ...reviews];
+            }
+            // Exactly 2 identical halves for 50% translation seamless loop
+            const displayReviews = [...chunk, ...chunk];
+            track.innerHTML = displayReviews.map(r => {
+              const photoHtml = r.photo ? `<img src="${r.photo.startsWith('http') ? r.photo : '/uploads/' + r.photo}" loading="lazy" class="rm-photo" alt="Customer Photo">` : '';
+              return `
+              <div class="rm-card">
+                ${photoHtml}
+                <div class="rm-stars">${`<svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg>`.repeat(r.rating)}${`<svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon></svg>`.repeat(5-r.rating)}</div>
+                <div class="rm-text">"${r.comment || ''}"</div>
+                <div class="rm-author">${r.customerName}</div>
+                <div class="rm-product">${r.productName || r.productSku || ''}</div>
+              </div>
+              `;
+            }).join('');
+          }
+        } catch (e) {
+          console.error('Reviews marquee error:', e);
+        }
+      }
+
+      /* ── SHOP THE LOOK ── */
+      let stlSlides = [];
+      let stlCurrent = 0;
+      let activeTooltip = null;
+
+      async function loadShopTheLook() {
+        try {
+          const res = await fetch('/api/shop-the-look');
+          stlSlides = await res.json();
+          const section = document.getElementById('stl-section');
+          if (!stlSlides || !stlSlides.length) {
+            if (section) section.style.display = 'none';
+            return;
+          }
+          if (section) section.style.display = 'block';
+          buildStlSlider();
+        } catch (e) {
+          console.error('Shop the Look error:', e);
+        }
+      }
+
+      function buildStlSlider() {
+        const track = document.getElementById('stlTrack');
+        if (!track) return;
+        
+        track.innerHTML = stlSlides.map((s, i) => {
+          const hotspotsHtml = (s.hotspots || []).map((hs, hidx) => {
+            const isNearBottom = hs.y > 40;
+            const posStyle = isNearBottom
+              ? `left: ${hs.x}%; bottom: calc(${100 - hs.y}% + 12px);`
+              : `left: ${hs.x}%; top: calc(${hs.y}% + 12px);`;
+            const ttClass = isNearBottom ? "stl-tooltip stl-tooltip-up" : "stl-tooltip";
+            return `
+              <div class="stl-hotspot" style="left: ${hs.x}%; top: ${hs.y}%" onclick="toggleTooltip(event, '${hs.productId}', ${i}, ${hidx})"></div>
+              <a href="#" class="${ttClass}" id="tooltip-${i}-${hidx}" style="${posStyle}">
+                <div class="stl-tt-content">Loading...</div>
+              </a>
+            `;
+          }).join('');
+
+          return `
+          <div class="stl-slide">
+            <img src="${iu(s.image)}" alt="Shop the look ${i+1}" loading="lazy">
+            ${hotspotsHtml}
+          </div>
+        `}).join('');
+
+        const prevBtn = document.getElementById('stlPrev');
+        const nextBtn = document.getElementById('stlNext');
+        if (prevBtn && nextBtn) {
+          if (stlSlides.length <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+          } else {
+            prevBtn.style.display = '';
+            nextBtn.style.display = '';
+          }
+        }
+      }
+
+      function goStlSlide(idx) {
+        if (!stlSlides.length) return;
+        stlCurrent = ((idx % stlSlides.length) + stlSlides.length) % stlSlides.length;
+        const track = document.getElementById('stlTrack');
+        if (track) track.style.transform = `translateX(-${stlCurrent * 100}%)`;
+        hideActiveTooltip();
+      }
+
+      function stlNext() { goStlSlide(stlCurrent + 1); }
+      function stlPrev() { goStlSlide(stlCurrent - 1); }
+
+      function initStlTouch() {
+        const slider = document.querySelector('.stl-slider');
+        if (!slider) return;
+        let startX = 0;
+        slider.addEventListener('touchstart', e => {
+          startX = e.touches[0].clientX;
+        }, {passive:true});
+        slider.addEventListener('touchend', e => {
+          const diff = startX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) diff > 0 ? stlNext() : stlPrev();
+        }, {passive:true});
+      }
+
+      async function toggleTooltip(e, productId, slideIdx, hsIdx) {
+        e.stopPropagation();
+        e.preventDefault();
+        const tooltipId = `tooltip-${slideIdx}-${hsIdx}`;
+        const tooltipEl = document.getElementById(tooltipId);
+        
+        if (activeTooltip && activeTooltip !== tooltipEl) {
+          activeTooltip.classList.remove('show');
+        }
+
+        if (tooltipEl.classList.contains('show')) {
+          tooltipEl.classList.remove('show');
+          activeTooltip = null;
+          return;
+        }
+
+        tooltipEl.classList.add('show');
+        activeTooltip = tooltipEl;
+
+        if (!productId) {
+          tooltipEl.innerHTML = `<div class="stl-tt-name" style="padding: 10px;">Coming Soon</div>`;
+          return;
+        }
+
+        if (!tooltipEl.dataset.loaded) {
+          try {
+            const res = await fetch(`/api/products/${productId}`);
+            const product = await res.json();
+            
+            if (res.ok && product && !product.error) {
+              const currentLang = localStorage.getItem("megaLang") || "en";
+              const name = currentLang === 'ar' ? (product.nameAr || product.nameEn) : (product.nameEn || product.nameAr);
+              const priceHtml = product.salePrice ? `<span style="color:var(--o);">LE ${product.salePrice.toLocaleString()}</span> <span style="text-decoration:line-through;color:var(--tm);font-size:0.9em;margin-left:4px;">LE ${product.originalPrice.toLocaleString()}</span>` : `LE ${(product.price || 0).toLocaleString()}`;
+              tooltipEl.href = `./pages/shop.html?product=${product.id}`;
+              tooltipEl.innerHTML = `
+                <img src="${iu(product.mainPhoto || (product.photos && product.photos[0]))}" class="stl-tt-img" onerror="this.style.display='none'">
+                <div class="stl-tt-name" data-t-pid="${product.id}" data-ar="${product.nameAr || product.nameEn}" data-en="${product.nameEn || product.nameAr}">${name}</div>
+                <div class="stl-tt-price">${priceHtml}</div>
+              `;
+              tooltipEl.dataset.loaded = "true";
+            } else {
+              tooltipEl.innerHTML = `<div class="stl-tt-name">Product not found</div>`;
+            }
+          } catch(err) {
+            tooltipEl.innerHTML = `<div class="stl-tt-name">Error loading product</div>`;
+          }
+        }
+      }
+
+      function hideActiveTooltip() {
+        if (activeTooltip) {
+          activeTooltip.classList.remove('show');
+          activeTooltip = null;
+        }
+      }
+
+      // Hide tooltips when clicking outside
+      document.addEventListener('click', () => {
+        hideActiveTooltip();
+      });
+
       // Initialize
       document.addEventListener('DOMContentLoaded', () => {
         loadHeroSlider();
         initSliderTouch();
+        loadProductMarquee();
+        loadPromoSlider();
+        initPromoTouch();
+        loadReviewsMarquee();
+        loadShopTheLook();
+        initStlTouch();
       });
 
       (function () {
@@ -3871,7 +4651,7 @@
         updBadge();
         renderCart();
       }
-      function renderCart() {
+            function renderCart() {
         const el = document.getElementById("clist"),
           cc = document.getElementById("cc") || document.getElementById("ccount"),
           ft = document.getElementById("cftr"),
@@ -4152,7 +4932,7 @@
           const res = await fetch(window.location.origin + "/api/categories");
           if (!res.ok) throw new Error("fetch failed");
           allCats = await res.json();
-          cats = allCats.filter((cat) => !cat.parentId);
+          cats = allCats.filter((cat) => !cat.parentId && cat.showInDreamRoom !== false);
         } catch (e) {
           if (rsSection) rsSection.style.display = "none";
           return;
@@ -4413,6 +5193,15 @@
         const scrollAmount = grid.offsetWidth * 0.7;
         const sign = isRtl ? -1 : 1;
         grid.scrollBy({ left: dir * sign * scrollAmount, behavior: "smooth" });
+      }
+
+      function scrollPmTrack(dir) {
+        const track = document.getElementById("pm-track");
+        if (!track) return;
+        const isRtl = document.documentElement.dir === "rtl";
+        const scrollAmount = track.offsetWidth * 0.7;
+        const sign = isRtl ? -1 : 1;
+        track.scrollBy({ left: dir * sign * scrollAmount, behavior: "smooth" });
       }
 
       async function loadShowcase() {
@@ -5074,8 +5863,14 @@
             l === "ar"
               ? window.megaAnn.linkText_ar || window.megaAnn.linkText_en
               : window.megaAnn.linkText_en || window.megaAnn.linkText_ar;
-          if (lt)
-            html += ` <a href="${window.megaAnn.link}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+          if (lt) {
+              let finalLink = window.megaAnn.link;
+              const isSale = msg.toLowerCase().match(/sale|discount|offer|خصم|عرض|تخفيض/);
+              if (isSale && finalLink.includes("shop.html")) {
+                finalLink = "pages/offers.html";
+              }
+              html += ` <a href="${finalLink}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
+            }
         }
         const msgEl = document.getElementById("gen-ann-msg");
         if (msgEl) msgEl.innerHTML = html;
@@ -5121,58 +5916,68 @@
 
       /* ── ACTIVE COLLECTION ── */
       /* ── BUNDLES ── */
-      function renderBundleCard(b, lang) {
-        const name =
-          lang === "ar" ? b.nameAr || b.nameEn : b.nameEn || b.nameAr;
-        const imgHtml = b.image
-          ? `<img src="${b.image.startsWith("http") ? b.image : "/uploads/" + b.image}" alt="${name}" loading="lazy"/>`
-          : "";
-        const saveHtml = b.discountPct
-          ? `<span class="bc-save">${lang === "ar" ? "وفّر" : "Save"} ${b.discountPct}%</span>`
-          : "";
-        const items = b.items || [];
-        const thumbs = items
-          .slice(0, 4)
-          .map((p) => {
-            if (p.mainPhoto) {
-              const src = p.mainPhoto.startsWith("http")
-                ? p.mainPhoto
-                : "/uploads/" + p.mainPhoto;
-              return `<div class="bc-thumb" style="background-image:url('${src}')"></div>`;
-            }
-            const init = (p.nameEn || p.nameAr || "?")[0];
-            return `<div class="bc-thumb">${init}</div>`;
-          })
-          .join("");
-        const more =
-          items.length > 4
-            ? `<div class="bc-thumb">+${items.length - 4}</div>`
-            : "";
+            function renderBundleCard(b, lang) {
+        const name = lang === "ar" ? b.nameAr || b.nameEn : b.nameEn || b.nameAr;
+        const imgUrl = b.image ? (b.image.startsWith("http") ? b.image : "/uploads/" + b.image) : "./logos/mega-logo.jpg";
+        const imgHtml = `<img src="${imgUrl}" alt="${name}" loading="lazy" onerror="this.style.opacity=0.1" />`;
+        
+        const badgeTxt = lang === "ar" ? b.badgeAr : b.badgeEn;
+        let iconSvg = '';
+        if (b.badgeIcon === 'star') iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+        else if (b.badgeIcon === 'fire') iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"></path></svg>`;
+        else if (b.badgeIcon === 'crown') iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="2 20 22 20 19 4 15 10 12 4 9 10 5 4 2 20"></polygon></svg>`;
+        else iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>`;
+        
+        
+        let badgeClass = "bc-badge";
+        if (b.tier === 'signature') {
+            badgeClass += " bc-badge-signature";
+        }
+        const badgeHtml = badgeTxt ? `<div class="${badgeClass}">${iconSvg} ${badgeTxt}</div>` : '';
+
+        const isHighlight = b.tier === 'complete';
+        
+        const roomCountStr = (b.items && b.items.length) ? (b.items.length + (lang === "ar" ? " قطع" : " Items")) : "";
+        
+        const roomsHtml = (b.rooms || []).map(r => {
+          const rName = lang === "ar" ? r.nameAr || r.nameEn : r.nameEn || r.nameAr;
+          // Simple icon mapping fallback
+          let rIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+          if(r.icon === 'bed') rIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v9h18v-9"></path><path d="M5 16v-2"></path><path d="M19 16v-2"></path><path d="M3 10h18"></path><path d="M8 7v3"></path><path d="M16 7v3"></path></svg>';
+          else if(r.icon === 'sofa' || r.icon === 'armchair') rIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2"></path><path d="M4 16c-1.1 0-2-.9-2-2V9h20v5c0 1.1-.9 2-2 2H4z"></path><path d="M6 16v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2"></path></svg>';
+          else if(r.icon === 'dining') rIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21v-4"></path><path d="M19 21v-4"></path><path d="M3 13h18"></path><path d="M12 17v-4"></path><path d="M4 13l2-10h12l2 10"></path></svg>';
+          else if(r.icon === 'baby' || r.icon === 'youth') rIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 21h4"></path><path d="M12 21v-6"></path><path d="M8 10h8"></path><path d="M4 5h16"></path><path d="M6 5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5"></path></svg>';
+          
+          return `<div class="bc-room-item">
+            <div class="bc-room-icon-wrap">${rIcon}</div>
+            <span>${rName}</span>
+          </div>`;
+        }).join('');
+        
         const origFmt = "EGP " + Number(b.originalTotal || 0).toLocaleString();
         const bndFmt = "EGP " + Number(b.bundlePrice || 0).toLocaleString();
-        const savAmt =
-          Number(b.originalTotal || 0) - Number(b.bundlePrice || 0);
-        const countLbl =
-          lang === "ar"
-            ? `يشمل ${items.length} منتجات`
-            : `Includes ${items.length} products`;
-        const addLbl = t("bundles-add");
-        const savLbl =
-          lang === "ar"
-            ? `توفر EGP ${savAmt.toLocaleString()}`
-            : `Save EGP ${savAmt.toLocaleString()}`;
-        return `<div class="bundle-card" onclick="location.href='./pages/bundle.html?id=${b.id}'">
-          <div class="bc-img">${imgHtml}${saveHtml}</div>
+        
+        const priceLabelOld = lang === "ar" ? "السعر قبل الخصم" : "Price before discount";
+        const priceLabelNew = lang === "ar" ? "السعر بعد الخصم" : "Price after discount";
+        const btnLbl = lang === "ar" ? "شوف تفاصيل الباقة >" : "View Bundle Details >";
+        
+        return `<div class="bundle-card ${isHighlight ? 'highlight' : ''}" onclick="location.href='./pages/bundle.html?id=${b.id}'">
+          <div class="bc-img-wrapper">${imgHtml}${badgeHtml}</div>
           <div class="bc-body">
             <div class="bc-name">${name}</div>
-            <div class="bc-count">${countLbl}</div>
-            <div class="bc-thumbs">${thumbs}${more}</div>
+            <div class="bc-room-count">${roomCountStr}</div>
+            <div class="bc-rooms-list">${roomsHtml}</div>
             <div class="bc-prices">
-              <span class="bc-original">${origFmt}</span>
-              <span class="bc-price">${bndFmt}</span>
-              ${savAmt > 0 ? `<span class="bc-savings">${savLbl}</span>` : ""}
+              <div class="bc-price-col">
+                <span class="bc-price-label">${priceLabelOld}</span>
+                <span class="bc-price-old">${origFmt}</span>
+              </div>
+              <div class="bc-price-col">
+                <span class="bc-price-label">${priceLabelNew}</span>
+                <span class="bc-price-new">${bndFmt}</span>
+              </div>
             </div>
-            <button class="bc-btn" onclick="event.stopPropagation();addBundleToCart('${b.id}',this)">${addLbl}</button>
+            <button class="bc-btn">${btnLbl}</button>
           </div>
         </div>`;
       }
@@ -5247,7 +6052,6 @@
 
       loadNavAndRooms();
       loadShowcase();
-      // loadHomeBundles();
 
       /* ── BUNDLE DETAIL MODAL ── */
       function openBundleDetail(bundleId) {

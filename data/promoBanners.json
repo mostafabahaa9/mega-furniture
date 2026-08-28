@@ -1,0 +1,32 @@
+[
+  {
+    "id": "promo-sample-1",
+    "image": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200",
+    "titleAr": "خصم ٢٠٪ على غرف النوم",
+    "titleEn": "20% Off Bedroom Sets",
+    "link": "pages/shop.html?cat=bedroom",
+    "active": true,
+    "sortOrder": 1,
+    "createdAt": "2026-08-12T00:00:00.000Z"
+  },
+  {
+    "id": "promo-sample-2",
+    "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1200",
+    "titleAr": "توصيل مجاني هذا الأسبوع",
+    "titleEn": "Free Delivery This Week",
+    "link": "pages/shop.html",
+    "active": true,
+    "sortOrder": 2,
+    "createdAt": "2026-08-12T00:00:00.000Z"
+  },
+  {
+    "id": "promo-sample-3",
+    "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=1200",
+    "titleAr": "تشكيلة الصيف الجديدة",
+    "titleEn": "New Summer Collection",
+    "link": "pages/shop.html",
+    "active": true,
+    "sortOrder": 3,
+    "createdAt": "2026-08-12T00:00:00.000Z"
+  }
+]
