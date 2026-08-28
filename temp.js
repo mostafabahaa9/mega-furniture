@@ -1,0 +1,6599 @@
+
+      const API = window.location.origin + "/api";
+      let TOKEN = localStorage.getItem("mgAdminToken") || "";
+      let allProducts = [],
+        allOrders = [],
+        allReviews = [],
+        allCats = [],
+        allCoupons = [],
+        allDiscounts = [],
+        allShip = [],
+        allCust = [],
+        allVideos = [],
+        allBundles = [],
+        allCollections = [],
+        allBanners = [],
+        allPromoBanners = [],
+        allColors = [];
+      let editingProdId = null,
+        editingCatId = null,
+        editingVideoId = null,
+        editingCouponId = null,
+        editingDiscountId = null,
+        editingShipId = null,
+        editingBundleId = null,
+        editingCollectionId = null,
+        editingColorId = null,
+        editingBannerId = null,
+        editingPromoBannerId = null;
+      let promoBannerPhotoData = null,
+        __photoOrder = [],
+        photoColorMap = {},
+        photoSideMap = {},
+        lastOrderPollIso = null,
+        orderPollTimer = null;
+
+      function iu(src) {
+        if (!src) return "";
+        if (src.startsWith("http") || src.startsWith("/")) return src;
+        return "/uploads/" + src;
+      }
+
+
+
+      const CAT_ICONS = {
+        sofa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11V8a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v3"/><path d="M5 11h14a2 2 0 0 1 2 2v4H3v-4a2 2 0 0 1 2-2Z"/><path d="M6 17v2M18 17v2"/></svg>',
+        bed: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5v14"/><path d="M21 11v8"/><path d="M3 11h18"/><path d="M7 8h5a2 2 0 0 1 2 2v1H5V10a2 2 0 0 1 2-2Z"/><path d="M3 19h18"/></svg>',
+        dining: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h16"/><path d="M6 10l-1 9"/><path d="M18 10l1 9"/><path d="M8 6h8a3 3 0 0 1 3 3v1H5V9a3 3 0 0 1 3-3Z"/><path d="M9 14h6"/></svg>',
+        "tv-unit": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="10" rx="2"/><path d="M8 19h8"/><path d="M12 15v4"/></svg>',
+        kids: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 11a4 4 0 1 1 8 0v6H8v-6Z"/><path d="M9 17l-2 3"/><path d="M15 17l2 3"/><path d="M10 11h.01M14 11h.01"/></svg>',
+        office: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h16v8H4z"/><path d="M8 10V7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"/><path d="M9 18v2M15 18v2"/></svg>',
+        mattress: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="8" width="18" height="8" rx="3"/><path d="M6 16v2M18 16v2"/><path d="M7 11h10"/></svg>',
+        wardrobe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M12 3v18"/><path d="M10 12h.01M14 12h.01"/></svg>',
+        chair: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 4h8v8H8z"/><path d="M7 12h10v5H7z"/><path d="M8 17v3M16 17v3"/></svg>',
+        "corner-sofa": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9h8v8H4z"/><path d="M12 12h8v5h-8z"/><path d="M6 17v2M18 17v2"/></svg>',
+        "custom-collection": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"/><path d="M6 7l1 13h10l1-13"/><path d="M9 7a3 3 0 0 1 6 0"/><path d="M9 12h6"/></svg>',
+        default: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg>',
+      };
+      const CAT_ICON_OPTIONS = [
+        ["sofa", "Sofa"],
+        ["bed", "Bed"],
+        ["dining", "Dining"],
+        ["tv-unit", "TV Unit"],
+        ["kids", "Kids"],
+        ["office", "Office"],
+        ["mattress", "Mattress"],
+        ["wardrobe", "Wardrobe"],
+        ["chair", "Chair"],
+        ["corner-sofa", "Corner Sofa"],
+        ["custom-collection", "Custom Collection"],
+      ];
+      function catIconHtml(category) {
+        const photoIcon = category && (category.iconUrl || category.image);
+        if (photoIcon) {
+          return `<span class="cat-icon-box"><img src="${iu(photoIcon)}" alt=""></span>`;
+        }
+        const key = (category && category.iconKey) || "default";
+        return `<span class="cat-icon-box">${CAT_ICONS[key] || CAT_ICONS.default}</span>`;
+      }
+      function normalizeCat(c) {
+        return { parentId: null, iconType: "library", iconKey: "default", iconUrl: null, ...c };
+      }
+      function catLabelAdmin(c) {
+        return c ? c.nameEn || c.nameAr || c.slug : "";
+      }
+      function catValuesAdmin(c) {
+        return [c && c.slug, c && c.id].filter(Boolean);
+      }
+      function productHasAdminCategory(product, category, includeChildren = false) {
+        if (!category) return false;
+        const values = new Set(catValuesAdmin(category));
+        if (includeChildren) {
+          allCats
+            .filter((child) => child.parentId === category.id)
+            .forEach((child) =>
+              catValuesAdmin(child).forEach((value) => values.add(value)),
+            );
+        }
+        return (product.categories || []).some((value) => values.has(value));
+      }
+      function categoryOptionLabel(c, depth = 0) {
+        return `${depth ? "└─ " : ""}${catLabelAdmin(c)}`;
+      }
+
+      /* ── AUTH ── */
+      async function doLogin() {
+        const u = document.getElementById("lu").value.trim();
+        const p = document.getElementById("lp").value;
+        const err = document.getElementById("lerr");
+        err.classList.remove("show");
+        try {
+          const r = await fetch(`${API}/admin/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: u, password: p }),
+          });
+          const d = await r.json();
+          if (!r.ok) throw new Error(d.error || "Login failed");
+          TOKEN = d.token;
+          localStorage.setItem("mgAdminToken", TOKEN);
+          document.getElementById("login-screen").style.display = "none";
+          document.getElementById("app").classList.add("visible");
+          initApp();
+        } catch (e) {
+          err.textContent = e.message;
+          err.classList.add("show");
+        }
+      }
+      function doLogout() {
+        localStorage.removeItem("mgAdminToken");
+        TOKEN = "";
+        location.reload();
+      }
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Enter" &&
+          document.getElementById("login-screen").style.display !== "none"
+        )
+          doLogin();
+      });
+
+      /* ── INIT ── */
+      function initApp() {
+        if (window.innerWidth < 768)
+          document.getElementById("menu-toggle").style.display = "flex";
+        lastOrderPollIso = new Date().toISOString();
+        loadStats();
+        loadProducts();
+        loadOrders();
+        loadReviews();
+        loadCustomOrders();
+        loadCats();
+        loadColors();
+        loadCoupons();
+        loadShipping();
+        loadCustomers();
+        loadReports();
+        loadVideos();
+        loadBundles();
+        loadCollections();
+        loadBanners();
+        loadPromoBanners();
+        loadAnnouncement();
+        loadDiscounts();
+        loadNotifyEmails();
+        loadStl();
+        startOrderPoll();
+        
+        // Refresh photo strip selections dynamically on selector change
+        document.querySelectorAll(".pm-side-opt").forEach(cb => {
+          cb.addEventListener("change", renderPhotoStrip);
+        });
+        document.querySelectorAll("input[name='pm-side-choice-type']").forEach(rd => {
+          rd.addEventListener("change", renderPhotoStrip);
+        });
+      }
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("open");
+      }
+      (function () {
+        if (TOKEN) {
+          fetch(`${API}/admin/stats`, {
+            headers: { Authorization: "Bearer " + TOKEN },
+          })
+            .then((r) => {
+              if (r.ok) {
+                document.getElementById("login-screen").style.display = "none";
+                document.getElementById("app").classList.add("visible");
+                initApp();
+              }
+            })
+            .catch(() => {});
+        }
+      })();
+
+      /* ── NAVIGATION ── */
+      const PAGE_META = {
+        dashboard: {
+          title: "Dashboard",
+          sub: "Overview of your store",
+          addBtn: false,
+        },
+        products: {
+          title: "Products",
+          sub: "Manage your product catalogue",
+          addBtn: true,
+          addLabel: "+ Add Product",
+        },
+        categories: {
+          title: "Categories",
+          sub: "Manage product categories",
+          addBtn: false,
+        },
+        colors: {
+          title: "Color Palette",
+          sub: "Manage fabric colors and specifications",
+          addBtn: false,
+        },
+
+        orders: {
+          title: "Orders",
+          sub: "Track and manage customer orders",
+          addBtn: false,
+        },
+        coupons: { title: "Coupons", sub: "Discount codes", addBtn: false },
+        discounts: {
+          title: "Category Discounts",
+          sub: "Auto-apply discounts by category — no code needed",
+          addBtn: false,
+        },
+        shipping: { title: "Shipping", sub: "Zones and fees", addBtn: false },
+        customers: {
+          title: "Customers",
+          sub: "From order history",
+          addBtn: false,
+        },
+        reports: {
+          title: "Reports",
+          sub: "Sales and inventory insights",
+          addBtn: false,
+        },
+        reviews: {
+          title: "Reviews",
+          sub: "Approve or reject customer reviews",
+          addBtn: false,
+        },
+        "custom-orders": {
+          title: "Custom Orders",
+          sub: "Bespoke furniture requests from customers",
+          addBtn: false,
+        },
+        videos: {
+          title: "Videos",
+          sub: "Manage videos & reels",
+          addBtn: false,
+        },
+        bundles: {
+          title: "Bundles",
+          sub: "Group products into discounted bundles",
+          addBtn: false,
+        },
+
+        collections: {
+          title: "Collections",
+          sub: "Manage custom seasonal collections and their products",
+          addBtn: false,
+        },
+        "promo-banners": {
+          title: "Promo Banners",
+          sub: "Manage rotating promo banners",
+          addBtn: false,
+        },
+        banners: {
+          title: "Banners",
+          sub: "Manage homepage promo banners",
+          addBtn: false,
+        },
+        announcement: {
+          title: "Announcement Bar",
+          sub: "Global banner shown at the top of every page",
+          addBtn: false,
+        },
+        settings: {
+          title: "Settings",
+          sub: "Account and store settings",
+          addBtn: false,
+        },
+      };
+      function goto(page) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".slink")
+          .forEach((l) => l.classList.remove("active"));
+        document.getElementById("panel-" + page).classList.add("active");
+        document
+          .querySelector(`.slink[onclick="goto('${page}')"]`)
+          .classList.add("active");
+        const m = PAGE_META[page];
+        document.getElementById("page-title").textContent = m.title;
+        document.getElementById("page-sub").textContent = m.sub;
+        const ab = document.getElementById("topbar-add-btn");
+        if (m.addBtn) {
+          ab.style.display = "flex";
+          ab.textContent = m.addLabel;
+        } else {
+          ab.style.display = "none";
+        }
+
+        if (page === "reports") {
+          const a = document.getElementById("rep-csv-link");
+          a.href = API + "/admin/reports/export.csv";
+          a.setAttribute("download", "");
+          a.onclick = (e) => {
+            e.preventDefault();
+            fetch(API + "/admin/reports/export.csv", {
+              headers: { Authorization: "Bearer " + TOKEN },
+            })
+              .then((r) => r.blob())
+              .then((b) => {
+                const u = URL.createObjectURL(b);
+                const x = document.createElement("a");
+                x.href = u;
+                x.download = "orders.csv";
+                x.click();
+                URL.revokeObjectURL(u);
+              })
+              .catch(() => toast("Export failed", false));
+          };
+        }
+
+        if (window.innerWidth < 768)
+          document.getElementById("sidebar").classList.remove("open");
+      }
+      function openAddModal() {
+        if (
+          document.getElementById("panel-products").classList.contains("active")
+        )
+          openProdModal();
+      }
+
+      /* ── API HELPERS ── */
+      async function api(path, opts = {}) {
+        const r = await fetch(API + path, {
+          ...opts,
+          headers: {
+            Authorization: "Bearer " + TOKEN,
+            "Content-Type": "application/json",
+            ...(opts.headers || {}),
+          },
+        });
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error || "Error");
+        return d;
+      }
+      async function apiForm(path, form) {
+        const r = await fetch(API + path, {
+          method: "POST",
+          headers: { Authorization: "Bearer " + TOKEN },
+          body: form,
+        });
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error || "Error");
+        return d;
+      }
+
+      /* ── TOAST ── */
+      let tt;
+      function toast(msg, ok = true) {
+        document.getElementById("toast-ico").innerHTML = ok 
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>'
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff4757" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+        document.getElementById("toast-msg").textContent = String(msg).replace(/^[⚠️]\s*/, '');
+        const t = document.getElementById("toast");
+        t.classList.add("show");
+        clearTimeout(tt);
+        tt = setTimeout(() => t.classList.remove("show"), 3000);
+      }
+
+      /* ── STATS ── */
+      async function loadStats() {
+        try {
+          const d = await api("/admin/stats");
+          document.getElementById("st-products").textContent = d.totalProducts;
+          document.getElementById("st-orders").textContent = d.totalOrders;
+          document.getElementById("st-pending").textContent = d.pendingOrders;
+          document.getElementById("st-reviews").textContent = d.pendingReviews;
+          document.getElementById("sb-orders").textContent = d.pendingOrders;
+          document.getElementById("sb-reviews").textContent = d.pendingReviews;
+          const pr = document.getElementById("st-profit");
+          if (pr)
+            pr.textContent =
+              d.totalProfit != null
+                ? "EGP " +
+                  Number(d.totalProfit).toLocaleString(undefined, {
+                    maximumFractionDigits: 0,
+                  })
+                : "—";
+        } catch {}
+      }
+
+      function playOrderBeep() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const o = ctx.createOscillator(),
+            g = ctx.createGain();
+          o.connect(g);
+          g.connect(ctx.destination);
+          o.frequency.value = 880;
+          g.gain.value = 0.12;
+          o.start();
+          setTimeout(() => {
+            o.stop();
+            ctx.close();
+          }, 180);
+        } catch {}
+      }
+
+      function startOrderPoll() {
+        if (orderPollTimer) clearInterval(orderPollTimer);
+        orderPollTimer = setInterval(async () => {
+          if (!TOKEN) return;
+          try {
+            const d = await fetch(
+              API +
+                `/admin/orders/new-since?since=${encodeURIComponent(lastOrderPollIso || "")}`,
+              { headers: { Authorization: "Bearer " + TOKEN } },
+            );
+            const j = await d.json();
+            if (!d.ok) return;
+            if (j.count > 0) {
+              playOrderBeep();
+              toast("New order received!", true);
+              lastOrderPollIso = new Date().toISOString();
+              loadOrders();
+              loadStats();
+            }
+          } catch {}
+        }, 12000);
+      }
+
+      /* ── INVENTORY ── */
+      async function renderInventory() {
+        return;
+      }
+      async function old_renderInventory() {
+        try {
+          const prods = allProducts.length
+            ? allProducts
+            : await api("/admin/products");
+          if (!allProducts.length) allProducts = prods;
+
+          // KPI
+          let total = prods.length;
+          document.getElementById("inv-kpi").innerHTML = [
+            {
+              ico: "",
+              label: "إجمالي المنتجات",
+              val: total,
+              color: "var(--o)",
+            }
+          ]
+            .map(
+              (c) =>
+                `<div class="stat-card"><div class="stat-icon">${c.ico}</div><div class="stat-label">${c.label}</div><div class="stat-value" style="color:${c.color}">${c.val}</div></div>`,
+            )
+            .join("");
+
+          // Populate category filter
+          const catSel = document.getElementById("inv-cat-filter");
+          const prevCat = catSel.value;
+          const catSet = new Set();
+          prods.forEach((p) =>
+            (p.categories || []).forEach((c) => catSet.add(c)),
+          );
+          catSel.innerHTML =
+            '<option value="">كل الفئات</option>' +
+            [...catSet]
+              .map((c) => {
+                const cat = allCats.find((x) => x.slug === c);
+                const label = cat ? cat.nameAr || cat.nameEn || c : c;
+                return `<option value="${c}" ${prevCat === c ? "selected" : ""}>${label}</option>`;
+              })
+              .join("");
+
+          // Filters
+          const q = (document.getElementById("inv-search")?.value || "")
+            .toLowerCase()
+            .trim();
+          const catF = catSel.value;
+          const statusF =
+            document.getElementById("inv-status-filter")?.value || "";
+
+          const filtered = prods.filter((p) => {
+            if (
+              q &&
+              !(p.nameAr || "").includes(q) &&
+              !(p.nameEn || "").toLowerCase().includes(q)
+            )
+              return false;
+            if (catF && !(p.categories || []).includes(catF)) return false;
+            return true;
+          });
+
+          // Group by category
+          const catMap = new Map();
+          filtered.forEach((p) => {
+            const cats =
+              (p.categories || []).length > 0 ? p.categories : ["__none__"];
+            cats.forEach((c) => {
+              if (!catMap.has(c)) catMap.set(c, []);
+              catMap.get(c).push(p);
+            });
+          });
+
+          const body = document.getElementById("inv-body");
+          if (!filtered.length) {
+            body.innerHTML = `<div style="text-align:center;padding:40px;color:var(--tm)">لا توجد منتجات تطابق البحث</div>`;
+            return;
+          }
+
+          let html = "";
+          for (const [slug, products] of catMap) {
+            const cat = allCats.find((x) => x.slug === slug);
+            const catName =
+              slug === "__none__"
+                ? "بدون فئة"
+                : cat
+                  ? cat.nameAr || cat.nameEn || slug
+                  : slug;
+            const sorted = products;
+            html += `<div style="margin-bottom:28px">
+              <div style="font-size:13px;font-weight:700;color:var(--o);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--b);display:flex;align-items:center;gap:8px">
+                 ${catName} <span style="font-size:11px;color:var(--tm);font-weight:400">(${products.length} منتج)</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                ${sorted.map((p) => buildInvCard(p)).join("")}
+              </div>
+            </div>`;
+          }
+          body.innerHTML = html;
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      function buildInvCard(p) {
+        const img = p.mainPhoto
+          ? `<img src="${iu(p.mainPhoto)}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;flex-shrink:0" onerror="this.style.display='none'">`
+          : `<div style="width:44px;height:44px;background:var(--s2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0"></div>`;
+
+        const breakdown = buildVariantBreakdown(p);
+        const hasDetails = breakdown.length > 0;
+        const uid = "ivc_" + p.id;
+        return `<div style="background:var(--s2);border:1px solid var(--b);border-radius:12px;overflow:hidden">
+          <div onclick="document.getElementById('${uid}').style.display=document.getElementById('${uid}').style.display==='none'?'block':'none';this.querySelector('.inv-arr').style.transform=document.getElementById('${uid}').style.display==='block'?'rotate(180deg)':''"
+               style="display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:${hasDetails ? "pointer" : "default"}">
+            ${img}
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.nameAr || p.nameEn || "—"}</div>
+              <div style="font-size:11px;color:var(--tm)">${p.price ? "EGP " + Number(p.price).toLocaleString() : "اتصل للسعر"}</div>
+            </div>
+            <button onclick="event.stopPropagation();deleteProduct('${p.id}')" title="حذف المنتج" style="background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.3);color:#ff4757;width:32px;height:32px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:background .2s" onmouseover="this.style.background='rgba(255,71,87,.25)'" onmouseout="this.style.background='rgba(255,71,87,.12)'"></button>
+            <span class="inv-arr" style="color:var(--tm);font-size:13px;transition:transform .2s;flex-shrink:0;display:${hasDetails ? "block" : "none"}">▼</span>
+          </div>
+          <div id="${uid}" style="display:none;border-top:1px solid var(--b);padding:14px 16px">
+            ${breakdown}
+          </div>
+        </div>`;
+      }
+
+      function buildVariantBreakdown(p) {
+        function colorRow(thumb, name) {
+          return `<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--s3);border-radius:7px">
+            ${thumb}
+            <span style="font-size:12px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${name}</span>
+          </div>`;
+        }
+
+        function sizeCard(headerHtml, colorRowsHtml) {
+          return `<div style="border:1px solid rgba(100,180,255,.2);border-radius:10px;overflow:hidden;margin-bottom:10px">
+            <div style="background:rgba(100,180,255,.08);padding:8px 12px;display:flex;align-items:center;flex-wrap:wrap;gap:8px">
+              ${headerHtml}
+            </div>
+            ${colorRowsHtml ? `<div style="padding:8px;display:flex;flex-direction:column;gap:5px">${colorRowsHtml}</div>` : ""}
+          </div>`;
+        }
+
+        const parts = [];
+
+        if (p.variants && p.variants.length) {
+          const sizeMap = new Map();
+          for (const v of p.variants) {
+            const sn = (v.sizeNameAr || "").trim();
+            if (!sizeMap.has(sn)) sizeMap.set(sn, []);
+            sizeMap.get(sn).push(v);
+          }
+          for (const [sn, vs] of sizeMap) {
+            if (sn) {
+              const first = vs[0];
+              const dims = [first.sizeLength, first.sizeWidth, first.sizeDepth, first.sizeHeight]
+                .filter(Boolean)
+                .join(" × ");
+              const headerHtml = `
+                <span style="font-size:11px;font-weight:800;color:#6ab4ff">${sn}${first.sizeNameEn ? " / " + first.sizeNameEn : ""}</span>
+                ${dims ? `<span style="font-size:10px;color:var(--tm)">${dims} cm</span>` : ""}
+                ${first.price ? `<span style="font-size:10px;color:var(--o)">EGP ${Number(first.price).toLocaleString()}</span>` : ""}`;
+              const colorRowsHtml = vs
+                .map((v) => {
+                  const cn = v.colorName || v.colorNameAr || "";
+                  if (!cn) return "";
+                  const thumb = v.colorPhoto
+                    ? `<img src="${iu(v.colorPhoto)}" style="width:24px;height:24px;object-fit:cover;border-radius:5px;flex-shrink:0">`
+                    : v.colorHex
+                      ? `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${v.colorHex};border:1px solid rgba(255,255,255,.25);flex-shrink:0"></span>`
+                      : `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--s4);flex-shrink:0"></span>`;
+                  return colorRow(
+                    thumb,
+                    cn + (v.colorNameEn ? " / " + v.colorNameEn : ""),
+                  );
+                })
+                .filter(Boolean)
+                .join("");
+              parts.push(sizeCard(headerHtml, colorRowsHtml));
+            } else {
+              const standalone = vs
+                .map((v) => {
+                  const cn = v.colorName || v.colorNameAr || "";
+                  if (!cn) return "";
+                  const thumb = v.colorPhoto
+                    ? `<img src="${iu(v.colorPhoto)}" style="width:24px;height:24px;object-fit:cover;border-radius:5px;flex-shrink:0">`
+                    : v.colorHex
+                      ? `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${v.colorHex};border:1px solid rgba(255,255,255,.25);flex-shrink:0"></span>`
+                      : `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--s4);flex-shrink:0"></span>`;
+                  return colorRow(
+                    thumb,
+                    cn + (v.colorNameEn ? " / " + v.colorNameEn : ""),
+                  );
+                })
+                .filter(Boolean)
+                .join("");
+              if (standalone)
+                parts.push(
+                  `<div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">${standalone}</div>`,
+                );
+            }
+          }
+        } else {
+          const allColors = p.colors || [];
+          if (allColors.length) {
+            const rows = allColors
+              .map((c) => {
+                const thumb = c.photo
+                  ? `<img src="${iu(c.photo)}" style="width:24px;height:24px;object-fit:cover;border-radius:5px;flex-shrink:0">`
+                  : c.hex
+                    ? `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${c.hex};border:1px solid rgba(255,255,255,.25);flex-shrink:0"></span>`
+                    : `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--s4);flex-shrink:0"></span>`;
+                return colorRow(
+                  thumb,
+                  c.name || c.nameEn || "—",
+                );
+              })
+              .join("");
+            if (!(p.sizes || []).length)
+              parts.push(
+                `<div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">${rows}</div>`,
+              );
+          }
+          (p.sizes || []).forEach((s) => {
+            const dims = [s.length, s.width, s.height]
+              .filter(Boolean)
+              .join(" × ");
+            const hasCS =
+              s.colorStocks && Object.keys(s.colorStocks).length > 0;
+            const headerHtml = `
+              <span style="font-size:11px;font-weight:800;color:#6ab4ff">${s.nameAr || s.nameEn || "—"}</span>
+              ${dims ? `<span style="font-size:10px;color:var(--tm)">${dims} cm</span>` : ""}
+              ${s.price ? `<span style="font-size:10px;color:var(--o)">EGP ${Number(s.price).toLocaleString()}</span>` : ""}`;
+            let colorRowsHtml = "";
+            if (hasCS) {
+              colorRowsHtml = Object.keys(s.colorStocks)
+                .map((cn) => {
+                  const colObj = allColors.find(
+                    (c) => (c.name || c.nameEn || "") === cn,
+                  );
+                  const thumb =
+                    colObj && colObj.photo
+                      ? `<img src="${iu(colObj.photo)}" style="width:24px;height:24px;object-fit:cover;border-radius:5px;flex-shrink:0">`
+                      : colObj && colObj.hex
+                        ? `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${colObj.hex};border:1px solid rgba(255,255,255,.25);flex-shrink:0"></span>`
+                        : `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--s4);flex-shrink:0"></span>`;
+                  return colorRow(thumb, cn);
+                })
+                .join("");
+            }
+            parts.push(sizeCard(headerHtml, colorRowsHtml));
+          });
+        }
+        return parts.join("");
+      }
+
+      /* ── PRODUCTS ── */
+      async function loadProducts() {
+        try {
+          allProducts = await api("/admin/products");
+          populateCatFilter();
+          filterProds();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      function sortProductList(list, sortKey) {
+        const sorted = [...list];
+        switch (sortKey) {
+          case "alpha-asc":
+            return sorted.sort((a, b) => (a.nameEn || a.nameAr || "").localeCompare(b.nameEn || b.nameAr || "", undefined, { numeric: true, sensitivity: 'base' }));
+          case "alpha-desc":
+            return sorted.sort((a, b) => (b.nameEn || b.nameAr || "").localeCompare(a.nameEn || a.nameAr || "", undefined, { numeric: true, sensitivity: 'base' }));
+          case "sku-asc":
+            return sorted.sort((a, b) => (a.sku || "").localeCompare(b.sku || "", undefined, { numeric: true, sensitivity: 'base' }));
+          case "sku-desc":
+            return sorted.sort((a, b) => (b.sku || "").localeCompare(a.sku || "", undefined, { numeric: true, sensitivity: 'base' }));
+          case "price-asc":
+            return sorted.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+          case "price-desc":
+            return sorted.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
+          case "oldest":
+            return sorted.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+          case "newest":
+          default:
+            return sorted.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        }
+      }
+
+      function renderProducts(list) {
+        const c = document.getElementById("prod-container");
+        if (!list.length) {
+          c.innerHTML = `<div class="empty"><div class="eico"></div><h4>No products found</h4><p>Try adjusting your search query, category, or sort option.</p></div>`;
+          return;
+        }
+        c.innerHTML = `<div class="prod-grid">${list
+          .map((p) => {
+            const visible = p.visible !== false;
+            const sideLabel = p.sideChoiceEnabled ? "Left/Right choice" : "No side choice";
+            return `
+    <div class="prod-card">
+      <div class="prod-thumb">
+        ${p.mainPhoto ? `<img src="${iu(p.mainPhoto)}" alt="${p.nameEn}" onerror="this.style.display='none'">` : ""}
+      </div>
+      <div class="prod-info">
+        <div class="prod-name">${p.nameEn || p.nameAr}${visible ? `<span class="badge badge-green">Visible</span>` : `<span class="badge badge-grey">Hidden</span>`}</div>
+        <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          ${p.sku ? `<span class="badge badge-blue" style="font-weight:700;">SKU: ${p.sku}</span>` : ""}
+          <span class="badge badge-grey">${sideLabel}</span>
+        </div>
+        <div class="prod-price">${p.price ? "EGP " + Number(p.price).toLocaleString() : "Call for price"}</div>
+        <div class="prod-acts">
+          <button class="act-btn" onclick="editProduct('${p.id}')">Edit</button>
+          <button class="act-btn danger" onclick="deleteProduct('${p.id}')">Delete</button>
+        </div>
+      </div>
+    </div>`;
+          })
+          .join("")}</div>`;
+      }
+
+      function getFilteredProducts() {
+        const q = (document.getElementById("prod-search") ? document.getElementById("prod-search").value : "").toLowerCase();
+        const cat = document.getElementById("cat-filter") ? document.getElementById("cat-filter").value : "";
+        const sortKey = document.getElementById("prod-sort") ? document.getElementById("prod-sort").value : "newest";
+        const selectedCategory = allCats.find((c) => c.slug === cat || c.id === cat);
+        const filtered = allProducts.filter((p) => {
+          const matchQ =
+            !q ||
+            (p.nameEn || "").toLowerCase().includes(q) ||
+            (p.nameAr || "").toLowerCase().includes(q) ||
+            (p.sku || "").toLowerCase().includes(q);
+          const matchC =
+            !cat ||
+            (selectedCategory
+              ? productHasAdminCategory(p, selectedCategory, true)
+              : (p.categories || []).includes(cat));
+          return matchQ && matchC;
+        });
+        return sortProductList(filtered, sortKey);
+      }
+
+      function filterProds() {
+        const list = getFilteredProducts();
+        renderProducts(list);
+      }
+
+      function exportProductsExcel() {
+        const list = getFilteredProducts();
+        if (!list || !list.length) {
+          toast("No products to export", false);
+          return;
+        }
+        const headers = ["SKU", "Product Name (EN)", "Product Name (AR)", "Categories", "Price (EGP)"];
+        const rows = list.map((p) => {
+          const catNames = (p.categories || [])
+            .map((catId) => {
+              const cat = allCats.find((c) => c.id === catId || c.slug === catId);
+              return cat ? (cat.nameEn || cat.nameAr || cat.id) : catId;
+            })
+            .join(" | ");
+          return [
+            p.sku || "",
+            p.nameEn || "",
+            p.nameAr || "",
+            catNames,
+            p.price || 0,
+          ];
+        });
+        const csvContent = [headers, ...rows]
+          .map((row) =>
+            row.map((val) => `"${String(val).replace(/"/g, '""')}"`).join(",")
+          )
+          .join("\r\n");
+        const blob = new Blob(["\uFEFF" + csvContent], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "mega_furniture_products.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function exportProductsPDF() {
+        const list = getFilteredProducts();
+        if (!list || !list.length) {
+          toast("No products to export", false);
+          return;
+        }
+        const printWindow = window.open("", "_blank");
+        if (!printWindow) {
+          toast("Popup blocked! Please allow popups to export PDF.", false);
+          return;
+        }
+        const dateStr = new Date().toLocaleDateString();
+        const rowsHtml = list
+          .map((p, idx) => {
+            const catNames = (p.categories || [])
+              .map((catId) => {
+                const cat = allCats.find((c) => c.id === catId || c.slug === catId);
+                return cat ? (cat.nameEn || cat.nameAr) : catId;
+              })
+              .join(", ");
+            return `
+              <tr>
+                <td style="text-align: center;">${idx + 1}</td>
+                <td style="font-weight: bold; font-family: monospace; font-size: 14px;">${p.sku || "-"}</td>
+                <td>${p.nameEn || "-"}</td>
+                <td dir="rtl" style="text-align: right;">${p.nameAr || "-"}</td>
+                <td>${catNames || "-"}</td>
+              </tr>
+            `;
+          })
+          .join("");
+        const html = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>Mega Furniture - Product SKU List</title>
+              <style>
+                body {
+                  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                  color: #333;
+                  margin: 30px;
+                }
+                .header {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  border-bottom: 2px solid #f5a623;
+                  padding-bottom: 15px;
+                  margin-bottom: 30px;
+                }
+                .title {
+                  font-size: 24px;
+                  font-weight: bold;
+                  margin: 0;
+                }
+                .subtitle {
+                  font-size: 14px;
+                  color: #666;
+                  margin: 5px 0 0 0;
+                }
+                .date {
+                  font-size: 14px;
+                  color: #666;
+                  text-align: right;
+                }
+                table {
+                  width: 100%;
+                  border-collapse: collapse;
+                  margin-bottom: 30px;
+                }
+                th, td {
+                  border: 1px solid #ddd;
+                  padding: 10px 12px;
+                  text-align: left;
+                  font-size: 13px;
+                }
+                th {
+                  background-color: #f9f9f9;
+                  font-weight: 600;
+                }
+                tr:nth-child(even) {
+                  background-color: #fafafa;
+                }
+                @media print {
+                  body {
+                    margin: 15px;
+                  }
+                  .header {
+                    border-bottom-color: #000;
+                  }
+                }
+              </style>
+            </head>
+            <body>
+              <div class="header">
+                <div>
+                  <h1 class="title">MEGA FURNITURE</h1>
+                  <p class="subtitle">Factory Product SKU List</p>
+                </div>
+                <div class="date">
+                  Export Date: ${dateStr}<br>
+                  Total Items: ${list.length}
+                </div>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 5%; text-align: center;">#</th>
+                    <th style="width: 20%;">SKU Code</th>
+                    <th style="width: 30%;">Product Name (EN)</th>
+                    <th style="width: 25%; text-align: right;">الاسم (AR)</th>
+                    <th style="width: 20%;">Category</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rowsHtml}
+                </tbody>
+              </table>
+            </body>
+          </html>
+        `;
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.onload = function () {
+          printWindow.focus();
+          printWindow.print();
+        };
+      }
+
+      async function exportOrderExcel(orderId) {
+        const o = allOrders.find((x) => x.id === orderId);
+        if (!o) return;
+        const downloadUrl = `${API}/admin/orders/${orderId}/export?format=excel`;
+        try {
+          const res = await fetch(downloadUrl, {
+            headers: { Authorization: "Bearer " + TOKEN }
+          });
+          if (!res.ok) throw new Error("Export failed");
+          const blob = await res.blob();
+          const u = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.setAttribute("href", u);
+          link.setAttribute("download", `order_${o.trackingCode || o.id}_factory.xlsx`);
+          link.style.visibility = "hidden";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(u);
+          toast("Order Excel exported");
+        } catch (err) {
+          toast("Export failed: " + err.message, false);
+        }
+      }
+
+      function exportOrderPDF(orderId) {
+        const o = allOrders.find((x) => x.id === orderId);
+        if (!o) return;
+        const printWindow = window.open("", "_blank");
+        if (!printWindow) {
+          toast("Popup blocked! Please allow popups to export PDF.", false);
+          return;
+        }
+        const dateStr = new Date(o.createdAt || Date.now()).toLocaleDateString();
+        const rowsHtml = (o.items || [])
+          .map((i, idx) => {
+            const prod = allProducts.find((x) => x.id === i.id);
+            const sku = prod ? prod.sku : "";
+            const sz = i.size;
+            const dims = sz && (sz.length || sz.width || sz.height)
+              ? [sz.length && sz.length + "cm", sz.width && sz.width + "cm", sz.height && sz.height + "cm"].filter(Boolean).join(" x ")
+              : "";
+            const sizeStr = sz ? `${sz.nameEn || sz.nameAr || ""}${dims ? ` (${dims})` : ""}` : "-";
+            const colorStr = i.colorName ? `${i.colorName} (${i.color})` : (i.color || "-");
+            return `
+              <tr>
+                <td style="text-align: center;">${idx + 1}</td>
+                <td style="font-weight: bold; font-family: monospace; font-size: 14px;">${sku || "-"}</td>
+                <td>${i.nameEn || "-"}</td>
+                <td dir="rtl" style="text-align: right;">${i.nameAr || "-"}</td>
+                <td style="text-align: center; font-weight: bold;">${i.quantity || 1}</td>
+                <td>${sizeStr}</td>
+                <td>${colorStr}</td>
+              </tr>
+            `;
+          })
+          .join("");
+        const html = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>Mega Furniture - Factory Production Sheet</title>
+              <style>
+                body {
+                  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                  color: #333;
+                  margin: 30px;
+                  line-height: 1.5;
+                }
+                .header {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  border-bottom: 2px solid #f5a623;
+                  padding-bottom: 15px;
+                  margin-bottom: 30px;
+                }
+                .title {
+                  font-size: 22px;
+                  font-weight: bold;
+                  margin: 0;
+                }
+                .subtitle {
+                  font-size: 13px;
+                  color: #666;
+                  margin: 5px 0 0 0;
+                  text-transform: uppercase;
+                  letter-spacing: 0.05em;
+                }
+                .order-meta {
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 15px;
+                  background: #f9f9f9;
+                  padding: 15px 20px;
+                  border-radius: 8px;
+                  margin-bottom: 30px;
+                  font-size: 14px;
+                  border: 1px solid #eee;
+                }
+                .meta-item span {
+                  color: #666;
+                  font-weight: 500;
+                  display: inline-block;
+                  width: 120px;
+                }
+                .meta-item strong {
+                  color: #000;
+                }
+                table {
+                  width: 100%;
+                  border-collapse: collapse;
+                  margin-bottom: 30px;
+                }
+                th, td {
+                  border: 1px solid #ddd;
+                  padding: 10px 12px;
+                  text-align: left;
+                  font-size: 13px;
+                }
+                th {
+                  background-color: #f5f5f5;
+                  font-weight: 600;
+                }
+                tr:nth-child(even) {
+                  background-color: #fafafa;
+                }
+                .notes-box {
+                  border: 1px solid #ddd;
+                  background: #fffdf5;
+                  padding: 15px;
+                  border-radius: 6px;
+                  font-size: 13px;
+                  margin-top: 20px;
+                }
+                @media print {
+                  body {
+                    margin: 15px;
+                  }
+                  .header {
+                    border-bottom-color: #000;
+                  }
+                }
+              </style>
+            </head>
+            <body>
+              <div class="header">
+                <div>
+                  <h1 class="title">MEGA FURNITURE</h1>
+                  <p class="subtitle">Factory Production Sheet</p>
+                </div>
+                <div style="text-align: right; font-size: 13px; color: #666;">
+                  Order Date: ${dateStr}<br>
+                  Print Date: ${new Date().toLocaleDateString()}
+                </div>
+              </div>
+              
+              <div class="order-meta">
+                <div class="meta-item"><span>Order Code:</span> <strong>${o.trackingCode || o.id}</strong></div>
+                <div class="meta-item"><span>Customer:</span> <strong>${o.customerName}</strong></div>
+                <div class="meta-item"><span>Phone:</span> <strong>${o.phone}</strong></div>
+                <div class="meta-item"><span>City:</span> <strong>${o.city || "-"}</strong></div>
+              </div>
+              
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 5%; text-align: center;">#</th>
+                    <th style="width: 15%;">SKU</th>
+                    <th style="width: 25%;">Item Name (EN)</th>
+                    <th style="width: 20%; text-align: right;">الاسم (AR)</th>
+                    <th style="width: 8%; text-align: center;">Qty</th>
+                    <th style="width: 15%;">Size</th>
+                    <th style="width: 12%;">Color</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rowsHtml}
+                </tbody>
+              </table>
+              
+              ${o.notes ? `<div class="notes-box"><strong>Customer Notes:</strong><br>${o.notes}</div>` : ""}
+            </body>
+          </html>
+        `;
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.onload = function () {
+          printWindow.focus();
+          printWindow.print();
+        };
+      }
+      function populateCatFilter() {
+        const sel = document.getElementById("cat-filter");
+        const cur = sel.value;
+        if (allCats.length) {
+          sel.innerHTML =
+            '<option value="">All Categories</option>' +
+            orderedCats()
+              .map(({ cat: c, depth }) => {
+                const value = c.slug || c.id;
+                return `<option value="${value}" ${value === cur ? "selected" : ""}>${categoryOptionLabel(c, depth)}</option>`;
+              })
+              .join("");
+          return;
+        }
+        const cats = [...new Set(allProducts.flatMap((p) => p.categories || []))];
+        sel.innerHTML =
+          '<option value="">All Categories</option>' +
+          cats
+            .map(
+              (c) =>
+                `<option value="${c}" ${c === cur ? "selected" : ""}>${c}</option>`,
+            )
+            .join("");
+      }
+
+      /* ── PRODUCT MODAL ── */
+      function updProfit() {
+        const price =
+          parseFloat(document.getElementById("pm-price").value) || 0;
+        const costVal = (document.getElementById("pm-cost").value || "").trim();
+        const cost = costVal !== "" && !isNaN(parseFloat(costVal)) ? parseFloat(costVal) : null;
+        const el = document.getElementById("pm-profit");
+        if (!el) return;
+        el.value =
+          price > 0 && cost != null && cost > 0
+            ? "EGP " +
+              (price - cost).toLocaleString(undefined, {
+                maximumFractionDigits: 1,
+              })
+            : "—";
+      }
+      function getUniqueProductColors() {
+        const colors = new Set();
+        document.querySelectorAll("#variant-rows .sg-cr").forEach(cr => {
+          const txts = cr.querySelectorAll("input[type=text]");
+          const cNameAr = txts[0] ? txts[0].value.trim() : "";
+          const cNameEn = txts[1] ? txts[1].value.trim() : "";
+          if (cNameAr || cNameEn) {
+            colors.add(cNameAr + (cNameEn ? " / " + cNameEn : ""));
+          }
+        });
+        document.querySelectorAll("#variant-rows .co-wrap").forEach(cr => {
+          const txts = cr.querySelectorAll("input[type=text]");
+          const cNameAr = txts[0] ? txts[0].value.trim() : "";
+          const cNameEn = txts[1] ? txts[1].value.trim() : "";
+          if (cNameAr || cNameEn) {
+            colors.add(cNameAr + (cNameEn ? " / " + cNameEn : ""));
+          }
+        });
+        return Array.from(colors);
+      }
+
+      function getEnabledSideOptions() {
+        const opts = [];
+        const sideTypeEl = document.querySelector('input[name="pm-side-choice-type"]:checked');
+        const sideType = sideTypeEl ? sideTypeEl.value : "none";
+        if (sideType !== "none") {
+          document.querySelectorAll('.pm-side-opt:checked').forEach(c => {
+            opts.push(c.value);
+          });
+        }
+        return opts;
+      }
+
+      window.updatePhotoColorMapping = function(fn, val) {
+        if (!val) delete photoColorMap[fn];
+        else photoColorMap[fn] = val;
+      };
+
+      window.updatePhotoSideMapping = function(fn, val) {
+        if (!val) delete photoSideMap[fn];
+        else photoSideMap[fn] = val;
+      };
+
+      function renderPhotoStrip() {
+        const wrap = document.getElementById("existing-photos-strip");
+        if (!wrap) return;
+        if (!__photoOrder.length) {
+          wrap.innerHTML = "";
+          return;
+        }
+
+        const uniqueColors = getUniqueProductColors();
+        const enabledSides = getEnabledSideOptions();
+
+        wrap.innerHTML = __photoOrder
+          .map((fn, i) => {
+            const assignedColor = photoColorMap[fn] || "";
+            const assignedSide = photoSideMap[fn] || "";
+
+            const colorOpts = uniqueColors.map(c => `
+              <option value="${c}" ${c === assignedColor ? 'selected' : ''}>${c}</option>
+            `).join("");
+
+            const sideLabels = {
+              left: 'Left / شمال',
+              right: 'Right / يمين',
+              middle: 'Middle / وسط',
+              left_middle: 'Left & Middle / شمال ووسط',
+              right_middle: 'Right & Middle / يمين ووسط',
+              left_right: 'Left & Right / شمال ويمين'
+            };
+            const sideOpts = enabledSides.map(s => `
+              <option value="${s}" ${s === assignedSide ? 'selected' : ''}>${sideLabels[s] || s}</option>
+            `).join("");
+
+            return `
+              <div class="ph" data-i="${i}" style="width:145px; height:auto; display:flex; flex-direction:column; gap:4px; padding:6px; background:var(--s2); border-radius:8px; border:1px solid var(--b); position:relative; box-sizing:border-box;">
+                <div style="position:relative; width:100%; aspect-ratio:4/3; border-radius:6px; overflow:hidden;">
+                  <img src="${iu(fn)}" style="width:100%; height:100%; object-fit:cover;">
+                  <button type="button" style="position:absolute; top:2px; left:2px; background:#ef4444; color:#fff; border:none; border-radius:4px; font-size:10px; cursor:pointer; width:18px; height:18px; display:flex; align-items:center; justify-content:center; padding:0; line-height:1; z-index:5;" onclick="event.stopPropagation();phDelete(${i})">✕</button>
+                  <div class="mv" style="top:2px; right:2px;">
+                    <button type="button" onclick="event.stopPropagation();phMove(${i},-1)">◀</button>
+                    <button type="button" onclick="event.stopPropagation();phMove(${i},1)">▶</button>
+                  </div>
+                </div>
+                <!-- Color Mapping -->
+                <select style="font-size:10px; padding:3px; background:var(--s3); color:var(--t); border:1px solid var(--b); border-radius:4px; width:100%;" onchange="updatePhotoColorMapping('${fn.replace(/'/g, "\\'")}', this.value)">
+                  <option value="">🎨 General (All Colors)</option>
+                  ${colorOpts}
+                </select>
+                <!-- Side Mapping -->
+                <select style="font-size:10px; padding:3px; background:var(--s3); color:var(--t); border:1px solid var(--b); border-radius:4px; width:100%;" onchange="updatePhotoSideMapping('${fn.replace(/'/g, "\\'")}', this.value)">
+                  <option value="">↔️ General (All Sides)</option>
+                  ${sideOpts}
+                </select>
+              </div>
+            `;
+          })
+          .join("");
+        if (typeof renderFbGalleryPicker === 'function') renderFbGalleryPicker();
+      }
+      function phMove(i, dir) {
+        const j = i + dir;
+        if (j < 0 || j >= __photoOrder.length) return;
+        const t = __photoOrder[i];
+        __photoOrder[i] = __photoOrder[j];
+        __photoOrder[j] = t;
+        renderPhotoStrip();
+      }
+      function phDelete(i) {
+        const fn = __photoOrder[i];
+        __photoOrder.splice(i, 1);
+        delete photoColorMap[fn];
+        delete photoSideMap[fn];
+        renderPhotoStrip();
+      }
+      /* ── VARIANT EDITOR (replaces separate color + size editors) ── */
+      function legacyToVariants(colors, sizes) {
+        if (!colors.length && !sizes.length) return [];
+        if (!sizes.length)
+          return colors.map((c) => ({
+            colorName: c.name || c.nameAr || null,
+            colorNameEn: c.nameEn || null,
+            colorHex: c.hex || "#888888",
+            colorHex2: c.hex2 || null,
+            colorPhoto: c.photo || null,
+            colorPriceAdd: c.priceAdd || null,
+            sizeNameAr: null,
+            sizeNameEn: null,
+            sizeLength: null,
+            sizeWidth: null,
+            sizeDepth: null,
+            sizeHeight: null,
+            price: null,
+            costPrice: null,
+          }));
+        if (!colors.length)
+          return sizes.map((s) => ({
+            colorName: null,
+            colorNameEn: null,
+            colorHex: null,
+            colorPhoto: null,
+            colorPriceAdd: null,
+            sizeNameAr: s.nameAr || null,
+            sizeNameEn: s.nameEn || null,
+            sizeLength: s.length || null,
+            sizeWidth: s.width || null,
+            sizeDepth: s.depth || null,
+            sizeHeight: s.height || null,
+            price: s.price || null,
+            costPrice: s.costPrice || null,
+          }));
+        const result = [];
+        for (const s of sizes) {
+          const cs =
+            s.colorStocks && Object.keys(s.colorStocks).length
+              ? s.colorStocks
+              : null;
+          const colList = cs
+            ? Object.entries(cs)
+            : colors.map((c) => [c.name || c.nameAr, null]);
+          for (const [cName, qty] of colList) {
+            const c = colors.find((x) => (x.name || x.nameAr) === cName) || {};
+            result.push({
+              colorName: cName || null,
+              colorNameEn: c.nameEn || null,
+              colorHex: c.hex || "#888888",
+              colorHex2: c.hex2 || null,
+              colorPhoto: c.photo || null,
+              colorPriceAdd: c.priceAdd || null,
+              sizeNameAr: s.nameAr || null,
+              sizeNameEn: s.nameEn || null,
+              sizeLength: s.length || null,
+              sizeWidth: s.width || null,
+              sizeDepth: s.depth || null,
+              sizeHeight: s.height || null,
+              price: s.price || null,
+              costPrice: s.costPrice || null,
+            });
+          }
+        }
+        return result;
+      }
+
+        function getAddOnsFromUI() {
+          const result = [];
+          document.querySelectorAll(".pm-addon-row").forEach(row => {
+            const nameEn = row.querySelector(".pm-addon-name-en").value.trim();
+            const nameAr = row.querySelector(".pm-addon-name-ar").value.trim();
+            const price = parseFloat(row.querySelector(".pm-addon-price").value) || 0;
+            const photo = row.querySelector(".pm-addon-photo").value.trim();
+            const id = row.dataset.id || crypto.randomUUID();
+            if (nameEn || nameAr) {
+              result.push({ id, nameEn, nameAr, price, photo, dimensionL: parseFloat(row.querySelector('.pm-addon-dim-l').value) || null, dimensionW: parseFloat(row.querySelector('.pm-addon-dim-w').value) || null, dimensionD: parseFloat(row.querySelector('.pm-addon-dim-d').value) || null, dimensionH: parseFloat(row.querySelector('.pm-addon-dim-h').value) || null });
+            }
+          });
+          return result;
+        }
+
+        async function uploadAddOnPhoto(input) {
+          const row = input.closest(".pm-addon-row");
+          if (!input.files[0] || !row) return;
+          const form = new FormData();
+          form.append("photo", input.files[0]);
+          try {
+            const r = await fetch(API + "/admin/upload-photo", {
+              method: "POST",
+              headers: { Authorization: "Bearer " + TOKEN },
+              body: form,
+            });
+            const data = await r.json();
+            if (!data.url) throw new Error("Upload failed");
+            row.querySelector(".pm-addon-photo").value = data.url;
+            row.querySelector(".pm-addon-preview").innerHTML = `<img src="${data.url}" style="width:36px;height:36px;object-fit:cover;border-radius:5px;border:1px solid var(--b)">`;
+          } catch (e) {
+            toast("Upload failed", false);
+          }
+        }
+
+        function addAddOnRow(data = {}) {
+          const list = document.getElementById("addon-rows");
+          if (!list) return;
+          const row = document.createElement("div");
+          row.className = "pm-addon-row";
+          row.dataset.id = data.id || crypto.randomUUID();
+          row.style.cssText = "display: flex; gap: 6px; align-items: center; background: rgba(0,0,0,0.02); padding: 8px; border-radius: 6px; border: 1px solid var(--b); flex-wrap: wrap;";
+          row.innerHTML = `
+            <div class="pm-addon-preview" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--s);border:1px solid var(--b);border-radius:5px;">
+              ${data.photo ? `<img src="${iu(data.photo)}" style="width:36px;height:36px;object-fit:cover;border-radius:5px;">` : '<span style="font-size:10px;color:var(--tm)">Img</span>'}
+            </div>
+            <input type="file" accept="image/*" style="display:none;" onchange="uploadAddOnPhoto(this)" />
+            <button type="button" onclick="this.previousElementSibling.click()" style="padding: 6px 10px; background: var(--s2); border: 1px solid var(--b); border-radius: 4px; font-size: 12px; cursor: pointer;">Upload</button>
+            <input type="hidden" class="pm-addon-photo" value="${data.photo || ''}" />
+            <input type="text" class="pm-addon-name-en" placeholder="Name (EN)" value="${data.nameEn || ''}" style="flex: 1; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t); min-width: 100px;" />
+            <input type="text" class="pm-addon-name-ar" placeholder="الاسم (عربي)" dir="rtl" value="${data.nameAr || ''}" style="flex: 1; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t); min-width: 100px;" />
+            <input type="number" class="pm-addon-price" placeholder="Price (EGP)" min="0" step="1" value="${data.price != null ? data.price : ''}" style="width: 90px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <input type="number" class="pm-addon-dim-l" placeholder="L (cm)" min="0" step="0.1" value="${data.dimensionL || ''}" style="width: 55px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <input type="number" class="pm-addon-dim-w" placeholder="W (cm)" min="0" step="0.1" value="${data.dimensionW || ''}" style="width: 55px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <input type="number" class="pm-addon-dim-d" placeholder="D (cm)" min="0" step="0.1" value="${data.dimensionD || ''}" style="width: 55px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <input type="number" class="pm-addon-dim-h" placeholder="H (cm)" min="0" step="0.1" value="${data.dimensionH || ''}" style="width: 55px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+            <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; color: #ff4757; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 4px;">&times;</button>
+          `;
+          list.appendChild(row);
+        }
+
+      function addDimPieceRow(data = {}) {
+        const list = document.getElementById("pm-dims-list");
+        if (!list) return;
+        const row = document.createElement("div");
+        row.className = "pm-dim-row";
+        row.style.cssText = "display: flex; gap: 6px; align-items: center; background: rgba(0,0,0,0.02); padding: 8px; border-radius: 6px; border: 1px solid var(--b);";
+        row.innerHTML = `
+          <input type="text" class="pm-dim-name-en" placeholder="Name (EN)" value="${data.nameEn || ''}" style="flex: 2; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+          <input type="text" class="pm-dim-name-ar" placeholder="الاسم (عربي)" dir="rtl" value="${data.nameAr || ''}" style="flex: 2; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+          <input type="number" class="pm-dim-length" placeholder="L (cm)" min="0" step="0.1" value="${data.length != null ? data.length : ''}" style="width: 60px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+          <input type="number" class="pm-dim-width" placeholder="W (cm)" min="0" step="0.1" value="${data.width != null ? data.width : ''}" style="width: 60px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+          <input type="number" class="pm-dim-depth" placeholder="D (cm)" min="0" step="0.1" value="${data.depth != null ? data.depth : ''}" style="width: 60px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+          <input type="number" class="pm-dim-height" placeholder="H (cm)" min="0" step="0.1" value="${data.height != null ? data.height : ''}" style="width: 60px; font-size: 12px; padding: 6px; background: var(--s); border: 1px solid var(--b); border-radius: 4px; color: var(--t);" />
+          <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; color: #ff4757; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 4px;">✕</button>
+        `;
+        list.appendChild(row);
+      }
+      function addSizeGroup(v) {
+        v = v || {};
+        const sNameAr = v.sizeNameAr || "";
+        const sNameEn = v.sizeNameEn || "";
+        const sLen = v.sizeLength != null ? v.sizeLength : "";
+        const sWid = v.sizeWidth != null ? v.sizeWidth : "";
+        const sDep = v.sizeDepth != null ? v.sizeDepth : "";
+        const sHei = v.sizeHeight != null ? v.sizeHeight : "";
+        const cost = v.costPrice != null && v.costPrice > 0 ? v.costPrice : "";
+        const price = v.price != null ? v.price : "";
+        const profit =
+          v.price != null && v.costPrice != null && v.price > 0
+            ? Math.round(((v.price - v.costPrice) / v.price) * 100)
+            : null;
+        const g = document.createElement("div");
+        g.className = "sg-wrap";
+        g.style.cssText =
+          "border:1px solid var(--b);border-radius:10px;overflow:hidden;background:var(--s2)";
+        const dimDisplay = (sLen || sWid || sDep || sHei) 
+          ? `<span class="sg-dim-display" style="font-size:10px;color:var(--tm);margin-left:auto;padding:4px 8px;background:rgba(255,255,255,.05);border-radius:6px;font-family:monospace;white-space:nowrap">Dimensions: ${sLen ? 'Length: ' + sLen + ' cm' : ''}${(sLen && sWid) ? ' × ' : ''}${sWid ? 'Width: ' + sWid + ' cm' : ''}${((sLen || sWid) && sDep) ? ' × ' : ''}${sDep ? 'Depth: ' + sDep + ' cm' : ''}${((sLen || sWid || sDep) && sHei) ? ' × ' : ''}${sHei ? 'Height: ' + sHei + ' cm' : ''}</span>`
+          : "";
+        g.innerHTML = `
+          <div style="background:rgba(100,180,255,.08);padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+            <span style="font-size:10px;background:rgba(100,180,255,.15);color:#6ab4ff;padding:2px 8px;border-radius:20px;font-weight:700;flex-shrink:0">مقاس</span>
+            <input type="text" class="sg-nar" value="${sNameAr}" placeholder="اسم المقاس (عربي)" style="flex:1;min-width:80px;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px">
+            <input type="text" class="sg-nen" value="${sNameEn}" placeholder="Size (EN)" style="flex:1;min-width:70px;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px">
+            <input type="number" class="sg-len" value="${sLen}" placeholder="طول" min="0" title="الطول cm" style="width:54px;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px" onchange="updateDimDisplay(this)">
+            <input type="number" class="sg-wid" value="${sWid}" placeholder="عرض" min="0" title="العرض cm" style="width:54px;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px" onchange="updateDimDisplay(this)">
+            <input type="number" class="sg-dep" value="${sDep}" placeholder="عمق" min="0" title="العمق cm" style="width:54px;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px" onchange="updateDimDisplay(this)">
+            <input type="number" class="sg-hei" value="${sHei}" placeholder="ارتفاع" min="0" title="الارتفاع cm" style="width:54px;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px" onchange="updateDimDisplay(this)">
+            ${dimDisplay}
+            <button type="button" class="sg-del" style="background:#ff4757;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:11px;padding:4px 10px;flex-shrink:0">× حذف</button>
+          </div>
+          <div style="padding:8px 12px;display:grid;grid-template-columns:1fr 1fr 60px;gap:6px;border-bottom:1px dashed var(--b)">
+            <div>
+              <div style="font-size:10px;color:var(--tm);margin-bottom:2px">التكلفة</div>
+              <input type="number" class="sg-cost" value="${cost}" placeholder="0" min="0" step="0.01" oninput="updateSgProfit(this)" style="width:100%;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px">
+            </div>
+            <div>
+              <div style="font-size:10px;color:var(--tm);margin-bottom:2px">سعر البيع</div>
+              <input type="number" class="sg-price" value="${price}" placeholder="0" min="0" step="0.01" oninput="updateSgProfit(this)" style="width:100%;padding:5px 7px;border:1px solid rgba(245,166,35,.5);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px">
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:10px;color:var(--tm);margin-bottom:2px">مكسب</div>
+              <div class="sg-profit" style="font-size:13px;font-weight:700;color:${profit != null && profit > 0 ? "#4caf50" : "var(--tm)"}">${profit != null ? profit + "%" : "—"}</div>
+            </div>
+          </div>
+          <div class="sg-colors" style="display:flex;flex-direction:column"></div>
+          <button type="button" class="sg-add-color" style="width:100%;padding:7px;background:none;border:none;border-top:1px dashed var(--b);color:var(--tm);cursor:pointer;font-size:12px">+ إضافة لون لهذا المقاس</button>`;
+        g.querySelector(".sg-del").onclick = () => g.remove();
+        g.querySelector(".sg-add-color").onclick = () => openSwatchPicker(sw => addColorToGroup(g, sw));
+        document.getElementById("variant-rows").appendChild(g);
+        return g;
+      }
+      function updateDimDisplay(el) {
+        const wrapper = el.closest(".sg-wrap");
+        const sLen = parseFloat(wrapper.querySelector(".sg-len").value) || null;
+        const sWid = parseFloat(wrapper.querySelector(".sg-wid").value) || null;
+        const sDep = parseFloat(wrapper.querySelector(".sg-dep").value) || null;
+        const sHei = parseFloat(wrapper.querySelector(".sg-hei").value) || null;
+        const dimDisplay = wrapper.querySelector(".sg-dim-display");
+        if (!dimDisplay) return;
+        if (!sLen && !sWid && !sDep && !sHei) {
+          dimDisplay.style.display = "none";
+          return;
+        }
+        dimDisplay.style.display = "";
+        dimDisplay.textContent = 'Dimensions: ' + (sLen ? 'Length: ' + sLen + ' cm' : '') + ((sLen && sWid) ? ' × ' : '') + (sWid ? 'Width: ' + sWid + ' cm' : '') + (((sLen || sWid) && sDep) ? ' × ' : '') + (sDep ? 'Depth: ' + sDep + ' cm' : '') + (((sLen || sWid || sDep) && sHei) ? ' × ' : '') + (sHei ? 'Height: ' + sHei + ' cm' : '');
+      }
+      function addColorToGroup(groupEl, v) {
+        v = v || {};
+        const hex = v.colorHex || "#888888";
+        const hex2 = v.colorHex2 || "";
+        const cNameAr = v.nameAr || v.colorName || v.colorNameAr || "";
+        const cNameEn = v.nameEn || v.colorNameEn || "";
+        const photo = v.icon || v.image || v.colorPhoto || "";
+        const cr = document.createElement("div");
+        cr.className = "sg-cr";
+        cr.style.cssText =
+          "display:grid;grid-template-columns:32px 32px 1fr 1fr 36px 26px;gap:5px;align-items:center;padding:7px 12px;border-top:1px solid rgba(255,255,255,.05)";
+        if (photo) cr.dataset.photo = photo;
+        cr.innerHTML = `
+          <input type="color" value="${hex}" disabled title="لون 1" style="width:32px;height:28px;padding:2px;border:1px solid var(--b);border-radius:6px;background:var(--s3);opacity:1;">
+          <input type="color" value="${hex2 || hex}" disabled title="لون 2" class="hex2-input" style="width:32px;height:28px;padding:2px;border:1px solid var(--b);border-radius:6px;background:var(--s3);opacity:${hex2 ? 1 : 0.35}">
+          <input type="text" value="${cNameAr}" readonly placeholder="اسم اللون (عربي)" style="padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px;width:100%">
+          <input type="text" value="${cNameEn}" readonly placeholder="Color (EN)" style="padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px;width:100%">
+          <div class="cr-photo-wrap" style="width:36px;height:28px;flex-shrink:0">
+            ${photo ? `<img src="${iu(photo)}" style="width:36px;height:28px;object-fit:cover;border-radius:5px;border:1px solid var(--b)">` : `<div style="width:36px;height:28px;border-radius:5px;border:1px dashed var(--b);"></div>`}
+          </div>
+          <button type="button" style="background:#ff4757;border:none;border-radius:5px;color:#fff;cursor:pointer;font-size:13px;width:26px;height:26px;flex-shrink:0">×</button>`;
+        cr.querySelector("button").onclick = () => {
+          cr.remove();
+          renderPhotoStrip();
+        };
+        groupEl.querySelector(".sg-colors").appendChild(cr);
+        renderPhotoStrip();
+        return cr;
+      }
+      function addColorOnlyRow(v) {
+        v = v || {};
+        const hex = v.colorHex || "#888888";
+        const hex2 = v.colorHex2 || "";
+        const cNameAr = v.nameAr || v.colorName || v.colorNameAr || "";
+        const cNameEn = v.nameEn || v.colorNameEn || "";
+        const price = v.price != null ? v.price : "";
+        const cost = v.costPrice != null && v.costPrice > 0 ? v.costPrice : "";
+        const photo = v.icon || v.image || v.colorPhoto || "";
+        const profit =
+          v.price != null && v.costPrice != null && v.price > 0
+            ? Math.round(((v.price - v.costPrice) / v.price) * 100)
+            : null;
+        const cr = document.createElement("div");
+        cr.className = "co-wrap";
+        cr.style.cssText =
+          "border:1px solid var(--b);border-radius:10px;overflow:hidden;background:var(--s2)";
+        if (photo) cr.dataset.photo = photo;
+        cr.innerHTML = `
+          <div style="background:rgba(245,166,35,.06);padding:8px 12px;display:flex;flex-wrap:wrap;gap:5px;align-items:center">
+            <span style="font-size:10px;background:rgba(245,166,35,.15);color:var(--o);padding:2px 8px;border-radius:20px;font-weight:700;flex-shrink:0">لون</span>
+            <input type="color" value="${hex}" disabled title="لون 1" style="width:32px;height:28px;padding:2px;border:1px solid var(--b);border-radius:6px;background:var(--s3);opacity:1;flex-shrink:0">
+            <input type="color" value="${hex2 || hex}" disabled title="لون 2" class="hex2-input" style="width:32px;height:28px;padding:2px;border:1px solid var(--b);border-radius:6px;background:var(--s3);opacity:${hex2 ? 1 : 0.35};flex-shrink:0">
+            <input type="text" value="${cNameAr}" readonly placeholder="اسم اللون (عربي)" style="flex:1;min-width:80px;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px">
+            <input type="text" value="${cNameEn}" readonly placeholder="Color (EN)" style="flex:1;min-width:70px;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px">
+            <div class="cr-photo-wrap" style="width:36px;height:28px;flex-shrink:0">
+              ${photo ? `<img src="${iu(photo)}" style="width:36px;height:28px;object-fit:cover;border-radius:5px;border:1px solid var(--b)">` : `<div style="width:36px;height:28px;border-radius:5px;border:1px dashed var(--b);"></div>`}
+            </div>
+            <button type="button" class="co-del" style="background:#ff4757;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:11px;padding:4px 10px;flex-shrink:0">× حذف</button>
+          </div>
+          <div style="padding:8px 12px;display:grid;grid-template-columns:1fr 1fr 60px;gap:6px;align-items:end">
+            <div>
+              <div style="font-size:10px;color:var(--tm);margin-bottom:2px">التكلفة</div>
+              <input type="number" class="co-cost" value="${cost}" placeholder="0" min="0" step="0.01" oninput="updateCoProfit(this)" style="width:100%;padding:5px 7px;border:1px solid var(--b);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px">
+            </div>
+            <div>
+              <div style="font-size:10px;color:var(--tm);margin-bottom:2px">سعر البيع</div>
+              <input type="number" class="co-price" value="${price}" placeholder="0" min="0" step="0.01" oninput="updateCoProfit(this)" style="width:100%;padding:5px 7px;border:1px solid rgba(245,166,35,.5);border-radius:6px;background:var(--s3);color:var(--t);font-size:12px">
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:10px;color:var(--tm);margin-bottom:2px">مكسب</div>
+              <div class="co-profit" style="font-size:13px;font-weight:700;color:${profit != null && profit > 0 ? "#4caf50" : "var(--tm)"}">${profit != null ? profit + "%" : "—"}</div>
+            </div>
+          </div>`;
+        cr.querySelector(".co-del").onclick = () => {
+          cr.remove();
+          renderPhotoStrip();
+        };
+        document.getElementById("variant-rows").appendChild(cr);
+        renderPhotoStrip();
+        return cr;
+      }
+      async function uploadCrPhoto(input) {
+        const row = input.closest(".sg-cr, .co-wrap");
+        if (!input.files[0] || !row) return;
+        const form = new FormData();
+        form.append("photo", input.files[0]);
+        try {
+          const r = await fetch(`${API}/admin/upload-photo`, {
+            method: "POST",
+            headers: { Authorization: "Bearer " + TOKEN },
+            body: form,
+          });
+          const data = await r.json();
+          if (!data.url) throw new Error("Upload failed");
+          row.dataset.photo = data.url;
+          const wrap = row.querySelector(".cr-photo-wrap");
+          if (wrap)
+            wrap.innerHTML = `<img src="${data.url}" style="width:36px;height:28px;object-fit:cover;border-radius:5px;border:1px solid var(--b)">`;
+          toast("صورة اللون اتحملت");
+        } catch (e) {
+          toast("" + e.message, false);
+        }
+      }
+      function updateSgProfit(input) {
+        const card = input.closest(".sg-wrap");
+        if (!card) return;
+        const costVal = (card.querySelector(".sg-cost").value || "").trim();
+        const priceVal = (card.querySelector(".sg-price").value || "").trim();
+        const cost = costVal !== "" && !isNaN(parseFloat(costVal)) ? parseFloat(costVal) : null;
+        const price = priceVal !== "" && !isNaN(parseFloat(priceVal)) ? parseFloat(priceVal) : null;
+        const el = card.querySelector(".sg-profit");
+        if (!el) return;
+        if (price != null && price > 0 && cost != null && cost > 0) {
+          const p = Math.round(((price - cost) / price) * 100);
+          el.textContent = p + "%";
+          el.style.color = p > 0 ? "#4caf50" : "#ff4757";
+        } else {
+          el.textContent = "—";
+          el.style.color = "var(--tm)";
+        }
+      }
+      function updateCoProfit(input) {
+        const card = input.closest(".co-wrap");
+        if (!card) return;
+        const costVal = (card.querySelector(".co-cost").value || "").trim();
+        const priceVal = (card.querySelector(".co-price").value || "").trim();
+        const cost = costVal !== "" && !isNaN(parseFloat(costVal)) ? parseFloat(costVal) : null;
+        const price = priceVal !== "" && !isNaN(parseFloat(priceVal)) ? parseFloat(priceVal) : null;
+        const el = card.querySelector(".co-profit");
+        if (!el) return;
+        if (price != null && price > 0 && cost != null && cost > 0) {
+          const p = Math.round(((price - cost) / price) * 100);
+          el.textContent = p + "%";
+          el.style.color = p > 0 ? "#4caf50" : "#ff4757";
+        } else {
+          el.textContent = "—";
+          el.style.color = "var(--tm)";
+        }
+      }
+      function getVariantsFromUI() {
+        const result = [];
+        document.querySelectorAll("#variant-rows .sg-wrap").forEach((g) => {
+          const sNameAr = g.querySelector(".sg-nar").value.trim();
+          const sNameEn = g.querySelector(".sg-nen").value.trim();
+          if (!sNameAr && !sNameEn) return;
+          const sLen =
+            g.querySelector(".sg-len").value !== ""
+              ? parseFloat(g.querySelector(".sg-len").value)
+              : null;
+          const sWid =
+            g.querySelector(".sg-wid").value !== ""
+              ? parseFloat(g.querySelector(".sg-wid").value)
+              : null;
+          const sDep =
+            g.querySelector(".sg-dep") && g.querySelector(".sg-dep").value !== ""
+              ? parseFloat(g.querySelector(".sg-dep").value)
+              : null;
+          const sHei =
+            g.querySelector(".sg-hei").value !== ""
+              ? parseFloat(g.querySelector(".sg-hei").value)
+              : null;
+          const basePrice =
+            g.querySelector(".sg-price").value !== ""
+              ? parseFloat(g.querySelector(".sg-price").value)
+              : null;
+          const baseCost =
+            g.querySelector(".sg-cost").value !== ""
+              ? parseFloat(g.querySelector(".sg-cost").value)
+              : null;
+          const colorRows = g.querySelectorAll(".sg-colors .sg-cr");
+          if (colorRows.length === 0) {
+            result.push({
+              sizeNameAr: sNameAr || null,
+              sizeNameEn: sNameEn || null,
+              sizeLength: sLen,
+              sizeWidth: sWid,
+              sizeDepth: sDep,
+              sizeHeight: sHei,
+              price: basePrice,
+              costPrice: baseCost,
+            });
+          } else {
+            colorRows.forEach((cr) => {
+              const txts = cr.querySelectorAll("input[type=text]");
+              const cNameAr = txts[0] ? txts[0].value.trim() : "";
+              const cNameEn = txts[1] ? txts[1].value.trim() : "";
+              const cols = cr.querySelectorAll("input[type=color]");
+              const col = cols[0];
+              const col2 = cols[1];
+              result.push({
+                colorName: cNameAr || null,
+                colorNameEn: cNameEn || null,
+                colorHex: col ? col.value : "#888888",
+                colorHex2: col2 && col2.dataset.has === "1" ? col2.value : null,
+                colorPhoto: cr.dataset.photo || null,
+                colorPriceAdd: null,
+                sizeNameAr: sNameAr || null,
+                sizeNameEn: sNameEn || null,
+                sizeLength: sLen,
+                sizeWidth: sWid,
+                sizeDepth: sDep,
+                sizeHeight: sHei,
+                price: basePrice,
+                costPrice: baseCost,
+              });
+            });
+          }
+        });
+        document.querySelectorAll("#variant-rows .co-wrap").forEach((cr) => {
+          const txts = cr.querySelectorAll("input[type=text]");
+          const cNameAr = txts[0] ? txts[0].value.trim() : "";
+          const cNameEn = txts[1] ? txts[1].value.trim() : "";
+          if (!cNameAr && !cNameEn) return;
+          const cols2 = cr.querySelectorAll("input[type=color]");
+          const col = cols2[0];
+          const col2 = cols2[1];
+          const price =
+            cr.querySelector(".co-price").value !== ""
+              ? parseFloat(cr.querySelector(".co-price").value)
+              : null;
+          const cost =
+            cr.querySelector(".co-cost").value !== ""
+              ? parseFloat(cr.querySelector(".co-cost").value)
+              : null;
+          result.push({
+            colorName: cNameAr || null,
+            colorNameEn: cNameEn || null,
+            colorHex: col ? col.value : "#888888",
+            colorHex2: col2 && col2.dataset.has === "1" ? col2.value : null,
+            colorPhoto: cr.dataset.photo || null,
+            price,
+            costPrice: cost,
+          });
+        });
+        return result;
+      }
+      function clearVariantRows() {
+        document.getElementById("variant-rows").innerHTML = "";
+      }
+
+      /* ── FEATURE BANNER HELPERS ── */
+      function toggleFeatBanner() {
+        const body = document.getElementById('feat-banner-body');
+        body.style.display = body.style.display === 'none' ? 'block' : 'none';
+      }
+
+      function toggleSpecsCare() {
+        const body = document.getElementById('specs-care-body');
+        body.style.display = body.style.display === 'none' ? 'block' : 'none';
+      }
+
+      function getCategoryTemplate() {
+        const catInputs = document.querySelectorAll("#pm-cats input[type=checkbox]:checked");
+        const cats = Array.from(catInputs).map(i => i.value);
+        const nameAr = (document.getElementById("pm-name-ar").value || "").toLowerCase();
+        const nameEn = (document.getElementById("pm-name-en").value || "").toLowerCase();
+        const sku = (document.getElementById("pm-sku").value || "").toUpperCase();
+
+        const CATEGORY_DEFAULTS = {
+          "bedroom": {
+            specStructureAr: "خشب كونتر طبيعي بسدائب وقشاط من خشب الزان الأحمر؛ تشطيب دهان دوكو/أستر كابينة جافة وفرن حراري. إكسسوارات ومفصلات إنداوكس (إسباني). مجاري أدراج ميكانيزم تركي مستورد (عادي / سوفت كلوز)",
+            specStructureEn: "Natural blockboard with beech wood framing and edge banding; finished with oven-cured lacquer (Astar/Duco). Indaux (Spanish) hinge accessories. Imported Turkish drawer slides (standard / soft-close)",
+            specFabricAr: "تنجيد قماش قطيفة/كيتان فاخر بالرأسية معالج ضد البقع والتأكل.",
+            specFabricEn: "Premium stain-resistant Velvet/Linen fabric headboard upholstery.",
+            specFillingAr: "إسفنج عالي الكثافة (كثافة 30 كجم/م³) لراحة ومتانة ممتدة.",
+            specFillingEn: "High-density 30 kg/m³ foam for long-lasting ergonomic support.",
+            specDimensionsNoteAr: "الأبعاد والقطع قابلة للتعديل حسب الطلب والمساحة المتاحة.",
+            specDimensionsNoteEn: "Dimensions and set components can be customized upon request.",
+            productCareAr: "التنظيف بممسحة قماشية جافة ناعمة وتجنب استخدام المواد الكيميائية القاسية.",
+            productCareEn: "Wipe with a soft dry cloth. Avoid harsh chemical cleaners.",
+            pieces: [
+              { nameEn: "Bed", nameAr: "السرير", width: 160, length: 195, depth: null, height: 120 },
+              { nameEn: "Wardrobe", nameAr: "الدولاب", width: 260, length: null, depth: 60, height: 220 },
+              { nameEn: "Nightstand", nameAr: "كومود", width: 50, length: null, depth: 40, height: 45 },
+              { nameEn: "Dressing Table", nameAr: "تسريحة", width: 120, length: null, depth: 45, height: 80 }
+            ]
+          },
+          "beds": {
+            specStructureAr: "خشب كونتر طبيعي بسدائب وقشاط من خشب الزان الأحمر؛ تشطيب دهان دوكو/أستر كابينة جافة وفرن حراري. إكسسوارات ومفصلات إنداوكس (إسباني). مجاري أدراج ميكانيزم تركي مستورد (عادي / سوفت كلوز)",
+            specStructureEn: "Natural blockboard with beech wood framing and edge banding; finished with oven-cured lacquer (Astar/Duco). Indaux (Spanish) hinge accessories. Imported Turkish drawer slides (standard / soft-close)",
+            specFabricAr: "قماش كيتان / قطيفة عالي الجودة معالج ضد البقع والأتربة.",
+            specFabricEn: "Stain and dust resistant premium Linen/Velvet upholstery fabric.",
+            specFillingAr: "طبقات إسفنج مرن عالي الكثافة لحماية مريحة.",
+            specFillingEn: "High-resilience cushion foam layer.",
+            specDimensionsNoteAr: "مقاس السرير يتناسب مع المراتب القياسية.",
+            specDimensionsNoteEn: "Fits standard mattress sizing.",
+            productCareAr: "تنظيف جاف للبقع، والتنظيف الدوري بالمكنسة الكهربائية.",
+            productCareEn: "Spot clean with damp cloth, vacuum regularly.",
+            width: 160, length: 200, depth: null, height: 120
+          },
+          "living-room": {
+            specStructureAr: "هيكل داخلي من خشب الزان الأحمر وأربطة مرنة عالية التحمل.",
+            specStructureEn: "Internal frame of kiln-dried Red Beechwood with heavy-duty elastic webbing.",
+            specFabricAr: "قماش كيتان فاخر قابل للتنظيف ومقاوم للتأكل والتمزق.",
+            specFabricEn: "Premium breathable Linen fabric, abrasion and tear resistant.",
+            specFillingAr: "إسفنج عالي الكثافة (كثافة 33 كجم/م³) مع طبقة فيبر ناعمة.",
+            specFillingEn: "High-density 33 kg/m³ foam with plush top fiber layer.",
+            specDimensionsNoteAr: "الأبعاد تشمل الكنب والفوتيهات حسب مكونات الطقم.",
+            specDimensionsNoteEn: "Dimensions include sofas and armchairs as per set components.",
+            productCareAr: "تنظيف جاف فقط أو استخدام منظفات الأقمشة الرغوية المخصصة.",
+            productCareEn: "Dry clean only or use foam fabric cleaners.",
+            pieces: [
+              { nameEn: "Three Seater Sofa", nameAr: "كنبة ثلاثية", width: 220, length: 90, depth: null, height: 85 },
+              { nameEn: "Two Seater Sofa", nameAr: "كنبة ثنائية", width: 170, length: 90, depth: null, height: 85 },
+              { nameEn: "Armchair", nameAr: "فوتيه", width: 85, length: 85, depth: null, height: 85 }
+            ]
+          },
+          "lcorner": {
+            specStructureAr: "هيكل خشب زان أحمر معالج مع شيزلونج مريح وقواعد تثبيت قوية.",
+            specStructureEn: "Treated Red Beechwood frame with ergonomic chaise lounge.",
+            specFabricAr: "قماش كيتان / جلد مقلوب عالي التحمل وسهل التنظيف.",
+            specFabricEn: "Heavy-duty, easy-clean Linen / Suede fabric.",
+            specFillingAr: "إسفنج مضغوط عالي الكثافة لراحة الظهر والجلسة.",
+            specFillingEn: "High-density compressed foam for back and seat comfort.",
+            specDimensionsNoteAr: "اتجاه الشيزلونج (يمين/شمال) يحدد عند المواجهة.",
+            specDimensionsNoteEn: "Chaise lounge arrangement (Left/Right) is determined when facing the sofa.",
+            productCareAr: "تنظيف جاف باستخدام مسحوق تنظيف الأقمشة والجاف.",
+            productCareEn: "Dry clean using dedicated upholstery foam cleaner.",
+            width: 300, length: 200, depth: null, height: 85
+          },
+          "sofa": {
+            specStructureAr: "هيكل خشبي متين من الزان الأحمر مع أرجل مقواة.",
+            specStructureEn: "Solid Red Beechwood frame with reinforced legs.",
+            specFabricAr: "قماش كيتان فاخر ناعم الملمس وسهل العناية.",
+            specFabricEn: "Soft-touch premium Linen fabric, easy to maintain.",
+            specFillingAr: "إسفنج عالي الكثافة (كثافة 33) لراحة فاخرة.",
+            specFillingEn: "High-density 33 density foam for plush seating comfort.",
+            specDimensionsNoteAr: "أبعاد قياسية مريحة تناسب مختلف مساحات غرف المعيشة.",
+            specDimensionsNoteEn: "Standard comfortable dimensions suitable for various living spaces.",
+            productCareAr: "التنظيف بالمكنسة الكهربائية والمسح الفوري للبقع.",
+            productCareEn: "Vacuum regularly and wipe spills immediately.",
+            width: 220, length: null, depth: 90, height: 85
+          },
+          "dining-room": {
+            specStructureAr: "خشب زان أحمر طبيعي مع قشرة أروا فاخرة ومفصلات هيدروليك ناعمة.",
+            specStructureEn: "Solid Red Beechwood with natural Oak veneer and soft-close hydraulic hinges.",
+            specFabricAr: "الكراسي منجدة بقماش جلد مقلوب أو قطيفة معالج ضد السوائل.",
+            specFabricEn: "Dining chairs upholstered in liquid-repellent Suede/Velvet fabric.",
+            specFillingAr: "حشو مقاعد الكراسي إسفنج مضغوط كثافة 30.",
+            specFillingEn: "Chair seats padded with high-density 30 foam.",
+            specDimensionsNoteAr: "الطقم يضم طاولة السفرة، والبوفيه، وكراسي السفرة.",
+            specDimensionsNoteEn: "Set includes Dining Table, Buffet, and Dining Chairs.",
+            productCareAr: "مسح الخشب بملمع الأثاث المخصص وتجنب السوائل الحارقة.",
+            productCareEn: "Use specialized wood polish and avoid corrosive liquids.",
+            pieces: [
+              { nameEn: "Dining Table", nameAr: "طاولة سفرة", width: 180, length: 90, depth: null, height: 78 },
+              { nameEn: "Buffet", nameAr: "بوفيه", width: 200, length: null, depth: 45, height: 90 }
+            ]
+          },
+          "buffet": {
+            specStructureAr: "خشب زان أحمر وقشرة أروا طبيعية مع أدراج هيدروليكية ومقابض مودرن.",
+            specStructureEn: "Red Beechwood with natural Oak veneer, hydraulic drawers and modern handles.",
+            specFabricAr: "لا يوجد (هيكل خشبي كامل).",
+            specFabricEn: "N/A (Full wooden structure).",
+            specFillingAr: "لا يوجد.",
+            specFillingEn: "N/A.",
+            specDimensionsNoteAr: "يوفر مساحات تخزين متعددة وأرفف داخلية واسعة.",
+            specDimensionsNoteEn: "Provides ample storage space with wide internal shelves.",
+            productCareAr: "مسح السطح بقطعة قماش دقيقة الألياف ناعمة.",
+            productCareEn: "Wipe surfaces with a soft microfiber cloth.",
+            width: 180, length: null, depth: 45, height: 90
+          },
+          "tv-unit": {
+            specStructureAr: "هيكل خشب كونتر زان وميلامين مع أدراج ميكانيكية سلسة الحركة.",
+            specStructureEn: "Counter Beechwood and melamine structure with smooth ball-bearing drawers.",
+            specFabricAr: "لا يوجد (هيكل خشبي بالكامل).",
+            specFabricEn: "N/A (Solid wood & veneer structure).",
+            specFillingAr: "لا يوجد.",
+            specFillingEn: "N/A.",
+            specDimensionsNoteAr: "تتسع لشاشات التلفزيون حتى 75 بوصة مع فتحات لإخفاء الأسلاك.",
+            specDimensionsNoteEn: "Accommodates TVs up to 75 inches with cable management holes.",
+            productCareAr: "التنظيف بقطعة قماش دقيقة الألياف (مايكروفايبر) جافة.",
+            productCareEn: "Dust with a dry microfiber cloth.",
+            width: 180, length: null, depth: 40, height: 45
+          },
+          "office": {
+            specStructureAr: "خشب MDF ميلامين عالي الجودة مقاوِم للخدش مع أرجل معدنية إلكتروستاتيك.",
+            specStructureEn: "Scratch-resistant melamine MDF with electrostatic steel legs.",
+            specFabricAr: "تنجيد كرسي المكتب بقماش شبكي هواء (Mesh) للتنفس.",
+            specFabricEn: "Desk chair upholstered in breathable Mesh fabric.",
+            specFillingAr: "إسفنج عالي الكثافة لكرسي المكتب مريح للظهر.",
+            specFillingEn: "High-density ergonomic seat foam.",
+            specDimensionsNoteAr: "المكتب مزود بوحدة أدراج جانبيّة متحركة أو ثابتة.",
+            specDimensionsNoteEn: "Desk includes attached or mobile pedestal drawers.",
+            productCareAr: "المسح بمنظف الأسطح المتعدد الاستخدامات وجفافه فوراً.",
+            productCareEn: "Wipe with multi-surface cleaner and dry immediately.",
+            width: 140, length: null, depth: 60, height: 75
+          },
+          "kids/teens-room": {
+            specStructureAr: "خشب زان وميلامين صديق للبيئة وآمن للأطفال بحواف دائرية.",
+            specStructureEn: "Eco-friendly Beechwood and melamine with child-safe rounded edges.",
+            specFabricAr: "قماش قطني معالج ناعم وسهل التنظيف.",
+            specFabricEn: "Soft, easy-to-clean cotton-blend fabric.",
+            specFillingAr: "إسفنج مرن عالي الجودة وصحي للظهر.",
+            specFillingEn: "Elastic, spine-supportive foam.",
+            specDimensionsNoteAr: "الغرفة تشمل سرير، دولاب، وكومود أو مكتب دراسة.",
+            specDimensionsNoteEn: "Includes single bed, wardrobe, and nightstand or study desk.",
+            productCareAr: "سهولة التنظيف بماء دافئ وصابون خفيف.",
+            productCareEn: "Easy to clean with warm water and mild soap.",
+            pieces: [
+              { nameEn: "Bed", nameAr: "السرير", width: 120, length: 195, depth: null, height: 110 },
+              { nameEn: "Wardrobe", nameAr: "الدولاب", width: 120, length: null, depth: 50, height: 220 }
+            ]
+          },
+          "shoe-cabinet": {
+            specStructureAr: "خشب كونتر/MDF ميلامين مع أرفف داخلية متعددة وآلية فتح هيدروليكية.",
+            specStructureEn: "Melamine Counter/MDF wood with adjustable internal shelves.",
+            specFabricAr: "لا يوجد.",
+            specFabricEn: "N/A.",
+            specFillingAr: "لا يوجد.",
+            specFillingEn: "N/A.",
+            specDimensionsNoteAr: "تتسع لـ 15 إلى 25 زوجاً من الأحذية.",
+            specDimensionsNoteEn: "Capacity: Holds 15 to 25 pairs of shoes.",
+            productCareAr: "التهوية الدورية والمسح بقطعة قماش جافة.",
+            productCareEn: "Air periodically and wipe with a dry cloth.",
+            width: 100, length: null, depth: 35, height: 120
+          },
+          "matters": {
+            specStructureAr: "شاسيه سوست بوكيت منفصلة/متصلة نبال ألمانية مع طبقات لباد عازل.",
+            specStructureEn: "Pocket/Bonnell German steel springs with protective felt insulation layers.",
+            specFabricAr: "قماش دبل نت فاخر معالج ضد البكتيريا وحشرات الفراش.",
+            specFabricEn: "Premium antibacterial & hypoallergenic knitted fabric.",
+            specFillingAr: "إسفنج عالي الكثافة 30 + طبقة فيبر ناعمة التنجيد (ارتفاع 26 سم).",
+            specFillingEn: "High-density 30 foam + plush fiber quilting (26 cm total height).",
+            specDimensionsNoteAr: "متوفرة بكافة المقاسات القياسية بالطلب.",
+            specDimensionsNoteEn: "Available in all standard mattress sizes upon order.",
+            productCareAr: "تدوير المرتبة كل 3 أشهر وتجنب القفز عليها.",
+            productCareEn: "Rotate mattress every 3 months; do not bend or fold.",
+            width: 160, length: 195, depth: null, height: 26
+          },
+          "chair": {
+            specStructureAr: "أرجل خشب زان أحمر طبيعي مع هيكل متين.",
+            specStructureEn: "Natural Red Beechwood legs with sturdy inner frame.",
+            specFabricAr: "قماش قطيفة / جلد مقلوب فاخر معالج ضد البقع.",
+            specFabricEn: "Premium stain-resistant Velvet / Suede fabric.",
+            specFillingAr: "إسفنج عالي الكثافة (كثافة 30 كجم/م³) لراحة الجلوس.",
+            specFillingEn: "High-density 30 kg/m³ seating foam.",
+            specDimensionsNoteAr: "تصميم مريح للظهر والجلسة.",
+            specDimensionsNoteEn: "Ergonomic seating and back support design.",
+            productCareAr: "تنظيف جاف للبقع ومسح الأرجل بمقماش ناعم.",
+            productCareEn: "Spot clean stains, wipe legs with a soft cloth.",
+            width: 75, length: 80, depth: null, height: 80
+          },
+          "tables": {
+            specStructureAr: "هيكل خشبي من الزان الأحمر أو المعدن المقاوم للرؤية والخدوش.",
+            specStructureEn: "Solid Red Beechwood or scratch-resistant metal frame.",
+            specFabricAr: "لا يوجد.",
+            specFabricEn: "N/A.",
+            specFillingAr: "لا يوجد.",
+            specFillingEn: "N/A.",
+            specDimensionsNoteAr: "سطح خشب متين وعالي التحمل.",
+            specDimensionsNoteEn: "Durable high-strength wooden top.",
+            productCareAr: "مسح السطح بقطعة قماش ناعمة جافة.",
+            productCareEn: "Wipe top with a soft dry cloth.",
+            width: 80, length: 60, depth: null, height: 60
+          },
+          "dressing": {
+            specStructureAr: "خشب كونتر وزان مع زجاج شفاف أو مضلع وأرفف ملابس متعددة.",
+            specStructureEn: "Counter and Beechwood with clear/fluted glass and clothing organizers.",
+            specFabricAr: "لا يوجد.",
+            specFabricEn: "N/A.",
+            specFillingAr: "لا يوجد.",
+            specFillingEn: "N/A.",
+            specDimensionsNoteAr: "سعة تخزينية واسعة للملابس والأغراض الشخصية.",
+            specDimensionsNoteEn: "Spacious storage capacity for clothes and personal belongings.",
+            productCareAr: "مسح الزجاج بمُنظف الزجاج المخصص والخشب بقماش جاف.",
+            productCareEn: "Clean glass with glass cleaner and wipe wood with dry cloth.",
+            width: 240, length: null, depth: 60, height: 240
+          }
+        };
+
+        let tpl = null;
+        for (const c of cats) {
+          if (CATEGORY_DEFAULTS[c]) { tpl = CATEGORY_DEFAULTS[c]; break; }
+        }
+
+        if (!tpl) {
+          if (sku.includes('BEDROOM') || nameAr.includes('نوم') || nameEn.includes('bedroom')) tpl = CATEGORY_DEFAULTS['bedroom'];
+          else if (sku.includes('BED') || nameAr.includes('سرير') || nameEn.includes('bed')) tpl = CATEGORY_DEFAULTS['beds'];
+          else if (sku.includes('SOFA') || nameAr.includes('كنب') || nameEn.includes('sofa')) tpl = CATEGORY_DEFAULTS['sofa'];
+          else if (sku.includes('LSHAPE') || nameAr.includes('ركن') || nameEn.includes('lshape')) tpl = CATEGORY_DEFAULTS['lcorner'];
+          else if (sku.includes('LIVING') || nameAr.includes('معيشة') || nameEn.includes('living')) tpl = CATEGORY_DEFAULTS['living-room'];
+          else if (sku.includes('DINNING') || sku.includes('DINING') || nameAr.includes('سفرة') || nameEn.includes('dining')) tpl = CATEGORY_DEFAULTS['dining-room'];
+          else if (sku.includes('BUFFET') || nameAr.includes('بوفيه') || nameEn.includes('buffet')) tpl = CATEGORY_DEFAULTS['buffet'];
+          else if (sku.includes('UNIT') || nameAr.includes('تلفزيون') || nameEn.includes('tv')) tpl = CATEGORY_DEFAULTS['tv-unit'];
+          else if (sku.includes('OFFICE') || nameAr.includes('مكتب') || nameEn.includes('office')) tpl = CATEGORY_DEFAULTS['office'];
+          else if (sku.includes('KROOM') || nameAr.includes('أطفال') || nameEn.includes('kids')) tpl = CATEGORY_DEFAULTS['kids/teens-room'];
+          else if (sku.includes('SCABINET') || nameAr.includes('أحذية') || nameEn.includes('shoe')) tpl = CATEGORY_DEFAULTS['shoe-cabinet'];
+          else if (sku.includes('MATTRESS') || nameAr.includes('مرتب') || nameEn.includes('mattress')) tpl = CATEGORY_DEFAULTS['matters'];
+          else if (sku.includes('CHAIR') || nameAr.includes('كرسي') || nameEn.includes('chair')) tpl = CATEGORY_DEFAULTS['chair'];
+          else if (sku.includes('TABLE') || nameAr.includes('طاول') || nameEn.includes('table')) tpl = CATEGORY_DEFAULTS['tables'];
+          else if (sku.includes('DRESSING') || nameAr.includes('دريسنج') || nameEn.includes('dressing')) tpl = CATEGORY_DEFAULTS['dressing'];
+        }
+        return tpl;
+      }
+
+      function getSelectedCategoryObject() {
+        const catInputs = document.querySelectorAll("#pm-cats input[type=checkbox]:checked");
+        const catValues = Array.from(catInputs).map(i => i.value);
+        if (!catValues.length || !allCats || !allCats.length) return null;
+        
+        let mainCat = allCats.find(c => catValues.includes(c.id) || catValues.includes(c.slug));
+        if (!mainCat) return null;
+
+        let parentCat = mainCat.parentId ? allCats.find(c => c.id === mainCat.parentId) : null;
+        return { main: mainCat, parent: parentCat };
+      }
+
+      function autoFillCategorySpecs() {
+        const catObj = getSelectedCategoryObject();
+        const main = catObj?.main;
+        const parent = catObj?.parent;
+        
+        const specStructAr = main?.defaultSpecStructureAr || parent?.defaultSpecStructureAr;
+        const specStructEn = main?.defaultSpecStructureEn || parent?.defaultSpecStructureEn;
+        const specFabAr = main?.defaultSpecFabricAr || parent?.defaultSpecFabricAr;
+        const specFabEn = main?.defaultSpecFabricEn || parent?.defaultSpecFabricEn;
+        const specFillAr = main?.defaultSpecFillingAr || parent?.defaultSpecFillingAr;
+        const specFillEn = main?.defaultSpecFillingEn || parent?.defaultSpecFillingEn;
+        const specDimsAr = main?.defaultSpecDimensionsNoteAr || parent?.defaultSpecDimensionsNoteAr;
+        const specDimsEn = main?.defaultSpecDimensionsNoteEn || parent?.defaultSpecDimensionsNoteEn;
+        const specCareAr = main?.defaultProductCareAr || parent?.defaultProductCareAr;
+        const specCareEn = main?.defaultProductCareEn || parent?.defaultProductCareEn;
+
+        if (specStructAr || specStructEn || specFabAr || specFabEn || specFillAr || specFillEn || specCareAr) {
+          document.getElementById("pm-spec-structure-ar").value = specStructAr || "";
+          document.getElementById("pm-spec-structure-en").value = specStructEn || "";
+          document.getElementById("pm-spec-fabric-ar").value = specFabAr || "";
+          document.getElementById("pm-spec-fabric-en").value = specFabEn || "";
+          document.getElementById("pm-spec-filling-ar").value = specFillAr || "";
+          document.getElementById("pm-spec-filling-en").value = specFillEn || "";
+          document.getElementById("pm-spec-dims-note-ar").value = specDimsAr || "";
+          document.getElementById("pm-spec-dims-note-en").value = specDimsEn || "";
+          document.getElementById("pm-spec-care-ar").value = specCareAr || "";
+          document.getElementById("pm-spec-care-en").value = specCareEn || "";
+          const body = document.getElementById('specs-care-body');
+          if (body) body.style.display = 'block';
+          toast("✨ Category Specifications applied!", true);
+          return;
+        }
+
+        const tpl = getCategoryTemplate();
+        if (!tpl) {
+          toast("Please select a category or enter product name/SKU first.", false);
+          return;
+        }
+
+        document.getElementById("pm-spec-structure-ar").value = tpl.specStructureAr || "";
+        document.getElementById("pm-spec-structure-en").value = tpl.specStructureEn || "";
+        document.getElementById("pm-spec-fabric-ar").value = tpl.specFabricAr || "";
+        document.getElementById("pm-spec-fabric-en").value = tpl.specFabricEn || "";
+        document.getElementById("pm-spec-filling-ar").value = tpl.specFillingAr || "";
+        document.getElementById("pm-spec-filling-en").value = tpl.specFillingEn || "";
+        document.getElementById("pm-spec-dims-note-ar").value = tpl.specDimensionsNoteAr || "";
+        document.getElementById("pm-spec-dims-note-en").value = tpl.specDimensionsNoteEn || "";
+        document.getElementById("pm-spec-care-ar").value = tpl.productCareAr || "";
+        document.getElementById("pm-spec-care-en").value = tpl.productCareEn || "";
+
+        const body = document.getElementById('specs-care-body');
+        if (body) body.style.display = 'block';
+
+        toast("✨ Specifications & Care template applied!", true);
+      }
+
+      function autoFillCategoryDimensions() {
+        const tpl = getCategoryTemplate();
+        if (!tpl) {
+          toast("Please select a category or enter product name/SKU first.", false);
+          return;
+        }
+
+        if (tpl.pieces && Array.isArray(tpl.pieces)) {
+          const container = document.getElementById("pm-dims-list");
+          if (container) container.innerHTML = "";
+          tpl.pieces.forEach(p => addDimPieceRow(p));
+        } else {
+          document.getElementById("pm-width").value = tpl.width || "";
+          document.getElementById("pm-length").value = tpl.length || "";
+          document.getElementById("pm-depth").value = tpl.depth || "";
+          document.getElementById("pm-height").value = tpl.height || "";
+        }
+
+        toast("📐 Category Dimensions template applied!", true);
+      }
+
+      function autoFillCategorySpecsAndDims() {
+        autoFillCategorySpecs();
+        autoFillCategoryDimensions();
+      }
+
+      function autoFillDescription() {
+        const catObj = getSelectedCategoryObject();
+        const main = catObj?.main;
+        const parent = catObj?.parent;
+
+        const descAr = main?.defaultDescAr || parent?.defaultDescAr;
+        const descEn = main?.defaultDescEn || parent?.defaultDescEn;
+
+        if (descAr || descEn) {
+          document.getElementById("pm-desc-ar").value = descAr || "";
+          document.getElementById("pm-desc-en").value = descEn || "";
+          toast("✍️ Category Description template applied!", true);
+          return;
+        }
+
+        const catInputs = document.querySelectorAll("#pm-cats input[type=checkbox]:checked");
+        const cats = Array.from(catInputs).map(i => i.value);
+        const nameAr = (document.getElementById("pm-name-ar").value || "").toLowerCase();
+        const nameEn = (document.getElementById("pm-name-en").value || "").toLowerCase();
+        const sku = (document.getElementById("pm-sku").value || "").toUpperCase();
+
+        let desc = null;
+        for (const c of cats) {
+          if (DESC_DEFAULTS[c]) { desc = DESC_DEFAULTS[c]; break; }
+        }
+        if (!desc) {
+          if (sku.includes('BEDROOM') || nameAr.includes('نوم') || nameEn.includes('bedroom')) desc = DESC_DEFAULTS['bedroom'];
+          else if (sku.includes('BED') || nameAr.includes('سرير') || nameEn.includes('bed')) desc = DESC_DEFAULTS['beds'];
+          else if (sku.includes('SOFA') || nameAr.includes('كنب') || nameEn.includes('sofa')) desc = DESC_DEFAULTS['sofa'];
+          else if (sku.includes('LSHAPE') || nameAr.includes('ركن') || nameEn.includes('lshape')) desc = DESC_DEFAULTS['lcorner'];
+          else if (sku.includes('LIVING') || nameAr.includes('معيشة') || nameEn.includes('living')) desc = DESC_DEFAULTS['living-room'];
+          else if (sku.includes('DINNING') || sku.includes('DINING') || nameAr.includes('سفرة') || nameEn.includes('dining')) desc = DESC_DEFAULTS['dining-room'];
+          else if (sku.includes('BUFFET') || nameAr.includes('بوفيه') || nameEn.includes('buffet')) desc = DESC_DEFAULTS['buffet'];
+          else if (sku.includes('UNIT') || nameAr.includes('تلفزيون') || nameEn.includes('tv')) desc = DESC_DEFAULTS['tv-unit'];
+          else if (sku.includes('OFFICE') || nameAr.includes('مكتب') || nameEn.includes('office')) desc = DESC_DEFAULTS['office'];
+          else if (sku.includes('KROOM') || nameAr.includes('أطفال') || nameEn.includes('kids')) desc = DESC_DEFAULTS['kids/teens-room'];
+          else if (sku.includes('SCABINET') || nameAr.includes('أحذية') || nameEn.includes('shoe')) desc = DESC_DEFAULTS['shoe-cabinet'];
+          else if (sku.includes('MATTRESS') || nameAr.includes('مرتب') || nameEn.includes('mattress')) desc = DESC_DEFAULTS['matters'];
+          else if (sku.includes('CHAIR') || nameAr.includes('كرسي') || nameEn.includes('chair')) desc = DESC_DEFAULTS['chair'];
+          else if (sku.includes('TABLE') || nameAr.includes('طاول') || nameEn.includes('table')) desc = DESC_DEFAULTS['tables'];
+          else if (sku.includes('DRESSING') || nameAr.includes('دريسنج') || nameEn.includes('dressing')) desc = DESC_DEFAULTS['dressing'];
+        }
+        if (!desc) {
+          desc = {
+            ar: "منتج فاخر بتصميم عصري وأعلى معايير الجودة والتصنيع ليوفر لك تجربة استثنائية ولمسة جمالية متكاملة.",
+            en: "Premium product featuring sleek modern craftsmanship and high-quality materials to enhance your home."
+          };
+        }
+
+        document.getElementById("pm-desc-ar").value = desc.ar;
+        document.getElementById("pm-desc-en").value = desc.en;
+
+        toast("✍️ Product Description auto-generated!", true);
+      }
+
+      function renderFbGalleryPicker() {
+        const picker = document.getElementById("pm-fb-gallery-picker");
+        if (!picker) return;
+
+        const currentFbPhoto = document.getElementById("pm-fb-photo-url")?.value || "";
+        const allPhotos = [];
+
+        if (Array.isArray(__photoOrder) && __photoOrder.length > 0) {
+          __photoOrder.forEach(p => { if (p && typeof p === 'string') allPhotos.push(p); });
+        }
+
+        if (Array.isArray(_selPhotos) && _selPhotos.length > 0) {
+          _selPhotos.forEach(f => {
+            if (typeof f === 'string') allPhotos.push(f);
+          });
+        }
+
+        const uniquePhotos = Array.from(new Set(allPhotos));
+
+        if (uniquePhotos.length === 0) {
+          picker.innerHTML = `<span style="font-size:11px;color:var(--tm)">No existing gallery photos found yet. Upload gallery photos above first!</span>`;
+          return;
+        }
+
+        picker.innerHTML = uniquePhotos.map((url, i) => {
+          const isSelected = (url === currentFbPhoto);
+          const borderStyle = isSelected ? "border:2px solid var(--o);transform:scale(1.05);box-shadow:0 0 6px rgba(245,166,35,0.5)" : "border:1px solid var(--b)";
+          return `
+            <div onclick="selectFbGalleryPhoto('${url}')" style="cursor:pointer;position:relative;border-radius:6px;overflow:hidden;${borderStyle};transition:all 0.2s" title="Click to use as Feature Banner photo">
+              <img src="${iu(url)}" style="width:48px;height:48px;object-fit:cover;display:block">
+              ${isSelected ? `<span style="position:absolute;top:2px;right:2px;background:var(--o);color:#fff;font-size:9px;padding:1px 3px;border-radius:3px;font-weight:700">✓</span>` : ''}
+            </div>
+          `;
+        }).join('');
+      }
+
+      function selectFbGalleryPhoto(url) {
+        document.getElementById("pm-fb-photo-url").value = url;
+        document.getElementById("pm-fb-photo-img").src = iu(url);
+        document.getElementById("pm-fb-photo-preview").style.display = "block";
+        renderFbGalleryPicker();
+        toast("Selected existing gallery photo for Feature Banner!", true);
+      }
+
+      function autoFillFeatureBanner() {
+        document.getElementById("pm-fb-enabled").checked = true;
+
+        let currentPhoto = document.getElementById("pm-fb-photo-url").value;
+        if (!currentPhoto && Array.isArray(__photoOrder) && __photoOrder.length > 0) {
+          currentPhoto = __photoOrder[0];
+        }
+        if (!currentPhoto && Array.isArray(_selPhotos) && _selPhotos.length > 0) {
+          const first = _selPhotos[0];
+          if (typeof first === 'string') currentPhoto = first;
+        }
+
+        if (currentPhoto) {
+          selectFbGalleryPhoto(currentPhoto);
+        }
+
+        const catObj = getSelectedCategoryObject();
+        const fb = catObj?.main?.defaultFeatureBanner || catObj?.parent?.defaultFeatureBanner;
+
+        if (fb && (fb.titleAr || fb.titleEn || (fb.features && fb.features.length))) {
+          document.getElementById("pm-fb-title-ar").value = fb.titleAr || "ما الذي يجعله مميزاً";
+          document.getElementById("pm-fb-title-en").value = fb.titleEn || "What Makes It Special";
+          document.getElementById("pm-fb-desc-ar").value = fb.descAr || "";
+          document.getElementById("pm-fb-desc-en").value = fb.descEn || "";
+          buildFeatBannerRows(fb.features || []);
+          const body = document.getElementById('feat-banner-body');
+          if (body) body.style.display = 'block';
+          renderFbGalleryPicker();
+          toast("🖼️ Category Feature Banner applied!", true);
+          return;
+        }
+
+        const catInputs = document.querySelectorAll("#pm-cats input[type=checkbox]:checked");
+        const cats = Array.from(catInputs).map(i => i.value);
+        const nameAr = (document.getElementById("pm-name-ar").value || "").toLowerCase();
+        const nameEn = (document.getElementById("pm-name-en").value || "").toLowerCase();
+        const sku = (document.getElementById("pm-sku").value || "").toUpperCase();
+
+        document.getElementById("pm-fb-title-ar").value = "ما الذي يجعله مميزاً";
+        document.getElementById("pm-fb-title-en").value = "What Makes It Special";
+
+        let defaultFeatures = [];
+
+        // 1. Mattresses
+        if (cats.includes('matters') || sku.includes('MATTRESS') || nameAr.includes('مرتب')) {
+          document.getElementById("pm-fb-desc-ar").value = "مرتبة طبية فاخرة توفر أقصى درجات الدعم والراحة لنوم صحي وعميق.";
+          document.getElementById("pm-fb-desc-en").value = "Ergonomic medical mattress designed for maximum spinal support and luxurious sleep.";
+          defaultFeatures = [
+            { icon: "spring", labelAr: "سوست بوكيت ألمانية", labelEn: "German Pocket Springs" },
+            { icon: "foam", labelAr: "إسفنج مرن عالي الكثافة", labelEn: "High-Density Foam" },
+            { icon: "fabric", labelAr: "قماش مضاد للبكتيريا", labelEn: "Antibacterial Fabric" },
+            { icon: "clock", labelAr: "ضمان واستدامة طويلة", labelEn: "Long-lasting Warranty" }
+          ];
+        }
+        // 2. Pure Wooden items (Shoe Cabinets, TV Units, Buffets, Office desks, Tables, Dressing)
+        else if (cats.includes('shoe-cabinet') || cats.includes('tv-unit') || cats.includes('buffet') || cats.includes('office') || cats.includes('tables') || cats.includes('dressing') || sku.includes('SCABINET') || sku.includes('UNIT') || sku.includes('BUFFET') || sku.includes('OFFICE') || sku.includes('TABLE') || sku.includes('DRESSING')) {
+          document.getElementById("pm-fb-desc-ar").value = "مصنع بعناية فائقة من أخشاب عالية الجودة ومواد معالجة تقاوم الخدوش والرطوبة.";
+          document.getElementById("pm-fb-desc-en").value = "Precision crafted from high-grade treated timber designed for durability, scratch, and moisture resistance.";
+          defaultFeatures = [
+            { icon: "wood", labelAr: "خشب زان طبيعي متين", labelEn: "Solid Beechwood Frame" },
+            { icon: "clock", labelAr: "هيكل قوي وطويل العمر", labelEn: "Durable Construction" },
+            { icon: "shield", labelAr: "مقاوم للخدش والرطوبة", labelEn: "Scratch & Moisture Resistant" },
+            { icon: "leaf", labelAr: "طلاء وخامات صديقة للبيئة", labelEn: "Eco-Friendly Finish" }
+          ];
+        }
+        // 3. Kids Room
+        else if (cats.includes('kids/teens-room') || sku.includes('KROOM') || nameAr.includes('أطفال')) {
+          document.getElementById("pm-fb-desc-ar").value = "مصمم بلمسات مبهجة وخامات آمنة تماماً للأطفال بحواف دائرية لحماية عائلتك.";
+          document.getElementById("pm-fb-desc-en").value = "Thoughtfully designed with vibrant child-safe eco-friendly materials and smooth rounded protective edges.";
+          defaultFeatures = [
+            { icon: "wood", labelAr: "خشب زان وميلامين آمن", labelEn: "Safe Beech & Melamine Wood" },
+            { icon: "shield", labelAr: "حواف دائرية آمنة للأطفال", labelEn: "Child-Safe Rounded Edges" },
+            { icon: "leaf", labelAr: "خامات وصباغات صديقة للبيئة", labelEn: "Eco-Friendly Non-Toxic" },
+            { icon: "clock", labelAr: "متانة للاستخدام اليومي", labelEn: "Built for Daily Use" }
+          ];
+        }
+        // 4. Upholstered Furniture (Beds, Sofas, Living Room, L-Corner, Upholstered Chairs)
+        else {
+          document.getElementById("pm-fb-desc-ar").value = "تم تصنيع هذا المنتج بعناية فائقة باستخدام أجود الخامات المعالجة لضمان المتانة والراحة والاستدامة.";
+          document.getElementById("pm-fb-desc-en").value = "Crafted with meticulous attention to detail using premium treated materials for lasting comfort and durability.";
+          defaultFeatures = [
+            { icon: "wood", labelAr: "شاسيه زان أحمر متين", labelEn: "Solid Beechwood Frame" },
+            { icon: "foam", labelAr: "إسفنج مرن عالي الكثافة", labelEn: "High-Density Foam" },
+            { icon: "fabric", labelAr: "قماش فاخر معالج", labelEn: "Premium Treated Fabric" },
+            { icon: "stitch", labelAr: "تقفيل كابوتونيه فاخر", labelEn: "Master Upholstery Stitching" }
+          ];
+        }
+
+        buildFeatBannerRows(defaultFeatures);
+
+        const body = document.getElementById('feat-banner-body');
+        if (body) body.style.display = 'block';
+
+        renderFbGalleryPicker();
+
+        toast("✨ Feature Banner auto-generated using existing photo!", true);
+      }
+
+      function autoFillAllCategoryDefaults() {
+        autoFillDescription();
+        autoFillCategorySpecs();
+        autoFillFeatureBanner();
+        toast("🚀 All category defaults filled successfully!", true);
+      }
+
+      function buildFeatBannerRows(features) {
+        const container = document.getElementById('pm-fb-features');
+        if (!container) return;
+        container.innerHTML = [0,1,2,3].map(i => {
+          const f = features?.[i] || {};
+          const opts = FEAT_BANNER_ICONS.map(([ic, label]) => 
+            `<option value="${ic}" ${f.icon===ic?'selected':''}>${label}</option>`
+          ).join('');
+          return `<div class="fb-row">
+            <select class="fb-icon-sel" data-i="${i}">
+              <option value="">-- Icon --</option>${opts}
+            </select>
+            <input class="fb-label-ar" data-i="${i}" 
+              value="${f.labelAr||''}" 
+              placeholder="Arabic label" 
+              style="direction:rtl">
+            <input class="fb-label-en" data-i="${i}" 
+              value="${f.labelEn||''}" 
+              placeholder="English label">
+          </div>`;
+        }).join('');
+      }
+
+      async function uploadFeatBannerPhoto(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const fd = new FormData();
+        fd.append('photo', file);
+        try {
+          const res = await fetch(`${API}/admin/upload-photo`, {
+            method:'POST',
+            headers:{Authorization:'Bearer '+TOKEN},
+            body:fd
+          });
+          const data = await res.json();
+          const url = data.url || '';
+          if (url) {
+            document.getElementById('pm-fb-photo-url').value = url;
+            document.getElementById('pm-fb-photo-img').src = iu(url);
+            document.getElementById('pm-fb-photo-preview').style.display = 'block';
+            toast("Feature banner image uploaded");
+          } else {
+            throw new Error("Upload failed");
+          }
+        } catch (e) {
+          toast("" + e.message, false);
+        }
+      }
+
+      function getFeatBannerData() {
+        const enabled = document.getElementById('pm-fb-enabled')?.checked || false;
+        const photo = document.getElementById('pm-fb-photo-url')?.value || '';
+        const titleAr = document.getElementById('pm-fb-title-ar')?.value || '';
+        const titleEn = document.getElementById('pm-fb-title-en')?.value || '';
+        const descAr = document.getElementById('pm-fb-desc-ar')?.value || '';
+        const descEn = document.getElementById('pm-fb-desc-en')?.value || '';
+        const features = [0,1,2,3].map(i => ({
+          icon: document.querySelector(`.fb-icon-sel[data-i="${i}"]`)?.value || '',
+          labelAr: document.querySelector(`.fb-label-ar[data-i="${i}"]`)?.value || '',
+          labelEn: document.querySelector(`.fb-label-en[data-i="${i}"]`)?.value || ''
+        })).filter(f => f.icon || f.labelAr || f.labelEn);
+        return { enabled, photo, titleAr, titleEn, descAr, descEn, features };
+      }
+
+      function toggleSideOptionsUI(val) {
+        const container = document.getElementById("pm-side-options-container");
+        if (val === "none") {
+          container.style.display = "none";
+        } else {
+          container.style.display = "block";
+        }
+      }
+
+      function openProdModal(id) {
+        editingProdId = id || null;
+        document.getElementById("prod-modal-title").textContent = id
+          ? "Edit Product"
+          : "Add Product";
+        document.getElementById("upload-preview").innerHTML = "";
+        document.getElementById("existing-photos").innerHTML = "";
+        document.getElementById("existing-photos-strip").innerHTML = "";
+        document.getElementById("pm-photos").value = "";
+        _selPhotos = [];
+
+
+
+        // Clear Feature Banner fields
+        document.getElementById('pm-fb-enabled').checked = false;
+        document.getElementById('pm-fb-photo-url').value = '';
+        document.getElementById('pm-fb-photo-preview').style.display = 'none';
+        document.getElementById('pm-fb-photo-img').src = '';
+        document.getElementById('pm-fb-title-ar').value = '';
+        document.getElementById('pm-fb-title-en').value = '';
+        document.getElementById('pm-fb-desc-ar').value = '';
+        document.getElementById('pm-fb-desc-en').value = '';
+        buildFeatBannerRows([]);
+
+        [
+          "pm-name-ar",
+          "pm-name-en",
+          "pm-sku",
+          "pm-desc-ar",
+          "pm-desc-en",
+          "pm-price",
+          "pm-cost",
+          "pm-length",
+          "pm-width",
+          "pm-depth",
+          "pm-height",
+          "pm-profit",
+          "pm-spec-structure-ar",
+          "pm-spec-structure-en",
+          "pm-spec-fabric-ar",
+          "pm-spec-fabric-en",
+          "pm-spec-filling-ar",
+          "pm-spec-filling-en",
+          "pm-spec-dims-note-ar",
+          "pm-spec-dims-note-en",
+          "pm-spec-care-ar",
+          "pm-spec-care-en",
+        ].forEach((f) => {
+          const el = document.getElementById(f);
+          if (el) el.value = "";
+        });
+        document.getElementById('specs-care-body').style.display = 'none';
+        clearVariantRows();
+        document.getElementById("pm-dims-list").innerHTML = "";
+        __photoOrder = [];
+        photoColorMap = {};
+        photoSideMap = {};
+
+
+
+        document.getElementById("pm-featured").checked = false;
+        document.getElementById("pm-marquee").checked = false;
+        document.getElementById("pm-visible").checked = true;
+        document.getElementById("pm-isnew").checked = false;
+        document.querySelectorAll('input[name="pm-side-choice-type"]').forEach(r => {
+          r.checked = r.value === "none";
+        });
+        document.querySelectorAll('.pm-side-opt').forEach(c => c.checked = false);
+        toggleSideOptionsUI("none");
+        populateCatSelect();
+        if (id) {
+          const p = allProducts.find((x) => x.id === id);
+          if (p) {
+
+            document.getElementById("pm-featured").checked =
+              p.featured === true;
+            document.getElementById("pm-marquee").checked =
+              p.featuredInMarquee === true;
+            document.getElementById("pm-visible").checked =
+              p.visible !== false;
+            document.getElementById("pm-isnew").checked = p.isNew === true;
+            document.getElementById("pm-bestseller").checked = p.bestSeller === true || p.bestSeller === "true";
+            
+            const sideType = p.sideChoiceType || (p.sideChoiceEnabled ? "orientation" : "none");
+            document.querySelectorAll('input[name="pm-side-choice-type"]').forEach(r => {
+              r.checked = r.value === sideType;
+            });
+            const sideOpts = p.sideOptions || (p.sideChoiceEnabled ? ["left", "right"] : []);
+            document.querySelectorAll('.pm-side-opt').forEach(c => {
+              c.checked = sideOpts.includes(c.value);
+            });
+            toggleSideOptionsUI(sideType);
+            document.getElementById("pm-name-ar").value = p.nameAr || "";
+            document.getElementById("pm-name-en").value = p.nameEn || "";
+            document.getElementById("pm-sku").value = p.sku || "";
+            document.getElementById("pm-desc-ar").value = p.descriptionAr || "";
+            document.getElementById("pm-desc-en").value = p.descriptionEn || "";
+            document.getElementById("pm-price").value = p.price || "";
+            document.getElementById("pm-cost").value =
+              p.costPrice != null && p.costPrice > 0 ? p.costPrice : "";
+            const dims = p.dimensions || {};
+            document.getElementById("pm-length").value = dims.length || "";
+            document.getElementById("pm-width").value = dims.width || "";
+            document.getElementById("pm-depth").value = dims.depth || "";
+            document.getElementById("pm-height").value = dims.height || "";
+            if (dims.pieces && Array.isArray(dims.pieces)) {
+              dims.pieces.forEach((piece) => addDimPieceRow(piece));
+
+              document.getElementById("addon-rows").innerHTML = "";
+              if (p.addOns && Array.isArray(p.addOns)) {
+                p.addOns.forEach(addon => addAddOnRow(addon));
+              }
+
+            }
+
+            // Load specifications & care
+            document.getElementById("pm-spec-structure-ar").value = p.specStructureAr || "";
+            document.getElementById("pm-spec-structure-en").value = p.specStructureEn || "";
+            document.getElementById("pm-spec-fabric-ar").value = p.specFabricAr || "";
+            document.getElementById("pm-spec-fabric-en").value = p.specFabricEn || "";
+            document.getElementById("pm-spec-filling-ar").value = p.specFillingAr || "";
+            document.getElementById("pm-spec-filling-en").value = p.specFillingEn || "";
+            document.getElementById("pm-spec-dims-note-ar").value = p.specDimensionsNoteAr || "";
+            document.getElementById("pm-spec-dims-note-en").value = p.specDimensionsNoteEn || "";
+            document.getElementById("pm-spec-care-ar").value = p.productCareAr || "";
+            document.getElementById("pm-spec-care-en").value = p.productCareEn || "";
+
+            // Load Feature Banner
+            if (p.featureBanner) {
+              document.getElementById('pm-fb-enabled').checked = p.featureBanner.enabled || false;
+              document.getElementById('pm-fb-photo-url').value = p.featureBanner.photo || '';
+              if (p.featureBanner.photo) {
+                document.getElementById('pm-fb-photo-img').src = p.featureBanner.photo;
+                document.getElementById('pm-fb-photo-preview').style.display = 'block';
+              } else {
+                document.getElementById('pm-fb-photo-preview').style.display = 'none';
+              }
+              document.getElementById('pm-fb-title-ar').value = p.featureBanner.titleAr || '';
+              document.getElementById('pm-fb-title-en').value = p.featureBanner.titleEn || '';
+              document.getElementById('pm-fb-desc-ar').value = p.featureBanner.descAr || '';
+              document.getElementById('pm-fb-desc-en').value = p.featureBanner.descEn || '';
+              buildFeatBannerRows(p.featureBanner.features || []);
+            } else {
+              document.getElementById('pm-fb-enabled').checked = false;
+              document.getElementById('pm-fb-photo-url').value = '';
+              document.getElementById('pm-fb-photo-preview').style.display = 'none';
+              document.getElementById('pm-fb-photo-img').src = '';
+              document.getElementById('pm-fb-title-ar').value = '';
+              document.getElementById('pm-fb-title-en').value = '';
+              document.getElementById('pm-fb-desc-ar').value = '';
+              document.getElementById('pm-fb-desc-en').value = '';
+              buildFeatBannerRows([]);
+            }
+
+            const variantsToLoad =
+              p.variants && p.variants.length
+                ? p.variants
+                : legacyToVariants(p.colors || [], p.sizes || []);
+            const bySize = new Map();
+            for (const v of variantsToLoad) {
+              const sn = (v.sizeNameAr || "").trim();
+              if (!bySize.has(sn)) bySize.set(sn, []);
+              bySize.get(sn).push(v);
+            }
+            for (const [sn, vs] of bySize) {
+              if (sn) {
+                const g = addSizeGroup(vs[0]);
+                vs.forEach((v) => {
+                  if (v.colorName || v.colorNameEn) addColorToGroup(g, v);
+                });
+              } else {
+                vs.forEach((v) => addColorOnlyRow(v));
+              }
+            }
+            photoColorMap = {};
+            if (p.colorPhotos) {
+              for (const [color, fns] of Object.entries(p.colorPhotos)) {
+                if (Array.isArray(fns)) {
+                  fns.forEach(fn => { photoColorMap[fn] = color; });
+                }
+              }
+            }
+            photoSideMap = {};
+            if (p.sidePhotos) {
+              for (const [side, fns] of Object.entries(p.sidePhotos)) {
+                if (Array.isArray(fns)) {
+                  fns.forEach(fn => { photoSideMap[fn] = side; });
+                }
+              }
+            }
+            __photoOrder = [...(p.photos || [])];
+            if (__photoOrder.length) {
+              document.getElementById("existing-photos").innerHTML =
+                '<div style="font-size:12px;color:var(--tm);margin-bottom:6px">Gallery order (↑↓)</div>';
+              renderPhotoStrip();
+            }
+            setTimeout(() => {
+              const inputs = document.querySelectorAll("#pm-cats input[type=checkbox]");
+              inputs.forEach((input) => {
+                input.checked = (p.categories || []).includes(input.value);
+              });
+            }, 50);
+          }
+        }
+
+        updProfit();
+        setTimeout(() => { if (typeof renderFbGalleryPicker === 'function') renderFbGalleryPicker(); }, 100);
+        document.getElementById("prod-modal").classList.add("open");
+      }
+      function closeProdModal() {
+        document.getElementById("prod-modal").classList.remove("open");
+      }
+      function populateCatSelect() {
+        const sel = document.getElementById("pm-cats");
+        sel.innerHTML = orderedCats()
+          .map(({ cat: c, depth }) =>
+            `<label style="display:flex;align-items:center;gap:8px;padding:10px 12px;margin-left:${depth ? 18 : 0}px;border:1px solid rgba(0,0,0,0.08);border-left:${depth ? "3px solid var(--o)" : "1px solid rgba(0,0,0,0.08)"};border-radius:10px;cursor:pointer;user-select:none;background:rgba(255,255,255,0.95)"><input type="checkbox" value="${c.slug}" style="width:16px;height:16px;accent-color:var(--o);flex-shrink:0" /><span>${depth ? "└─ " : ""}${c.nameEn} / ${c.nameAr}</span></label>`,
+          )
+          .join("");
+      }
+      let _selPhotos = [];
+      function previewPhotos(inp) {
+        _selPhotos = [..._selPhotos, ...inp.files];
+        inp.value = "";
+        renderPhotoPreview();
+      }
+      function renderPhotoPreview() {
+        const pv = document.getElementById("upload-preview");
+        pv.innerHTML = "";
+        _selPhotos.forEach((f, i) => {
+          const r = new FileReader();
+          r.onload = (e) => {
+            const wrap = document.createElement("div");
+            wrap.className = "upi";
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "upi-rm";
+            btn.textContent = "✕";
+            btn.onclick = () => {
+              _selPhotos.splice(i, 1);
+              renderPhotoPreview();
+            };
+            wrap.appendChild(img);
+            wrap.appendChild(btn);
+            pv.appendChild(wrap);
+          };
+          r.readAsDataURL(f);
+        });
+        if (typeof renderFbGalleryPicker === 'function') renderFbGalleryPicker();
+      }
+      async function saveProduct() {
+        const nameAr = document.getElementById("pm-name-ar").value.trim();
+        const nameEn = document.getElementById("pm-name-en").value.trim();
+        const sku = document
+          .getElementById("pm-sku")
+          .value.trim()
+          .toUpperCase();
+        const price =
+          parseFloat(document.getElementById("pm-price").value) || 0;
+        const costVal = (document.getElementById("pm-cost").value || "").trim();
+        const costPrice =
+          costVal !== "" && !isNaN(parseFloat(costVal)) && parseFloat(costVal) > 0
+            ? parseFloat(costVal)
+            : "";
+        const dimensionsLength =
+          parseFloat(document.getElementById("pm-length").value) || null;
+        const dimensionsWidth =
+          parseFloat(document.getElementById("pm-width").value) || null;
+        const dimensionsDepth =
+          parseFloat(document.getElementById("pm-depth").value) || null;
+        const dimensionsHeight =
+          parseFloat(document.getElementById("pm-height").value) || null;
+        const descriptionAr = document
+          .getElementById("pm-desc-ar")
+          .value.trim();
+        const descriptionEn = document
+          .getElementById("pm-desc-en")
+          .value.trim();
+        const specStructureAr = document.getElementById("pm-spec-structure-ar").value.trim();
+        const specStructureEn = document.getElementById("pm-spec-structure-en").value.trim();
+        const specFabricAr = document.getElementById("pm-spec-fabric-ar").value.trim();
+        const specFabricEn = document.getElementById("pm-spec-fabric-en").value.trim();
+        const specFillingAr = document.getElementById("pm-spec-filling-ar").value.trim();
+        const specFillingEn = document.getElementById("pm-spec-filling-en").value.trim();
+        const specDimensionsNoteAr = document.getElementById("pm-spec-dims-note-ar").value.trim();
+        const specDimensionsNoteEn = document.getElementById("pm-spec-dims-note-en").value.trim();
+        const productCareAr = document.getElementById("pm-spec-care-ar").value.trim();
+        const productCareEn = document.getElementById("pm-spec-care-en").value.trim();
+
+        const categories = [...document.querySelectorAll("#pm-cats input[type=checkbox]:checked")].map((input) => input.value);
+        const variants = getVariantsFromUI();
+        if (!nameAr && !nameEn) return toast("Product name is required", false);
+        try {
+          const photos = _selPhotos;
+          const form = new FormData();
+
+          form.append("featureBanner", JSON.stringify(getFeatBannerData()));
+
+          form.append("nameAr", nameAr);
+          form.append("nameEn", nameEn);
+          form.append("sku", sku);
+          form.append("descriptionAr", descriptionAr);
+          form.append("descriptionEn", descriptionEn);
+          form.append("specStructureAr", specStructureAr);
+          form.append("specStructureEn", specStructureEn);
+          form.append("specFabricAr", specFabricAr);
+          form.append("specFabricEn", specFabricEn);
+          form.append("specFillingAr", specFillingAr);
+          form.append("specFillingEn", specFillingEn);
+          form.append("specDimensionsNoteAr", specDimensionsNoteAr);
+          form.append("specDimensionsNoteEn", specDimensionsNoteEn);
+          form.append("productCareAr", productCareAr);
+          form.append("productCareEn", productCareEn);
+          form.append("price", price);
+          form.append("costPrice", costPrice);
+          const pieces = [];
+          document.querySelectorAll(".pm-dim-row").forEach((row) => {
+            const nameEn = row.querySelector(".pm-dim-name-en").value.trim();
+            const nameAr = row.querySelector(".pm-dim-name-ar").value.trim();
+            const lVal = row.querySelector(".pm-dim-length").value;
+            const wVal = row.querySelector(".pm-dim-width").value;
+            const dVal = row.querySelector(".pm-dim-depth").value;
+            const hVal = row.querySelector(".pm-dim-height").value;
+            if (nameEn || nameAr || lVal || wVal || dVal || hVal) {
+               pieces.push({
+                 nameEn,
+                 nameAr,
+                 length: lVal ? parseFloat(lVal) : null,
+                 width: wVal ? parseFloat(wVal) : null,
+                 depth: dVal ? parseFloat(dVal) : null,
+                 height: hVal ? parseFloat(hVal) : null,
+               });
+            }
+          });
+          const dimensions = {
+            length: dimensionsLength,
+            width: dimensionsWidth,
+            depth: dimensionsDepth,
+            height: dimensionsHeight,
+            pieces: pieces,
+          };
+          form.append("dimensions", JSON.stringify(dimensions));
+          form.append("variants", JSON.stringify(variants));
+          if (editingProdId && __photoOrder.length)
+            form.append("keepPhotos", JSON.stringify(__photoOrder));
+          form.append("categories", JSON.stringify(categories));
+
+          form.append(
+            "featured",
+            document.getElementById("pm-featured").checked ? "true" : "false",
+          );
+          form.append(
+            "featuredInMarquee",
+            document.getElementById("pm-marquee").checked ? "true" : "false",
+          );
+          form.append(
+            "visible",
+            document.getElementById("pm-visible").checked ? "true" : "false",
+          );
+          form.append(
+            "isNew",
+            document.getElementById("pm-isnew").checked ? "true" : "false",
+          );
+          form.append(
+            "bestSeller",
+            document.getElementById("pm-bestseller").checked ? "true" : "false",
+          );
+          const sideTypeEl = document.querySelector('input[name="pm-side-choice-type"]:checked');
+          const sideType = sideTypeEl ? sideTypeEl.value : "none";
+          const sideOptions = [];
+          if (sideType !== "none") {
+            document.querySelectorAll('.pm-side-opt:checked').forEach(c => {
+              sideOptions.push(c.value);
+            });
+          }
+          form.append("sideChoiceEnabled", sideType !== "none" ? "true" : "false");
+          form.append("sideChoiceType", sideType);
+          form.append("sideOptions", JSON.stringify(sideOptions));
+
+            const addOns = getAddOnsFromUI();
+            form.append("addOns", JSON.stringify(addOns));
+
+          const colorPhotos = {};
+          const sidePhotos = {};
+          __photoOrder.forEach(fn => {
+            const color = photoColorMap[fn];
+            if (color) {
+              if (!colorPhotos[color]) colorPhotos[color] = [];
+              colorPhotos[color].push(fn);
+            }
+            const side = photoSideMap[fn];
+            if (side) {
+              if (!sidePhotos[side]) sidePhotos[side] = [];
+              sidePhotos[side].push(fn);
+            }
+          });
+          form.append("colorPhotos", JSON.stringify(colorPhotos));
+          form.append("sidePhotos", JSON.stringify(sidePhotos));
+
+          photos.forEach((f) => form.append("photos", f));
+          let url = `${API}/admin/products`;
+          let method = "POST";
+          if (editingProdId) {
+            url = `${API}/admin/products/${editingProdId}`;
+            method = "PUT";
+          }
+          const r = await fetch(url, {
+            method,
+            headers: { Authorization: "Bearer " + TOKEN },
+            body: form,
+          });
+          const d = await r.json();
+          if (!r.ok) throw new Error(d.error || "Error");
+          toast(editingProdId ? "Product updated!" : "Product added!");
+          closeProdModal();
+          await loadProducts();
+          loadStats();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      function editProduct(id) {
+        openProdModal(id);
+      }
+      async function deleteProduct(id) {
+        if (!confirm("Delete this product?")) return;
+        try {
+          await api(`/admin/products/${id}`, { method: "DELETE" });
+          toast("Product deleted");
+          loadProducts();
+          loadStats();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── CATEGORIES ── */
+      async function loadCats() {
+        try {
+          allCats = (await api("/categories")).map(normalizeCat);
+          renderCats();
+          populateCatFilter();
+        } catch {}
+      }
+      function catProductCount(category) {
+        const values = new Set([category.slug, category.id].filter(Boolean));
+        allCats
+          .filter((c) => c.parentId === category.id)
+          .forEach((child) => [child.slug, child.id].filter(Boolean).forEach((v) => values.add(v)));
+        return allProducts.filter((p) => (p.categories || []).some((v) => values.has(v))).length;
+      }
+      function orderedCats() {
+        const rows = [];
+        allCats
+          .filter((c) => !c.parentId)
+          .forEach((parent) => {
+            rows.push({ cat: parent, depth: 0 });
+            allCats
+              .filter((c) => c.parentId === parent.id)
+              .forEach((child) => rows.push({ cat: child, depth: 1 }));
+          });
+        allCats
+          .filter((c) => c.parentId && !allCats.some((p) => p.id === c.parentId))
+          .forEach((cat) => rows.push({ cat, depth: 0 }));
+        return rows;
+      }
+      function renderCats() {
+        const b = document.getElementById("cat-body");
+        if (!allCats.length) {
+          b.innerHTML =
+            '<tr><td colspan="8"><div class="empty" style="padding:40px"><div class="eico" style="font-size:36px"></div><h4>No categories</h4></div></td></tr>';
+          return;
+        }
+        b.innerHTML = orderedCats()
+          .map(({ cat: c, depth }) => {
+            const count = catProductCount(c);
+            const parent = allCats.find((p) => p.id === c.parentId);
+            return `<tr class="${depth ? "cat-child-row" : ""}">
+      <td>${catIconHtml(c)}</td>
+      <td><div class="cat-tree-name">${depth ? "<span>└─</span>" : ""}<span>${c.nameAr || "—"}</span></div></td>
+      <td>${c.nameEn || "—"}</td>
+      <td><span style="font-family:monospace;background:var(--s2);padding:2px 8px;border-radius:4px;font-size:12px">${c.slug}</span></td>
+      <td>${parent ? catLabelAdmin(parent) : "Main Category"}</td>
+      <td>${c.warrantyYears != null ? c.warrantyYears + " Years" : "No Warranty"}</td>
+      <td>${count}</td>
+      <td><div class="act-row">
+        <button class="act-btn" onclick="editCat('${c.id}')">Edit</button>
+        <button class="act-btn danger" onclick="deleteCat('${c.id}')">Delete</button>
+      </div></td>
+    </tr>`;
+          })
+          .join("");
+      }
+
+      /* ── COLORS / FABRICS PALETTE ── */
+      async function loadColors() {
+        try {
+          allColors = await api("/admin/colors");
+          renderColors();
+        } catch {}
+      }
+
+      function renderColors() {
+        const b = document.getElementById("colors-body");
+        if (!b) return;
+        if (!allColors.length) {
+          b.innerHTML = '<tr><td colspan="7"><div class="empty" style="padding:40px"><div class="eico" style="font-size:36px"></div><h4>No colors in palette yet</h4></div></td></tr>';
+          return;
+        }
+        b.innerHTML = allColors.map(c => {
+          const swatchHtml = c.icon
+            ? `<img src="${iu(c.icon)}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--b)" />`
+            : `<div style="width:36px;height:36px;border-radius:50%;background:${c.colorHex};border:1px solid var(--b)"></div>`;
+          return `
+            <tr>
+              <td>${swatchHtml}</td>
+              <td>
+                <div style="font-weight:600;color:var(--t)">${c.nameAr || '—'}</div>
+                <div style="font-size:12px;color:var(--tm)">${c.nameEn || '—'}</div>
+              </td>
+              <td>
+                <div>${c.paletteNameAr || '—'}</div>
+                <div style="font-size:11px;color:var(--tm)">${c.paletteNameEn || '—'}</div>
+              </td>
+              <td><span style="font-family:monospace;background:var(--s2);padding:2px 8px;border-radius:4px;font-size:12px">${c.fabricCode || '—'}</span></td>
+              <td>
+                <div style="max-width:200px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${c.fabricStatsAr || ''}">${c.fabricStatsAr || '—'}</div>
+                <div style="max-width:200px;font-size:11px;color:var(--tm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${c.fabricStatsEn || ''}">${c.fabricStatsEn || '—'}</div>
+              </td>
+              <td>${c.showInCustomWork ? 'Yes' : 'No'}</td>
+              <td>
+                <div class="act-row">
+                  <button class="act-btn" onclick="editColor('${c.id}')">Edit</button>
+                  <button class="act-btn danger" onclick="deleteColor('${c.id}')">Delete</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      function openAddColor() {
+        editingColorId = null;
+        document.getElementById("color-modal-title").textContent = "Add Fabric/Color";
+        ["colm-name-ar", "colm-name-en", "colm-palette-ar", "colm-palette-en", "colm-hex", "colm-code", "colm-stats-ar", "colm-stats-en", "colm-image", "colm-icon"].forEach(
+          f => document.getElementById(f).value = ""
+        );
+        document.getElementById("colm-hex-picker").value = "#cccccc";
+        document.getElementById("colm-custom-work").checked = true;
+        document.getElementById("colm-image-preview").style.display = "none";
+        document.getElementById("colm-icon-preview").style.display = "none";
+        document.getElementById("color-modal").classList.add("open");
+      }
+
+      function closeColorModal() {
+        document.getElementById("color-modal").classList.remove("open");
+      }
+
+      function editColor(id) {
+        editingColorId = id;
+        const c = allColors.find(x => x.id === id);
+        if (!c) return;
+        document.getElementById("color-modal-title").textContent = "Edit Fabric/Color";
+        document.getElementById("colm-name-ar").value = c.nameAr || "";
+        document.getElementById("colm-name-en").value = c.nameEn || "";
+        document.getElementById("colm-palette-ar").value = c.paletteNameAr || "";
+        document.getElementById("colm-palette-en").value = c.paletteNameEn || "";
+        document.getElementById("colm-hex").value = c.colorHex || "#cccccc";
+        document.getElementById("colm-hex-picker").value = c.colorHex || "#cccccc";
+        document.getElementById("colm-code").value = c.fabricCode || "";
+        document.getElementById("colm-stats-ar").value = c.fabricStatsAr || "";
+        document.getElementById("colm-stats-en").value = c.fabricStatsEn || "";
+        document.getElementById("colm-image").value = c.image || "";
+        document.getElementById("colm-icon").value = c.icon || "";
+        document.getElementById("colm-custom-work").checked = c.showInCustomWork !== false;
+
+        const imgPreview = document.getElementById("colm-image-preview");
+        if (c.image) {
+          document.getElementById("colm-image-preview-el").src = iu(c.image);
+          imgPreview.style.display = "block";
+        } else {
+          imgPreview.style.display = "none";
+        }
+
+        const iconPreview = document.getElementById("colm-icon-preview");
+        if (c.icon) {
+          document.getElementById("colm-icon-preview-el").src = iu(c.icon);
+          iconPreview.style.display = "block";
+        } else {
+          iconPreview.style.display = "none";
+        }
+
+        document.getElementById("color-modal").classList.add("open");
+      }
+
+      async function saveColor() {
+        const nameAr = document.getElementById("colm-name-ar").value.trim();
+        const nameEn = document.getElementById("colm-name-en").value.trim();
+        if (!nameAr && !nameEn) return toast("Name is required", false);
+
+        const data = {
+          nameAr,
+          nameEn,
+          paletteNameAr: document.getElementById("colm-palette-ar").value.trim(),
+          paletteNameEn: document.getElementById("colm-palette-en").value.trim(),
+          colorHex: document.getElementById("colm-hex").value.trim() || "#cccccc",
+          fabricCode: document.getElementById("colm-code").value.trim(),
+          fabricStatsAr: document.getElementById("colm-stats-ar").value.trim(),
+          fabricStatsEn: document.getElementById("colm-stats-en").value.trim(),
+          image: document.getElementById("colm-image").value.trim() || null,
+          icon: document.getElementById("colm-icon").value.trim() || null,
+          showInCustomWork: document.getElementById("colm-custom-work").checked
+        };
+
+        try {
+          if (editingColorId) {
+            await api(`/admin/colors/${editingColorId}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data)
+            });
+            toast("Fabric/Color updated");
+          } else {
+            await api("/admin/colors", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data)
+            });
+            toast("Fabric/Color added to palette");
+          }
+          closeColorModal();
+          loadColors();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      async function deleteColor(id) {
+        if (!confirm("Delete this color/fabric from palette?")) return;
+        try {
+          await api(`/admin/colors/${id}`, { method: "DELETE" });
+          toast("Fabric/Color deleted");
+          loadColors();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      async function uploadColorPhoto(input, field) {
+        if (!input.files[0]) return;
+        const form = new FormData();
+        form.append("photo", input.files[0]);
+        try {
+          const r = await fetch(API + "/admin/upload-photo", {
+            method: "POST",
+            headers: { Authorization: "Bearer " + TOKEN },
+            body: form
+          });
+          const d = await r.json();
+          if (!d.url) throw new Error("Upload failed");
+          document.getElementById(`colm-${field}`).value = d.url;
+          document.getElementById(`colm-${field}-preview-el`).src = iu(d.url);
+          document.getElementById(`colm-${field}-preview`).style.display = "block";
+          toast("Swatch uploaded");
+        } catch (e) {
+          toast("" + e.message, false);
+        }
+      }
+
+      /* ── SWATCH PICKER MODAL ── */
+      let activeSwatchCallback = null;
+      function openSwatchPicker(callback) {
+        if (!allColors || !allColors.length) {
+          return toast("Please add fabrics to the global Color Palette first!", false);
+        }
+        activeSwatchCallback = callback;
+        const grid = document.getElementById("swatch-picker-grid");
+        grid.innerHTML = allColors.map(c => {
+          const bg = c.colorHex;
+          const iconHtml = c.icon 
+            ? `<img src="${iu(c.icon)}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--b)" />`
+            : `<div style="width:36px;height:36px;border-radius:50%;background:${bg};border:1px solid var(--b)"></div>`;
+          return `
+            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--s2);padding:10px;border-radius:12px;border:1px solid var(--b);cursor:pointer;transition:transform 0.2s" onclick="selectSwatch('${c.id}')" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
+              ${iconHtml}
+              <div style="font-size:11px;font-weight:600;margin-top:6px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.nameAr || c.nameEn}</div>
+              <div style="font-size:9px;color:var(--tm);margin-top:2px">${c.fabricCode || ''}</div>
+            </div>
+          `;
+        }).join("");
+        document.getElementById("swatch-picker-modal").classList.add("open");
+      }
+
+      function closeSwatchPicker() {
+        document.getElementById("swatch-picker-modal").classList.remove("open");
+      }
+
+      function selectSwatch(colorId) {
+        const c = allColors.find(x => x.id === colorId);
+        if (c && activeSwatchCallback) {
+          activeSwatchCallback(c);
+        }
+        closeSwatchPicker();
+      }
+
+      const FEAT_BANNER_ICONS = [
+        ['wood', 'Wood / خشب'],
+        ['foam', 'Foam / إسفنج'],
+        ['fabric', 'Fabric / قماش'],
+        ['spring', 'Spring / سوست'],
+        ['shield', 'Shield / حماية'],
+        ['leaf', 'Eco / طبيعي'],
+        ['clock', 'Durability / متانة'],
+        ['stitch', 'Stitching / خياطة'],
+        ['truck', 'Shipping / شحن'],
+        ['star', 'Quality / جودة'],
+        ['warranty', 'Warranty / ضمان'],
+        ['heart', 'Comfort / راحة'],
+        ['award', 'Premium / فاخر'],
+        ['check', 'Guaranteed / مضمون'],
+        ['spark', 'Modern / مودرن']
+      ];
+
+      function buildCatFeatBannerRows(features) {
+        const container = document.getElementById('cm-fb-features-container');
+        if (!container) return;
+        container.innerHTML = [0,1,2,3].map(i => {
+          const f = features?.[i] || {};
+          const opts = FEAT_BANNER_ICONS.map(([ic, label]) => 
+            `<option value="${ic}" ${f.icon===ic?'selected':''}>${label}</option>`
+          ).join('');
+          return `<div class="fb-row" style="margin-bottom:6px">
+            <select class="cm-fb-icon-sel" data-i="${i}" style="font-size:11px">
+              <option value="">-- Select Icon --</option>${opts}
+            </select>
+            <input class="cm-fb-label-ar" data-i="${i}" 
+              value="${f.labelAr||''}" 
+              placeholder="Arabic label" 
+              style="direction:rtl; font-size:11px">
+            <input class="cm-fb-label-en" data-i="${i}" 
+              value="${f.labelEn||''}" 
+              placeholder="English label" style="font-size:11px">
+          </div>`;
+        }).join('');
+      }
+
+      function getCatFeatBannerData() {
+        const titleAr = document.getElementById('cm-fb-title-ar')?.value || '';
+        const titleEn = document.getElementById('cm-fb-title-en')?.value || '';
+        const descAr = document.getElementById('cm-fb-desc-ar')?.value || '';
+        const descEn = document.getElementById('cm-fb-desc-en')?.value || '';
+        const features = [0,1,2,3].map(i => ({
+          icon: document.querySelector(`.cm-fb-icon-sel[data-i="${i}"]`)?.value || '',
+          labelAr: document.querySelector(`.cm-fb-label-ar[data-i="${i}"]`)?.value || '',
+          labelEn: document.querySelector(`.cm-fb-label-en[data-i="${i}"]`)?.value || ''
+        })).filter(f => f.labelAr || f.labelEn || f.icon);
+        
+        if (!titleAr && !titleEn && !descAr && !descEn && !features.length) return null;
+        return { enabled: true, titleAr, titleEn, descAr, descEn, features };
+      }
+
+      function openAddCat() {
+        editingCatId = null;
+        document.getElementById("cat-modal-title").textContent = "Add Category";
+        ["cm-ar", "cm-en", "cm-slug", "cm-img", "cm-warranty", "cm-icon-url",
+         "cm-ship-duration-ar", "cm-ship-duration-en",
+         "cm-default-desc-ar", "cm-default-desc-en",
+         "cm-spec-structure-ar", "cm-spec-structure-en",
+         "cm-spec-fabric-ar", "cm-spec-fabric-en",
+         "cm-spec-filling-ar", "cm-spec-filling-en",
+         "cm-spec-dims-note-ar", "cm-spec-dims-note-en",
+         "cm-spec-care-ar", "cm-spec-care-en",
+         "cm-fb-title-ar", "cm-fb-title-en", "cm-fb-desc-ar", "cm-fb-desc-en"
+        ].forEach((f) => {
+          const el = document.getElementById(f);
+          if (el) el.value = "";
+        });
+        buildCatFeatBannerRows([]);
+        populateCatParentSelect();
+        populateIconSelect();
+        document.getElementById("cm-parent").value = "";
+        document.getElementById("cm-icon-key").value = "default";
+        document.getElementById("cm-show-dream-room").checked = true;
+        setCatIconType("library");
+        document.getElementById("cm-img-preview").innerHTML = "";
+        updateCatIconPreview();
+        document.getElementById("cat-modal").classList.add("open");
+      }
+      function closeCatModal() {
+        document.getElementById("cat-modal").classList.remove("open");
+      }
+      function editCat(id) {
+        editingCatId = id;
+        const c = allCats.find((x) => x.id === id);
+        if (!c) return;
+        document.getElementById("cat-modal-title").textContent = "Edit Category";
+        document.getElementById("cm-ar").value = c.nameAr || "";
+        document.getElementById("cm-en").value = c.nameEn || "";
+        document.getElementById("cm-slug").value = c.slug || "";
+        document.getElementById("cm-img").value = c.image || "";
+        document.getElementById("cm-warranty").value = c.warrantyYears != null ? c.warrantyYears : "";
+        document.getElementById("cm-ship-duration-ar").value = c.shippingDurationAr || "";
+        document.getElementById("cm-ship-duration-en").value = c.shippingDurationEn || "";
+
+        document.getElementById("cm-default-desc-ar").value = c.defaultDescAr || "";
+        document.getElementById("cm-default-desc-en").value = c.defaultDescEn || "";
+        document.getElementById("cm-spec-structure-ar").value = c.defaultSpecStructureAr || "";
+        document.getElementById("cm-spec-structure-en").value = c.defaultSpecStructureEn || "";
+        document.getElementById("cm-spec-fabric-ar").value = c.defaultSpecFabricAr || "";
+        document.getElementById("cm-spec-fabric-en").value = c.defaultSpecFabricEn || "";
+        document.getElementById("cm-spec-filling-ar").value = c.defaultSpecFillingAr || "";
+        document.getElementById("cm-spec-filling-en").value = c.defaultSpecFillingEn || "";
+        document.getElementById("cm-spec-dims-note-ar").value = c.defaultSpecDimensionsNoteAr || "";
+        document.getElementById("cm-spec-dims-note-en").value = c.defaultSpecDimensionsNoteEn || "";
+        document.getElementById("cm-spec-care-ar").value = c.defaultProductCareAr || "";
+        document.getElementById("cm-spec-care-en").value = c.defaultProductCareEn || "";
+        
+        document.getElementById("cm-show-dream-room").checked = c.showInDreamRoom !== false;
+
+        const fb = c.defaultFeatureBanner || {};
+        document.getElementById("cm-fb-title-ar").value = fb.titleAr || "";
+        document.getElementById("cm-fb-title-en").value = fb.titleEn || "";
+        document.getElementById("cm-fb-desc-ar").value = fb.descAr || "";
+        document.getElementById("cm-fb-desc-en").value = fb.descEn || "";
+        buildCatFeatBannerRows(fb.features || []);
+
+        populateCatParentSelect(c.id);
+        populateIconSelect();
+        document.getElementById("cm-parent").value = c.parentId || "";
+        document.getElementById("cm-icon-key").value = c.iconKey || "default";
+        document.getElementById("cm-icon-url").value = c.iconUrl || "";
+        setCatIconType(c.iconType || (c.iconUrl ? "upload" : "library"));
+        updateCatIconPreview();
+        const pv = document.getElementById("cm-img-preview");
+        pv.innerHTML = c.image
+          ? `<img src="${c.image}" style="width:48px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--b)" onerror="this.style.display='none'"><span>${c.image.split("/").pop()}</span>`
+          : "";
+        document.getElementById("cat-modal").classList.add("open");
+      }
+      document.getElementById("cm-en").addEventListener("input", function () {
+        if (!editingCatId)
+          document.getElementById("cm-slug").value = this.value
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^a-z0-9-]/g, "");
+      });
+      function populateCatParentSelect(currentId = null) {
+        const sel = document.getElementById("cm-parent");
+        sel.innerHTML = '<option value="">None (Main Category)</option>';
+        allCats
+          .filter((c) => !c.parentId && c.id !== currentId)
+          .forEach((c) => {
+            const opt = document.createElement("option");
+            opt.value = c.id;
+            opt.textContent = catLabelAdmin(c);
+            sel.appendChild(opt);
+          });
+      }
+      function populateIconSelect() {
+        const sel = document.getElementById("cm-icon-key");
+        if (sel.options.length) return;
+        sel.innerHTML =
+          '<option value="default">Default</option>' +
+          CAT_ICON_OPTIONS.map(([key, label]) => `<option value="${key}">${label}</option>`).join("");
+      }
+      function setCatIconType(type) {
+        document.querySelectorAll("input[name=cm-icon-type]").forEach((input) => {
+          input.checked = input.value === type;
+        });
+        toggleCatIconSource();
+      }
+      function toggleCatIconSource() {
+        const type = document.querySelector("input[name=cm-icon-type]:checked").value;
+        document.getElementById("cm-icon-library").style.display = type === "library" ? "" : "none";
+        document.getElementById("cm-icon-upload").style.display = type === "upload" ? "" : "none";
+        updateCatIconPreview();
+      }
+      function updateCatIconPreview() {
+        const type = document.querySelector("input[name=cm-icon-type]:checked")?.value || "library";
+        const iconKey = document.getElementById("cm-icon-key").value || "default";
+        const iconUrl = document.getElementById("cm-icon-url").value.trim();
+        const previewCat = type === "upload" && iconUrl ? { iconUrl } : { iconKey };
+        document.getElementById("cm-icon-preview").innerHTML =
+          `${catIconHtml(previewCat)}<span>${type === "upload" && iconUrl ? iconUrl.split("/").pop() : "Live icon preview"}</span>`;
+      }
+      function clearCatIconUpload() {
+        document.getElementById("cm-icon-url").value = "";
+        updateCatIconPreview();
+      }
+      async function uploadCatIcon(input) {
+        if (!input.files[0]) return;
+        const form = new FormData();
+        form.append("icon", input.files[0]);
+        try {
+          const r = await fetch(`${API}/admin/categories/upload-icon`, {
+            method: "POST",
+            headers: { Authorization: "Bearer " + TOKEN },
+            body: form,
+          });
+          const data = await r.json();
+          if (!r.ok || !data.url) throw new Error(data.error || "Upload failed");
+          document.getElementById("cm-icon-url").value = data.url;
+          setCatIconType("upload");
+          updateCatIconPreview();
+          toast("Icon uploaded");
+        } catch (e) {
+          toast(e.message, false);
+        } finally {
+          input.value = "";
+        }
+      }
+      async function saveCat() {
+        const nameAr = document.getElementById("cm-ar").value.trim();
+        const nameEn = document.getElementById("cm-en").value.trim();
+        const slug = document.getElementById("cm-slug").value.trim();
+        const image = document.getElementById("cm-img").value.trim();
+        const warrantyVal = document.getElementById("cm-warranty").value.trim();
+        const warrantyYears = warrantyVal !== "" ? Number(warrantyVal) : null;
+        const parentId = document.getElementById("cm-parent").value || null;
+        const iconType = document.querySelector("input[name=cm-icon-type]:checked").value;
+        const iconKey = document.getElementById("cm-icon-key").value || "default";
+        const iconUrl = document.getElementById("cm-icon-url").value.trim() || null;
+
+        const shippingDurationAr = document.getElementById("cm-ship-duration-ar").value.trim();
+        const shippingDurationEn = document.getElementById("cm-ship-duration-en").value.trim();
+
+        const defaultDescAr = document.getElementById("cm-default-desc-ar").value.trim();
+        const defaultDescEn = document.getElementById("cm-default-desc-en").value.trim();
+        const defaultSpecStructureAr = document.getElementById("cm-spec-structure-ar").value.trim();
+        const defaultSpecStructureEn = document.getElementById("cm-spec-structure-en").value.trim();
+        const defaultSpecFabricAr = document.getElementById("cm-spec-fabric-ar").value.trim();
+        const defaultSpecFabricEn = document.getElementById("cm-spec-fabric-en").value.trim();
+        const defaultSpecFillingAr = document.getElementById("cm-spec-filling-ar").value.trim();
+        const defaultSpecFillingEn = document.getElementById("cm-spec-filling-en").value.trim();
+        const defaultSpecDimensionsNoteAr = document.getElementById("cm-spec-dims-note-ar").value.trim();
+        const defaultSpecDimensionsNoteEn = document.getElementById("cm-spec-dims-note-en").value.trim();
+        const defaultProductCareAr = document.getElementById("cm-spec-care-ar").value.trim();
+        const defaultProductCareEn = document.getElementById("cm-spec-care-en").value.trim();
+        const defaultFeatureBanner = getCatFeatBannerData();
+        const showInDreamRoom = document.getElementById("cm-show-dream-room").checked;
+
+        if (!nameEn || !slug)
+          return toast("English name and slug are required", false);
+        try {
+          const payload = {
+            nameAr, nameEn, slug, image, warrantyYears, parentId, iconType, iconKey, iconUrl,
+            shippingDurationAr, shippingDurationEn,
+            defaultDescAr, defaultDescEn,
+            defaultSpecStructureAr, defaultSpecStructureEn,
+            defaultSpecFabricAr, defaultSpecFabricEn,
+            defaultSpecFillingAr, defaultSpecFillingEn,
+            defaultSpecDimensionsNoteAr, defaultSpecDimensionsNoteEn,
+            defaultProductCareAr, defaultProductCareEn,
+            defaultFeatureBanner, showInDreamRoom
+          };
+          if (editingCatId) {
+            await api(`/admin/categories/${editingCatId}`, {
+              method: "PUT",
+              body: JSON.stringify(payload),
+            });
+          } else {
+            await api("/admin/categories", {
+              method: "POST",
+              body: JSON.stringify(payload),
+            });
+          }
+          toast(editingCatId ? "Category updated" : "Category added");
+          closeCatModal();
+          await loadCats();
+          populateCatSelect();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteCat(id) {
+        if (!confirm("Delete this category?")) return;
+        try {
+          await api(`/admin/categories/${id}`, { method: "DELETE" });
+          toast("Category deleted");
+          loadCats();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function uploadCatImage(input) {
+        if (!input.files[0]) return;
+        const form = new FormData();
+        form.append("photo", input.files[0]);
+        try {
+          const r = await fetch(`${API}/admin/upload-photo`, {
+            method: "POST",
+            headers: { Authorization: "Bearer " + TOKEN },
+            body: form,
+          });
+          const data = await r.json();
+          if (!data.url) throw new Error("Upload failed");
+          document.getElementById("cm-img").value = data.url;
+          document.getElementById("cm-img-preview").innerHTML =
+            `<img src="${data.url}" style="width:48px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--b)"><span style="font-size:11px;word-break:break-all">${data.url.split("/").pop()}</span>`;
+          toast("Image uploaded");
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── ORDERS ── */
+      async function loadOrders() {
+        try {
+          allOrders = await api("/admin/orders");
+          renderOrders(allOrders);
+          renderDashOrders();
+        } catch {}
+      }
+      const STATUS_BADGE = { pending_payment: "badge-grey",
+        received: "badge-orange",
+        processing: "badge-orange",
+        shipped: "badge-green",
+        delivered: "badge-green",
+        cancelled: "badge-red",
+        returned: "badge-grey",
+      };
+      function renderOrders(list) {
+        const b = document.getElementById("order-body");
+        const selectAllChk = document.getElementById("select-all-orders");
+        if (selectAllChk) selectAllChk.checked = false;
+        
+        if (!list.length) {
+          b.innerHTML =
+            '<tr><td colspan="11"><div class="empty" style="padding:40px"><div class="eico" style="font-size:36px"></div><h4>No orders yet</h4></div></td></tr>';
+          return;
+        }
+        b.innerHTML = list
+          .map(
+            (o) => `<tr>
+    <td><input type="checkbox" class="order-checkbox" value="${o.id}"></td>
+    <td><span style="font-family:monospace;font-size:12px">${o.trackingCode || o.id.slice(0, 8)}</span></td>
+    <td>${o.customerName}</td>
+    <td>${o.phone}</td>
+    <td>${o.city || "—"}</td>
+    <td style="font-weight:700">${(o.items || []).reduce((s, i) => s + (i.quantity || 1), 0)} pcs</td>
+    <td style="font-size:11px;max-width:140px;color:var(--tm)">${
+      [
+        ...new Set(
+          (o.items || []).flatMap((i) => {
+            const p = allProducts.find((x) => x.id === i.id);
+            return p ? p.categories || [] : [];
+          }),
+        ),
+      ]
+        .map((slug) => {
+          const cat = allCats.find((c) => c.slug === slug);
+          return cat ? cat.nameEn || cat.nameAr || slug : slug;
+        })
+        .join(" · ") || "—"
+    }</td>
+    <td>${o.total ? "EGP " + o.total.toLocaleString() : "—"}</td>
+    <td><span class="badge ${STATUS_BADGE[o.status] || "badge-grey"}">${o.status || "received"}</span></td>
+    <td>${new Date(o.createdAt).toLocaleDateString()}</td>
+    <td><div class="act-row">
+      <button class="act-btn" onclick="viewOrder('${o.id}')">View</button>
+      <select class="act-btn" style="padding:5px" onchange="updateOrderStatus('${o.id}',this.value)">
+        ${["pending_payment", "received", "processing", "shipped", "delivered", "cancelled", "returned"].map((s) => `<option value="${s}" ${o.status === s ? "selected" : ""}>${s}</option>`).join("")}
+      </select>
+      <button class="act-btn" style="background:#ff4757;color:#fff;border-color:#ff4757" onclick="deleteOrder('${o.id}')"></button>
+    </div></td>
+  </tr>`,
+          )
+          .join("");
+      }
+      function renderDashOrders() {
+        const b = document.getElementById("dash-orders");
+        const list = allOrders.slice(0, 6);
+        if (!list.length) {
+          b.innerHTML =
+            '<tr><td colspan="6" style="text-align:center;color:var(--tm);padding:24px">No orders yet</td></tr>';
+          return;
+        }
+        b.innerHTML = list
+          .map(
+            (o) => `<tr>
+    <td style="font-family:monospace;font-size:12px">${o.trackingCode || o.id.slice(0, 8)}</td>
+    <td>${o.customerName}</td>
+    <td>${o.city || "—"}</td>
+    <td>${o.total ? "EGP " + o.total.toLocaleString() : "—"}</td>
+    <td><span class="badge ${STATUS_BADGE[o.status] || "badge-grey"}">${o.status || "received"}</span></td>
+    <td>${new Date(o.createdAt).toLocaleDateString()}</td>
+  </tr>`,
+          )
+          .join("");
+      }
+      function filterOrders(v) {
+        const q = typeof v === "string" ? v.toLowerCase() : (document.querySelector('#panel-orders .search-box input')?.value || "").toLowerCase();
+        const st = document.getElementById("order-status-filter").value;
+        const fromVal = document.getElementById("order-from-filter").value;
+        const toVal = document.getElementById("order-to-filter").value;
+        
+        const fromTime = fromVal ? new Date(fromVal).getTime() : 0;
+        const toTime = toVal ? new Date(toVal + "T23:59:59").getTime() : Infinity;
+
+        renderOrders(
+          allOrders.filter((o) => {
+            const mq =
+              !q ||
+              o.customerName.toLowerCase().includes(q) ||
+              o.phone.includes(q) ||
+              (o.trackingCode || "").toLowerCase().includes(q);
+            const ms = !st || o.status === st;
+            
+            const orderTime = new Date(o.createdAt).getTime();
+            const md = orderTime >= fromTime && orderTime <= toTime;
+            
+            return mq && ms && md;
+          }),
+        );
+      }
+
+      function selectAllOrders(checked) {
+        document.querySelectorAll(".order-checkbox").forEach((cb) => {
+          cb.checked = checked;
+        });
+      }
+
+      async function exportFilteredOrders() {
+        const checkedBoxes = document.querySelectorAll(".order-checkbox:checked");
+        let ids = [];
+        if (checkedBoxes.length > 0) {
+          ids = Array.from(checkedBoxes).map((cb) => cb.value);
+        } else {
+          const q = (document.querySelector('#panel-orders .search-box input')?.value || "").toLowerCase();
+          const st = document.getElementById("order-status-filter").value;
+          const fromVal = document.getElementById("order-from-filter").value;
+          const toVal = document.getElementById("order-to-filter").value;
+          
+          const fromTime = fromVal ? new Date(fromVal).getTime() : 0;
+          const toTime = toVal ? new Date(toVal + "T23:59:59").getTime() : Infinity;
+
+          const filtered = allOrders.filter((o) => {
+            const mq =
+              !q ||
+              o.customerName.toLowerCase().includes(q) ||
+              o.phone.includes(q) ||
+              (o.trackingCode || "").toLowerCase().includes(q);
+            const ms = !st || o.status === st;
+            const orderTime = new Date(o.createdAt).getTime();
+            const md = orderTime >= fromTime && orderTime <= toTime;
+            return mq && ms && md;
+          });
+          ids = filtered.map((o) => o.id);
+        }
+
+        if (ids.length === 0) {
+          toast("No orders to export", false);
+          return;
+        }
+
+        const format = document.getElementById("export-format").value;
+        const queryParams = new URLSearchParams();
+        queryParams.append("ids", ids.join(","));
+        queryParams.append("format", format);
+
+        const downloadUrl = `${API}/admin/orders/export?${queryParams.toString()}`;
+        
+        try {
+          const res = await fetch(downloadUrl, {
+            headers: { Authorization: "Bearer " + TOKEN }
+          });
+          if (!res.ok) throw new Error("Export failed");
+          const blob = await res.blob();
+          const u = URL.createObjectURL(blob);
+          const x = document.createElement("a");
+          x.href = u;
+          x.download = format === "excel" ? "orders-factory.xlsx" : "orders-factory.csv";
+          x.click();
+          URL.revokeObjectURL(u);
+          toast("Orders exported successfully");
+        } catch (err) {
+          toast("Export failed: " + err.message, false);
+        }
+      }
+      let _pendingStatusId = null,
+        _pendingStatus = null;
+      const STATUS_LABELS_AR = { pending_payment: "في انتظار الدفع",
+        received: "قيد المراجعة",
+        processing: "تصنيع / تجهيز",
+        shipped: "في الشحن",
+        delivered: "تم التسليم",
+        cancelled: "ملغي",
+        returned: "مرتجع",
+      };
+
+      function updateOrderStatus(id, status) {
+        const o = allOrders.find((x) => x.id === id);
+        _pendingStatusId = id;
+        _pendingStatus = status;
+        if (o && o.email) {
+          doStatusWithEmail();
+          return;
+        }
+        document.getElementById("nm-status-label").textContent =
+          STATUS_LABELS_AR[status] || status;
+        document.getElementById("nm-tracking").textContent = o
+          ? o.trackingCode || o.id
+          : id;
+        document.getElementById("nm-email").value = "";
+        document.getElementById("notify-modal").classList.add("open");
+        setTimeout(() => document.getElementById("nm-email").focus(), 120);
+      }
+      function closeNotifyModal() {
+        document.getElementById("notify-modal").classList.remove("open");
+        _pendingStatusId = null;
+        _pendingStatus = null;
+      }
+      async function doStatusOnly() {
+        const id = _pendingStatusId,
+          status = _pendingStatus;
+        closeNotifyModal();
+        try {
+          await api(`/admin/orders/${id}/status`, {
+            method: "PUT",
+            body: JSON.stringify({ status }),
+          });
+          toast("Status updated");
+          loadOrders();
+          loadStats();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function doStatusWithEmail() {
+        const id = _pendingStatusId,
+          status = _pendingStatus;
+        const emailInp = document.getElementById("nm-email");
+        const email =
+          (emailInp ? emailInp.value.trim() : "") ||
+          (allOrders.find((x) => x.id === id) || {}).email ||
+          "";
+        if (!email && emailInp) {
+          emailInp.style.borderColor = "#ff4757";
+          emailInp.focus();
+          return;
+        }
+        closeNotifyModal();
+        try {
+          if (email) {
+            await api(`/admin/orders/${id}/email`, {
+              method: "PATCH",
+              body: JSON.stringify({ email }),
+            });
+            const o = allOrders.find((x) => x.id === id);
+            if (o) o.email = email;
+          }
+          const res = await api(`/admin/orders/${id}/status`, {
+            method: "PUT",
+            body: JSON.stringify({ status }),
+          });
+          const er = res._emailResult;
+          if (!email) {
+            toast("Status updated");
+          } else if (er && er.sent) {
+            toast("Status updated · إيميل اتبعت للعميل");
+          } else if (er && er.skipped) {
+            toast("Status updated إيميل مش محفّظ — تحقق من SMTP", false);
+          } else if (er && er.error) {
+            toast(`Status updated إيميل فشل: ${er.error}`, false);
+          } else {
+            toast("Status updated");
+          }
+          loadOrders();
+          loadStats();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      function viewOrder(id) {
+        const o = allOrders.find((x) => x.id === id);
+        if (!o) return;
+        document.getElementById("order-modal-body").innerHTML = `
+    <div style="display:grid;gap:14px">
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button class="tbtn" style="padding: 6px 12px; font-size: 12px; height: 32px;" onclick="exportOrderExcel('${o.id}')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export Excel (Factory)
+        </button>
+        <button class="tbtn primary" style="padding: 6px 12px; font-size: 12px; height: 32px;" onclick="exportOrderPDF('${o.id}')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export PDF (Factory)
+        </button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="field"><label>Customer</label><div style="padding:10px 14px;background:var(--s2);border-radius:8px">${o.customerName}</div></div>
+        <div class="field"><label>Phone</label><div style="padding:10px 14px;background:var(--s2);border-radius:8px">${o.phone}</div></div>
+        <div class="field"><label>City</label><div style="padding:10px 14px;background:var(--s2);border-radius:8px">${o.city || "—"}</div></div>
+        <div class="field"><label>Tracking</label><div style="padding:10px 14px;background:var(--s2);border-radius:8px;font-family:monospace">${o.trackingCode || o.id}</div></div>
+      </div>
+      ${o.address ? `<div class="field"><label>Address</label><div style="padding:10px 14px;background:var(--s2);border-radius:8px">${o.address}</div></div>` : ""}
+      ${o.notes ? `<div class="field"><label>Notes</label><div style="padding:10px 14px;background:var(--s2);border-radius:8px">${o.notes}</div></div>` : ""}
+      <div class="field"><label>Items — ${(o.items || []).reduce((s, i) => s + (i.quantity || 1), 0)} pcs</label>
+        <div style="background:var(--s2);border-radius:8px;overflow:hidden">
+          ${(o.items || [])
+            .map((i) => {
+              const prod = allProducts.find((x) => x.id === i.id);
+              const photo = prod && prod.mainPhoto ? prod.mainPhoto : null;
+              const thumb = photo
+                ? `<img src="${iu(photo)}" onclick="adminLightbox('${iu(photo)}')" style="width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0;cursor:zoom-in;transition:opacity .15s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'" onerror="this.style.display='none'">`
+                : `<div style="width:48px;height:48px;border-radius:6px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0"></div>`;
+              const colorLine = i.color
+                ? (() => {
+                  // If it's a hex code (custom color)
+                  if (i.color.startsWith('#')) {
+                    const colorBox = `<span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:${i.color};border:1px solid rgba(255,255,255,.2);margin-right:6px;vertical-align:middle;flex-shrink:0;cursor:pointer;transition:all .2s" onclick="event.stopPropagation();adminShowColorPreview('${i.colorName || 'Color'}', '${i.color}')" title="Click to zoom"></span>`;
+                    const colorDisplay = i.colorName ? i.colorName : i.color;
+                    return `<span>${colorBox}<strong style="color:var(--t)">${colorDisplay}</strong>${i.colorName && i.color ? ` <span style="color:var(--tm);font-size:12px">(${i.color})</span>` : ''}</span>`;
+                  }
+                  // Preset color name
+                  return `<span>Color: <strong style="color:var(--t)">${i.color}</strong></span>`;
+                })()
+                : "";
+              const sz = i.size;
+              const dims =
+                sz && (sz.length || sz.width || sz.height)
+                  ? [
+                      sz.length && sz.length + "cm",
+                      sz.width && sz.width + "cm",
+                      sz.height && sz.height + "cm",
+                    ]
+                      .filter(Boolean)
+                      .join(" × ")
+                  : "";
+              const sizeLine = sz
+                ? `<span>Size: <strong style="color:var(--t)">${sz.nameEn || sz.nameAr || ""}</strong>${dims ? ` — ${dims}` : ""}</span>`
+                : "";
+              const meta = [colorLine, sizeLine].filter(Boolean);
+              return `<div style="padding:12px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--b)">
+              ${thumb}
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-weight:700">${i.nameEn || i.nameAr || "—"}</div>
+                ${meta.length ? `<div style="font-size:13px;color:var(--tm);margin-top:5px;display:flex;flex-direction:column;gap:3px">${meta.map((m) => `<div>${m}</div>`).join("")}</div>` : ""}
+                <div style="font-size:13px;font-weight:700;color:var(--t);margin-top:5px">Qty: <span style="color:var(--o)">${i.quantity || 1}</span></div>
+              </div>
+              <span style="color:var(--o);font-weight:800;font-size:15px;white-space:nowrap">${i.price ? "EGP " + (i.price * (i.quantity || 1)).toLocaleString() : ""}</span>
+            </div>`;
+            })
+            .join("")}
+          <div style="padding:10px 14px;display:flex;justify-content:space-between;font-weight:700">
+            <span>Total</span><span style="color:var(--o)">${o.total ? "EGP " + o.total.toLocaleString() : "—"}</span>
+          </div>
+        </div>
+      </div>
+      ${o.promoCode ? `<div style="padding:10px 14px;background:rgba(245,166,35,.1);border-radius:8px;font-size:13px">Promo: <strong>${o.promoCode}</strong> — discount EGP ${(o.discountAmount || 0).toLocaleString()}</div>` : ""}
+      ${o.paymentMethod ? `<div class="field"><label>Payment</label><div style="padding:10px 14px;background:var(--s2);border-radius:8px">${o.paymentMethod}</div></div>` : ""}
+      ${o.subtotal != null ? `<div style="font-size:12px;color:var(--tm)">Subtotal EGP ${o.subtotal} · Shipping EGP ${o.shippingFee || 0}</div>` : ""}
+      <div style="border-top:1px solid var(--b);padding-top:14px;margin-top:4px">
+        <div style="font-size:12px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">إيميل العميل (للإشعارات)</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="order-email-inp" type="email" value="${o.email || ""}" placeholder="customer@email.com"
+            style="flex:1;background:var(--s2);border:1px solid var(--b);border-radius:8px;padding:10px 14px;color:var(--t);font-family:'Jost',sans-serif;font-size:14px;outline:none">
+          <button class="tbtn primary" style="white-space:nowrap" onclick="saveOrderEmail('${o.id}')">حفظ</button>
+        </div>
+        <div style="font-size:11px;color:var(--tm);margin-top:5px">لما تغير الـ Status هيتبعت إيميل تلقائي للعميل على الإيميل ده</div>
+      </div>
+      <div style="border-top:1px solid var(--b);padding-top:14px;margin-top:4px">
+        <button onclick="deleteOrder('${o.id}',true)" style="width:100%;padding:12px;background:#ff4757;color:#fff;border:none;border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+          حذف الأوردر
+        </button>
+      </div>
+    </div>`;
+        document.getElementById("order-modal").classList.add("open");
+        const emailInp = document.getElementById("order-email-inp");
+        if (emailInp) emailInp.focus();
+      }
+      async function saveOrderEmail(orderId) {
+        const email =
+          (document.getElementById("order-email-inp") || {}).value || "";
+        try {
+          await api(`/admin/orders/${orderId}/email`, {
+            method: "PATCH",
+            body: JSON.stringify({ email }),
+          });
+          const o = allOrders.find((x) => x.id === orderId);
+          if (o) o.email = email.trim() || null;
+          toast(email ? "إيميل اتحفظ" : "تم مسح الإيميل");
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      function adminShowColorPreview(colorName, colorHex) {
+        const modal = document.createElement("div");
+        modal.id = "adminColorPreviewModal";
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0,0,0,0.8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 5000;
+        `;
+        
+        modal.innerHTML = `
+          <div style="background: var(--s); padding: 40px; border-radius: 12px; text-align: center; border: 1px solid var(--b); max-width: 500px; box-shadow: 0 8px 32px rgba(0,0,0,0.3)">
+            <div style="font-size: 16px; color: var(--tm); margin-bottom: 20px; font-weight: 600">${colorName}</div>
+            <div style="width: 220px; height: 220px; border-radius: 12px; background: ${colorHex}; border: 2px solid var(--b); margin: 0 auto 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.2)"></div>
+            <div style="font-family: monospace; font-size: 15px; color: var(--t); margin-bottom: 20px; font-weight: 700">${colorHex}</div>
+            <button type="button" onclick="this.closest('#adminColorPreviewModal').remove()" style="padding: 12px 24px; background: var(--o); color: #000; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; font-family: 'Jost', sans-serif">Close</button>
+          </div>
+        `;
+        
+        document.body.appendChild(modal);
+        modal.onclick = (e) => {
+          if (e.target === modal) modal.remove();
+        };
+      }
+      function closeOrderModal() {
+        document.getElementById("order-modal").classList.remove("open");
+      }
+      async function deleteOrder(id, fromModal = false) {
+        const o = allOrders.find((x) => x.id === id);
+        const label = o
+          ? `أوردر ${o.trackingCode || id} — ${o.customerName}`
+          : `الأوردر`;
+        const confirmed = confirm(
+          `حذف ${label}؟\n\nهذه العملية لا يمكن التراجع عنها.`,
+        );
+        if (!confirmed) return;
+        try {
+          const res = await fetch(`${API}/admin/orders/${id}`, {
+            method: "DELETE",
+            headers: { Authorization: "Bearer " + TOKEN },
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Error");
+          allOrders = allOrders.filter((x) => x.id !== id);
+          renderOrders(allOrders);
+          if (fromModal) closeOrderModal();
+          toast("تم حذف الأوردر بنجاح");
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      function adminLightbox(src) {
+        const ov = document.createElement("div");
+        ov.style.cssText =
+          "position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:99999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;opacity:0;transition:opacity .15s";
+        const img = document.createElement("img");
+        img.src = src;
+        img.style.cssText =
+          "max-width:90vw;max-height:90vh;border-radius:10px;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.8)";
+        ov.appendChild(img);
+        ov.onclick = () => {
+          ov.style.opacity = "0";
+          setTimeout(() => ov.remove(), 150);
+        };
+        document.body.appendChild(ov);
+        requestAnimationFrame(() => (ov.style.opacity = "1"));
+      }
+
+      /* ── REVIEWS ── */
+      async function loadReviews() {
+        try {
+          allReviews = await api("/admin/reviews");
+          renderReviews(allReviews);
+        } catch {}
+      }
+      function renderReviews(list) {
+        const b = document.getElementById("review-body");
+        if (!list.length) {
+          b.innerHTML =
+            '<tr><td colspan="7"><div class="empty" style="padding:40px"><div class="eico" style="font-size:36px"></div><h4>No reviews yet</h4></div></td></tr>';
+          return;
+        }
+        b.innerHTML = list
+          .map((r) => {
+            const prod = allProducts.find((p) => p.id === r.productId);
+            const sku = r.productSku || (prod && prod.sku) || null;
+            const pName = r.productName || (prod ? prod.nameEn || prod.nameAr : null);
+            const productLabel = sku ? sku : (pName || "No product");
+            return `<tr>
+      <td>${r.customerName}</td>
+      <td style="color:var(--tm);font-size:12px" title="${pName || ''}">${productLabel}</td>
+      <td>${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.comment || "—"}</td>
+      <td><span class="badge ${r.approved ? "badge-green" : "badge-orange"}">${r.approved ? "Approved" : "Pending"}</span></td>
+      <td>${new Date(r.createdAt).toLocaleDateString()}</td>
+      <td><div class="act-row">
+        ${!r.approved ? `<button class="act-btn success" onclick="approveReview('${r.id}')">Approve</button>` : ""}
+        ${r.approved ? `<button class="act-btn ${r.featuredOnHome ? 'danger' : 'success'}" onclick="featureReview('${r.id}')">${r.featuredOnHome ? 'Unfeature' : 'Feature'}</button>` : ""}
+        <button class="act-btn danger" onclick="deleteReview('${r.id}')">Delete</button>
+      </div></td>
+    </tr>`;
+          })
+          .join("");
+      }
+      function filterReviews(v) {
+        const q = (v || "").toLowerCase();
+        const f = document.getElementById("review-filter").value;
+        renderReviews(
+          allReviews.filter((r) => {
+            const mq =
+              !q ||
+              r.customerName.toLowerCase().includes(q) ||
+              (r.comment || "").toLowerCase().includes(q);
+            const mf =
+              !f ||
+              (f === "pending" && !r.approved) ||
+              (f === "approved" && r.approved);
+            return mq && mf;
+          }),
+        );
+      }
+      async function approveReview(id) {
+        try {
+          await api(`/admin/reviews/${id}/approve`, { method: "PUT" });
+          toast("Review approved ✓");
+          loadReviews();
+          loadStats();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function featureReview(id) {
+        try {
+          await api(`/admin/reviews/${id}/feature`, { method: "PUT" });
+          toast("Review feature status updated ✓");
+          loadReviews();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteReview(id) {
+        if (!confirm("Delete this review?")) return;
+        try {
+          await api(`/admin/reviews/${id}`, { method: "DELETE" });
+          toast("Review deleted");
+          loadReviews();
+          loadStats();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── COUPONS ── */
+      async function loadCoupons() {
+        try {
+          allCoupons = await api("/admin/coupons");
+          renderCoupons();
+        } catch {}
+      }
+      function renderCoupons() {
+        const b = document.getElementById("coupon-body");
+        if (!b) return;
+        if (!allCoupons.length) {
+          b.innerHTML =
+            '<tr><td colspan="8" style="padding:24px;color:var(--tm);text-align:center">لا توجد كوبونات</td></tr>';
+          return;
+        }
+        b.innerHTML = allCoupons
+          .map((c) => {
+            const now = new Date();
+            const expired = c.expiresAt && new Date(c.expiresAt) < now;
+            const scopeMap = {
+              order: "ORDER",
+              product: "PRODUCT",
+              category: "CATEGORY",
+            };
+            const scopeBadge = `<span style="background:rgba(245,166,35,.15);color:var(--o);font-size:10px;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:.04em">${scopeMap[c.scope || "order"] || "ORDER"}</span>`;
+            const discountLabel =
+              c.type === "percent"
+                ? `<span style="color:var(--o);font-weight:700">${c.value}%</span>`
+                : `<span style="color:var(--o);font-weight:700">EGP ${Number(c.value).toLocaleString()}</span>`;
+            const minLabel = c.minOrderAmount
+              ? `<span style="font-size:11px;color:var(--tm)">Min EGP ${Number(c.minOrderAmount).toLocaleString()}</span>`
+              : `<span style="color:var(--tm);font-size:11px">—</span>`;
+            const expLabel = c.expiresAt
+              ? `<span style="color:${expired ? "#ff4757" : "var(--tm)"};font-size:11px">${new Date(c.expiresAt).toLocaleDateString("ar-EG")}${expired ? " ✗" : ""}</span>`
+              : '<span style="color:var(--tm);font-size:11px">دائم</span>';
+            const usedLabel = `${c.usedCount || 0}${c.maxUses != null ? " / " + c.maxUses : " / ∞"}`;
+            const statusBadge = expired
+              ? `<span style="background:#ff475722;color:#ff4757;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;border:1px solid #ff475755">منتهي</span>`
+              : c.active
+                ? `<span style="background:#2ed57322;color:#2ed573;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;border:1px solid #2ed57355">مفعّل</span>`
+                : `<span style="background:#ff475722;color:#ff4757;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;border:1px solid #ff475755">معطّل</span>`;
+            return `<tr>
+              <td style="font-family:monospace;font-weight:700;font-size:14px;letter-spacing:.05em;color:var(--o)">${c.code}${c.autoDiscount ? ' <span style="font-size:10px;color:var(--tm);font-weight:400">auto</span>' : ""}</td>
+              <td>${scopeBadge}</td>
+              <td>${discountLabel}</td>
+              <td>${minLabel}</td>
+              <td style="font-size:12px">${usedLabel}</td>
+              <td>${expLabel}</td>
+              <td>${statusBadge}</td>
+              <td style="display:flex;gap:6px;align-items:center">
+                <button class="act-btn" onclick="openCouponModal('${c.id}')">تعديل</button>
+                <button class="act-btn danger" onclick="deleteCoupon('${c.id}')">حذف</button>
+              </td>
+            </tr>`;
+          })
+          .join("");
+      }
+      function toggleCouponCodeField() {
+        const auto = document.getElementById("cpn-auto").checked;
+        document.getElementById("cpn-code-wrap").style.display = auto
+          ? "none"
+          : "";
+      }
+      function toggleCouponScopeFields() {
+        const scope = document.getElementById("cpn-scope").value;
+        document.getElementById("cpn-minorder-wrap").style.display =
+          scope === "order" ? "" : "none";
+        document.getElementById("cpn-prod-wrap").style.display =
+          scope === "product" ? "" : "none";
+        document.getElementById("cpn-cat-wrap").style.display =
+          scope === "category" ? "" : "none";
+      }
+      function openCouponModal(editId) {
+        editingCouponId = editId || null;
+        const c = editId ? allCoupons.find((x) => x.id === editId) : null;
+        document.getElementById("coupon-modal-title").textContent = c
+          ? "تعديل كوبون"
+          : "إضافة كوبون";
+        // Populate product dropdown
+        const prodSel = document.getElementById("cpn-prod");
+        prodSel.innerHTML = '<option value="">— اختر منتج —</option>';
+        [...allProducts]
+          .sort((a, b) => (a.sku || "").localeCompare(b.sku || ""))
+          .forEach((p) => {
+            const opt = document.createElement("option");
+            opt.value = p.id;
+            opt.textContent =
+              (p.sku ? "[" + p.sku + "] " : "") +
+              (p.nameAr || p.nameEn || p.id);
+            prodSel.appendChild(opt);
+          });
+        // Populate category dropdown
+        const catSel = document.getElementById("cpn-cat");
+        catSel.innerHTML = '<option value="">— اختر قسم —</option>';
+        orderedCats().forEach(({ cat, depth }) => {
+          const opt = document.createElement("option");
+          opt.value = cat.id;
+          opt.textContent = categoryOptionLabel(cat, depth);
+          catSel.appendChild(opt);
+        });
+        // Fill fields
+        const scope = c && c.scope ? c.scope : "order";
+        document.getElementById("cpn-auto").checked = c
+          ? !!c.autoDiscount
+          : false;
+        document.getElementById("cpn-code").value = c ? c.code : "";
+        document.getElementById("cpn-scope").value = scope;
+        document.getElementById("cpn-type").value = c ? c.type : "percent";
+        document.getElementById("cpn-val").value = c ? c.value : "";
+        document.getElementById("cpn-minorder").value =
+          c && c.minOrderAmount != null ? c.minOrderAmount : "";
+        prodSel.value = c && c.productId ? c.productId : "";
+        catSel.value = c && c.categoryId ? c.categoryId : "";
+        document.getElementById("cpn-max").value =
+          c && c.maxUses != null ? c.maxUses : "";
+        document.getElementById("cpn-maxper").value =
+          c && c.maxUsesPerCustomer != null ? c.maxUsesPerCustomer : "";
+        document.getElementById("cpn-exp").value =
+          c && c.expiresAt ? c.expiresAt.slice(0, 10) : "";
+        document.getElementById("cpn-active").checked = c ? !!c.active : true;
+        toggleCouponCodeField();
+        toggleCouponScopeFields();
+        document.getElementById("coupon-modal").classList.add("open");
+      }
+      function closeCouponModal() {
+        document.getElementById("coupon-modal").classList.remove("open");
+      }
+      async function saveCoupon() {
+        const auto = document.getElementById("cpn-auto").checked;
+        const code = document
+          .getElementById("cpn-code")
+          .value.trim()
+          .toUpperCase();
+        if (!auto && !code) return toast("اكتب كود الخصم", false);
+        const value = parseFloat(document.getElementById("cpn-val").value);
+        if (!Number.isFinite(value) || value <= 0)
+          return toast("اكتب قيمة الخصم", false);
+        const scope = document.getElementById("cpn-scope").value;
+        const minOrderRaw = document
+          .getElementById("cpn-minorder")
+          .value.trim();
+        const maxUsesRaw = document.getElementById("cpn-max").value.trim();
+        const maxPerRaw = document.getElementById("cpn-maxper").value.trim();
+        const payload = {
+          code: auto ? "AUTO-" + Date.now() : code,
+          type: document.getElementById("cpn-type").value,
+          value,
+          scope,
+          autoDiscount: auto,
+          productId:
+            scope === "product"
+              ? document.getElementById("cpn-prod").value || null
+              : null,
+          categoryId:
+            scope === "category"
+              ? document.getElementById("cpn-cat").value || null
+              : null,
+          minOrderAmount:
+            scope === "order" && minOrderRaw ? parseFloat(minOrderRaw) : null,
+          maxUses: maxUsesRaw ? parseInt(maxUsesRaw, 10) : null,
+          maxUsesPerCustomer: maxPerRaw ? parseInt(maxPerRaw, 10) : null,
+          expiresAt: document.getElementById("cpn-exp").value || null,
+          active: document.getElementById("cpn-active").checked,
+        };
+        try {
+          if (editingCouponId) {
+            await api(`/admin/coupons/${editingCouponId}`, {
+              method: "PUT",
+              body: JSON.stringify(payload),
+            });
+            toast("تم تعديل الكوبون ");
+          } else {
+            await api("/admin/coupons", {
+              method: "POST",
+              body: JSON.stringify(payload),
+            });
+            toast("تم حفظ الكوبون ");
+          }
+          closeCouponModal();
+          loadCoupons();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteCoupon(id) {
+        if (!confirm("تأكيد حذف الكوبون؟")) return;
+        try {
+          await api(`/admin/coupons/${id}`, { method: "DELETE" });
+          loadCoupons();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── CATEGORY DISCOUNTS ── */
+      async function loadDiscounts() {
+        try {
+          allDiscounts = await api("/admin/discounts");
+          renderDiscounts();
+        } catch {}
+      }
+      function toggleDiscountScopeFields() {
+        const scope = document.getElementById("dsc-scope").value;
+        document.getElementById("dsc-cat-wrap").style.display = scope === "category" ? "block" : "none";
+        document.getElementById("dsc-prod-wrap").style.display = scope === "product" ? "block" : "none";
+      }
+      function renderDiscounts() {
+        const b = document.getElementById("discount-body");
+        if (!b) return;
+        if (!allDiscounts.length) {
+          b.innerHTML =
+            '<tr><td colspan="6" style="padding:24px;color:var(--tm);text-align:center">لا توجد خصومات</td></tr>';
+          return;
+        }
+        b.innerHTML = allDiscounts
+          .map((d) => {
+            const now = new Date();
+            const expired = d.expiresAt && new Date(d.expiresAt) < now;
+            let targetName = "—";
+            if (d.discountScope === "product") {
+              const p = allProducts.find((x) => x.id === d.productId);
+              targetName = p ? `${p.nameEn || p.nameAr} (Product)` : d.productName || d.productId || "Product";
+            } else {
+              const cat = allCats.find((c) => c.id === d.categoryId);
+              targetName = cat ? `${cat.nameAr || cat.nameEn} (Category)` : d.categoryName || d.categoryId || "Category";
+            }
+            const discLabel =
+              d.type === "percent"
+                ? `<span style="color:var(--o);font-weight:700">${d.value}%</span>`
+                : `<span style="color:var(--o);font-weight:700">EGP ${Number(d.value).toLocaleString()}</span>`;
+            const labelText = d.label_ar || d.label_en || "—";
+            const expLabel = d.expiresAt
+              ? `<span style="color:${expired ? "#ff4757" : "var(--tm)"};font-size:11px">${new Date(d.expiresAt).toLocaleDateString("ar-EG")}${expired ? " ✗" : ""}</span>`
+              : '<span style="color:var(--tm);font-size:11px">دائم</span>';
+            const statusBadge = expired
+              ? `<span style="background:#ff475722;color:#ff4757;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;border:1px solid #ff475755">منتهي</span>`
+              : d.active
+                ? `<span style="background:#2ed57322;color:#2ed573;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;border:1px solid #2ed57355">مفعّل</span>`
+                : `<span style="background:#ff475722;color:#ff4757;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;border:1px solid #ff475755">معطّل</span>`;
+            return `<tr>
+            <td style="font-weight:600">${targetName}</td>
+            <td>${discLabel}</td>
+            <td style="font-size:12px;color:var(--o)">${labelText}</td>
+            <td>${expLabel}</td>
+            <td>${statusBadge}</td>
+            <td style="display:flex;gap:6px;align-items:center">
+              <button class="act-btn" onclick="openDiscountModal('${d.id}')">تعديل</button>
+              <button class="act-btn danger" onclick="deleteDiscount('${d.id}')">حذف</button>
+            </td>
+          </tr>`;
+          })
+          .join("");
+      }
+      function openDiscountModal(editId) {
+        editingDiscountId = editId || null;
+        const d = editId ? allDiscounts.find((x) => x.id === editId) : null;
+        document.getElementById("discount-modal-title").textContent = d
+          ? "تعديل خصم"
+          : "إضافة خصم";
+        const catSel = document.getElementById("dsc-cat");
+        catSel.innerHTML = '<option value="">— اختر قسم —</option>';
+        orderedCats().forEach(({ cat, depth }) => {
+          const opt = document.createElement("option");
+          opt.value = cat.id;
+          opt.textContent = categoryOptionLabel(cat, depth);
+          catSel.appendChild(opt);
+        });
+        const prodSel = document.getElementById("dsc-prod");
+        prodSel.innerHTML = '<option value="">— اختر منتج —</option>';
+        allProducts.forEach((p) => {
+          const opt = document.createElement("option");
+          opt.value = p.id;
+          opt.textContent = (p.nameEn || p.nameAr || "") + (p.sku ? ` (${p.sku})` : "");
+          prodSel.appendChild(opt);
+        });
+        const scope = d ? d.discountScope || "category" : "category";
+        document.getElementById("dsc-scope").value = scope;
+        catSel.value = d ? d.categoryId || "" : "";
+        prodSel.value = d ? d.productId || "" : "";
+        toggleDiscountScopeFields();
+        document.getElementById("dsc-type").value = d ? d.type : "percent";
+        document.getElementById("dsc-val").value = d ? d.value : "";
+        document.getElementById("dsc-label-ar").value = d
+          ? d.label_ar || ""
+          : "";
+        document.getElementById("dsc-label-en").value = d
+          ? d.label_en || ""
+          : "";
+        document.getElementById("dsc-exp").value =
+          d && d.expiresAt ? d.expiresAt.slice(0, 10) : "";
+        document.getElementById("dsc-active").checked = d ? !!d.active : true;
+        document.getElementById("discount-modal").classList.add("open");
+      }
+      function closeDiscountModal() {
+        document.getElementById("discount-modal").classList.remove("open");
+      }
+      async function saveDiscount() {
+        const discountScope = document.getElementById("dsc-scope").value;
+        const categoryId = document.getElementById("dsc-cat").value;
+        const productId = document.getElementById("dsc-prod").value;
+        if (discountScope === "category" && !categoryId) return toast("اختر قسم", false);
+        if (discountScope === "product" && !productId) return toast("اختر منتج", false);
+        const value = parseFloat(document.getElementById("dsc-val").value);
+        if (!Number.isFinite(value) || value <= 0)
+          return toast("اكتب قيمة الخصم", false);
+        const cat = allCats.find((c) => c.id === categoryId);
+        const prod = allProducts.find((p) => p.id === productId);
+        const payload = {
+          discountScope,
+          categoryId: discountScope === "category" ? categoryId : "",
+          categoryName: discountScope === "category" && cat ? cat.nameAr || cat.nameEn : "",
+          productId: discountScope === "product" ? productId : "",
+          productName: discountScope === "product" && prod ? prod.nameEn || prod.nameAr : "",
+          type: document.getElementById("dsc-type").value,
+          value,
+          label_ar: document.getElementById("dsc-label-ar").value.trim(),
+          label_en: document.getElementById("dsc-label-en").value.trim(),
+          expiresAt: document.getElementById("dsc-exp").value || null,
+          active: document.getElementById("dsc-active").checked,
+        };
+        try {
+          if (editingDiscountId) {
+            await api(`/admin/discounts/${editingDiscountId}`, {
+              method: "PUT",
+              body: JSON.stringify(payload),
+            });
+            toast("تم تعديل الخصم ");
+          } else {
+            await api("/admin/discounts", {
+              method: "POST",
+              body: JSON.stringify(payload),
+            });
+            toast("تم حفظ الخصم ");
+          }
+          closeDiscountModal();
+          loadDiscounts();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteDiscount(id) {
+        if (!confirm("تأكيد حذف الخصم؟")) return;
+        try {
+          await api(`/admin/discounts/${id}`, { method: "DELETE" });
+          loadDiscounts();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── SHIPPING ── */
+      async function loadShipping() {
+        try {
+          allShip = await api("/admin/shipping");
+          renderShip();
+        } catch {}
+      }
+      function renderShip() {
+        const b = document.getElementById("ship-body");
+        if (!b) return;
+        if (!allShip.length) {
+          b.innerHTML =
+            '<tr><td colspan="5" style="padding:24px;color:var(--tm)">No zones</td></tr>';
+          return;
+        }
+        b.innerHTML = allShip
+          .map(
+            (z) => `<tr>
+    <td>${z.governorateAr || "—"}</td><td>${z.governorateEn || "—"}</td><td>${z.fee}</td><td>${z.etaDays || "—"}</td>
+    <td><button class="act-btn" onclick="editShip('${z.id}')">Edit</button> <button class="act-btn danger" onclick="deleteShip('${z.id}')">Del</button></td>
+  </tr>`,
+          )
+          .join("");
+      }
+      function openShipModal() {
+        editingShipId = null;
+        document.getElementById("ship-modal-title").textContent = "Add zone";
+        ["sh-ar", "sh-en", "sh-fee", "sh-eta"].forEach(
+          (id) => (document.getElementById(id).value = ""),
+        );
+        document.getElementById("ship-modal").classList.add("open");
+      }
+      function closeShipModal() {
+        document.getElementById("ship-modal").classList.remove("open");
+      }
+      function editShip(id) {
+        editingShipId = id;
+        const z = allShip.find((x) => x.id === id);
+        if (!z) return;
+        document.getElementById("ship-modal-title").textContent = "Edit zone";
+        document.getElementById("sh-ar").value = z.governorateAr || "";
+        document.getElementById("sh-en").value = z.governorateEn || "";
+        document.getElementById("sh-fee").value = z.fee || 0;
+        document.getElementById("sh-eta").value = z.etaDays || "";
+        document.getElementById("ship-modal").classList.add("open");
+      }
+      async function saveShip() {
+        const governorateAr = document.getElementById("sh-ar").value.trim();
+        const governorateEn = document.getElementById("sh-en").value.trim();
+        const fee = parseFloat(document.getElementById("sh-fee").value) || 0;
+        const etaDays = document.getElementById("sh-eta").value.trim();
+        if (!governorateEn && !governorateAr)
+          return toast("Name required", false);
+        try {
+          if (editingShipId) {
+            await api(`/admin/shipping/${editingShipId}`, {
+              method: "PUT",
+              body: JSON.stringify({
+                governorateAr,
+                governorateEn,
+                fee,
+                etaDays,
+              }),
+            });
+          } else {
+            await api("/admin/shipping", {
+              method: "POST",
+              body: JSON.stringify({
+                governorateAr,
+                governorateEn,
+                fee,
+                etaDays,
+              }),
+            });
+          }
+          toast("Saved");
+          closeShipModal();
+          loadShipping();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteShip(id) {
+        if (!confirm("Delete zone?")) return;
+        try {
+          await api(`/admin/shipping/${id}`, { method: "DELETE" });
+          loadShipping();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── CUSTOMERS ── */
+      let allTiers = [];
+      let cemPhone = null;
+
+      async function loadCustomers() {
+        try {
+          const res = await api("/admin/customers");
+          allCust = res.customers || res;
+          allTiers = res.tiers || [];
+          renderCust();
+        } catch {}
+      }
+
+      function tierStyle(tier) {
+        const t = allTiers.find((x) => x.id === tier);
+        return t
+          ? `background:${t.color}22;color:${t.color};border:1px solid ${t.color}66`
+          : "background:var(--s2);color:var(--tm)";
+      }
+      function tierLabel(tier) {
+        const t = allTiers.find((x) => x.id === tier);
+        return t ? t.label : tier;
+      }
+
+      function renderCust() {
+        const b = document.getElementById("cust-body");
+        if (!b) return;
+
+        // KPI cards
+        const kpi = document.getElementById("cust-kpi");
+        if (kpi) {
+          const counts = {};
+          allTiers.forEach((t) => (counts[t.id] = 0));
+          allCust.forEach((c) => {
+            counts[c.tier] = (counts[c.tier] || 0) + 1;
+          });
+          kpi.innerHTML =
+            `<div class="stat-card"><div class="stat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="stat-label">إجمالي العملاء</div><div class="stat-value">${allCust.length}</div></div>` +
+            allTiers
+              .map(
+                (t) =>
+                  `<div class="stat-card"><div class="stat-icon" style="font-size:22px">${t.label.split(" ").pop()}</div><div class="stat-label">${t.label}</div><div class="stat-value" style="color:${t.color}">${counts[t.id] || 0}</div></div>`,
+              )
+              .join("");
+        }
+
+        // Tier chips legend
+        const chips = document.getElementById("tier-chips");
+        if (chips)
+          chips.innerHTML = allTiers
+            .map(
+              (t) =>
+                `<span style="padding:5px 14px;border-radius:100px;font-size:13px;font-weight:700;${tierStyle(t.id)}">${t.label}</span>`,
+            )
+            .join("");
+
+        if (!allCust.length) {
+          b.innerHTML =
+            '<tr><td colspan="8" style="padding:24px;color:var(--tm);text-align:center">لا يوجد عملاء بعد</td></tr>';
+          return;
+        }
+
+        b.innerHTML = allCust
+          .map(
+            (c) => `<tr>
+          <td><div style="font-weight:700">${c.customerName}</div>${c.email ? `<div style="font-size:11px;color:var(--tm)">${c.email}</div>` : ""}</td>
+          <td style="font-family:monospace">${c.phone}</td>
+          <td>${c.city || "—"}</td>
+          <td style="text-align:center;font-weight:700">${c.orderCount}</td>
+          <td style="font-weight:800;color:var(--o)">EGP ${Number(c.totalSpent).toLocaleString()}</td>
+          <td style="font-size:12px;color:var(--tm)">${new Date(c.lastOrderAt).toLocaleDateString("ar-EG")}</td>
+          <td>
+            <select class="act-btn" style="padding:5px" onchange="setCustTier('${c.phone}',this.value)">
+              ${allTiers.map((t) => `<option value="${t.id}" ${c.tier === t.id ? "selected" : ""}>${t.label}</option>`).join("")}
+            </select>
+          </td>
+          <td>
+            <button class="act-btn primary" onclick="openCustEmail('${c.phone}')">إيميل</button>
+          </td>
+        </tr>`,
+          )
+          .join("");
+      }
+
+      async function setCustTier(phone, tier) {
+        try {
+          await api(`/admin/customers/${encodeURIComponent(phone)}/tier`, {
+            method: "PATCH",
+            body: JSON.stringify({ tier }),
+          });
+          const c = allCust.find((x) => x.phone === phone);
+          if (c) c.tier = tier;
+          renderCust();
+          toast("تم تحديث الـ Tier");
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      async function openCustEmail(phone) {
+        const c = allCust.find((x) => x.phone === phone);
+        if (!c) return;
+        cemPhone = phone;
+        document.getElementById("cem-title").textContent =
+          `إيميل لـ ${c.customerName}`;
+        document.getElementById("cem-customer-info").innerHTML =
+          `<strong>${c.customerName}</strong> · ${c.phone} · ${c.orderCount} أوردر · EGP ${Number(c.totalSpent).toLocaleString()} إجمالي إنفاق`;
+        document.getElementById("cem-email").value = c.email || "";
+        document.getElementById("cem-subject").value =
+          "رسالة خاصة من ميجا فرنيتشر ";
+        const tierLbl = tierLabel(c.tier);
+        document.getElementById("cem-message").value =
+          `أهلاً ${c.customerName}،\n\nبنشكرك على ثقتك في ميجا فرنيتشر — أنت عميل ${tierLbl} مميز جداً بالنسبالنا!\n\nهديتك كوبون خصم خاص ليك — استخدمه في أي طلب قادم.`;
+        // Load coupons
+        const sel = document.getElementById("cem-coupon");
+        sel.innerHTML = '<option value="">— بدون كوبون —</option>';
+        try {
+          const coupons = await api("/admin/coupons");
+          (coupons || []).forEach((cp) => {
+            const prod = cp.productId
+              ? allProducts.find((p) => p.id === cp.productId)
+              : null;
+            const prodSuffix = prod
+              ? ` · ${prod.sku ? "[" + prod.sku + "] " : ""}${prod.nameAr || prod.nameEn}`
+              : " · كل المنتجات";
+            const expSuffix = cp.expiresAt
+              ? ` · ينتهي ${new Date(cp.expiresAt).toLocaleDateString("ar-EG")}`
+              : "";
+            const opt = document.createElement("option");
+            opt.value = cp.code;
+            opt.textContent = `${cp.code} — ${cp.type === "percent" ? cp.value + "%" : "EGP " + cp.value}${prodSuffix}${expSuffix}`;
+            sel.appendChild(opt);
+          });
+        } catch {}
+        sel.onchange = () => {
+          const code = sel.value;
+          const prev = document.getElementById("cem-coupon-preview");
+          if (!code) {
+            prev.textContent = "";
+            return;
+          }
+          const cp = (allCoupons || []).find((x) => x.code === code);
+          if (!cp) {
+            prev.textContent = `كوبون "${code}" هيتضاف في الإيميل`;
+            return;
+          }
+          const prod = cp.productId
+            ? allProducts.find((p) => p.id === cp.productId)
+            : null;
+          const prodNote = prod
+            ? `خاص بـ: ${prod.sku ? "[" + prod.sku + "] " : ""}${prod.nameAr || prod.nameEn}`
+            : "ينطبق على كل المنتجات";
+          const expNote = cp.expiresAt
+            ? `ينتهي: ${new Date(cp.expiresAt).toLocaleDateString("ar-EG")}`
+            : "صلاحية غير محدودة";
+          prev.textContent = `${prodNote} · ${expNote}`;
+        };
+        const ov = document.getElementById("cust-email-ov");
+        ov.style.display = "flex";
+      }
+
+      function closeCustEmail() {
+        document.getElementById("cust-email-ov").style.display = "none";
+        cemPhone = null;
+      }
+
+      async function sendCustEmailModal() {
+        const email = document.getElementById("cem-email").value.trim();
+        const subject = document.getElementById("cem-subject").value.trim();
+        const message = document.getElementById("cem-message").value.trim();
+        const couponCode = document.getElementById("cem-coupon").value;
+        const c = cemPhone ? allCust.find((x) => x.phone === cemPhone) : null;
+        if (!email) return toast("ادخل الإيميل", false);
+        if (!subject) return toast("ادخل الموضوع", false);
+        try {
+          await api("/admin/customers/message", {
+            method: "POST",
+            body: JSON.stringify({
+              email,
+              phone: cemPhone,
+              subject,
+              message,
+              couponCode: couponCode || null,
+              customerName: c ? c.customerName : "",
+            }),
+          });
+          toast("تم إرسال الإيميل بنجاح");
+          closeCustEmail();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── TIER MANAGER ── */
+      function openTierManager() {
+        const rows = document.getElementById("tier-mgr-rows");
+        rows.innerHTML = allTiers
+          .map(
+            (t, i) =>
+              `<div style="display:grid;grid-template-columns:80px 1fr 40px;gap:8px;align-items:center" data-idx="${i}">
+            <input type="color" value="${t.color}" title="اللون"
+              style="width:100%;height:36px;border:1px solid var(--b);border-radius:6px;padding:2px;cursor:pointer;background:var(--s2)">
+            <input type="text" value="${t.label}" placeholder="مثلاً: VIP "
+              style="padding:8px 10px;background:var(--s2);border:1px solid var(--b);border-radius:6px;color:var(--t);font-family:inherit;font-size:13px">
+            <button onclick="this.closest('[data-idx]').remove()" style="background:#ff4757;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:16px;height:36px;width:36px">×</button>
+          </div>`,
+          )
+          .join("");
+        document.getElementById("tier-mgr-ov").style.display = "flex";
+      }
+
+      function closeTierManager() {
+        document.getElementById("tier-mgr-ov").style.display = "none";
+      }
+
+      function addTierRow() {
+        const rows = document.getElementById("tier-mgr-rows");
+        const div = document.createElement("div");
+        div.style.cssText =
+          "display:grid;grid-template-columns:80px 1fr 40px;gap:8px;align-items:center";
+        div.setAttribute("data-idx", rows.children.length);
+        div.innerHTML = `
+          <input type="color" value="#888888" style="width:100%;height:36px;border:1px solid var(--b);border-radius:6px;padding:2px;cursor:pointer;background:var(--s2)">
+          <input type="text" placeholder="مثلاً: Platinum " style="padding:8px 10px;background:var(--s2);border:1px solid var(--b);border-radius:6px;color:var(--t);font-family:inherit;font-size:13px">
+          <button onclick="this.closest('[data-idx]').remove()" style="background:#ff4757;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:16px;height:36px;width:36px">×</button>`;
+        rows.appendChild(div);
+      }
+
+      async function saveTiers() {
+        const rows = document.querySelectorAll("#tier-mgr-rows [data-idx]");
+        const tiers = [];
+        rows.forEach((row, i) => {
+          const color = row.querySelector("input[type=color]").value;
+          const label = row.querySelector("input[type=text]").value.trim();
+          if (!label) return;
+          const id =
+            label
+              .toLowerCase()
+              .replace(/[^a-z0-9أ-ي]/g, "_")
+              .replace(/_+/g, "_")
+              .slice(0, 20) +
+            "_" +
+            i;
+          tiers.push({ id, label, color });
+        });
+        if (!tiers.length) return toast("أضف Tier واحد على الأقل", false);
+        try {
+          const res = await api("/admin/settings/tiers", {
+            method: "PUT",
+            body: JSON.stringify({ tiers }),
+          });
+          allTiers = res.tiers || tiers;
+          renderCust();
+          closeTierManager();
+          toast("تم حفظ الـ Tiers");
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── REPORTS ── */
+      function setRepFilter(preset) {
+        const today = new Date();
+        const pad = (n) => String(n).padStart(2, "0");
+        const fmt = (d) =>
+          `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        let from = "",
+          to = fmt(today);
+        if (preset === "today") {
+          from = fmt(today);
+        } else if (preset === "yesterday") {
+          const y = new Date(today);
+          y.setDate(y.getDate() - 1);
+          from = to = fmt(y);
+        } else if (preset === "week") {
+          const w = new Date(today);
+          w.setDate(w.getDate() - 6);
+          from = fmt(w);
+        } else if (preset === "month") {
+          const m = new Date(today);
+          m.setDate(m.getDate() - 29);
+          from = fmt(m);
+        } else if (preset === "thismonth") {
+          from = fmt(new Date(today.getFullYear(), today.getMonth(), 1));
+        } else if (preset === "lastmonth") {
+          from = fmt(new Date(today.getFullYear(), today.getMonth() - 1, 1));
+          to = fmt(new Date(today.getFullYear(), today.getMonth(), 0));
+        } else if (preset === "year") {
+          from = fmt(new Date(today.getFullYear(), 0, 1));
+        } else if (preset === "all") {
+          from = "";
+          to = "";
+        }
+        document.getElementById("rep-from").value = from;
+        document.getElementById("rep-to").value = to;
+        document.querySelectorAll(".rep-preset").forEach((b) => {
+          const active = b.dataset.preset === preset;
+          b.style.background = active ? "var(--o)" : "";
+          b.style.color = active ? "#fff" : "";
+          b.style.borderColor = active ? "var(--o)" : "";
+        });
+        loadReports();
+      }
+
+      async function loadReports() {
+        const from = document.getElementById("rep-from").value;
+        const to = document.getElementById("rep-to").value;
+        const qs = [from ? `from=${from}` : "", to ? `to=${to}` : ""]
+          .filter(Boolean)
+          .join("&");
+        document.getElementById("rep-csv-link").href =
+          "/api/admin/reports/export.csv";
+        try {
+          const r = await api(`/admin/reports/full${qs ? "?" + qs : ""}`);
+
+          // ── KPIs ──
+          const changeBadge = (pct) => {
+            if (pct == null) return "";
+            const up = pct >= 0;
+            return `<span style="font-size:11px;color:${up ? "#2ed573" : "#ff4757"};margin-right:4px">${up ? "▲" : "▼"} ${Math.abs(pct)}%</span>`;
+          };
+          document.getElementById("rep-kpi").innerHTML = [
+            {
+              ico: "",
+              label: "الإيرادات",
+              val: "EGP " + r.revenue.toLocaleString(),
+              color: "var(--o)",
+              change: changeBadge(r.revenueChange),
+            },
+            {
+              ico: "",
+              label: "الأرباح",
+              val: "EGP " + r.profit.toLocaleString(),
+              color: "#2ed573",
+              change: changeBadge(r.profitChange),
+            },
+            {
+              ico: "",
+              label: "الأوردرات",
+              val: r.orders,
+              color: "var(--t)",
+              change: changeBadge(r.ordersChange),
+            },
+            {
+              ico: "",
+              label: "متوسط الأوردر",
+              val: "EGP " + r.avgOrder.toLocaleString(),
+              color: "#a29bfe",
+              change: "",
+            },
+          ]
+            .map(
+              (c) =>
+                `<div class="stat-card"><div class="stat-icon">${c.ico}</div><div class="stat-label">${c.label}</div><div class="stat-value" style="color:${c.color}">${c.val} ${c.change}</div></div>`,
+            )
+            .join("");
+
+          // ── Chart ──
+          const groups = r.chart || [];
+          const maxVal = Math.max(...groups.map((g) => g.revenue), 1);
+          document.getElementById("rep-chart").innerHTML = groups.length
+            ? groups
+                .map((g) => {
+                  const revH = Math.max(
+                    4,
+                    Math.round((g.revenue / maxVal) * 110),
+                  );
+                  const profH = Math.max(
+                    2,
+                    Math.round((Math.max(0, g.profit) / maxVal) * 110),
+                  );
+                  return `<div style="flex:1;min-width:28px;display:flex;flex-direction:column;align-items:center;gap:2px">
+                  <div style="width:100%;display:flex;align-items:flex-end;gap:2px;height:110px">
+                    <div style="flex:1;height:${revH}px;background:var(--o);border-radius:4px 4px 0 0;opacity:.85" title="إيرادات: EGP ${g.revenue.toLocaleString()}"></div>
+                    <div style="flex:1;height:${profH}px;background:#2ed573;border-radius:4px 4px 0 0;opacity:.85" title="أرباح: EGP ${g.profit.toLocaleString()}"></div>
+                  </div>
+                  <div style="font-size:9px;color:var(--tm);text-align:center;white-space:nowrap">${g.label}</div>
+                  <div style="font-size:9px;color:var(--tm)">${g.orders} أوردر</div>
+                </div>`;
+                })
+                .join("")
+            : `<div style="color:var(--tm);font-size:12px;padding:20px">لا توجد بيانات للفترة المحددة</div>`;
+
+          // ── أكثر مبيعاً ──
+          document.getElementById("rep-top").innerHTML = (r.topProducts || [])
+            .length
+            ? r.topProducts
+                .map(
+                  (p) =>
+                    `<tr>
+                  <td>${p.nameAr || p.nameEn || "—"}${p.sku ? ` <span style="font-size:10px;color:var(--tm);font-family:monospace">[${p.sku}]</span>` : ""}</td>
+                  <td style="font-weight:700;color:var(--o)">${p.qty}</td>
+                  <td>EGP ${p.revenue.toLocaleString()}</td>
+                  <td style="color:#2ed573">EGP ${p.profit.toLocaleString()}</td>
+                </tr>`,
+                )
+                .join("")
+            : `<tr><td colspan="4" style="color:var(--tm);text-align:center;padding:12px">لا توجد بيانات</td></tr>`;
+
+          // ── أكثر العملاء ──
+          document.getElementById("rep-customers").innerHTML = (
+            r.topCustomers || []
+          ).length
+            ? r.topCustomers
+                .map(
+                  (c) =>
+                    `<tr>
+                  <td>${c.name || "—"}<br><span style="font-size:10px;color:var(--tm)">${c.phone}</span></td>
+                  <td style="font-weight:700;color:#a29bfe">${c.orders}</td>
+                  <td style="font-weight:700;color:var(--o)">EGP ${c.spent.toLocaleString()}</td>
+                </tr>`,
+                )
+                .join("")
+            : `<tr><td colspan="3" style="color:var(--tm);text-align:center;padding:12px">لا توجد بيانات</td></tr>`;
+
+          // ── المدن ──
+          document.getElementById("rep-cities").innerHTML = (r.cities || [])
+            .length
+            ? r.cities
+                .map(
+                  (c) =>
+                    `<tr>
+                  <td>${c.city}</td>
+                  <td style="color:#6ab4ff;font-weight:700">${c.orders}</td>
+                  <td style="font-weight:700">EGP ${c.revenue.toLocaleString()}</td>
+                </tr>`,
+                )
+                .join("")
+            : `<tr><td colspan="3" style="color:var(--tm);text-align:center;padding:12px">لا توجد بيانات</td></tr>`;
+
+          // ── حالة المخزون ──
+          const inv = r.inventoryStats || {};
+          document.getElementById("rep-inv").innerHTML = [
+            {
+              label: "إجمالي",
+              val: inv.total || 0,
+              color: "var(--o)",
+              ico: "",
+            },
+            {
+              label: "متوفر",
+              val: inv.healthy || 0,
+              color: "#2ed573",
+              ico: "",
+            },
+            {
+              label: "قرب ينفذ",
+              val: inv.lowStock || 0,
+              color: "#ffa502",
+              ico: "⚠️",
+            },
+            {
+              label: "نفذ",
+              val: inv.outOfStock || 0,
+              color: "#ff4757",
+              ico: "●",
+            },
+          ]
+            .map(
+              (c) =>
+                `<div style="background:var(--s3);border-radius:10px;padding:14px;text-align:center">
+              <div style="font-size:20px;margin-bottom:4px">${c.ico}</div>
+              <div style="font-size:20px;font-weight:900;color:${c.color}">${c.val}</div>
+              <div style="font-size:10px;color:var(--tm);margin-top:2px">${c.label}</div>
+            </div>`,
+            )
+            .join("");
+
+          // ── الأقل مبيعاً ──
+          document.getElementById("rep-slow").innerHTML = (r.slowSellers || [])
+            .length
+            ? r.slowSellers
+                .map(
+                  (p) =>
+                    `<tr>
+                  <td>${p.nameAr || p.nameEn || "—"}</td>
+                  <td style="color:#ffa502;font-weight:700">${p.qty}</td>
+                  <td>EGP ${p.revenue.toLocaleString()}</td>
+                </tr>`,
+                )
+                .join("")
+            : `<tr><td colspan="3" style="color:var(--tm);text-align:center;padding:12px">لا توجد بيانات</td></tr>`;
+
+          // ── لم يُباع ──
+          document.getElementById("rep-unsold").innerHTML = (
+            r.unsoldProducts || []
+          ).length
+            ? r.unsoldProducts
+                .map(
+                  (p) =>
+                    `<tr>
+                  <td>${p.nameAr || p.nameEn || "—"}</td>
+                  <td>${p.everSold ? '<span style="color:#ffa502">سبق</span>' : '<span style="color:#ff4757">لأ</span>'}</td>
+                </tr>`,
+                )
+                .join("")
+            : `<tr><td colspan="2" style="color:#2ed573;text-align:center;padding:12px">كل المنتجات اتباعت </td></tr>`;
+        } catch (e) {
+          toast(e.message || "خطأ في تحميل التقارير", false);
+        }
+      }
+
+      /* ── SETTINGS ── */
+      async function changeCredentials() {
+        const cur = document.getElementById("cr-cur").value;
+        const newUser = document.getElementById("cr-user").value.trim();
+        const newPass = document.getElementById("cr-new").value;
+        if (!cur) return toast("ادخل الباسورد الحالي للتأكيد", false);
+        if (!newUser && !newPass)
+          return toast("ادخل يوزر جديد أو باسورد جديد", false);
+        if (newPass && newPass.length < 6)
+          return toast("الباسورد لازم يكون 6 حروف على الأقل", false);
+        try {
+          const r = await api("/admin/change-credentials", {
+            method: "POST",
+            body: JSON.stringify({
+              currentPassword: cur,
+              newUsername: newUser || undefined,
+              newPassword: newPass || undefined,
+            }),
+          });
+          toast("تم حفظ بيانات الدخول");
+          ["cr-cur", "cr-new", "cr-user"].forEach(
+            (f) => (document.getElementById(f).value = ""),
+          );
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      let _notifyEmails = [];
+      async function loadNotifyEmails() {
+        try {
+          const r = await api("/admin/settings/notify-emails");
+          _notifyEmails = r.emails || [];
+          renderNotifyEmails();
+        } catch {}
+      }
+      function renderNotifyEmails() {
+        const list = document.getElementById("notify-emails-list");
+        if (!list) return;
+        list.innerHTML = _notifyEmails.length
+          ? _notifyEmails
+              .map(
+                (em, i) => `
+            <div style="display:flex;align-items:center;gap:8px;background:var(--s2);border-radius:8px;padding:8px 12px">
+              <span style="flex:1;font-size:13px;color:var(--t)">${em}</span>
+              <button onclick="_notifyEmails.splice(${i},1);renderNotifyEmails()" style="background:#ff4757;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:12px;padding:3px 8px">حذف</button>
+            </div>`,
+              )
+              .join("")
+          : `<p style="font-size:13px;color:var(--tm)">مفيش إيميلات مضافة — هيستخدم إيميل الـ .env</p>`;
+      }
+      function addNotifyEmail() {
+        const inp = document.getElementById("notify-email-input");
+        const em = (inp.value || "").trim();
+        if (!em || !em.includes("@")) return toast("ادخل إيميل صحيح", false);
+        if (_notifyEmails.includes(em))
+          return toast("الإيميل ده موجود بالفعل", false);
+        _notifyEmails.push(em);
+        renderNotifyEmails();
+        inp.value = "";
+      }
+      async function saveNotifyEmails() {
+        try {
+          await api("/admin/settings/notify-emails", {
+            method: "PUT",
+            body: JSON.stringify({ emails: _notifyEmails }),
+          });
+          toast("تم حفظ الإيميلات");
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      async function sendTestEmail() {
+        const to = (document.getElementById("test-email-to") || {}).value || "";
+        if (!to) return toast("أدخل إيميل الاختبار", false);
+        const btn = event.target;
+        btn.disabled = true;
+        btn.textContent = "جاري الإرسال...";
+        try {
+          const r = await api("/admin/test-email", {
+            method: "POST",
+            body: JSON.stringify({ to }),
+          });
+          if (r.success) toast("" + r.message);
+          else toast("" + (r.message || r.error), false);
+        } catch (e) {
+          toast("" + e.message, false);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "إرسال إيميل تجريبي";
+        }
+      }
+
+      /* ── VIDEOS ── */
+      async function loadVideos() {
+        try {
+          allVideos = await api("/admin/videos");
+          renderVideos();
+        } catch {}
+      }
+      function renderVideos() {
+        const b = document.getElementById("video-body");
+        if (!b) return;
+        if (!allVideos.length) {
+          b.innerHTML =
+            '<tr><td colspan="6"><div class="empty" style="padding:40px"><div class="eico" style="font-size:36px"></div><h4>No videos yet</h4><p>Click "+ Add Video" to add your first reel.</p></div></td></tr>';
+          return;
+        }
+        b.innerHTML = allVideos
+          .map(
+            (v, i) => `<tr>
+          <td style="color:var(--tm)">${i + 1}</td>
+          <td style="direction:rtl;text-align:right;max-width:200px">${v.titleAr || "—"}</td>
+          <td><span class="badge ${v.platform === "instagram" ? "badge-orange" : "badge-grey"}">${v.platform || "—"}</span></td>
+          <td><a href="${v.linkUrl}" target="_blank" style="color:var(--o);font-size:12px;word-break:break-all">${v.linkUrl}</a></td>
+          <td><span class="badge ${v.active ? "badge-green" : "badge-red"}">${v.active ? "Active" : "Hidden"}</span></td>
+          <td><div class="act-row">
+            <button class="act-btn" onclick="moveVideo('${v.id}',-1)" title="Up">↑</button>
+            <button class="act-btn" onclick="moveVideo('${v.id}',1)" title="Down">↓</button>
+            <button class="act-btn" onclick="editVideo('${v.id}')">Edit</button>
+            <button class="act-btn danger" onclick="deleteVideo('${v.id}')">Delete</button>
+          </div></td>
+        </tr>`,
+          )
+          .join("");
+      }
+      function detectVideoPlatform(url) {
+        const badge = document.getElementById("vm-platform-badge");
+        const label = document.getElementById("vm-platform-label");
+        let platform = "",
+          color = "";
+        if (/instagram\.com/.test(url)) {
+          platform = "Instagram";
+          color = "#E1306C";
+        } else if (/tiktok\.com/.test(url)) {
+          platform = "TikTok";
+          color = "#010101";
+        } else if (/facebook\.com/.test(url)) {
+          platform = "Facebook";
+          color = "#1877F2";
+        } else if (/youtube\.com|youtu\.be/.test(url)) {
+          platform = "YouTube";
+          color = "#FF0000";
+        }
+        if (platform) {
+          label.textContent = platform;
+          label.style.background = color;
+          badge.style.display = "block";
+        } else {
+          badge.style.display = "none";
+        }
+      }
+      function previewVideoThumb(input) {
+        const preview = document.getElementById("vm-thumb-preview");
+        if (input.files && input.files[0]) {
+          preview.src = URL.createObjectURL(input.files[0]);
+          preview.style.display = "block";
+        } else {
+          preview.style.display = "none";
+        }
+      }
+      function toggleVideoSourceInput() {
+        const sourceVal = document.querySelector('input[name="vm-source"]:checked').value;
+        const linkCont = document.getElementById("vm-link-container");
+        const uploadCont = document.getElementById("vm-upload-container");
+        if (sourceVal === "link") {
+          linkCont.style.display = "block";
+          uploadCont.style.display = "none";
+        } else {
+          linkCont.style.display = "none";
+          uploadCont.style.display = "block";
+        }
+      }
+      async function handleVideoFileSelect(input) {
+        const status = document.getElementById("vm-video-upload-status");
+        if (!input.files || !input.files[0]) {
+          status.style.display = "none";
+          document.getElementById("vm-video-url").value = "";
+          return;
+        }
+
+        const file = input.files[0];
+        status.textContent = "Uploading video... Please wait.";
+        status.style.color = "var(--tm)";
+        status.style.display = "block";
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+          const res = await fetch(API + "/admin/videos/upload/video", {
+            method: "POST",
+            headers: { Authorization: "Bearer " + TOKEN },
+            body: formData,
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Upload failed");
+          
+          document.getElementById("vm-video-url").value = data.filename;
+          status.textContent = "Video uploaded successfully!";
+          status.style.color = "#2ed573";
+        } catch (err) {
+          console.error(err);
+          status.textContent = "" + err.message;
+          status.style.color = "#ff4757";
+          input.value = "";
+          document.getElementById("vm-video-url").value = "";
+        }
+      }
+      function openVideoModal(id) {
+        editingVideoId = id || null;
+        document.getElementById("video-modal-title").textContent = id
+          ? "Edit Video"
+          : "Add Video";
+        document.getElementById("vm-title").value = "";
+        document.getElementById("vm-title-en").value = "";
+        document.getElementById("vm-link").value = "";
+        document.getElementById("vm-thumb").value = "";
+        document.getElementById("vm-video-file").value = "";
+        document.getElementById("vm-video-url").value = "";
+        document.getElementById("vm-video-upload-status").style.display = "none";
+        document.getElementById("vm-active").checked = true;
+        document.getElementById("vm-platform").value = "instagram";
+        document.getElementById("vm-platform-badge").style.display = "none";
+        
+        // Reset radio source to 'link'
+        document.querySelector('input[name="vm-source"][value="link"]').checked = true;
+        toggleVideoSourceInput();
+
+        const preview = document.getElementById("vm-thumb-preview");
+        preview.src = "";
+        preview.style.display = "none";
+        
+        if (id) {
+          const v = allVideos.find((x) => x.id === id);
+          if (v) {
+            document.getElementById("vm-title").value = v.titleAr || "";
+            document.getElementById("vm-title-en").value = v.titleEn || "";
+            document.getElementById("vm-active").checked = v.active !== false;
+            document.getElementById("vm-platform").value = v.platform || "instagram";
+            
+            if (v.videoUrl) {
+              // Video file source
+              document.querySelector('input[name="vm-source"][value="upload"]').checked = true;
+              toggleVideoSourceInput();
+              document.getElementById("vm-video-url").value = v.videoUrl;
+              const status = document.getElementById("vm-video-upload-status");
+              status.textContent = "Current video: " + v.videoUrl;
+              status.style.color = "var(--tm)";
+              status.style.display = "block";
+            } else {
+              // Link source
+              document.getElementById("vm-link").value = v.linkUrl || "";
+              if (v.linkUrl) detectVideoPlatform(v.linkUrl);
+            }
+
+            if (v.thumbnail) {
+              const src = v.thumbnail.startsWith("http")
+                ? v.thumbnail
+                : "/uploads/" + v.thumbnail;
+              preview.src = src;
+              preview.style.display = "block";
+            }
+          }
+        }
+        document.getElementById("video-modal").classList.add("open");
+      }
+      function closeVideoModal() {
+        document.getElementById("video-modal").classList.remove("open");
+      }
+      function editVideo(id) {
+        openVideoModal(id);
+      }
+      async function saveVideo() {
+        const titleAr = document.getElementById("vm-title").value.trim();
+        const titleEn = document.getElementById("vm-title-en").value.trim();
+        const active = document.getElementById("vm-active").checked;
+        const thumbFile = document.getElementById("vm-thumb").files[0];
+        
+        const sourceVal = document.querySelector('input[name="vm-source"]:checked').value;
+        const linkUrl = document.getElementById("vm-link").value.trim();
+        const videoUrl = document.getElementById("vm-video-url").value.trim();
+        const platform = document.getElementById("vm-platform").value;
+
+        if (sourceVal === "link" && !linkUrl) {
+          return toast("URL is required", false);
+        }
+        if (sourceVal === "upload" && !videoUrl) {
+          return toast("Please upload a video file first", false);
+        }
+
+        const form = new FormData();
+        form.append("titleAr", titleAr);
+        form.append("titleEn", titleEn);
+        form.append("active", active);
+        
+        if (sourceVal === "link") {
+          form.append("linkUrl", linkUrl);
+          form.append("videoUrl", "");
+        } else {
+          form.append("linkUrl", "");
+          form.append("videoUrl", videoUrl);
+          form.append("platform", platform);
+        }
+
+        if (thumbFile) form.append("thumbnail", thumbFile);
+        try {
+          const method = editingVideoId ? "PUT" : "POST";
+          const path = editingVideoId
+            ? `/admin/videos/${editingVideoId}`
+            : "/admin/videos";
+          const r = await fetch(API + path, {
+            method,
+            headers: { Authorization: "Bearer " + TOKEN },
+            body: form,
+          });
+          const d = await r.json();
+          if (!r.ok) throw new Error(d.error || "Error");
+          toast(editingVideoId ? "Video updated!" : "Video added!");
+          closeVideoModal();
+          await loadVideos();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteVideo(id) {
+        if (!confirm("Delete this video?")) return;
+        try {
+          await api(`/admin/videos/${id}`, { method: "DELETE" });
+          toast("Video deleted");
+          loadVideos();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function moveVideo(id, dir) {
+        const idx = allVideos.findIndex((v) => v.id === id);
+        const j = idx + dir;
+        if (j < 0 || j >= allVideos.length) return;
+        const ids = allVideos.map((v) => v.id);
+        const tmp = ids[idx];
+        ids[idx] = ids[j];
+        ids[j] = tmp;
+        try {
+          await api("/admin/videos/reorder", {
+            method: "PATCH",
+            body: JSON.stringify({ ids }),
+          });
+          await loadVideos();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      /* ── ANNOUNCEMENT ── */
+      async function loadAnnouncement() {
+        try {
+          const ann = await fetch(API + "/announcement").then((r) => r.json());
+          document.getElementById("ann-msg-ar").value = ann.message_ar || "";
+          document.getElementById("ann-msg-en").value = ann.message_en || "";
+          document.getElementById("ann-link").value = ann.link || "";
+          document.getElementById("ann-lt-ar").value = ann.linkText_ar || "";
+          document.getElementById("ann-lt-en").value = ann.linkText_en || "";
+          document.getElementById("ann-active").checked = !!ann.active;
+        } catch {}
+      }
+      async function saveAnnouncement() {
+        try {
+          await api("/admin/announcement", {
+            method: "POST",
+            body: JSON.stringify({
+              message_ar: document.getElementById("ann-msg-ar").value.trim(),
+              message_en: document.getElementById("ann-msg-en").value.trim(),
+              active: document.getElementById("ann-active").checked,
+              link: document.getElementById("ann-link").value.trim(),
+              linkText_ar: document.getElementById("ann-lt-ar").value.trim(),
+              linkText_en: document.getElementById("ann-lt-en").value.trim(),
+            }),
+          });
+          toast("Announcement saved");
+        } catch (e) {
+          toast(e.message || "Error", false);
+        }
+      }
+      async function clearAnnouncement() {
+        try {
+          await api("/admin/announcement", { method: "DELETE" });
+          document.getElementById("ann-msg-ar").value = "";
+          document.getElementById("ann-msg-en").value = "";
+          document.getElementById("ann-link").value = "";
+          document.getElementById("ann-lt-ar").value = "";
+          document.getElementById("ann-lt-en").value = "";
+          document.getElementById("ann-active").checked = false;
+          toast("Announcement cleared");
+        } catch (e) {
+          toast(e.message || "Error", false);
+        }
+      }
+
+      /* ── COLLECTIONS ── */
+      /* ── CUSTOM ORDERS ── */
+      let allCustomOrders = [];
+      const BUDGET_LABELS = {
+        "under-5k": "< 5K EGP",
+        "5k-15k": "5K–15K EGP",
+        "15k-30k": "15K–30K EGP",
+        "30k-60k": "30K–60K EGP",
+        "over-60k": "> 60K EGP",
+      };
+      const CO_STATUS_COLORS = {
+        new: "#F5A623",
+        "in-progress": "#3B82F6",
+        completed: "#22C55E",
+        cancelled: "#EF4444",
+      };
+
+      async function loadCustomOrders() {
+        try {
+          allCustomOrders = await api("/admin/custom-orders");
+          const pending = allCustomOrders.filter(
+            (o) => o.status === "new",
+          ).length;
+          const badge = document.getElementById("sb-custom");
+          if (badge) {
+            badge.textContent = pending || "";
+            badge.style.display = pending ? "inline-flex" : "none";
+          }
+          filterCustomOrders();
+        } catch {}
+      }
+
+      function filterCustomOrders(q) {
+        if (q === undefined)
+          q = (document.getElementById("co-search") || {}).value || "";
+        const statusF =
+          (document.getElementById("co-status-filter") || {}).value || "";
+        q = q.toLowerCase();
+        const list = allCustomOrders.filter((o) => {
+          if (
+            q &&
+            !o.customerName.toLowerCase().includes(q) &&
+            !o.phone.includes(q) &&
+            !(o.furnitureType || "").includes(q)
+          )
+            return false;
+          if (statusF && o.status !== statusF) return false;
+          return true;
+        });
+        renderCustomOrders(list);
+      }
+
+      const COLOR_NAME_MAP = {
+        أبيض: "#f5f5f0",
+        white: "#f5f5f0",
+        كريمي: "#f5ead6",
+        cream: "#f5ead6",
+        بيج: "#d9c9a8",
+        beige: "#d9c9a8",
+        "رمادي فاتح": "#c8c8c8",
+        "light grey": "#c8c8c8",
+        رمادي: "#888888",
+        grey: "#888888",
+        gray: "#888888",
+        أسود: "#1a1a1a",
+        black: "#1a1a1a",
+        بني: "#7b4b2a",
+        brown: "#7b4b2a",
+        "بني فاتح": "#a0714f",
+        walnut: "#a0714f",
+        ذهبي: "#f5a623",
+        gold: "#f5a623",
+        برتقالي: "#e8751a",
+        orange: "#e8751a",
+        أحمر: "#c0392b",
+        red: "#c0392b",
+        وردي: "#d63384",
+        pink: "#d63384",
+        بنفسجي: "#6f42c1",
+        purple: "#6f42c1",
+        كحلي: "#1a2e4a",
+        navy: "#1a2e4a",
+        أزرق: "#2b5ea7",
+        blue: "#2b5ea7",
+        تركواز: "#0891b2",
+        turquoise: "#0891b2",
+        أخضر: "#2d6a4f",
+        green: "#2d6a4f",
+        زيتي: "#556b2f",
+        olive: "#556b2f",
+      };
+
+      function resolveColorHex(raw) {
+        const t = raw.trim();
+        if (/^#[0-9a-f]{3,6}$/i.test(t)) return t;
+        // "label (#hex)" format from custom color picker
+        const inParen = t.match(/\(#([0-9a-f]{3,6})\)$/i);
+        if (inParen) return "#" + inParen[1];
+        const parts = t.split("/").map((s) => s.trim().toLowerCase());
+        for (const p of parts) {
+          if (COLOR_NAME_MAP[p]) return COLOR_NAME_MAP[p];
+        }
+        return null;
+      }
+
+      function renderColorChips(colorsStr) {
+        if (!colorsStr) return "—";
+        return colorsStr
+          .split(",")
+          .map((c) => c.trim())
+          .filter(Boolean)
+          .map((c) => {
+            const hex = resolveColorHex(c);
+            const isHexRaw = /^#[0-9a-f]{3,6}$/i.test(c.trim());
+            const isLabelHex = /\(#[0-9a-f]{3,6}\)$/i.test(c.trim());
+            if (!hex) {
+              return `<span style="display:inline-flex;align-items:center;gap:4px;background:var(--s2);border:1px solid var(--b);color:var(--t);font-size:11px;padding:4px 10px;border-radius:100px;white-space:nowrap">✏️ ${c}</span>`;
+            }
+            // Extract display label
+            let label, code;
+            if (isLabelHex) {
+              // "شسيشسي (#d224f5)" → show description + hex
+              label = c.replace(/\s*\(#[0-9a-f]{3,6}\)$/i, "").trim();
+              code = hex;
+            } else if (c.includes("/")) {
+              label = c.split("/")[0].trim();
+              code = hex;
+            } else {
+              label = c.trim();
+              code = isHexRaw ? "" : hex;
+            }
+            const light = parseInt(hex.replace("#", ""), 16) > 0xaaaaaa;
+            return `<span style="display:inline-flex;align-items:center;gap:6px;background:${hex};color:${light ? "#111" : "#fff"};font-size:11px;font-weight:600;padding:4px 10px 4px 6px;border-radius:100px;border:1px solid rgba(0,0,0,.15);white-space:nowrap">
+              <span style="width:10px;height:10px;border-radius:50%;background:${hex};border:2px solid rgba(${light ? "0,0,0" : "255,255,255"},.35);flex-shrink:0"></span>
+              ${label}${code ? `<span style="font-size:10px;opacity:.7;font-family:monospace;font-weight:400">${code}</span>` : ""}
+            </span>`;
+          })
+          .join(" ");
+      }
+
+      function openLightbox(src) {
+        const lb = document.getElementById("img-lightbox");
+        document.getElementById("img-lightbox-img").src = src;
+        lb.style.display = "flex";
+      }
+      function closeLightbox() {
+        document.getElementById("img-lightbox").style.display = "none";
+        document.getElementById("img-lightbox-img").src = "";
+      }
+
+      function renderCustomOrders(list) {
+        const tbody = document.getElementById("co-body");
+        if (!tbody) return;
+        if (!list.length) {
+          tbody.innerHTML = `<tr><td colspan="9"><div class="empty" style="padding:40px"><div class="eico">✏️</div><h4>No custom orders yet</h4><p>They'll appear here when customers submit a request from the shop.</p></div></td></tr>`;
+          return;
+        }
+        tbody.innerHTML = list
+          .map((o) => {
+            const color = CO_STATUS_COLORS[o.status] || "var(--tm)";
+            const photos = (o.photos || [])
+              .map(
+                (fn) =>
+                  `<img src="${iu(fn)}" onclick="openLightbox('${iu(fn)}')" style="width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--b);cursor:zoom-in">`,
+              )
+              .join("");
+            return `<tr>
+            <td>
+              <strong>${o.customerName}</strong>
+              ${o.description ? `<div style="font-size:12px;color:var(--tm);margin-top:3px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${o.description}</div>` : ""}
+              ${photos ? `<div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">${photos}</div>` : ""}
+            </td>
+            <td><a href="tel:${o.phone}" style="color:var(--o)">${o.phone}</a></td>
+            <td style="font-size:12px">${o.email ? `<a href="mailto:${o.email}" style="color:var(--o)">${o.email}</a>` : "—"}</td>
+            <td>${o.furnitureType || "—"}</td>
+            <td style="max-width:160px"><div style="display:flex;flex-wrap:wrap;gap:4px">${renderColorChips(o.colors)}</div></td>
+            <td style="font-size:12px">${BUDGET_LABELS[o.budget] || o.budget || "—"}</td>
+            <td>
+              <select style="background:var(--s2);border:1px solid var(--b);color:${color};padding:5px 8px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer" onchange="updateCoStatus('${o.id}',this.value)">
+                <option value="new" ${o.status === "new" ? "selected" : ""}>New</option>
+                <option value="in-progress" ${o.status === "in-progress" ? "selected" : ""}>In Progress</option>
+                <option value="completed" ${o.status === "completed" ? "selected" : ""}>Completed</option>
+                <option value="cancelled" ${o.status === "cancelled" ? "selected" : ""}>Cancelled</option>
+              </select>
+            </td>
+            <td style="font-size:12px;color:var(--tm)">${new Date(o.createdAt).toLocaleDateString("en-GB")}</td>
+            <td>
+              <button class="act-btn" onclick="openCoDetail('${o.id}')">View</button>
+              <button class="act-btn del" onclick="deleteCustomOrder('${o.id}')">Delete</button>
+            </td>
+          </tr>`;
+          })
+          .join("");
+      }
+
+      async function updateCoStatus(id, status) {
+        try {
+          await api(`/admin/custom-orders/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({ status }),
+          });
+          toast("Status updated ✓");
+          loadCustomOrders();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      async function deleteCustomOrder(id) {
+        if (!confirm("Delete this custom order?")) return;
+        try {
+          await api(`/admin/custom-orders/${id}`, { method: "DELETE" });
+          toast("Deleted");
+          loadCustomOrders();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      function openCoDetail(id) {
+        const o = allCustomOrders.find((x) => x.id === id);
+        if (!o) return;
+        const BUDGET_MAP = {
+          "under-5k": "Under EGP 5,000",
+          "5k-15k": "EGP 5,000 – 15,000",
+          "15k-30k": "EGP 15,000 – 30,000",
+          "30k-60k": "EGP 30,000 – 60,000",
+          "over-60k": "Over EGP 60,000",
+        };
+        const STATUS_LABELS = {
+          new: "New",
+          "in-progress": "In Progress",
+          completed: "Completed",
+          cancelled: "Cancelled",
+        };
+        const photos = (o.photos || [])
+          .map(
+            (fn) =>
+              `<img src="${iu(fn)}" onclick="openLightbox('${iu(fn)}')" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid var(--b);cursor:zoom-in;transition:transform .2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">`,
+          )
+          .join("");
+        document.getElementById("co-detail-body").innerHTML = `
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 24px">
+            <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:4px">Customer</div><div style="font-weight:700;font-size:15px">${o.customerName}</div></div>
+            <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:4px">Phone</div><div><a href="tel:${o.phone}" style="color:var(--o);font-weight:600">${o.phone}</a></div></div>
+            <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:4px">Email</div><div>${o.email ? `<a href="mailto:${o.email}" style="color:var(--o)">${o.email}</a>` : "—"}</div></div>
+            <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:4px">Furniture Type</div><div>${o.furnitureType || "—"}</div></div>
+            <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:4px">Budget</div><div>${BUDGET_MAP[o.budget] || o.budget || "—"}</div></div>
+            <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:4px">Status</div><div style="font-weight:600">${STATUS_LABELS[o.status] || o.status}</div></div>
+            <div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:4px">Date Submitted</div><div>${new Date(o.createdAt).toLocaleString("en-GB")}</div></div>
+            ${o.colors ? `<div style="grid-column:1/-1"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:8px">Colors</div><div style="display:flex;flex-wrap:wrap;gap:6px">${renderColorChips(o.colors)}</div></div>` : ""}
+          </div>
+          ${o.description ? `<div style="margin-top:20px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:8px">Description</div><div style="background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.7;color:var(--t)">${o.description}</div></div>` : ""}
+          ${photos ? `<div style="margin-top:20px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.6;margin-bottom:8px">Reference Photos</div><div style="display:flex;flex-wrap:wrap;gap:8px">${photos}</div></div>` : ""}
+        `;
+        document.getElementById("co-detail-modal").classList.add("open");
+      }
+      function closeCoDetail() {
+        document.getElementById("co-detail-modal").classList.remove("open");
+      }
+
+      /* ── BUNDLES ── */
+
+      
+
+
+
+      
+
+let bundleRoomsData = [];
+
+      function renderBundleRooms() {
+        const container = document.getElementById("bundle-rooms-container");
+        if(!bundleRoomsData.length) {
+          container.innerHTML = '<div style="color:var(--tm); font-size:14px;">No rooms added. Use this to explicitly define rooms and their products.</div>';
+          return;
+        }
+        let html = '';
+        bundleRoomsData.forEach((r, i) => {
+          let options = allProducts.map(p => {
+            const selected = (r.productIds || []).includes(p.id) ? 'selected' : '';
+            return `<option value="${p.id}" ${selected}>${p.nameEn || p.nameAr}</option>`;
+          }).join('');
+          
+          html += `
+          <div style="background:var(--s2); padding:16px; border-radius:8px; border:1px solid var(--b); display:grid; gap:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size: 14px;">Room ${i+1}</strong>
+              <button type="button" class="act-btn danger" style="padding:4px 8px; font-size:12px;" onclick="removeBundleRoom(${i})">Remove</button>
+            </div>
+            <div class="form-grid cols2">
+              <div>
+                <label style="font-size:12px; margin-bottom:4px;">Name (En)</label>
+                <input type="text" placeholder="e.g. Master Bedroom" value="${r.nameEn || ''}" oninput="updateBundleRoom(${i}, 'nameEn', this.value)">
+              </div>
+              <div>
+                <label style="font-size:12px; margin-bottom:4px;">Name (Ar)</label>
+                <input type="text" placeholder="e.g. غرفة نوم رئيسية" value="${r.nameAr || ''}" oninput="updateBundleRoom(${i}, 'nameAr', this.value)">
+              </div>
+            </div>
+            <div class="form-grid cols2">
+              <div>
+                <label style="font-size:12px; margin-bottom:4px;">Room Icon</label>
+                <select onchange="updateBundleRoom(${i}, 'icon', this.value)">
+                  <option value="bed" ${r.icon==='bed'?'selected':''}>Bed (Bedroom)</option>
+                  <option value="sofa" ${r.icon==='sofa'?'selected':''}>Sofa (Living)</option>
+                  <option value="dining" ${r.icon==='dining'?'selected':''}>Dining (Dining Room)</option>
+                  <option value="baby" ${r.icon==='baby'?'selected':''}>Baby/Kids (Kids Room)</option>
+                  <option value="youth" ${r.icon==='youth'?'selected':''}>Youth (Youth Room)</option>
+                  <option value="armchair" ${r.icon==='armchair'?'selected':''}>Armchair (Reception)</option>
+                </select>
+              </div>
+              <div>
+                
+              </div>
+            </div>
+          </div>`;
+        });
+        container.innerHTML = html;
+      }
+
+      function addBundleRoom() {
+        bundleRoomsData.push({ icon: 'bed', nameEn: '', nameAr: '', productIds: [] });
+         renderBundleSelected();
+      }
+
+      function removeBundleRoom(i) {
+        bundleRoomsData.splice(i, 1);
+         renderBundleSelected();
+      }
+
+      function updateBundleRoom(i, field, val) {
+        bundleRoomsData[i][field] = val;
+      }
+
+      function updateBundleRoomProducts(i, selectElement) {
+        bundleRoomsData[i].productIds = Array.from(selectElement.selectedOptions).map(opt => opt.value);
+        // Sync with flat products list so discount/totals calculate automatically
+        bundleRoomsData[i].productIds.forEach(pid => {
+           const p = allProducts.find(x => x.id === pid);
+           if(p && !bundleSelectedProducts.some(existing => existing.id === pid)) {
+               bundleSelectedProducts.push(p);
+           }
+        });
+        renderBundleSelected();
+      }
+
+      let _bpActiveCat = "all";
+      let bundlePhotoData = null;
+
+      function openBundleModal(id) {
+        editingBundleId = id || null;
+        const b = id ? allBundles.find((x) => x.id === id) : null;
+        document.getElementById("bundle-modal-title").textContent = id
+          ? "Edit Bundle"
+          : "Add Bundle";
+        document.getElementById("bm-name-ar").value = b ? b.nameAr || "" : "";
+        document.getElementById("bm-name-en").value = b ? b.nameEn || "" : "";
+        document.getElementById("bm-discount").value = b
+          ? b.discountPct || ""
+          : "";
+        document.getElementById("bm-active").checked = b
+          ? b.active !== false
+          : true;
+        
+        // Handle bundle photo
+        bundlePhotoData = b?.mainPhoto || null;
+        const photoPreview = document.getElementById("bm-photo-preview");
+        if (b?.mainPhoto) {
+          document.getElementById("bm-photo-img").src = iu(b.mainPhoto);
+          photoPreview.style.display = "block";
+        } else {
+          photoPreview.style.display = "none";
+        }
+        document.getElementById("bm-photo").value = "";
+        
+        
+        bundleItemCounts = {};
+        if (b && b.productIds) {
+          b.productIds.forEach(pid => {
+             bundleItemCounts[pid] = (bundleItemCounts[pid] || 0) + 1;
+          });
+          bundleSelectedProducts = Object.keys(bundleItemCounts)
+            .map(pid => allProducts.find(p => p.id === pid))
+            .filter(Boolean);
+        } else {
+          bundleSelectedProducts = [];
+        }
+
+        _bpActiveCat = "all";
+        buildBpTabs();
+        renderBpList();
+        renderBundleSelected();
+        
+        
+        let bundleRoomsData = [];
+ 
+        
+        document.getElementById("bundle-modal").classList.add("open");
+    
+      }
+
+      function closeBundleModal() {
+        document.getElementById("bundle-modal").classList.remove("open");
+      }
+
+      function buildBpTabs() {
+        const cats = [
+          { slug: "all", nameEn: "All" },
+          ...allCats.map((c) => ({ slug: c.slug, nameEn: c.nameEn || c.slug })),
+        ];
+        document.getElementById("bp-tabs").innerHTML = cats
+          .map(
+            (c) =>
+              `<button class="bp-tab${c.slug === _bpActiveCat ? " active" : ""}" data-cat="${c.slug}" onclick="bpSetCat('${c.slug}')">${c.nameEn}</button>`,
+          )
+          .join("");
+      }
+
+      function bpSetCat(cat) {
+        _bpActiveCat = cat;
+        document
+          .querySelectorAll(".bp-tab")
+          .forEach((t) => t.classList.toggle("active", t.dataset.cat === cat));
+        renderBpList();
+      }
+
+      function renderBpList() {
+        
+        const list =
+          _bpActiveCat === "all"
+            ? allProducts
+            : allProducts.filter((p) =>
+                (p.categories || []).includes(_bpActiveCat),
+              );
+        if (!list.length) {
+          document.getElementById("bp-list").innerHTML =
+            '<div class="bp-empty">No products in this category</div>';
+          return;
+        }
+        document.getElementById("bp-list").innerHTML = list
+          .map((p) => {
+            const count = bundleSelectedProducts.filter(x => x.id === p.id).length;
+            const btnText = count > 0 ? "+ Add (" + count + ")" : "+ Add";
+            const thumb = p.mainPhoto
+              ? `<img class="bp-thumb" src="${iu(p.mainPhoto)}" onerror="this.style.display='none'">`
+              : `<div class="bp-thumb-ph"></div>`;
+            return `<div class="bp-row">
+              <button class="bp-add" onclick="bpAdd('${p.id}')">${btnText}</button>
+              ${thumb}
+              <div class="bp-name">${p.nameEn || p.nameAr}</div>
+              <div class="bp-price">${p.price ? "EGP " + Number(p.price).toLocaleString() : "—"}</div>
+            </div>`;
+          })
+          .join("");
+      }
+
+      let bundleSelectedProducts = [];
+      let bundleItemCounts = {};
+
+      function bpAdd(id) {
+        if (!bundleItemCounts[id]) {
+          const p = allProducts.find((x) => x.id === id);
+          if (p) {
+            bundleSelectedProducts.push(p);
+            bundleItemCounts[id] = 1;
+          }
+        } else {
+          bundleItemCounts[id]++;
+        }
+        renderBpList();
+        renderBundleSelected();
+      }
+
+      function bpRemove(id) {
+        bundleSelectedProducts = bundleSelectedProducts.filter(p => p.id !== id);
+        delete bundleItemCounts[id];
+        renderBpList();
+        renderBundleSelected();
+      }
+      
+      function bpChangeQty(id, delta) {
+        if (!bundleItemCounts[id]) return;
+        bundleItemCounts[id] += delta;
+        if (bundleItemCounts[id] <= 0) {
+           bpRemove(id);
+        } else {
+           renderBpList();
+           renderBundleSelected();
+        }
+      }
+
+      function renderBundleSelected() {
+        const total = bundleSelectedProducts.reduce(
+          (s, p) => s + ((Number(p.price) || 0) * (bundleItemCounts[p.id] || 1)),
+          0,
+        );
+        const disc = Number(document.getElementById("bm-discount").value) || 0;
+        const bundlePrice = disc ? Math.round(total * (1 - disc / 100)) : null;
+
+        if (!bundleSelectedProducts.length) {
+          document.getElementById("bp-selected").innerHTML =
+            '<div class="bp-empty">No products added yet</div>';
+        } else {
+          document.getElementById("bp-selected").innerHTML =
+            bundleSelectedProducts
+              .map(
+                (p) => `<div class="bp-row" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                  <div class="bp-name" style="flex:1; min-width:150px;">${p.nameEn || p.nameAr}</div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                     <button type="button" style="width:24px; height:24px; border-radius:4px; border:1px solid var(--b); background:var(--s2); cursor:pointer;" onclick="bpChangeQty('${p.id}', -1)">-</button>
+                     <span style="font-size:14px; min-width:20px; text-align:center;">${bundleItemCounts[p.id]}</span>
+                     <button type="button" style="width:24px; height:24px; border-radius:4px; border:1px solid var(--b); background:var(--s2); cursor:pointer;" onclick="bpChangeQty('${p.id}', 1)">+</button>
+                  </div>
+                  <div class="bp-price" style="width:100px; text-align:right;">${p.price ? "EGP " + (Number(p.price) * bundleItemCounts[p.id]).toLocaleString() : "—"}</div>
+                  <button class="bp-rm" onclick="bpRemove('${p.id}')" title="Remove">✕</button>
+                </div>`
+              )
+              .join("");
+        }
+
+        document.getElementById("bp-original-total").textContent =
+          "EGP " + total.toLocaleString();
+
+        if (bundlePrice !== null && total > 0) {
+          document.getElementById("bp-bundle-price").textContent =
+            "EGP " + bundlePrice.toLocaleString();
+          document.getElementById("bp-savings").textContent =
+            `Save ${disc}% — EGP ${(total - bundlePrice).toLocaleString()} off`;
+          document.getElementById("bp-price-row").style.display = "";
+          document.getElementById("bp-savings-row").style.display = "";
+        } else {
+          document.getElementById("bp-price-row").style.display = "none";
+          document.getElementById("bp-savings-row").style.display = "none";
+        }
+      }
+
+      function handleBundlePhotoSelect() {
+        const fileInput = document.getElementById("bm-photo");
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        console.log("Upload starting, TOKEN:", !!TOKEN, "File:", file.name);
+
+        fetch(window.location.origin + "/api/admin/bundles/upload/photo", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Authorization": "Bearer " + TOKEN,
+          },
+        })
+          .then((r) => {
+            console.log("Response status:", r.status);
+            return r.json();
+          })
+          .then((res) => {
+            console.log("Response:", res);
+            if (res.error) {
+              toast("Error: " + res.error, false);
+              return;
+            }
+            bundlePhotoData = res.filename;
+            console.log("bundlePhotoData set to:", bundlePhotoData);
+            const imgUrl = bundlePhotoData.startsWith("http")
+              ? bundlePhotoData
+              : `/uploads/${bundlePhotoData}`;
+            console.log("Setting image src to:", imgUrl);
+            document.getElementById("bm-photo-img").src = imgUrl;
+            document.getElementById("bm-photo-preview").style.display = "block";
+            toast("Photo uploaded!", true);
+          })
+          .catch((e) => {
+            console.error("Upload error:", e);
+            toast("Upload failed: " + e.message, false);
+          });
+      }
+
+      async function saveBundle() {
+        const nameAr = document.getElementById("bm-name-ar").value.trim();
+        const nameEn = document.getElementById("bm-name-en").value.trim();
+        if (!nameAr && !nameEn) {
+          toast("Bundle name is required", false);
+          return;
+        }
+        
+        if (bundleSelectedProducts.length === 0) {
+          toast("Add at least 1 product", false);
+          return;
+        }
+    
+        const disc = Number(document.getElementById("bm-discount").value) || 0;
+        const total = bundleSelectedProducts.reduce(
+          (s, p) => s + ((Number(p.price) || 0) * (bundleItemCounts[p.id] || 1)),
+          0,
+        );
+        
+        const productIds = [];
+        bundleSelectedProducts.forEach(p => {
+           const qty = bundleItemCounts[p.id] || 1;
+           for(let i=0; i<qty; i++) productIds.push(p.id);
+        });
+
+        const body = {
+          
+          
+          nameAr,
+          nameEn,
+          productIds: productIds,
+          discountPct: disc,
+          originalTotal: total,
+          bundlePrice: disc ? Math.round(total * (1 - disc / 100)) : total,
+          mainPhoto: bundlePhotoData || null,
+          active: document.getElementById("bm-active").checked,
+          tier: document.getElementById("bm-tier").value || undefined,
+          order: Number(document.getElementById("bm-order").value) || 0,
+          badgeAr: document.getElementById("bm-badge-ar").value.trim(),
+          badgeEn: document.getElementById("bm-badge-en").value.trim(),
+          badgeIcon: document.getElementById("bm-badge-icon").value,
+          roomCount: Number(document.getElementById("bm-room-count").value) || 0,
+          featured: document.getElementById("bm-featured").checked,
+        };
+        
+        try {
+          if (editingBundleId) {
+            await api(`/admin/bundles/${editingBundleId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+            });
+          } else {
+            await api("/admin/bundles", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+          }
+          toast("Bundle saved!", true);
+          closeBundleModal();
+          loadBundles();
+        } catch(e) {
+          toast(e.message || "Failed to save bundle", false);
+        }
+      }
+
+      async function loadBundles() {
+        try {
+          allBundles = await api("/admin/bundles");
+          renderBundles();
+        } catch {
+          allBundles = [];
+          renderBundles();
+        }
+      }
+
+      function renderBundles() {
+        const tbody = document.getElementById("bundle-body");
+        if (!allBundles.length) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--tm)">No bundles yet. Click "+ Add Bundle" to create one.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = allBundles
+          .map(
+            (b) => `<tr>
+          <td><strong>${b.nameEn || b.nameAr}</strong>${b.nameAr && b.nameEn ? `<br><small style="color:var(--tm)">${b.nameAr}</small>` : ""}</td>
+          <td>${(b.productIds || []).length} items</td>
+          <td>EGP ${Number(b.originalTotal || 0).toLocaleString()}</td>
+          <td>EGP ${Number(b.bundlePrice || 0).toLocaleString()}</td>
+          <td>${b.discountPct ? b.discountPct + "%" : "—"}</td>
+          <td><span class="badge ${b.active ? "badge-green" : "badge-grey"}">${b.active ? "Active" : "Inactive"}</span></td>
+          <td>
+            <button class="act-btn" onclick="openBundleModal('${b.id}')">Edit</button>
+            <button class="act-btn danger" onclick="deleteBundle('${b.id}')">Delete</button>
+          </td>
+        </tr>`,
+          )
+          .join("");
+      }
+
+      async function deleteBundle(id) {
+        if (!confirm("Delete this bundle?")) return;
+        try {
+          await api(`/admin/bundles/${id}`, { method: "DELETE" });
+          toast("Bundle deleted", true);
+          loadBundles();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+
+
+      // ── COLLECTIONS ──
+      let collectionProductsSearch = "";
+      let selectedCollectionProductIds = new Set();
+      async function loadCollections() {
+        try {
+          allCollections = await api("/admin/collections");
+          renderCollections();
+        } catch {
+          allCollections = [];
+          renderCollections();
+        }
+      }
+      function renderCollections() {
+        const tbody = document.getElementById("collection-body");
+        if (!tbody) return;
+        if (!allCollections.length) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:32px;color:var(--tm)">No collections yet. Click "+ Add Collection" to create one.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = allCollections
+          .map(
+            (c) => `<tr>
+          <td><strong>${c.nameEn || c.nameAr}</strong>${c.nameAr && c.nameEn ? `<br><small style="color:var(--tm)">${c.nameAr}</small>` : ""}</td>
+          <td>${(c.productIds || []).length} items</td>
+          <td><span class="badge ${c.active ? "badge-green" : "badge-grey"}">${c.active ? "Active" : "Inactive"}</span></td>
+          <td>
+            <button class="act-btn" onclick="openCollectionModal('${c.id}')">Edit</button>
+            <button class="act-btn danger" onclick="deleteCollection('${c.id}')">Delete</button>
+          </td>
+        </tr>`,
+          )
+          .join("");
+      }
+      function openCollectionModal(id) {
+        editingCollectionId = id || null;
+        const c = id ? allCollections.find((x) => x.id === id) : null;
+        document.getElementById("collection-modal-title").textContent = id
+          ? "Edit Collection"
+          : "Add Collection";
+        document.getElementById("col-name-ar").value = c ? c.nameAr || "" : "";
+        document.getElementById("col-name-en").value = c ? c.nameEn || "" : "";
+        document.getElementById("col-desc-ar").value = c ? c.descAr || "" : "";
+        document.getElementById("col-desc-en").value = c ? c.descEn || "" : "";
+        document.getElementById("col-active").checked = c ? c.active !== false : true;
+        document.getElementById("col-prod-search").value = "";
+        collectionProductsSearch = "";
+        selectedCollectionProductIds = new Set(c ? c.productIds || [] : []);
+        
+        renderCollectionProducts();
+        document.getElementById("collection-modal").classList.add("open");
+      }
+      function closeCollectionModal() {
+        document.getElementById("collection-modal").classList.remove("open");
+      }
+      function renderCollectionProducts() {
+        const wrap = document.getElementById("col-prod-list");
+        if (!wrap) return;
+        if (!allProducts.length) {
+          wrap.innerHTML = `<div style="color:var(--tm);font-size:13px;text-align:center;padding:12px;">No products found</div>`;
+          return;
+        }
+        const q = collectionProductsSearch.toLowerCase().trim();
+        const filteredProds = allProducts.filter((p) => {
+          if (!q) return true;
+          return (
+            (p.nameAr || "").toLowerCase().includes(q) ||
+            (p.nameEn || "").toLowerCase().includes(q) ||
+            (p.sku || "").toLowerCase().includes(q)
+          );
+        });
+        if (!filteredProds.length) {
+          wrap.innerHTML = `<div style="color:var(--tm);font-size:13px;text-align:center;padding:12px;">No matching products</div>`;
+          return;
+        }
+        wrap.innerHTML = filteredProds
+          .map((p) => {
+            const isChecked = selectedCollectionProductIds.has(p.id);
+            const label = (p.nameEn || p.nameAr || "") + (p.sku ? ` (${p.sku})` : "");
+            return `<label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;color:var(--t);user-select:none;">
+              <input type="checkbox" value="${p.id}" ${isChecked ? "checked" : ""} onchange="toggleCollectionProduct(this)" style="width:16px;height:16px;cursor:pointer;" />
+              <span>${label}</span>
+            </label>`;
+          })
+          .join("");
+      }
+      function toggleCollectionProduct(cb) {
+        if (cb.checked) {
+          selectedCollectionProductIds.add(cb.value);
+        } else {
+          selectedCollectionProductIds.delete(cb.value);
+        }
+      }
+      function filterCollectionProducts() {
+        const searchInput = document.getElementById("col-prod-search");
+        collectionProductsSearch = searchInput ? searchInput.value : "";
+        renderCollectionProducts();
+      }
+      async function saveCollection() {
+        const nameAr = document.getElementById("col-name-ar").value.trim();
+        const nameEn = document.getElementById("col-name-en").value.trim();
+        if (!nameAr && !nameEn) {
+          toast("Collection name is required", false);
+          return;
+        }
+        const body = {
+          nameAr,
+          nameEn,
+          descAr: document.getElementById("col-desc-ar").value.trim(),
+          descEn: document.getElementById("col-desc-en").value.trim(),
+          active: document.getElementById("col-active").checked,
+          productIds: Array.from(selectedCollectionProductIds),
+        };
+        try {
+          if (editingCollectionId) {
+            await api(`/admin/collections/${editingCollectionId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+            });
+          } else {
+            await api("/admin/collections", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+          }
+          toast("Collection saved!", true);
+          closeCollectionModal();
+          loadCollections();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteCollection(id) {
+        if (!confirm("Delete this collection?")) return;
+        try {
+          await api(`/admin/collections/${id}`, { method: "DELETE" });
+          toast("Collection deleted", true);
+          loadCollections();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      // ── BANNERS ──
+      async function loadBanners() {
+        try {
+          allBanners = await api("/admin/banners");
+          renderBanners();
+        } catch {
+          allBanners = [];
+          renderBanners();
+        }
+      }
+      function renderBanners() {
+        const tbody = document.getElementById("banner-body");
+        if (!tbody) return;
+        if (!allBanners.length) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--tm)">No banners yet. Click "+ Add Banner" to create one.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = allBanners
+          .map((b) => {
+            const imgUrl = b.image ? (b.image.startsWith("http") ? b.image : `/uploads/${b.image}`) : "";
+            const photoHtml = imgUrl ? `<img src="${imgUrl}" style="height:45px; width:90px; object-fit:cover; border-radius:6px; border: 1px solid var(--b);">` : "—";
+            const truncatedLink = b.link ? (b.link.length > 30 ? b.link.substring(0, 30) + "..." : b.link) : "—";
+            return `<tr>
+              <td>${photoHtml}</td>
+              <td><code>${truncatedLink}</code></td>
+              <td>${b.order || 0}</td>
+              <td><span class="badge ${b.active ? "badge-green" : "badge-grey"}">${b.active ? "Active" : "Inactive"}</span></td>
+              <td>
+                <button class="act-btn" onclick="openBannerModal('${b.id}')">Edit</button>
+                <button class="act-btn danger" onclick="deleteBanner('${b.id}')">Delete</button>
+              </td>
+            </tr>`;
+          })
+          .join("");
+      }
+      function openBannerModal(id) {
+        editingBannerId = id || null;
+        const b = id ? allBanners.find((x) => x.id === id) : null;
+        document.getElementById("banner-modal-title").textContent = id ? "Edit Banner" : "Add Banner";
+        document.getElementById("bnm-link").value = b ? b.link || "" : "";
+        document.getElementById("bnm-order").value = b ? b.order || "1" : "1";
+        document.getElementById("bnm-active").checked = b ? b.active !== false : true;
+        
+        bannerPhotoData = b?.image || null;
+        const preview = document.getElementById("bnm-photo-preview");
+        if (bannerPhotoData) {
+          const imgUrl = bannerPhotoData.startsWith("http") ? bannerPhotoData : `/uploads/${bannerPhotoData}`;
+          document.getElementById("bnm-photo-img").src = imgUrl;
+          preview.style.display = "block";
+        } else {
+          preview.style.display = "none";
+        }
+        document.getElementById("bnm-photo").value = "";
+        document.getElementById("banner-modal").classList.add("open");
+      }
+      function closeBannerModal() {
+        document.getElementById("banner-modal").classList.remove("open");
+      }
+      function handleBannerPhotoSelect() {
+        const fileInput = document.getElementById("bnm-photo");
+        const file = fileInput.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch(window.location.origin + "/api/admin/banners/upload/photo", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Authorization": "Bearer " + TOKEN,
+          },
+        })
+          .then((r) => r.json())
+          .then((res) => {
+            if (res.error) {
+              toast("Error: " + res.error, false);
+              return;
+            }
+            bannerPhotoData = res.filename;
+            const imgUrl = bannerPhotoData.startsWith("http") ? bannerPhotoData : `/uploads/${bannerPhotoData}`;
+            document.getElementById("bnm-photo-img").src = imgUrl;
+            document.getElementById("bnm-photo-preview").style.display = "block";
+            toast("Photo uploaded!", true);
+          })
+          .catch((e) => {
+            console.error("Upload error:", e);
+            toast("Upload failed: " + e.message, false);
+          });
+      }
+      async function saveBanner() {
+        if (!bannerPhotoData) {
+          toast("Banner photo is required", false);
+          return;
+        }
+        const link = document.getElementById("bnm-link").value;
+        const order = document.getElementById("bnm-order").value;
+        const body = {
+          image: bannerPhotoData,
+          link: link,
+          order: order,
+          active: document.getElementById("bnm-active").checked,
+        };
+        try {
+          if (editingBannerId) {
+            await api(`/admin/banners/${editingBannerId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+            });
+          } else {
+            await api("/admin/banners", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+          }
+          toast("Banner saved!", true);
+          closeBannerModal();
+          loadBanners();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deleteBanner(id) {
+        if (!confirm("Delete this banner?")) return;
+        try {
+          await api(`/admin/banners/${id}`, { method: "DELETE" });
+          toast("Banner deleted", true);
+          loadBanners();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      
+      // ── PROMO BANNERS ──
+      async function loadPromoBanners() {
+        try {
+          allPromoBanners = await api("/admin/promo-banners");
+          renderPromoBanners();
+        } catch {
+          allPromoBanners = [];
+          renderPromoBanners();
+        }
+      }
+      function renderPromoBanners() {
+        const tbody = document.getElementById("promo-banner-body");
+        if (!tbody) return;
+        if (!allPromoBanners.length) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--tm)">No promo banners yet. Click "+ Add Promo Banner" to create one.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = allPromoBanners
+          .map((b) => {
+            const imgUrl = b.image ? (b.image.startsWith("http") ? b.image : `/uploads/${b.image}`) : "";
+            const photoHtml = imgUrl ? `<img src="${imgUrl}" style="height:45px; width:90px; object-fit:cover; border-radius:6px; border: 1px solid var(--b);">` : "—";
+            const truncatedLink = b.link ? (b.link.length > 30 ? b.link.substring(0, 30) + "..." : b.link) : "—";
+            return `<tr>
+              <td>${photoHtml}</td>
+              <td>${b.titleAr || "—"}</td>
+              <td>${b.titleEn || "—"}</td>
+              <td><code>${truncatedLink}</code></td>
+              <td>${b.sortOrder || 0}</td>
+              <td><span class="badge ${b.active ? "badge-green" : "badge-grey"}">${b.active ? "Active" : "Inactive"}</span></td>
+              <td>
+                <button class="act-btn" onclick="openPromoBannerModal('${b.id}')">Edit</button>
+                <button class="act-btn danger" onclick="deletePromoBanner('${b.id}')">Delete</button>
+              </td>
+            </tr>`;
+          })
+          .join("");
+      }
+      function openPromoBannerModal(id) {
+        editingPromoBannerId = id || null;
+        const b = id ? allPromoBanners.find((x) => x.id === id) : null;
+        document.getElementById("promo-banner-modal-title").textContent = id ? "Edit Promo Banner" : "Add Promo Banner";
+        document.getElementById("pbm-titleAr").value = b ? b.titleAr || "" : "";
+        document.getElementById("pbm-titleEn").value = b ? b.titleEn || "" : "";
+        document.getElementById("pbm-link").value = b ? b.link || "" : "";
+        document.getElementById("pbm-order").value = b ? b.sortOrder || "1" : "1";
+        document.getElementById("pbm-active").checked = b ? b.active !== false : true;
+        
+        promoBannerPhotoData = b?.image || null;
+        const preview = document.getElementById("pbm-photo-preview");
+        if (promoBannerPhotoData) {
+          const imgUrl = promoBannerPhotoData.startsWith("http") ? promoBannerPhotoData : `/uploads/${promoBannerPhotoData}`;
+          document.getElementById("pbm-photo-img").src = imgUrl;
+          preview.style.display = "block";
+        } else {
+          preview.style.display = "none";
+        }
+        document.getElementById("pbm-photo").value = "";
+        document.getElementById("promo-banner-modal").classList.add("open");
+      }
+      function closePromoBannerModal() {
+        document.getElementById("promo-banner-modal").classList.remove("open");
+      }
+      function handlePromoBannerPhotoSelect() {
+        const fileInput = document.getElementById("pbm-photo");
+        const file = fileInput.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch(window.location.origin + "/api/admin/promo-banners/upload/photo", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Authorization": "Bearer " + TOKEN,
+          },
+        })
+          .then((r) => r.json())
+          .then((res) => {
+            if (res.error) {
+              toast("Error: " + res.error, false);
+              return;
+            }
+            promoBannerPhotoData = res.filename;
+            const imgUrl = promoBannerPhotoData.startsWith("http") ? promoBannerPhotoData : `/uploads/${promoBannerPhotoData}`;
+            document.getElementById("pbm-photo-img").src = imgUrl;
+            document.getElementById("pbm-photo-preview").style.display = "block";
+            toast("Photo uploaded!", true);
+          })
+          .catch((e) => {
+            console.error("Upload error:", e);
+            toast("Upload failed: " + e.message, false);
+          });
+      }
+      async function savePromoBanner() {
+        if (!promoBannerPhotoData) {
+          toast("Promo banner photo is required", false);
+          return;
+        }
+        const titleAr = document.getElementById("pbm-titleAr").value;
+        const titleEn = document.getElementById("pbm-titleEn").value;
+        const link = document.getElementById("pbm-link").value;
+        const order = document.getElementById("pbm-order").value;
+        const body = {
+          image: promoBannerPhotoData,
+          titleAr: titleAr,
+          titleEn: titleEn,
+          link: link,
+          sortOrder: order,
+          active: document.getElementById("pbm-active").checked,
+        };
+        try {
+          if (editingPromoBannerId) {
+            await api(`/admin/promo-banners/${editingPromoBannerId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+            });
+          } else {
+            await api("/admin/promo-banners", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+          }
+          toast("Promo banner saved!", true);
+          closePromoBannerModal();
+          loadPromoBanners();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      async function deletePromoBanner(id) {
+        if (!confirm("Delete this promo banner?")) return;
+        try {
+          await api(`/admin/promo-banners/${id}`, { method: "DELETE" });
+          toast("Promo banner deleted", true);
+          loadPromoBanners();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      
+      async function deleteBundle(id) {
+        if (!confirm("Delete this bundle?")) return;
+        try {
+          await api(`/admin/bundles/${id}`, { method: "DELETE" });
+          toast("Bundle deleted", true);
+          loadBundles();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+      // --- SHOP THE LOOK JS ---
+      let allStl = [];
+      let editingStlId = null;
+      let stlPhotoData = null;
+      let stlHotspots = [];
+
+      async function loadStl() {
+        try {
+          allStl = await api("/admin/shop-the-look");
+          renderStl();
+        } catch (e) {
+          console.error("Failed to load shop the look:", e);
+        }
+      }
+
+      function renderStl() {
+        const tbody = document.getElementById("stl-body");
+        if (!allStl || allStl.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5"><div class="empty" style="padding:40px"><div class="eico" style="font-size:36px"></div><h4>No items yet</h4></div></td></tr>';
+          return;
+        }
+        tbody.innerHTML = allStl
+          .map((s) => {
+            const imgUrl = iu(s.image);
+            const hotspotsCount = (s.hotspots || []).length;
+            const badge = s.active
+              ? `<span class="badge badge-green">Active</span>`
+              : `<span class="badge badge-orange">Inactive</span>`;
+            return `<tr>
+              <td><div style="width:120px;height:67px;background:#eee;border-radius:4px;overflow:hidden">
+                <img src="${imgUrl}" style="width:100%;height:100%;object-fit:cover">
+              </div></td>
+              <td>${hotspotsCount} hotspot(s)</td>
+              <td>${s.sortOrder}</td>
+              <td>${badge}</td>
+              <td><div class="act-row">
+                <button class="act-btn" onclick="editStl('${s.id}')">Edit</button>
+                <button class="act-btn danger" onclick="deleteStl('${s.id}')">Delete</button>
+              </div></td>
+            </tr>`;
+          })
+          .join("");
+      }
+
+      function openStlModal() {
+        editingStlId = null;
+        stlPhotoData = null;
+        stlHotspots = [];
+        document.getElementById("stl-modal-title").textContent = "Add Shop the Look";
+        document.getElementById("stm-photo").value = "";
+        document.getElementById("stm-photo-preview").style.display = "none";
+        document.getElementById("stm-order").value = "1";
+        document.getElementById("stm-active").checked = true;
+        renderStlHotspotsList();
+        document.getElementById("stl-modal").style.display = "flex";
+      }
+
+      function closeStlModal() {
+        document.getElementById("stl-modal").style.display = "none";
+      }
+
+      function editStl(id) {
+        const s = allStl.find((x) => x.id === id);
+        if (!s) return;
+        editingStlId = id;
+        stlPhotoData = s.image;
+        stlHotspots = JSON.parse(JSON.stringify(s.hotspots || []));
+        document.getElementById("stl-modal-title").textContent = "Edit Shop the Look";
+        document.getElementById("stm-photo").value = "";
+        const imgUrl = iu(s.image);
+        document.getElementById("stm-photo-img").src = imgUrl;
+        document.getElementById("stm-photo-preview").style.display = "block";
+        document.getElementById("stm-order").value = s.sortOrder;
+        document.getElementById("stm-active").checked = s.active;
+        renderStlHotspotsList();
+        document.getElementById("stl-modal").style.display = "flex";
+      }
+
+      function handleStlPhotoSelect() {
+        const file = document.getElementById("stm-photo").files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch(window.location.origin + "/api/admin/shop-the-look/upload/photo", {
+          method: "POST",
+          body: formData,
+          headers: { "Authorization": "Bearer " + TOKEN },
+        })
+          .then((r) => r.json())
+          .then((res) => {
+            if (res.error) {
+              toast("Error: " + res.error, false);
+              return;
+            }
+            stlPhotoData = res.filename;
+            document.getElementById("stm-photo-img").src = iu(stlPhotoData);
+            document.getElementById("stm-photo-preview").style.display = "block";
+            toast("Photo uploaded!", true);
+          })
+          .catch((e) => {
+            console.error("Upload error:", e);
+            toast("Upload failed: " + e.message, false);
+          });
+      }
+
+      function addStlHotspot(e) {
+        if (!stlPhotoData) {
+          toast("Upload a photo first", false);
+          return;
+        }
+        const rect = e.target.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        stlHotspots.push({ id: 'hs-' + Date.now(), productId: "", x: x.toFixed(2), y: y.toFixed(2) });
+        renderStlHotspotsList();
+      }
+
+      function removeStlHotspot(idx) {
+        stlHotspots.splice(idx, 1);
+        renderStlHotspotsList();
+      }
+
+      function updateStlHotspotProduct(idx, val) {
+        stlHotspots[idx].productId = val;
+      }
+
+      function renderStlHotspotsList() {
+        const listEl = document.getElementById("stm-hotspots-list");
+        const overlay = document.getElementById("stm-hotspots-overlay");
+        
+        if (stlHotspots.length === 0) {
+          listEl.innerHTML = '<div style="color:var(--tm);font-size:13px">No hotspots added yet. Click the image above to add one.</div>';
+          overlay.innerHTML = '';
+          return;
+        }
+        
+        let overlayHtml = '';
+        let listHtml = '';
+        const prodOptions = allProducts.map(p => `<option value="${p.id}">${p.sku ? p.sku + ' - ' : ''}${p.nameEn || p.nameAr}</option>`).join('');
+
+        stlHotspots.forEach((hs, idx) => {
+          overlayHtml += `<div style="position:absolute;left:${hs.x}%;top:${hs.y}%;width:20px;height:20px;background:#fff;border:3px solid var(--o);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 2px 5px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;color:var(--o);">${idx+1}</div>`;
+          
+          listHtml += `
+            <div style="background:#fff;padding:8px;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;gap:10px;border:1px solid #e0e0e0">
+              <div style="width:24px;height:24px;background:var(--o);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;flex-shrink:0;">${idx+1}</div>
+              <select style="flex:1;min-width:0" onchange="updateStlHotspotProduct(${idx}, this.value)">
+                <option value="">Select a Product</option>
+                ${allProducts.map(p => `<option value="${p.id}" ${p.id === hs.productId ? 'selected' : ''}>${p.sku ? p.sku + ' - ' : ''}${p.nameEn || p.nameAr}</option>`).join('')}
+              </select>
+              <button class="act-btn danger" onclick="removeStlHotspot(${idx})">✕</button>
+            </div>
+          `;
+        });
+        
+        overlay.innerHTML = overlayHtml;
+        listEl.innerHTML = listHtml;
+      }
+
+      async function saveStl() {
+        if (!stlPhotoData) {
+          toast("Photo is required", false);
+          return;
+        }
+        const order = document.getElementById("stm-order").value;
+        const body = {
+          image: stlPhotoData,
+          sortOrder: order,
+          active: document.getElementById("stm-active").checked,
+          hotspots: stlHotspots
+        };
+        try {
+          if (editingStlId) {
+            await api(`/admin/shop-the-look/${editingStlId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+            });
+          } else {
+            await api("/admin/shop-the-look", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+          }
+          toast("Shop the Look saved!", true);
+          closeStlModal();
+          loadStl();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+
+      async function deleteStl(id) {
+        if (!confirm("Delete this shop the look item?")) return;
+        try {
+          await api(`/admin/shop-the-look/${id}`, { method: "DELETE" });
+          toast("Deleted successfully", true);
+          loadStl();
+        } catch (e) {
+          toast(e.message, false);
+        }
+      }
+    
