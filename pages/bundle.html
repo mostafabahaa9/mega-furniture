@@ -14,6 +14,151 @@
         
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
     <style>
+      .wa-menu-container { position: relative; }
+      .wa-menu { position: absolute; bottom: 56px; right: 0; background: var(--nb); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--b); border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); padding: 6px 0; display: none; flex-direction: column; min-width: 240px; z-index: 999; }
+      .wa-menu.show { display: flex; }
+      .wa-menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: var(--t); text-decoration: none; font-size: 13px; font-weight: 500; transition: background 0.2s, color 0.2s; text-align: right; direction: rtl; border-bottom: 1px solid var(--b); }
+      .wa-menu-item:last-child { border-bottom: none; }
+      html[lang="en"] .wa-menu-item { text-align: left; direction: ltr; }
+      .wa-menu-item:hover { background: var(--b); color: var(--o); }
+    
+      /* FOOTER & WA MENU CSS ADDED BY FIX SCRIPT */
+      footer {
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        padding: 60px 48px 32px;
+        transition: background 0.3s;
+      }
+      .fg {
+        max-width: 1200px;
+        margin: 0 auto 48px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+      }
+      .fbr p {
+        color: var(--tm);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-top: 12px;
+        max-width: 280px;
+      }
+      .fc h4 {
+        font-family: "Fraunces", serif;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--t);
+      }
+      .fc ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .fc a {
+        color: var(--tm);
+        font-size: 14px;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .fc a:hover {
+        color: var(--t);
+      }
+      .fb {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--b);
+        padding-top: 24px;
+        font-size: 12px;
+        color: var(--tm);
+      }
+      @media (max-width: 768px) {
+        .fg { grid-template-columns: 1fr; gap: 20px; }
+        footer { padding: 32px 16px 20px; }
+        .fb { flex-direction: column; gap: 4px; text-align: center; }
+      }
+      
+      .fbtns {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 999;
+      }
+      .fbtn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+      .fbtn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      }
+      .wab {
+        background: #25d366 !important;
+        color: #fff !important;
+        text-decoration: none;
+        border: none !important;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4) !important;
+      }
+      .wab:hover {
+        background: #20ba5a !important;
+      }
+      .wa-menu-container {
+        position: relative;
+      }
+      .wa-menu {
+        position: absolute;
+        bottom: 60px;
+        right: 0;
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        padding: 8px;
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+        width: 160px;
+      }
+      .wa-menu.show {
+        display: flex;
+        animation: fadeUp 0.2s ease;
+      }
+      .wa-menu a {
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: var(--t);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.2s;
+      }
+      .wa-menu a:hover {
+        background: var(--bg);
+      }
+
+    </style>
+    <style>
       :root {
         --o: #e8961e;
         --od: #c07a18;
@@ -212,22 +357,607 @@
   <style>
     .product-card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); }
   </style>
-</head>
+
+  <style>
+    /* ── SWAP ITEM & ALTERNATIVES STYLES ── */
+    .btn-swap-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      background: var(--o);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(232, 150, 30, 0.4);
+    }
+    .btn-swap-item:hover {
+      background: var(--o);
+      color: #ffffff;
+      border-style: solid;
+    }
+    .slot-room-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--o);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .slot-swapped-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: var(--o);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    [dir="rtl"] .slot-swapped-badge {
+      right: auto;
+      left: 6px;
+    }
+
+    /* Swap Modal */
+    .swap-modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s;
+    }
+    .swap-modal-bg.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .swap-modal {
+      background: var(--s);
+      border: 1px solid var(--b);
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--sh);
+      overflow: hidden;
+      transform: translateY(20px);
+      transition: transform 0.25s ease;
+    }
+    .swap-modal-bg.open .swap-modal {
+      transform: translateY(0);
+    }
+    .swap-modal-hdr {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--b);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--s2);
+    }
+    .swap-modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+    }
+    .swap-modal-sub {
+      font-size: 12px;
+      color: var(--tm);
+      margin-top: 2px;
+    }
+    .swap-modal-close {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--tm);
+      padding: 4px;
+      line-height: 1;
+    }
+    .swap-modal-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .swap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .swap-opt-card {
+      border: 2px solid var(--b);
+      border-radius: 10px;
+      background: var(--s);
+      padding: 10px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .swap-opt-card:hover {
+      border-color: var(--o);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .swap-opt-card.active {
+      border-color: var(--o);
+      background: rgba(232, 150, 30, 0.05);
+    }
+    .swap-opt-img {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--s2);
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .swap-opt-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .swap-opt-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    .swap-opt-price {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--t);
+      margin-bottom: 6px;
+    }
+    .diff-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: auto;
+    }
+    .diff-badge.same {
+      background: var(--s2);
+      color: var(--tm);
+    }
+    .diff-badge.plus {
+      background: rgba(232, 150, 30, 0.15);
+      color: #c07a18;
+    }
+    .diff-badge.minus {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+    .swap-opt-active-check {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: var(--o);
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      z-index: 3;
+    }
+    [dir="rtl"] .swap-opt-active-check {
+      right: auto;
+      left: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .swap-modal {
+        max-height: 90vh;
+        border-radius: 16px 16px 0 0;
+        margin-top: auto;
+      }
+      .swap-modal-bg {
+        padding: 0;
+        align-items: flex-end;
+      }
+      .swap-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .swap-modal-hdr {
+        padding: 14px 16px;
+      }
+      .swap-modal-body {
+        padding: 14px 16px;
+      }
+      .swap-opt-card {
+        padding: 8px;
+      }
+      .swap-opt-name {
+        font-size: 11px;
+      }
+      .swap-opt-price {
+        font-size: 11px;
+      }
+      .diff-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+      }
+    }
+  
+      /* CART */
+      .ov {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .ov.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #cov {
+        z-index: 500;
+      }
+      #mov {
+        z-index: 200;
+      }
+      .cpa {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(440px, 100vw);
+        background: var(--s);
+        border-left: 1px solid var(--b);
+        z-index: 501;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+      }
+      .cpa.open {
+        transform: translateX(0);
+      }
+      .chdr {
+        padding: 22px;
+        border-bottom: 1px solid var(--b);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .chdr h3 {
+        font-family: var(--font-head);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .chdr h3 span {
+        color: var(--tm);
+        font-weight: 400;
+        font-size: 13px;
+        font-family: var(--font-body);
+      }
+      .cx {
+        background: var(--s2);
+        border: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--t);
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .cx:hover {
+        background: var(--s3);
+      }
+      .clist {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .cemp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        gap: 12px;
+        color: var(--tm);
+        text-align: center;
+        padding: 40px;
+      }
+      .cemp .big {
+        font-size: 60px;
+        opacity: 0.2;
+      }
+      .cir {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--s2);
+        border-radius: 14px;
+        padding: 14px;
+        border: 1px solid var(--b);
+        animation: sr 0.3s ease;
+      }
+      @keyframes sr {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .cii {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: var(--s3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .cii img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cin {
+        flex: 1;
+        min-width: 0;
+      }
+      .cin .nm {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--t);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 3px;
+      }
+      .cin .pr {
+        font-size: 12px;
+        color: var(--o);
+        margin-bottom: 8px;
+      }
+      .ciq {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .ciq button {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--s);
+        border: 1px solid var(--b);
+        color: var(--t);
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .ciq button:hover {
+        background: var(--o);
+        color: #0e0d0b;
+        border-color: var(--o);
+      }
+      .ciq span {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--t);
+        min-width: 18px;
+        text-align: center;
+      }
+      .crm {
+        background: none;
+        border: none;
+        color: var(--tm);
+        cursor: pointer;
+        font-size: 17px;
+        padding: 4px;
+        transition: color 0.2s;
+        flex-shrink: 0;
+      }
+      .crm:hover {
+        color: #ff4757;
+      }
+      .cir.bundle-item {
+        border-left: 2px solid var(--o);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .cir.bundle-item .cir-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .bundle-tag {
+        display: inline-block;
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        background: var(--o);
+        color: #0a0a0a;
+        border-radius: 4px;
+        padding: 2px 6px;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .bundle-item-count {
+        font-size: 11px;
+        color: var(--tm);
+        margin-bottom: 6px;
+      }
+      .bundle-items-list {
+        font-size: 10px;
+        color: var(--tm);
+        line-height: 1.7;
+        padding-left: 4px;
+      }
+      .cftr {
+        padding: 18px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .ctr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      .ctr .lb {
+        color: var(--tm);
+        font-size: 14px;
+      }
+      .ctr .am {
+        font-family: var(--font-head);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--o);
+      }
+      .bf {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .bp {
+        background: var(--t);
+        color: var(--bg);
+        border: none;
+        padding: 14px 36px;
+        border-radius: 999px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bp:hover {
+        background: var(--o);
+        transform: translateY(-2px);
+      }
+      .bg2 {
+        background: transparent;
+        color: var(--t);
+        border: 1px solid var(--b);
+        padding: 14px 36px;
+        border-radius: 999px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          border-color 0.3s,
+          color 0.3s,
+          transform 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bg2:hover {
+        border-color: var(--o);
+        color: var(--o);
+        transform: translateY(-2px);
+      }
+      /* BUTTONS */
+      </style>
+
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1236448993498775');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1236448993498775&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    <script src="/pages/metaTracking.js"></script>
+  </head>
 
   <body>
-    <script src="header.js"></script>
+    <script src="/pages/header.js"></script>
 
     <div class="container" id="bundle-content" style="display:none; margin-top: 40px;">
       
       <div class="breadcrumb">
-        <a href="../mega-furniture.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a> &gt; 
-        <a href="offers.html#bundles" data-ar="الباقات" data-en="Bundles">الباقات</a> &gt; 
+        <a href="/" data-ar="الرئيسية" data-en="Home">الرئيسية</a> &gt; 
+        <a href="/offers#bundles" data-ar="الباقات" data-en="Bundles">الباقات</a> &gt; 
         <span id="bc-name"></span>
       </div>
       
       <div class="hero">
         <div class="hero-img">
-          <img id="h-img" alt="Bundle image" onerror="this.src='../logos/mega-logo.jpg'; this.style.opacity=1;" style="opacity:1; transition:opacity 0.2s;" />
+          <img id="h-img" alt="Bundle image" onerror="this.src='/logos/mega-logo.jpg'; this.style.opacity=1;" style="opacity:1; transition:opacity 0.2s;" />
         </div>
         <div class="hero-content">
           <div class="badge-top" id="h-badge"></div>
@@ -288,22 +1018,22 @@
           <div class="step-item">
             <div class="step-num">1</div>
             <div class="step-title" data-ar="اختار التصميم" data-en="Choose Design">اختار التصميم</div>
-            <img class="step-img" src="../logos/steps_1.jpg" style="opacity:1" alt="Step 1" />
+            <img class="step-img" src="/logos/steps_1.jpg" style="opacity:1" alt="Step 1" />
           </div>
           <div class="step-item">
             <div class="step-num">2</div>
             <div class="step-title" data-ar="اختار اللون" data-en="Choose Color">اختار اللون</div>
-            <img class="step-img" src="../logos/steps_2.jpg" style="opacity:1" alt="Step 2" />
+            <img class="step-img" src="/logos/steps_2.jpg" style="opacity:1" alt="Step 2" />
           </div>
           <div class="step-item">
             <div class="step-num">3</div>
             <div class="step-title" data-ar="حدد المقاسات" data-en="Set Sizes">حدد المقاسات</div>
-            <img class="step-img" src="../logos/steps_3.jpg" style="opacity:1" alt="Step 3" />
+            <img class="step-img" src="/logos/steps_3.jpg" style="opacity:1" alt="Step 3" />
           </div>
           <div class="step-item">
             <div class="step-num">4</div>
             <div class="step-title" data-ar="تابع التنفيذ" data-en="Follow Execution">تابع التنفيذ</div>
-            <img class="step-img" src="../logos/steps_4.jpg" style="opacity:1" alt="Step 4" />
+            <img class="step-img" src="/logos/steps_4.jpg" style="opacity:1" alt="Step 4" />
           </div>
         </div>
       </div>
@@ -311,27 +1041,27 @@
       <h2 class="sec-head" data-ar="شوف الخامات قبل ما تختار" data-en="See materials before choosing">شوف الخامات قبل ما تختار</h2>
       <div class="mat-grid">
         <div class="mat-item">
-          <img class="mat-img" src="../logos/mat_1.webp" alt="Natural Wood" />
+          <img class="mat-img" src="/logos/mat_1.webp" alt="Natural Wood" />
           <div class="mat-title" data-ar="أخشاب طبيعية" data-en="Natural Wood">أخشاب طبيعية</div>
           <div class="mat-sub" data-ar="أجود أنواع الأخشاب الطبيعية" data-en="Premium quality natural wood">أجود أنواع الأخشاب الطبيعية</div>
         </div>
         <div class="mat-item">
-          <img class="mat-img" src="../logos/mat_2.jpg" alt="Luxury Fabrics" />
+          <img class="mat-img" src="/logos/mat_2.jpg" alt="Luxury Fabrics" />
           <div class="mat-title" data-ar="أقمشة فاخرة" data-en="Luxury Fabrics">أقمشة فاخرة</div>
           <div class="mat-sub" data-ar="أنواع متعددة وسهلة التنظيف" data-en="Various types, easy to clean">أنواع متعددة وسهلة التنظيف</div>
         </div>
         <div class="mat-item">
-          <img class="mat-img" src="../logos/mat_3.jpg" alt="High-Quality Foam" />
+          <img class="mat-img" src="/logos/mat_3.jpg" alt="High-Quality Foam" />
           <div class="mat-title" data-ar="إسفنج عالي الجودة" data-en="High-Quality Foam">إسفنج عالي الجودة</div>
           <div class="mat-sub" data-ar="راحة تدوم لسنين" data-en="Comfort that lasts for years">راحة تدوم لسنين</div>
         </div>
         <div class="mat-item">
-          <img class="mat-img" src="../logos/mat_4.jpg" alt="Safe Paints" />
+          <img class="mat-img" src="/logos/mat_4.jpg" alt="Safe Paints" />
           <div class="mat-title" data-ar="دهانات آمنة" data-en="Safe Paints">دهانات آمنة</div>
           <div class="mat-sub" data-ar="ألوان ثابتة وصديقة للبيئة" data-en="Colorfast and eco-friendly">ألوان ثابتة وصديقة للبيئة</div>
         </div>
         <div class="mat-item">
-          <img class="mat-img" src="../logos/mat_5.webp" alt="Professional Finish" onerror="this.src='../logos/mega-logo.jpg'; this.style.opacity=0.2" />
+          <img class="mat-img" src="/logos/mat_5.webp" alt="Professional Finish" onerror="this.src='/logos/mega-logo.jpg'; this.style.opacity=0.2" />
           <div class="mat-title" data-ar="تشطيب احترافي" data-en="Professional Finish">تشطيب احترافي</div>
           <div class="mat-sub" data-ar="تفاصيل دقيقة وجودة في التنفيذ" data-en="Precise details and quality execution">تفاصيل دقيقة وجودة في التنفيذ</div>
         </div>
@@ -365,7 +1095,7 @@
         <div class="bc-title" data-ar="جاهز تبدأ تجهيز بيتك <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>" data-en="Ready to furnish your home <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>">جاهز تبدأ تجهيز بيتك <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg></div>
         <div class="bc-sub" data-ar="اختار الباقة وسيب الباقي التفاصيل علينا." data-en="Choose the bundle and leave the rest to us.">اختار الباقة وسيب الباقي التفاصيل علينا.</div>
         <div class="bc-actions">
-          <button class="btn-primary" style="margin:0;" onclick="window.scrollTo(0,0)" data-ar="احجز معاينة في المعرض" data-en="Book Showroom Visit">احجز معاينة في المعرض</button>
+          <button class="btn-primary" style="margin:0;" onclick="metaTrack('Contact'); window.open('https://wa.me/201559518088', '_blank')"  data-ar="احجز معاينة في المعرض"  data-en="Book Showroom Visit">احجز معاينة في المعرض</button>
           <button class="btn-secondary" style="margin:0;" onclick="handleWhatsAppOrder()" data-ar="كلمنا على واتساب" data-en="Chat on WhatsApp">كلمنا على واتساب</button>
         </div>
       </div>
@@ -399,6 +1129,136 @@
       const urlParams = new URLSearchParams(window.location.search);
       const bundleId = urlParams.get('id');
       let currentBundle = null;
+      let bundleSlots = [];
+      let currentSwapSlotIndex = -1;
+
+      function recalcPrice() {
+        if (!currentBundle) return;
+        let diffTotal = 0;
+        bundleSlots.forEach(slot => {
+            const mainP = slot.mainProduct;
+            const selP = slot.selectedProduct;
+            if (mainP && selP) {
+               const mainP_price = (currentBundle.customItemPrices && currentBundle.customItemPrices[mainP.id] !== undefined) ? currentBundle.customItemPrices[mainP.id] : (mainP.price || 0);
+               const selP_price = (currentBundle.customItemPrices && currentBundle.customItemPrices[selP.id] !== undefined) ? currentBundle.customItemPrices[selP.id] : (selP.price || 0);
+               diffTotal += (Number(selP_price) - Number(mainP_price));
+            }
+        });
+        
+        const newOriginal = Number(currentBundle.originalTotal || 0) + diffTotal;
+        const disc = Number(currentBundle.discountPct || 0);
+        const baseBundlePrice = Number(currentBundle.bundlePrice || currentBundle.originalTotal || 0);
+        const newPrice = baseBundlePrice + (disc ? Math.round(diffTotal * (1 - disc/100)) : diffTotal);
+        
+        document.getElementById('h-old').textContent = "EGP " + newOriginal.toLocaleString();
+        document.getElementById('h-new').textContent = "EGP " + newPrice.toLocaleString();
+      }
+
+      function renderSlots() {
+          const itemsList = bundleSlots.map((slot, idx) => {
+              const p = slot.selectedProduct;
+              if(!p) return '';
+              const pName = lang === 'ar' ? p.nameAr || p.nameEn : p.nameEn || p.nameAr;
+              const pImg = p.mainPhoto ? (p.mainPhoto.startsWith("http") ? p.mainPhoto : "/uploads/" + p.mainPhoto) : "";
+              const imgHtml = pImg ? `<img src="${pImg}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">` : `<div style="width:100%; height:100%; background:var(--s2);"></div>`;
+              const customP = currentBundle.customItemPrices && currentBundle.customItemPrices[p.id] !== undefined ? currentBundle.customItemPrices[p.id] : p.price;
+              const priceText = customP ? "EGP " + Number(customP).toLocaleString() : "";
+              
+              const hasAlts = slot.alternatives && slot.alternatives.length > 0;
+              const swapBtn = hasAlts ? `
+                <div style="width: 100%;">
+                    <button class="btn-swap-item" onclick="event.preventDefault(); event.stopPropagation(); openSwapModal(${idx})">
+                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M8 9l4-4 4 4"/><path d="M12 5v14"/></svg>
+                       ${lang === 'ar' ? 'تبديل الموديل' : 'Swap Model'}
+                    </button>
+                </div>` : '';
+
+              return `<div style="position:relative; background:var(--s); border:1px solid var(--b); border-radius:10px; overflow:hidden; transition:transform 0.2s, box-shadow 0.2s;" class="product-card-hover">
+                 ${swapBtn}
+                 <a href="/product?id=${p.id}" target="_blank" style="display:block; text-decoration:none; color:inherit;">
+                     <div style="width:100%; aspect-ratio:1; background:var(--s2); position:relative;">
+                        ${imgHtml}
+                     </div>
+                     <div style="padding:10px;">
+                        <div style="font-size:11px; color:var(--tm); margin-bottom:2px;">${slot.roomName}</div>
+                        <div style="font-weight:600; font-size:13px; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${pName}</div>
+                        <div style="color:var(--o); font-weight:700; font-size:12px;">${priceText}</div>
+                     </div>
+                 </a>
+              </div>`;
+          }).join('');
+          
+          const title = lang === 'ar' ? 'محتويات الباقة' : 'Bundle Contents';
+          const roomsHtml = `<div style="width:100%; max-width:1200px; margin:0 auto;">
+              <h3 style="font-size:24px; margin-bottom:20px; text-align:center; font-family:'Fraunces', serif;">${title}</h3>
+              <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:12px;" dir="${lang==='ar'?'rtl':'ltr'}">
+                ${itemsList}
+              </div>
+            </div>`;
+          
+          const grid = document.getElementById('r-grid');
+          grid.style.display = 'block'; 
+          grid.innerHTML = roomsHtml;
+          document.getElementById('rooms-head').style.display = 'none';
+      }
+
+      window.openSwapModal = function(idx) {
+          currentSwapSlotIndex = idx;
+          const slot = bundleSlots[idx];
+          if (!slot) return;
+          
+          document.getElementById('swap-modal-title').textContent = lang === 'ar' ? 'اختر ' + slot.roomName : 'Choose ' + slot.roomName;
+          document.getElementById('swap-modal-sub').textContent = lang === 'ar' ? 'سيتم تحديث إجمالي سعر الباقة بناءً على اختيارك' : 'Bundle total price will update based on your selection';
+          
+          const allOptions = [slot.mainProduct, ...slot.alternatives];
+          
+          const html = allOptions.map(p => {
+              const isSel = p.id === slot.selectedProduct.id;
+              const pName = lang === 'ar' ? p.nameAr || p.nameEn : p.nameEn || p.nameAr;
+              const pImg = p.mainPhoto ? (p.mainPhoto.startsWith("http") ? p.mainPhoto : "/uploads/" + p.mainPhoto) : "";
+              const imgHtml = pImg ? `<img src="${pImg}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">` : `<div style="width:100%; height:100%; background:var(--s2);"></div>`;
+              const mainP_price = (currentBundle.customItemPrices && currentBundle.customItemPrices[slot.mainProduct.id] !== undefined) ? currentBundle.customItemPrices[slot.mainProduct.id] : (slot.mainProduct.price || 0);
+              const altP_price = (currentBundle.customItemPrices && currentBundle.customItemPrices[p.id] !== undefined) ? currentBundle.customItemPrices[p.id] : (p.price || 0);
+              const diff = Number(altP_price) - Number(mainP_price);
+              
+              let diffStr = '';
+              if (diff > 0) diffStr = `<span style="color:var(--o); font-weight:700;">+${diff.toLocaleString()} EGP</span>`;
+              else if (diff < 0) diffStr = `<span style="color:#10b981; font-weight:700;">-${Math.abs(diff).toLocaleString()} EGP</span>`;
+              else diffStr = `<span style="color:var(--tm);">(بدون فرق سعر)</span>`;
+              
+              return `<div style="display:flex; gap:12px; padding:12px; border:2px solid ${isSel ? 'var(--o)' : 'var(--b)'}; border-radius:8px; cursor:pointer; background:var(--s); align-items:center;" onclick="selectAlt('${p.id}')">
+                <div style="width:60px; height:60px; border-radius:6px; overflow:hidden; flex-shrink:0;">
+                   ${imgHtml}
+                </div>
+                <div style="flex:1;">
+                   <div style="font-size:14px; font-weight:600; margin-bottom:4px;">${pName}</div>
+                   <div style="font-size:12px;">${diffStr}</div>
+                </div>
+                <div style="width:24px; height:24px; border-radius:50%; border:2px solid ${isSel ? 'var(--o)' : 'var(--tm)'}; display:flex; align-items:center; justify-content:center;">
+                   ${isSel ? '<div style="width:12px; height:12px; background:var(--o); border-radius:50%;"></div>' : ''}
+                </div>
+              </div>`;
+          }).join('');
+          
+          document.getElementById('swap-grid').innerHTML = html;
+          document.getElementById('swap-modal').classList.add('open');
+      };
+
+      window.closeSwapModal = function() {
+          document.getElementById('swap-modal').classList.remove('open');
+      };
+      
+      window.selectAlt = function(pid) {
+          const slot = bundleSlots[currentSwapSlotIndex];
+          if (!slot) return;
+          const chosen = [slot.mainProduct, ...slot.alternatives].find(p => p.id === pid);
+          if (chosen) {
+              slot.selectedProduct = chosen;
+              recalcPrice();
+              renderSlots();
+          }
+          closeSwapModal();
+      };
 
       async function loadBundle() {
         if (!bundleId) return;
@@ -411,10 +1271,10 @@
 
           const nm = lang === "ar" ? currentBundle.nameAr || currentBundle.nameEn : currentBundle.nameEn || currentBundle.nameAr;
           const bdg = lang === "ar" ? currentBundle.badgeAr : currentBundle.badgeEn;
-          const mainImg = currentBundle.image ? (currentBundle.image.startsWith("http") ? currentBundle.image : "../uploads/" + currentBundle.image) : "";
+          const mainImg = currentBundle.image ? (currentBundle.image.startsWith("http") ? currentBundle.image : "/uploads/" + currentBundle.image) : "";
           
-          const itemCount2 = (currentBundle.items || []).length;
-          document.getElementById('bc-name').textContent = nm + " - " + itemCount2 + (lang === "ar" ? " قطع" : " Items");
+          const itemCount2 = currentBundle.mainProductIds ? currentBundle.mainProductIds.length : (currentBundle.items || []).length;
+          document.getElementById('bc-name').textContent = nm;
           
           document.getElementById('h-badge').textContent = bdg || (lang === "ar" ? "باقة" : "Bundle");
           if(currentBundle.tier === 'signature') {
@@ -423,53 +1283,69 @@
               document.getElementById('h-badge').classList.remove('badge-signature');
           }
 
-          document.getElementById('h-title').textContent = (currentBundle.items || []).length + (lang === "ar" ? " قطع لبيت متكامل على ذوقك" : " Items for a complete home");
+          document.getElementById('h-title').textContent = (currentBundle.mainProductIds ? currentBundle.mainProductIds.length : (currentBundle.items || []).length) + (lang === "ar" ? " قطع لبيت متكامل على ذوقك" : " Items for a complete home");
           document.getElementById('h-sub').textContent = lang === "ar" ? "كل اللي تحتاجه لبيت مريح وأنيق" : "Everything you need for a comfortable and elegant home";
           document.getElementById('h-old').textContent = "EGP " + Number(currentBundle.originalTotal || 0).toLocaleString();
           document.getElementById('h-new').textContent = "EGP " + Number(currentBundle.bundlePrice || 0).toLocaleString();
           
           if(mainImg) document.getElementById('h-img').src = mainImg;
           
-          document.getElementById('rooms-head').textContent = lang === "ar" ? "الباقة دي بتجهزلك " + (currentBundle.roomCount || 0) + " غرف <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>" : "This bundle furnishes " + (currentBundle.roomCount || 0) + " rooms <svg width='1em' height='1em' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'></path></svg>";
+          bundleSlots = [];
           
-          const itemsList = (currentBundle.items || []).map(p => {
-              const pName = lang === 'ar' ? p.nameAr || p.nameEn : p.nameEn || p.nameAr;
-              const pImg = p.mainPhoto ? (p.mainPhoto.startsWith("http") ? p.mainPhoto : "../uploads/" + p.mainPhoto) : "";
-              const imgHtml = pImg ? `<img src="${pImg}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">` : `<div style="width:100%; height:100%; background:var(--s2);"></div>`;
-              const priceText = p.price ? "EGP " + Number(p.price).toLocaleString() : "";
-              
-              // Standard Product Card Design
-              return `<a href="product.html?id=${p.id}" style="display:block; text-decoration:none; color:inherit; background:var(--s); border:1px solid var(--b); border-radius:10px; overflow:hidden; transition:transform 0.2s, box-shadow 0.2s;" class="product-card-hover">
-                 <div style="width:100%; aspect-ratio:1; background:var(--s2); position:relative;">
-                    ${imgHtml}
-                 </div>
-                 <div style="padding:10px;">
-                    <div style="font-weight:600; font-size:13px; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${pName}</div>
-                    <div style="color:var(--o); font-weight:700; font-size:12px;">${priceText}</div>
-                 </div>
-              </a>`;
-          }).join('');
+          const iterIds = currentBundle.mainProductIds && currentBundle.mainProductIds.length > 0 ? currentBundle.mainProductIds : currentBundle.productIds;
+          if (iterIds && iterIds.length > 0) {
+              iterIds.forEach(pid => {
+                  const mainP = currentBundle.items.find(x => x.id === pid);
+                  if (!mainP) return;
+                  
+                  const altIds = (currentBundle.flatAlternatives && currentBundle.flatAlternatives[pid]) || [];
+                  const alts = altIds.map(aid => {
+                      const allCatalog = [...(currentBundle.items || []), ...(currentBundle.alternativeItems || [])];
+                      return allCatalog.find(x => x.id === aid);
+                  }).filter(Boolean);
+                  
+                  bundleSlots.push({
+                      roomName: mainP.nameEn || mainP.nameAr || (lang === 'ar' ? 'منتج' : 'Item'),
+                      mainProduct: mainP,
+                      alternatives: alts,
+                      selectedProduct: mainP
+                  });
+              });
+          } else if (currentBundle.rooms && currentBundle.rooms.length > 0) {
+              currentBundle.rooms.forEach(r => {
+                  const mainPid = (r.productIds && r.productIds[0]) ? r.productIds[0] : null;
+                  if (!mainPid) return;
+                  const mainP = currentBundle.items.find(x => x.id === mainPid);
+                  if (!mainP) return;
+                  
+                  const alts = (r.alternatives || []).map(aid => currentBundle.items.find(x => x.id === aid)).filter(Boolean);
+                  
+                  bundleSlots.push({
+                      roomName: lang === 'ar' ? (r.nameAr || r.nameEn) : (r.nameEn || r.nameAr),
+                      mainProduct: mainP,
+                      alternatives: alts,
+                      selectedProduct: mainP
+                  });
+              });
+          } else {
+              (currentBundle.items || []).forEach(p => {
+                  bundleSlots.push({
+                      roomName: p.nameEn || p.nameAr || (lang === 'ar' ? 'منتج' : 'Item'),
+                      mainProduct: p,
+                      alternatives: [],
+                      selectedProduct: p
+                  });
+              });
+          }
           
-          const title = lang === 'ar' ? 'محتويات الباقة' : 'Bundle Contents';
-          
-          const roomsHtml = `<div style="width:100%; max-width:1200px; margin:0 auto;">
-              <h3 style="font-size:24px; margin-bottom:20px; text-align:center; font-family:'Fraunces', serif;">${title}</h3>
-              <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:10px;" dir="${lang==='ar'?'rtl':'ltr'}">
-                ${itemsList}
-              </div>
-            </div>`;
-          
-          const grid = document.getElementById('r-grid');
-          grid.style.display = 'block'; 
-          grid.innerHTML = roomsHtml;
-          document.getElementById('rooms-head').style.display = 'none';
+          recalcPrice();
+          renderSlots();
 
-          // Populate step/material images
           for(let i=1; i<=4; i++) {
               let imgEl = document.getElementById('step-img-'+i);
               if(imgEl) {
                   let dynamicSrc = currentBundle.stepsImages && currentBundle.stepsImages[i-1];
-                  if(dynamicSrc) imgEl.src = dynamicSrc.startsWith("http") ? dynamicSrc : "../uploads/" + dynamicSrc;
+                  if(dynamicSrc) imgEl.src = dynamicSrc.startsWith("http") ? dynamicSrc : "/uploads/" + dynamicSrc;
                   imgEl.style.opacity = dynamicSrc ? "1" : "0.2";
               }
           }
@@ -477,13 +1353,22 @@
               let imgEl = document.getElementById('mat-img-'+i);
               if(imgEl) {
                   let dynamicSrc = currentBundle.materialsImages && currentBundle.materialsImages[i-1];
-                  if(dynamicSrc) imgEl.src = dynamicSrc.startsWith("http") ? dynamicSrc : "../uploads/" + dynamicSrc;
+                  if(dynamicSrc) imgEl.src = dynamicSrc.startsWith("http") ? dynamicSrc : "/uploads/" + dynamicSrc;
                   imgEl.style.opacity = dynamicSrc ? "1" : "0.2";
               }
           }
 
           document.getElementById('bundle-content').style.display = 'block';
-        } catch (e) {
+            try {
+              metaTrack('ViewContent', {
+                content_name: currentBundle.nameEn || currentBundle.nameAr || 'Bundle',
+                content_ids: [currentBundle.id],
+                content_type: 'product',
+                value: currentBundle.bundlePrice || currentBundle.originalTotal || 0,
+                currency: 'EGP'
+              });
+            } catch(e) {}
+          } catch (e) {
           console.error(e);
         }
       }
@@ -498,14 +1383,31 @@
         let cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
         const bNmAr = currentBundle.nameAr || currentBundle.nameEn;
         const bNmEn = currentBundle.nameEn || currentBundle.nameAr;
-        const cartId = "bundle_" + currentBundle.id;
+        
+        const selIds = bundleSlots.map(s => s.selectedProduct.id).sort().join('_');
+        const cartId = "bundle_" + currentBundle.id + "_" + selIds;
+        
+        const currentPriceStr = document.getElementById('h-new').textContent.replace(/[^0-9]/g, '');
+        const currentPrice = parseInt(currentPriceStr) || Number(currentBundle.bundlePrice || 0);
+        metaTrack('AddToCart', {
+          content_ids: [currentBundle.id],
+          content_type: 'product',
+          value: currentPrice,
+          currency: 'EGP',
+          num_items: 1
+        });
+
         const ex = cart.find(x => x.id === cartId);
         if (ex) { ex.qty = (ex.qty || 1) + 1; } 
         else {
+          const bundleItemsAr = bundleSlots.map(s => s.selectedProduct.nameAr || s.selectedProduct.nameEn);
+          const bundleItemsEn = bundleSlots.map(s => s.selectedProduct.nameEn || s.selectedProduct.nameAr);
           cart.push({
             id: cartId, bundleId: currentBundle.id, isBundle: true,
-            nameAr: bNmAr, nameEn: bNmEn, price: Number(currentBundle.bundlePrice || 0),
-            photo: currentBundle.image, qty: 1
+            bundleProductIds: bundleSlots.map(s => s.selectedProduct.id),
+            bundleItemsAr, bundleItemsEn,
+            nameAr: bNmAr, nameEn: bNmEn, price: currentPrice,
+            photo: currentBundle.image, mainPhoto: currentBundle.image, qty: 1
           });
         }
         localStorage.setItem("megaCart", JSON.stringify(cart));
@@ -521,17 +1423,262 @@
       function handleWhatsAppOrder() {
         if (!currentBundle) return;
         const bNm = lang === "ar" ? currentBundle.nameAr || currentBundle.nameEn : currentBundle.nameEn || currentBundle.nameAr;
-        const price = Number(currentBundle.bundlePrice || 0);
+        const priceStr = document.getElementById('h-new').textContent;
         let msg = lang === "ar" 
-          ? `مرحباً! أود طلب هذا الطقم:\n- الطقم: ${bNm}\n- السعر: EGP ${price.toLocaleString()}\n- الرابط: ${window.location.href}`
-          : `Hello! I'd like to order:\n- Bundle: ${bNm}\n- Price: EGP ${price.toLocaleString()}\n- Link: ${window.location.href}`;
-        window.open("https://wa.me/201201111979?text=" + encodeURIComponent(msg), "_blank");
+          ? `مرحباً! أود طلب هذا الطقم:\n- الطقم: ${bNm}\n- السعر: ${priceStr}\n- الرابط: ${window.location.href}`
+          : `Hello! I'd like to order:\n- Bundle: ${bNm}\n- Price: ${priceStr}\n- Link: ${window.location.href}`;
+        metaTrack('Contact'); window.open("https://wa.me/201559518088?text=" + encodeURIComponent(msg), "_blank");
       }
 
       document.addEventListener("DOMContentLoaded", () => {
         applyLang(lang);
         loadBundle();
       });
-    </script>
-  </body>
+
+      /* CART */
+      let cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
+      function updBadge() {
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        const b = document.getElementById("cbadge");
+        if (!b) return;
+        b.textContent = n || "";
+        b.style.display = n > 0 ? "flex" : "none";
+      }
+      function iu(src) {
+        if (!src) return "";
+        return src.startsWith("http") ? src : "/uploads/" + src;
+      }
+      function saveCart() {
+        localStorage.setItem("megaCart", JSON.stringify(cart));
+      }
+      function rmCartIdx(idx) {
+        cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function updQtyIdx(idx, delta) {
+        if (!cart[idx]) return;
+        cart[idx].qty += delta;
+        if (cart[idx].qty < 1) cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+            
+      function t(k) {
+        const lang = localStorage.getItem("megaLang") || "en";
+        const dict = {
+          ar: {
+            "cart-empty": "السلة فارغة",
+            "cart-empty-sub": "لم تقم بإضافة أي منتجات بعد.",
+            "bundle-tag": "باقة",
+            "bundle-includes": "يحتوي على {n} منتجات",
+            "cart-items-label": "منتجات في السلة",
+            "call-price": "اتصل للسعر",
+            "cart-view": "عرض السلة / الدفع"
+          },
+          en: {
+            "cart-empty": "Your cart is empty",
+            "cart-empty-sub": "You haven't added any items yet.",
+            "bundle-tag": "BUNDLE",
+            "bundle-includes": "{n} products included",
+            "cart-items-label": "items",
+            "call-price": "Call for Price",
+            "cart-view": "View Cart / Checkout"
+          }
+        };
+        return (dict[lang] && dict[lang][k]) || k;
+      }
+
+      function renderCart() {
+        const el = document.getElementById("clist"),
+          cc = document.getElementById("cc") || document.getElementById("ccount"),
+          ft = document.getElementById("cftr"),
+          tot = document.getElementById("ctot");
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        if (cc) cc.textContent = "(" + n + ")";
+        if (!cart.length) {
+          el.innerHTML = `<div class="cemp"><div class="cemp-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><h4>${t("cart-empty")}</h4><p>${t("cart-empty-sub")}</p></div>`;
+          if (ft) {
+            ft.style.display = "none";
+            ft.classList.remove("show");
+          }
+          if (typeof clearPromo === "function") clearPromo();
+          return;
+        }
+        if (ft) {
+          ft.style.display = "flex";
+          ft.classList.add("show");
+        }
+        const lang = localStorage.getItem("megaLang") || "en";
+        el.innerHTML = cart
+          .map((item) => {
+            const nm =
+              lang === "ar"
+                ? item.nameAr || item.nameEn
+                : item.nameEn || item.nameAr;
+            const imgSrc = iu(item.mainPhoto);
+            const unitPrice = item.price || 0;
+            const lineTotal = unitPrice * item.qty;
+            const idx = cart.indexOf(item);
+            if (item.isBundle) {
+              const bundleTag = t("bundle-tag");
+              const countLbl = t("bundle-includes").replace("{n}", item.itemCount || 0);
+              const itemsList = (item.items || [])
+                .map(
+                  (p) =>
+                    "· " +
+                    (lang === "ar"
+                      ? p.nameAr || p.nameEn
+                      : p.nameEn || p.nameAr),
+                )
+                .join("<br>");
+              const priceStr =
+                unitPrice > 0
+                  ? item.qty > 1
+                    ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                    : "EGP " + Number(unitPrice).toLocaleString()
+                  : t("call-price");
+              return `<div class="cir bundle-item">
+      <div class="cir-top">
+        <div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div>
+        <div class="cin" style="flex:1;min-width:0">
+          <div><span class="bundle-tag">${bundleTag}</span></div>
+          <div class="nm">${nm}</div>
+          <div class="pr">${priceStr}</div>
+          <div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div>
+        </div>
+        <button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button>
+      </div>
+      <div class="bundle-item-count">${countLbl}</div>
+      ${itemsList ? `<div class="bundle-items-list">${itemsList}</div>` : ""}
+    </div>`;
+            }
+            const priceStr =
+              unitPrice > 0
+                ? item.qty > 1
+                  ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                  : "EGP " + Number(unitPrice).toLocaleString()
+                : t("call-price");
+            const meta = [
+              item.color || "",
+              item.size
+                ? (lang === "ar" ? item.size.nameAr : item.size.nameEn) || ""
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" · ");
+            return `<div class="cir">
+      <div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.parentElement.innerHTML='️'">` : '<span style="font-size:22px;opacity:.4">️</span>'}</div>
+      <div class="cin">
+        <div class="nm">${nm}${meta ? `<span style="font-size:10px;color:var(--tm);margin-right:4px"> · ${meta}</span>` : ""}</div>
+        <div class="pr">${priceStr}</div>
+        <div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div>
+      </div>
+      <button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button>
+    </div>`;
+          })
+          .join("");
+        if (tot)
+          tot.textContent = n + " " + t("cart-items-label");
+        if (typeof updCartFooter === "function") updCartFooter();
+      }
+      function openCart() {
+        renderCart();
+        document.getElementById("cpa").classList.add("open");
+        document.getElementById("cov").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCart() {
+        document.getElementById("cpa").classList.remove("open");
+        document.getElementById("cov").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      
+</script>
+  
+    <!-- SWAP ITEM MODAL -->
+    <div class="swap-modal-bg" id="swap-modal" onclick="if(event.target===this) closeSwapModal()">
+      <div class="swap-modal">
+        <div class="swap-modal-hdr">
+          <div>
+            <h3 class="swap-modal-title" id="swap-modal-title">تبديل الموديل</h3>
+            <div class="swap-modal-sub" id="swap-modal-sub">اختر الموديل المناسب لك وسيتم تحديث إجمالي الباقة تلقائياً</div>
+          </div>
+          <button class="swap-modal-close" onclick="closeSwapModal()">&times;</button>
+        </div>
+        <div class="swap-modal-body">
+          <div class="swap-grid" id="swap-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ov" id="cov" onclick="closeCart()"></div>
+    <aside class="cpa" id="cpa">
+      <div class="chdr">
+        <h3 data-ar="السلة <span id='cc'></span>" data-en="Cart <span id='cc'></span>">Cart <span id="cc"></span></h3>
+        <button class="cx" onclick="closeCart()"><span class="css-x"></span></button>
+      </div>
+      <div class="clist" id="clist"></div>
+      <div class="cftr" id="cftr" style="display: none">
+        <a
+          class="bp"
+          style="width: 100%; justify-content: center"
+          href="/checkout"
+          data-ar="عرض السلة / الدفع" data-en="View Cart / Checkout">View Cart / Checkout</a>
+      </div>
+    </aside>
+<footer>
+      <div class="fg">
+        <div class="fbr">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <img src="/logos/mega-logo.jpg" alt="Logo" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;" onerror="this.style.display = 'none'" />
+            <div class="logo-wordmark">MEGA <span>FURNITURE</span></div>
+          </div>
+          <p data-ar="أثاث فاخر للبيوت المصرية · تأسست 2020 · خبرة منذ 1998" data-en="Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998">
+            Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998
+          </p>
+        </div>
+        <div class="fc">
+          <h4 data-ar="تسوق" data-en="Shop">Shop</h4>
+          <ul>
+            <li><a href="/shop?cat=living-room" data-ar="غرف معيشة" data-en="Living Rooms">Living Rooms</a></li>
+            <li><a href="/shop?cat=bedroom" data-ar="غرف نوم" data-en="Bedrooms">Bedrooms</a></li>
+            <li><a href="/shop?cat=dining-room" data-ar="سفرة" data-en="Dining Rooms">Dining Rooms</a></li>
+            <li><a href="/shop?cat=office" data-ar="غرف مكتب" data-en="Home Office">Home Office</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="الشركة" data-en="Company">Company</h4>
+          <ul>
+            <li><a href="/about" data-ar="عن ميجا" data-en="About Us">About Us</a></li>
+            <li><a href="/videos" data-ar="فيديوهات" data-en="Videos">Videos</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="دعم" data-en="Support">Support</h4>
+          <ul>
+            <li><a href="/contact" data-ar="الاسترجاع" data-en="Returns">Returns</a></li>
+            <li><a href="/about#warranty" data-ar="الضمان" data-en="Warranty">Warranty</a></li>
+            <li><a href="/contact" data-ar="واتساب" data-en="WhatsApp">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fb">
+        <span data-ar="© 2026 ميجا فرنيتشر." data-en="© 2026 Mega Furniture.">© 2026 Mega Furniture.</span>
+        <span data-ar="صُنع لمصر" data-en="Made for Egypt">Made for Egypt</span>
+      </div>
+    </footer>
+
+    <div class="fbtns">
+    <a onclick="try{fbq('track', 'Contact');}catch(e){}" href="https://wa.me/201559518088" target="_blank" class="fbtn wab" aria-label="WhatsApp" >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+
+    
+</body>
 </html>

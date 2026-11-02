@@ -15,6 +15,10 @@
         "nameEn": "Master Bedroom",
         "productIds": [
           "prod-1"
+        ],
+        "alternatives": [
+          "prod-2",
+          "prod-3"
         ]
       },
       {
@@ -49,7 +53,11 @@
     "active": true,
     "featured": true,
     "order": 1,
-    "createdAt": "2026-07-14T00:00:00.000Z"
+    "createdAt": "2026-07-14T00:00:00.000Z",
+    "productIds": [
+      "prod-2",
+      "prod-3"
+    ]
   },
   {
     "id": "bundle-2",

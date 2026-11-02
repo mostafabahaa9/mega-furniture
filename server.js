@@ -11,6 +11,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const { ready: dbReady } = require("./utils/db");
 
 const app = express();
+app.set("trust proxy", 1);
 const PORT = process.env.PORT || 3001;
 
 // Additional Security Headers via Helmet
@@ -45,7 +46,8 @@ if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 // CORS setup
 const defaultOrigins = [
   "https://mega-furniture-production.up.railway.app",
-  "https://www.megafurniture.com",
+  "https://www.megafurnitures.com",
+  "https://megafurnitures.com",
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:5500",
@@ -65,7 +67,7 @@ app.use(
     origin: (origin, cb) => {
       if (!origin || origin === "null") return cb(null, true);
       if (allowedOrigins.includes("*")) return cb(null, true);
-      if (allowedOrigins.some((o) => origin.startsWith(o)))
+      if (allowedOrigins.some((o) => origin === o))
         return cb(null, true);
       if (process.env.CORS_STRICT_LOCAL !== "1" && localDevOrigin.test(origin))
         return cb(null, true);
@@ -135,30 +137,141 @@ app.use((req, res, next) => {
   next();
 });
 
-// Static assets
+
+  // Clean URL 301 Redirects
+  app.use((req, res, next) => {
+    // Exact match for the old root HTML
+    if (req.path === '/mega-furniture.html') {
+      const q = Object.keys(req.query).length ? '?' + (req.url.split('?')[1] || '') : '';
+      return res.redirect(301, '/' + q);
+    }
+    // Match /pages/something.html
+    if (req.path.startsWith('/pages/') && req.path.endsWith('.html')) {
+      const cleanPath = req.path.replace('/pages/', '/').replace('.html', '');
+      const q = Object.keys(req.query).length ? '?' + (req.url.split('?')[1] || '') : '';
+      return res.redirect(301, cleanPath + q);
+    }
+    next();
+  });
+
+  // Static assets
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/logos", express.static(path.join(__dirname, "logos")));
 app.use("/pages", express.static(path.join(__dirname, "pages")));
 
 // Frontend Pages
+
+  const cleanPages = ['shop', 'offers', 'bundle', 'about', 'contact', 'checkout', 'reviews', 'videos', 'custom-work', 'track', 'terms', 'policies'];
+  cleanPages.forEach(page => {
+    app.get(`/${page}`, (req, res) => {
+      res.sendFile(path.join(__dirname, "pages", `${page}.html`));
+    });
+  });
+
 app.get("/", (req, res) =>
   res.sendFile(path.join(__dirname, "mega-furniture.html")),
 );
-app.get("/mega-furniture.html", (req, res) =>
-  res.sendFile(path.join(__dirname, "mega-furniture.html")),
-);
+
 app.get("/admin", (req, res) =>
   res.sendFile(path.join(__dirname, "admin.html")),
 );
-app.get("/admin.html", (req, res) =>
-  res.sendFile(path.join(__dirname, "admin.html")),
-);
-app.get("/terms", (req, res) =>
-  res.sendFile(path.join(__dirname, "pages/terms.html")),
-);
-app.get("/terms.html", (req, res) =>
-  res.sendFile(path.join(__dirname, "pages/terms.html")),
-);
+
+// ── SEO: robots.txt ──
+app.get("/robots.txt", (req, res) => {
+  res.sendFile(path.join(__dirname, "robots.txt"));
+});
+
+// ── SEO: Dynamic sitemap.xml ──
+app.get("/sitemap.xml", (req, res) => {
+  const { read } = require("./utils/db");
+  const BASE = "https://www.megafurnitures.com";
+  const staticPages = [
+    "/", "/shop", "/offers", "/about",
+    "/contact", "/videos", "/reviews",
+    "/custom-work", "/bundle", "/track", "/terms", "/policies",
+  ];
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+  staticPages.forEach((p) => {
+    xml += `  <url><loc>${BASE}${p}</loc></url>\n`;
+  });
+  const products = read("products") || [];
+  products.forEach((p) => {
+    if (p.id) xml += `  <url><loc>${BASE}/product?id=${p.id}</loc></url>\n`;
+  });
+  const bundles = read("bundles") || [];
+  bundles.forEach((b) => {
+    if (b.id) xml += `  <url><loc>${BASE}/bundle?id=${b.id}</loc></url>\n`;
+  });
+  xml += `</urlset>`;
+  res.set("Content-Type", "application/xml");
+  res.send(xml);
+});
+
+// ── SEO: Server-side rendered product page (OG tags for social crawlers) ──
+app.get("/product", (req, res) => {
+    const id = req.query.id;
+    if (!id) return res.sendFile(path.join(__dirname, "pages/product.html"));
+  const { read } = require("./utils/db");
+  const product = (read("products") || []).find((p) => p.id === id);
+  if (!product) {
+    return res.sendFile(path.join(__dirname, "pages/product.html"));
+  }
+  const name = product.nameEn || product.nameAr || "Product";
+  const desc = (product.descriptionEn || product.descriptionAr || "Premium furniture by Mega Furniture").substring(0, 200);
+  const price = product.salePrice || product.price || 0;
+  const image = product.mainPhoto
+    ? (product.mainPhoto.startsWith("http") ? product.mainPhoto : `https://www.megafurnitures.com/uploads/${product.mainPhoto}`)
+    : "";
+  const url = `https://www.megafurnitures.com/product?id=${id}`;
+  const inStock = product.stock !== 0;
+
+  const ogTags = `
+    <meta property="og:type" content="product" />
+    <meta property="og:title" content="${name} | Mega Furniture" />
+    <meta property="og:description" content="${desc.replace(/"/g, '&quot;')}" />
+    <meta property="og:image" content="${image}" />
+    <meta property="og:url" content="${url}" />
+    <meta property="og:site_name" content="Mega Furniture" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${name} | Mega Furniture" />
+    <meta name="twitter:description" content="${desc.replace(/"/g, '&quot;')}" />
+    <meta name="twitter:image" content="${image}" />`;
+
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: name,
+    image: image ? [image] : [],
+    description: desc,
+    brand: { "@type": "Brand", name: "Mega Furniture" },
+    offers: {
+      "@type": "Offer",
+      url: url,
+      priceCurrency: "EGP",
+      price: price,
+      availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    },
+  });
+
+  let html = fs.readFileSync(path.join(__dirname, "pages/product.html"), "utf8");
+  // Inject OG tags right after <meta charset>
+  html = html.replace(
+    '<meta charset="UTF-8" />',
+    `<meta charset="UTF-8" />${ogTags}`
+  );
+  // Replace generic title
+  html = html.replace(
+    "<title>Mega Furniture | Product Details</title>",
+    `<title>${name} | Mega Furniture</title>`
+  );
+  // Inject JSON-LD before </head>
+  html = html.replace(
+    "</head>",
+    `<script type="application/ld+json">${jsonLd}</script>\n  </head>`
+  );
+  res.send(html);
+});
+
 
 // API Routes
 app.use("/api", require("./routes/discounts"));
@@ -168,6 +281,7 @@ app.use("/api", require("./routes/reports"));
 app.use("/api", require("./routes/products"));
 app.use("/api", require("./routes/categories"));
 app.use("/api", require("./routes/orders"));
+app.use("/api", require("./routes/meta"));
 app.use("/api", require("./routes/visits"));
 app.use("/api", require("./routes/reviews"));
 app.use("/api", require("./routes/customOrders"));

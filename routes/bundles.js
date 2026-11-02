@@ -20,15 +20,28 @@ function cleanProduct(p) {
 function enrich(bundle) {
   const products = read("products") || [];
 
-  const allItems = (bundle.productIds || [])
+  const mainIds = (bundle.mainProductIds && bundle.mainProductIds.length > 0) ? bundle.mainProductIds : (bundle.productIds || []);
+  const items = mainIds
+    .map((id) => products.find((p) => p.id === id))
+    .filter(Boolean)
+    .map(cleanProduct);
+    
+  const allAlts = [];
+  if (bundle.flatAlternatives) {
+      Object.values(bundle.flatAlternatives).forEach(alts => allAlts.push(...alts));
+  }
+  const alternativeItems = allAlts
     .map((id) => products.find((p) => p.id === id))
     .filter(Boolean)
     .map(cleanProduct);
 
   return {
     ...bundle,
-    items: allItems,
-    image: bundle.mainPhoto || allItems[0]?.mainPhoto || null,
+    items: items,
+    alternativeItems: alternativeItems,
+    customItemPrices: bundle.customItemPrices || {},
+    image: bundle.mainPhoto || items[0]?.mainPhoto || null,
+    cardPhoto: bundle.cardPhoto || null,
   };
 }
 
@@ -83,8 +96,10 @@ router.post("/admin/bundles", adminAuth, (req, res) => {
     discountPct,
     originalTotal,
     bundlePrice,
+    customItemPrices,
     active,
     mainPhoto,
+    cardPhoto,
     tier,
     badgeAr,
     badgeEn,
@@ -94,6 +109,8 @@ router.post("/admin/bundles", adminAuth, (req, res) => {
     galleryImages,
     featured,
     order,
+    flatAlternatives,
+    mainProductIds,
   } = req.body;
   if (!nameAr && !nameEn)
     return res.status(400).json({ error: "Bundle name is required" });
@@ -112,8 +129,10 @@ router.post("/admin/bundles", adminAuth, (req, res) => {
     discountPct: Number(discountPct) || 0,
     originalTotal: Number(originalTotal) || 0,
     bundlePrice: Number(bundlePrice) || 0,
+    customItemPrices: customItemPrices || {},
     mainPhoto: mainPhoto || null,
-            active: active !== false,
+    cardPhoto: cardPhoto || null,
+    active: active !== false,
     tier: tier || "starter",
     badgeAr: (badgeAr || "").trim(),
     badgeEn: (badgeEn || "").trim(),
@@ -123,6 +142,8 @@ router.post("/admin/bundles", adminAuth, (req, res) => {
     galleryImages: Array.isArray(galleryImages) ? galleryImages : [],
     featured: featured !== false,
     order: Number(order) || 0,
+    flatAlternatives: flatAlternatives || {},
+    mainProductIds: mainProductIds || [],
     createdAt: new Date().toISOString(),
   };
   bundles.push(bundle);
@@ -143,8 +164,10 @@ router.put("/admin/bundles/:id", adminAuth, (req, res) => {
     discountPct,
     originalTotal,
     bundlePrice,
+    customItemPrices,
     active,
     mainPhoto,
+    cardPhoto,
     tier,
     badgeAr,
     badgeEn,
@@ -154,6 +177,8 @@ router.put("/admin/bundles/:id", adminAuth, (req, res) => {
     galleryImages,
     featured,
     order,
+    flatAlternatives,
+    mainProductIds,
   } = req.body;
   
   if (nameAr !== undefined) bundles[idx].nameAr = nameAr.trim();
@@ -162,7 +187,9 @@ router.put("/admin/bundles/:id", adminAuth, (req, res) => {
   if (discountPct !== undefined) bundles[idx].discountPct = Number(discountPct) || 0;
   if (originalTotal !== undefined) bundles[idx].originalTotal = Number(originalTotal) || 0;
   if (bundlePrice !== undefined) bundles[idx].bundlePrice = Number(bundlePrice) || 0;
+  if (customItemPrices !== undefined) bundles[idx].customItemPrices = customItemPrices || {};
   if (mainPhoto !== undefined) bundles[idx].mainPhoto = mainPhoto;
+  if (cardPhoto !== undefined) bundles[idx].cardPhoto = cardPhoto;
   if (active !== undefined) bundles[idx].active = !!active;
   
   // New fields
@@ -176,6 +203,8 @@ router.put("/admin/bundles/:id", adminAuth, (req, res) => {
   if (galleryImages !== undefined) bundles[idx].galleryImages = Array.isArray(galleryImages) ? galleryImages : [];
   if (featured !== undefined) bundles[idx].featured = !!featured;
   if (order !== undefined) bundles[idx].order = Number(order) || 0;
+  if (flatAlternatives !== undefined) bundles[idx].flatAlternatives = flatAlternatives || {};
+  if (mainProductIds !== undefined) bundles[idx].mainProductIds = mainProductIds || [];
   
   bundles[idx].updatedAt = new Date().toISOString();
 

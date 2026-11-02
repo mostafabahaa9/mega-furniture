@@ -13,6 +13,151 @@
     <title>Mega Furniture | Offers</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
     <style>
+      .wa-menu-container { position: relative; }
+      .wa-menu { position: absolute; bottom: 56px; right: 0; background: var(--nb); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--b); border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); padding: 6px 0; display: none; flex-direction: column; min-width: 240px; z-index: 999; }
+      .wa-menu.show { display: flex; }
+      .wa-menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: var(--t); text-decoration: none; font-size: 13px; font-weight: 500; transition: background 0.2s, color 0.2s; text-align: right; direction: rtl; border-bottom: 1px solid var(--b); }
+      .wa-menu-item:last-child { border-bottom: none; }
+      html[lang="en"] .wa-menu-item { text-align: left; direction: ltr; }
+      .wa-menu-item:hover { background: var(--b); color: var(--o); }
+    
+      /* FOOTER & WA MENU CSS ADDED BY FIX SCRIPT */
+      footer {
+        background: var(--s);
+        border-top: 1px solid var(--b);
+        padding: 60px 48px 32px;
+        transition: background 0.3s;
+      }
+      .fg {
+        max-width: 1200px;
+        margin: 0 auto 48px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+      }
+      .fbr p {
+        color: var(--tm);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-top: 12px;
+        max-width: 280px;
+      }
+      .fc h4 {
+        font-family: "Fraunces", serif;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--t);
+      }
+      .fc ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .fc a {
+        color: var(--tm);
+        font-size: 14px;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .fc a:hover {
+        color: var(--t);
+      }
+      .fb {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--b);
+        padding-top: 24px;
+        font-size: 12px;
+        color: var(--tm);
+      }
+      @media (max-width: 768px) {
+        .fg { grid-template-columns: 1fr; gap: 20px; }
+        footer { padding: 32px 16px 20px; }
+        .fb { flex-direction: column; gap: 4px; text-align: center; }
+      }
+      
+      .fbtns {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 999;
+      }
+      .fbtn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+      .fbtn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      }
+      .wab {
+        background: #25d366 !important;
+        color: #fff !important;
+        text-decoration: none;
+        border: none !important;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4) !important;
+      }
+      .wab:hover {
+        background: #20ba5a !important;
+      }
+      .wa-menu-container {
+        position: relative;
+      }
+      .wa-menu {
+        position: absolute;
+        bottom: 60px;
+        right: 0;
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 12px;
+        padding: 8px;
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+        width: 160px;
+      }
+      .wa-menu.show {
+        display: flex;
+        animation: fadeUp 0.2s ease;
+      }
+      .wa-menu a {
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: var(--t);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.2s;
+      }
+      .wa-menu a:hover {
+        background: var(--bg);
+      }
+
+    </style>
+    <style>
       :root {
         --o: #f5a623;
         --od: #b8722a;
@@ -150,6 +295,30 @@
       .pcard:hover .pcimg img {
         transform: scale(1.06);
       }
+      
+      .bundle-bar-orange {
+        position: absolute;
+        left: 0;
+        right: 0;
+        background: linear-gradient(90deg, #d97706, #b45309);
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: 700;
+        text-align: center;
+        padding: 4px 8px;
+        z-index: 4;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+      }
+      .bundle-bar-orange:hover {
+        background: linear-gradient(90deg, #e8961e, #c07a18);
+      }
+
       .discount-bar-red {
         position: absolute;
         top: 0;
@@ -671,7 +840,342 @@
       }
 
       
-</style>
+
+      .pswatch { width:24px; height:24px; border:1px solid var(--b); border-radius:4px; cursor:pointer; padding:2px; background:var(--s); flex-shrink:0; transition: border-color 0.2s; }
+      .pswatch img, .pswatch div { width:100%; height:100%; border-radius:2px; object-fit:cover; }
+
+      /* CART */
+      .ov {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .ov.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #cov {
+        z-index: 500;
+      }
+      #mov {
+        z-index: 200;
+      }
+      .cpa {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(440px, 100vw);
+        background: var(--s);
+        border-left: 1px solid var(--b);
+        z-index: 501;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+      }
+      .cpa.open {
+        transform: translateX(0);
+      }
+      .chdr {
+        padding: 22px;
+        border-bottom: 1px solid var(--b);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .chdr h3 {
+        font-family: var(--font-head);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--t);
+      }
+      .chdr h3 span {
+        color: var(--tm);
+        font-weight: 400;
+        font-size: 13px;
+        font-family: var(--font-body);
+      }
+      .cx {
+        background: var(--s2);
+        border: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--t);
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .cx:hover {
+        background: var(--s3);
+      }
+      .clist {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .cemp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        gap: 12px;
+        color: var(--tm);
+        text-align: center;
+        padding: 40px;
+      }
+      .cemp .big {
+        font-size: 60px;
+        opacity: 0.2;
+      }
+      .cir {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--s2);
+        border-radius: 14px;
+        padding: 14px;
+        border: 1px solid var(--b);
+        animation: sr 0.3s ease;
+      }
+      @keyframes sr {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .cii {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: var(--s3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .cii img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cin {
+        flex: 1;
+        min-width: 0;
+      }
+      .cin .nm {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--t);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 3px;
+      }
+      .cin .pr {
+        font-size: 12px;
+        color: var(--o);
+        margin-bottom: 8px;
+      }
+      .ciq {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .ciq button {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--s);
+        border: 1px solid var(--b);
+        color: var(--t);
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .ciq button:hover {
+        background: var(--o);
+        color: #0e0d0b;
+        border-color: var(--o);
+      }
+      .ciq span {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--t);
+        min-width: 18px;
+        text-align: center;
+      }
+      .crm {
+        background: none;
+        border: none;
+        color: var(--tm);
+        cursor: pointer;
+        font-size: 17px;
+        padding: 4px;
+        transition: color 0.2s;
+        flex-shrink: 0;
+      }
+      .crm:hover {
+        color: #ff4757;
+      }
+      .cir.bundle-item {
+        border-left: 2px solid var(--o);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .cir.bundle-item .cir-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .bundle-tag {
+        display: inline-block;
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        background: var(--o);
+        color: #0a0a0a;
+        border-radius: 4px;
+        padding: 2px 6px;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .bundle-item-count {
+        font-size: 11px;
+        color: var(--tm);
+        margin-bottom: 6px;
+      }
+      .bundle-items-list {
+        font-size: 10px;
+        color: var(--tm);
+        line-height: 1.7;
+        padding-left: 4px;
+      }
+      .cftr {
+        padding: 18px;
+        border-top: 1px solid var(--b);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .ctr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      .ctr .lb {
+        color: var(--tm);
+        font-size: 14px;
+      }
+      .ctr .am {
+        font-family: var(--font-head);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--o);
+      }
+      .bf {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .bp {
+        background: var(--t);
+        color: var(--bg);
+        border: none;
+        padding: 14px 36px;
+        border-radius: 999px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bp:hover {
+        background: var(--o);
+        transform: translateY(-2px);
+      }
+      .bg2 {
+        background: transparent;
+        color: var(--t);
+        border: 1px solid var(--b);
+        padding: 14px 36px;
+        border-radius: 999px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          border-color 0.3s,
+          color 0.3s,
+          transform 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+      .bg2:hover {
+        border-color: var(--o);
+        color: var(--o);
+        transform: translateY(-2px);
+      }
+      /* BUTTONS */
+      </style>
+  
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1236448993498775');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1236448993498775&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    <script src="/pages/metaTracking.js"></script>
   </head>
   <body>
     
@@ -691,12 +1195,12 @@
           <div class="pb-track" id="pbTrack">
             <!-- slides injected by JS -->
           </div>
-          <button class="pb-arrow pb-prev" id="pbPrev" onclick="promoPrev()">
+          <button class="pb-arrow pb-prev" id="pbPrev" onclick="offersPrev()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <polyline points="15,18 9,12 15,6"/>
             </svg>
           </button>
-          <button class="pb-arrow pb-next" id="pbNext" onclick="promoNext()">
+          <button class="pb-arrow pb-next" id="pbNext" onclick="offersNext()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <polyline points="9,18 15,12 9,6"/>
             </svg>
@@ -761,17 +1265,29 @@
       <section class="empty-state" id="sec-empty">
         <h3 data-ar="لا توجد عروض حالياً" data-en="No Offers Available">No Offers Available</h3>
         <p data-ar="ترقبوا قريباً عروضنا وخصوماتنا الحصرية!" data-en="Stay tuned for our upcoming exclusive discounts!">Stay tuned for our upcoming exclusive discounts!</p>
-        <a href="shop.html" class="btn-insta">
+        <a href="/shop" class="btn-insta">
           <span data-ar="تصفح المتجر" data-en="Browse Shop">Browse Shop</span>
         </a>
       </section>
     </main>
 
     <!-- Essential Scripts -->
-    <script src="header.js"></script>
+    <script src="/pages/header.js"></script>
     <script>
       let productsCache = [];
       let bundlesCache = [];
+
+      function getBundleForProduct(productId) {
+        if (!bundlesCache || !bundlesCache.length) return null;
+        return bundlesCache.find((b) => {
+          if (b.active === false) return false;
+          if (b.productIds && b.productIds.includes(productId)) return true;
+          if (b.rooms && b.rooms.some((r) => (r.productIds && r.productIds.includes(productId)) || (r.alternatives && r.alternatives.includes(productId)))) return true;
+          if (b.items && b.items.some((i) => i.id === productId)) return true;
+          return false;
+        }) || null;
+      }
+
       const lang = localStorage.getItem("megaLang") || "en";
       
       // Setup language switching
@@ -798,10 +1314,10 @@
       function iu(p) {
         if (!p) return "";
         if (p.startsWith("http") || p.startsWith("data:")) return p;
-        return "../uploads/" + p;
+        return "/uploads/" + p;
       }
 
-      function _ph(img) { img.src = '../logos/mega-logo.jpg'; }
+      function _ph(img) { img.src = '/logos/mega-logo.jpg'; }
 
       
       window.changeCardImg = function(imgId, src, elem, colorName, prodId) {
@@ -813,7 +1329,7 @@
           elem.style.borderColor = 'var(--t)';
           const card = elem.closest('.pcard');
           if (card) {
-            card.setAttribute('onclick', `location.href='product.html?id=${prodId}&color=${encodeURIComponent(colorName)}'`);
+            card.setAttribute('onclick', `location.href='/product?id=${prodId}&color=${encodeURIComponent(colorName)}'`);
           }
         }
       };
@@ -827,15 +1343,36 @@
                <span style="font-size:13px;color:var(--o);font-weight:700">EGP ${Number(p.salePrice).toLocaleString()}</span>
              </div>`
           : `<div class="pcprice">${p.price > 0 ? 'EGP ' + Number(p.price).toLocaleString() : ''}</div>`;
+        const discLabel = hasDisc ? ((lang === 'ar' ? p.discountLabel_ar : p.discountLabel_en) || '') : '';
+        const catLabel = (p.categories || []).join(' · ');
+        const wOn = (function(){ try { return JSON.parse(localStorage.getItem('megaWish')||'[]').includes(p.id); } catch(e){ return false; } })();
+
+        const bundleObj = getBundleForProduct(p.id);
+        const hasBundle = !!bundleObj;
+        const bundleName = bundleObj ? (lang === "ar" ? bundleObj.nameAr || bundleObj.nameEn : bundleObj.nameEn || bundleObj.nameAr) : "";
+        const bundleBarText = lang === "ar" ? "من ضمن باقة: " + bundleName : "IN BUNDLE: " + bundleName;
+
         const discLabelText = hasDisc
           ? (p.discountPercent != null
               ? (lang === 'ar' ? 'خصم ' + p.discountPercent + '%' : p.discountPercent + '% OFF')
               : (lang === 'ar' ? 'خصم EGP ' + Number((p.originalPrice||p.price) - p.salePrice).toLocaleString() : 'SAVE EGP ' + Number((p.originalPrice||p.price) - p.salePrice).toLocaleString()))
           : '';
-        const discLabel = hasDisc ? ((lang === 'ar' ? p.discountLabel_ar : p.discountLabel_en) || '') : '';
-        const catLabel = (p.categories || []).join(' · ');
-        const wOn = (function(){ try { return JSON.parse(localStorage.getItem('megaWish')||'[]').includes(p.id); } catch(e){ return false; } })();
-        
+                let topOffset = 10;
+        let discBarHtml = "";
+        let bundleBarHtml = "";
+
+        if (hasDisc && hasBundle) {
+          discBarHtml = '<div class="discount-bar-red" style="top:0;">' + discLabelText + '</div>';
+          bundleBarHtml = '<div class="bundle-bar-orange" style="top:22px;" onclick="event.stopPropagation();location.href=\'/bundle?id=' + bundleObj.id + '\'" title="' + bundleName + '">' + bundleBarText + '</div>';
+          topOffset = 48;
+        } else if (hasDisc) {
+          discBarHtml = '<div class="discount-bar-red" style="top:0;">' + discLabelText + '</div>';
+          topOffset = 30;
+        } else if (hasBundle) {
+          bundleBarHtml = '<div class="bundle-bar-orange" style="top:0;" onclick="event.stopPropagation();location.href=\'/bundle?id=' + bundleObj.id + '\'" title="' + bundleName + '">' + bundleBarText + '</div>';
+          topOffset = 28;
+        }
+
         let mappedColors = p.colors || [];
         if (!mappedColors.length && p.variants && p.variants.length) {
           const colorMap = new Map();
@@ -857,25 +1394,34 @@
             let bgStyle = `background-color: ${c.hex || '#ccc'}`;
             if (c.hex2) bgStyle = `background: linear-gradient(135deg, ${c.hex} 50%, ${c.hex2} 50%)`;
             const inner = cImg ? `<img src="${cImg}">` : `<div style="${bgStyle}"></div>`;
-            const srcToSwap = cImg || imgSrc;
+            let sofaImg = null;
+            if (p.colorPhotos) {
+               const cNameLocal = c.nameEn || c.name || "";
+               const key = Object.keys(p.colorPhotos).find(k => k.toLowerCase().includes(cNameLocal.toLowerCase()) || (c.name && k.toLowerCase().includes(c.name.toLowerCase())));
+               if (key && p.colorPhotos[key].length > 0) {
+                   const rawImg = p.colorPhotos[key][0];
+                   sofaImg = rawImg.startsWith('http') ? rawImg : window.location.origin + '/uploads/' + rawImg;
+               }
+            }
+            const srcToSwap = sofaImg || cImg || imgSrc;
             const bcolor = idx === 0 ? 'var(--t)' : 'var(--b)';
             const cName = c.nameEn || c.name;
-            return `<div class="pswatch" style="border-color:${bcolor}" onclick="event.stopPropagation(); changeCardImg('img-offers-${p.id}', '${srcToSwap}', this, '${cName.replace(/'/g, "\'")}', '${p.id}')" title="${cName}">${inner}</div>`;
+            return `<div class="pswatch" style="border-color:${bcolor}" onclick="event.stopPropagation(); changeCardImg('img-offers-${p.id}', '${srcToSwap}', this, '${cName.replace(/'/g, "\\'")}', '${p.id}')" title="${cName}">${inner}</div>`;
           }).join("");
           const extraHtml = extra > 0 ? `<div style="font-size:11px;color:var(--tm);align-self:center;margin-left:4px">+${extra}</div>` : "";
           swatchesHtml = `<div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;">${swatchItems}${extraHtml}</div>`;
         }
 
-        return `<div class="pcard" onclick="location.href='product.html?id=${p.id}'">
+        return `<div class="pcard" onclick="location.href='/product?id=${p.id}'">
           <div class="pcimg">
-            <div style="position:absolute;top:${hasDisc?'32px':'10px'};right:10px;z-index:4;" onclick="event.stopPropagation()">
+            <div style="position:absolute;top:${topOffset}px;right:10px;z-index:4;" onclick="event.stopPropagation()">
               <button type="button" class="wish-circle" title="Wishlist" onclick="toggleWish('${p.id}',event)">
                 ${wOn ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'}
               </button>
             </div>
-            ${hasDisc ? '<div class="discount-bar-red">' + discLabelText + '</div>' : ''}
-            ${imgSrc ? '<img id="img-offers-'+p.id+'" src="' + imgSrc + '" alt="' + nm + '" loading="lazy" onerror="_ph(this)">' : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--s2);"><img src="../logos/mega-logo.jpg" style="width:50%;opacity:0.2;"></div>'}
-            <div style="position:absolute;top:${hasDisc?'32px':'10px'};left:10px;z-index:3;">
+            ${discBarHtml}${bundleBarHtml}
+            ${imgSrc ? '<img id="img-offers-'+p.id+'" src="' + imgSrc + '" alt="' + nm + '" loading="lazy" onerror="_ph(this)">' : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--s2);"><img src="/logos/mega-logo.jpg" style="width:50%;opacity:0.2;"></div>'}
+            <div style="position:absolute;top:${topOffset}px;left:10px;z-index:3;">
               ${catLabel ? '<span class="pctag">' + catLabel + '</span>' : ''}
             </div>
           </div>
@@ -883,13 +1429,14 @@
             <div class="pcname">${nm}</div>
             ${priceHtml}
             ${discLabel ? '<div style="font-size:11px;color:var(--o);margin-top:3px;font-weight:600">' + discLabel + '</div>' : ''}
+            ${swatchesHtml}
           </div>
         </div>`;
       }
 
-            function renderBundleCard(b, lang) {
+      function renderBundleCard(b, lang) {
         const name = lang === "ar" ? b.nameAr || b.nameEn : b.nameEn || b.nameAr;
-        const imgUrl = b.image ? (b.image.startsWith("http") ? b.image : "/uploads/" + b.image) : "./logos/mega-logo.jpg";
+        const imgUrl = (b.cardPhoto || b.image) ? ((b.cardPhoto || b.image).startsWith("http") ? (b.cardPhoto || b.image) : "/uploads/" + (b.cardPhoto || b.image)) : "/logos/mega-logo.jpg";
         const imgHtml = `<img src="${imgUrl}" alt="${name}" loading="lazy" onerror="this.style.opacity=0.1" />`;
         
         const badgeTxt = lang === "ar" ? b.badgeAr : b.badgeEn;
@@ -932,7 +1479,7 @@
         const priceLabelNew = lang === "ar" ? "السعر بعد الخصم" : "Price after discount";
         const btnLbl = lang === "ar" ? "شوف تفاصيل الباقة >" : "View Bundle Details >";
         
-        return `<div class="bundle-card ${isHighlight ? 'highlight' : ''}" onclick="location.href='bundle.html?id=${b.id}'">
+        return `<div class="bundle-card ${isHighlight ? 'highlight' : ''}" onclick="location.href='/bundle?id=${b.id}'">
           <div class="bc-img-wrapper">${imgHtml}${badgeHtml}</div>
           <div class="bc-body">
             <div class="bc-name">${name}</div>
@@ -1039,7 +1586,7 @@
 
         track.innerHTML = banners.map((b, i) => {
           const title = lang === 'ar' ? b.titleAr : b.titleEn;
-          return `<div class="pb-slide" onclick="if('${b.link}') location.href='${b.link}'">
+          return `<div class="pb-slide" ${b.link && b.link !== 'undefined' ? `onclick="location.href='${b.link}'"` : ''}>
             <img src="${b.image.startsWith('http') ? b.image : '/uploads/' + b.image}" alt="banner ${i+1}" />
             ${title ? '<div class="pb-title">' + title + '</div>' : ''}
           </div>`;
@@ -1119,7 +1666,7 @@
             const lt = lang === "ar" ? (ann.linkText_ar || ann.linkText_en) : (ann.linkText_en || ann.linkText_ar);
             if (lt) {
               let finalLink = ann.link;
-              if (finalLink.includes("shop.html")) finalLink = "offers.html";
+              if ((finalLink.includes("shop.html") || finalLink.includes("/shop"))) finalLink = "/offers";
               html += ` <a href="${finalLink}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
             }
           }
@@ -1138,6 +1685,231 @@
         applyLang(lang);
         loadOffers();
       });
+
+      /* CART */
+      let cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
+      function updBadge() {
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        const b = document.getElementById("cbadge");
+        if (!b) return;
+        b.textContent = n || "";
+        b.style.display = n > 0 ? "flex" : "none";
+      }
+      
+      function saveCart() {
+        localStorage.setItem("megaCart", JSON.stringify(cart));
+      }
+      function rmCartIdx(idx) {
+        cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+      function updQtyIdx(idx, delta) {
+        if (!cart[idx]) return;
+        cart[idx].qty += delta;
+        if (cart[idx].qty < 1) cart.splice(idx, 1);
+        saveCart();
+        updBadge();
+        renderCart();
+      }
+            
+      function t(k) {
+        const lang = localStorage.getItem("megaLang") || "en";
+        const dict = {
+          ar: {
+            "cart-empty": "السلة فارغة",
+            "cart-empty-sub": "لم تقم بإضافة أي منتجات بعد.",
+            "bundle-tag": "باقة",
+            "bundle-includes": "يحتوي على {n} منتجات",
+            "cart-items-label": "منتجات في السلة",
+            "call-price": "اتصل للسعر",
+            "cart-view": "عرض السلة / الدفع"
+          },
+          en: {
+            "cart-empty": "Your cart is empty",
+            "cart-empty-sub": "You haven't added any items yet.",
+            "bundle-tag": "BUNDLE",
+            "bundle-includes": "{n} products included",
+            "cart-items-label": "items",
+            "call-price": "Call for Price",
+            "cart-view": "View Cart / Checkout"
+          }
+        };
+        return (dict[lang] && dict[lang][k]) || k;
+      }
+
+      function renderCart() {
+        const el = document.getElementById("clist"),
+          cc = document.getElementById("cc") || document.getElementById("ccount"),
+          ft = document.getElementById("cftr"),
+          tot = document.getElementById("ctot");
+        const n = cart.reduce((s, c) => s + c.qty, 0);
+        if (cc) cc.textContent = "(" + n + ")";
+        if (!cart.length) {
+          el.innerHTML = `<div class="cemp"><div class="cemp-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.18"><path d="M3 3h2l2.7 13.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 8H6"/><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg></div><h4>${t("cart-empty")}</h4><p>${t("cart-empty-sub")}</p></div>`;
+          if (ft) {
+            ft.style.display = "none";
+            ft.classList.remove("show");
+          }
+          if (typeof clearPromo === "function") clearPromo();
+          return;
+        }
+        if (ft) {
+          ft.style.display = "flex";
+          ft.classList.add("show");
+        }
+        const lang = localStorage.getItem("megaLang") || "en";
+        el.innerHTML = cart
+          .map((item) => {
+            const nm =
+              lang === "ar"
+                ? item.nameAr || item.nameEn
+                : item.nameEn || item.nameAr;
+            const imgSrc = iu(item.mainPhoto);
+            const unitPrice = item.price || 0;
+            const lineTotal = unitPrice * item.qty;
+            const idx = cart.indexOf(item);
+            if (item.isBundle) {
+              const bundleTag = t("bundle-tag");
+              const countLbl = t("bundle-includes").replace("{n}", item.itemCount || 0);
+              const itemsList = (item.items || [])
+                .map(
+                  (p) =>
+                    "· " +
+                    (lang === "ar"
+                      ? p.nameAr || p.nameEn
+                      : p.nameEn || p.nameAr),
+                )
+                .join("<br>");
+              const priceStr =
+                unitPrice > 0
+                  ? item.qty > 1
+                    ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                    : "EGP " + Number(unitPrice).toLocaleString()
+                  : t("call-price");
+              return `<div class="cir bundle-item">
+      <div class="cir-top">
+        <div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.style.display='none'">` : ""}</div>
+        <div class="cin" style="flex:1;min-width:0">
+          <div><span class="bundle-tag">${bundleTag}</span></div>
+          <div class="nm">${nm}</div>
+          <div class="pr">${priceStr}</div>
+          <div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div>
+        </div>
+        <button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button>
+      </div>
+      <div class="bundle-item-count">${countLbl}</div>
+      ${itemsList ? `<div class="bundle-items-list">${itemsList}</div>` : ""}
+    </div>`;
+            }
+            const priceStr =
+              unitPrice > 0
+                ? item.qty > 1
+                  ? `<span style="font-size:11px;color:var(--tm)">EGP ${Number(unitPrice).toLocaleString()} × ${item.qty}</span><br>EGP ${Number(lineTotal).toLocaleString()}`
+                  : "EGP " + Number(unitPrice).toLocaleString()
+                : t("call-price");
+            const meta = [
+              item.color || "",
+              item.size
+                ? (lang === "ar" ? item.size.nameAr : item.size.nameEn) || ""
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" · ");
+            return `<div class="cir">
+      <div class="cii">${imgSrc ? `<img src="${imgSrc}" loading="lazy" onerror="this.parentElement.innerHTML='️'">` : '<span style="font-size:22px;opacity:.4">️</span>'}</div>
+      <div class="cin">
+        <div class="nm">${nm}${meta ? `<span style="font-size:10px;color:var(--tm);margin-right:4px"> · ${meta}</span>` : ""}</div>
+        <div class="pr">${priceStr}</div>
+        <div class="ciq"><button onclick="updQtyIdx(${idx},-1)">−</button><span>${item.qty}</span><button onclick="updQtyIdx(${idx},1)">+</button></div>
+      </div>
+      <button class="crm" onclick="rmCartIdx(${idx})"><span class="css-x"></span></button>
+    </div>`;
+          })
+          .join("");
+        if (tot)
+          tot.textContent = n + " " + t("cart-items-label");
+        if (typeof updCartFooter === "function") updCartFooter();
+      }
+      function openCart() {
+        renderCart();
+        document.getElementById("cpa").classList.add("open");
+        document.getElementById("cov").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCart() {
+        document.getElementById("cpa").classList.remove("open");
+        document.getElementById("cov").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      
     </script>
+    <div class="ov" id="cov" onclick="closeCart()"></div>
+    <aside class="cpa" id="cpa">
+      <div class="chdr">
+        <h3 data-ar="السلة <span id='cc'></span>" data-en="Cart <span id='cc'></span>">Cart <span id="cc"></span></h3>
+        <button class="cx" onclick="closeCart()"><span class="css-x"></span></button>
+      </div>
+      <div class="clist" id="clist"></div>
+      <div class="cftr" id="cftr" style="display: none">
+        <a
+          class="bp"
+          style="width: 100%; justify-content: center"
+          href="/checkout"
+          data-ar="عرض السلة / الدفع" data-en="View Cart / Checkout">View Cart / Checkout</a>
+      </div>
+    </aside>
+<footer>
+      <div class="fg">
+        <div class="fbr">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <img src="/logos/mega-logo.jpg" alt="Logo" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;" onerror="this.style.display = 'none'" />
+            <div class="logo-wordmark">MEGA <span>FURNITURE</span></div>
+          </div>
+          <p data-ar="أثاث فاخر للبيوت المصرية · تأسست 2020 · خبرة منذ 1998" data-en="Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998">
+            Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998
+          </p>
+        </div>
+        <div class="fc">
+          <h4 data-ar="تسوق" data-en="Shop">Shop</h4>
+          <ul>
+            <li><a href="/shop?cat=living-room" data-ar="غرف معيشة" data-en="Living Rooms">Living Rooms</a></li>
+            <li><a href="/shop?cat=bedroom" data-ar="غرف نوم" data-en="Bedrooms">Bedrooms</a></li>
+            <li><a href="/shop?cat=dining-room" data-ar="سفرة" data-en="Dining Rooms">Dining Rooms</a></li>
+            <li><a href="/shop?cat=office" data-ar="غرف مكتب" data-en="Home Office">Home Office</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="الشركة" data-en="Company">Company</h4>
+          <ul>
+            <li><a href="/about" data-ar="عن ميجا" data-en="About Us">About Us</a></li>
+            <li><a href="/videos" data-ar="فيديوهات" data-en="Videos">Videos</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="دعم" data-en="Support">Support</h4>
+          <ul>
+            <li><a href="/contact" data-ar="الاسترجاع" data-en="Returns">Returns</a></li>
+            <li><a href="/about#warranty" data-ar="الضمان" data-en="Warranty">Warranty</a></li>
+            <li><a href="/contact" data-ar="واتساب" data-en="WhatsApp">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fb">
+        <span data-ar="© 2026 ميجا فرنيتشر." data-en="© 2026 Mega Furniture.">© 2026 Mega Furniture.</span>
+        <span data-ar="صُنع لمصر" data-en="Made for Egypt">Made for Egypt</span>
+      </div>
+    </footer>
+
+    <div class="fbtns">
+    <a onclick="try{fbq('track', 'Contact');}catch(e){}" href="https://wa.me/201559518088" target="_blank" class="fbtn wab" aria-label="WhatsApp" >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+
+    
   </body>
 </html>

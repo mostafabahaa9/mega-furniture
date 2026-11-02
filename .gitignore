@@ -5,3 +5,9 @@ uploads/*
 *.log
 .DS_Store
 data/admin.json
+node_modules/
+.env
+.railway/
+
+data/admin.json
+data/orders.json

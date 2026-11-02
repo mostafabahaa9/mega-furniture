@@ -8,7 +8,7 @@ function mapBanner(b) {
   return {
     id: b.id,
     image: b.image || b.photoUrl || "",
-    link: b.link || (b.linkType === "product" ? `pages/product.html?id=${b.linkId}` : b.linkType === "bundle" ? `pages/shop.html#bundles` : ""),
+    link: b.link || (b.linkType === "product" ? `/product?id=${b.linkId}` : b.linkType === "bundle" ? `/shop#bundles` : ""),
     order: b.order !== undefined ? Number(b.order) : 0,
     active: b.active !== false,
     createdAt: b.createdAt

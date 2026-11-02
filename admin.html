@@ -2317,7 +2317,7 @@
                   <tr>
                     <th>AR</th>
                     <th>EN</th>
-                    <th>Fee (EGP)</th>
+                    
                     <th>ETA</th>
                     <th>Actions</th>
                   </tr>
@@ -3240,7 +3240,7 @@
                   <input
                     type="text"
                     id="ann-link"
-                    placeholder="/pages/shop.html?cat=bedroom"
+                    placeholder="//shop?cat=bedroom"
                   />
                 </div>
                 <div class="field">
@@ -3436,9 +3436,6 @@
             </div>
             <div class="form-grid cols2">
               <div class="field">
-                
-            <div class="form-grid cols2">
-              <div class="field">
                 <label>Tier</label>
                 <select id="bm-tier">
                   <option value="">None</option>
@@ -3478,11 +3475,13 @@
                 <input type="number" id="bm-room-count" value="0" />
               </div>
             </div>
-            
-            
-            
 
-            
+            <div class="field" style="grid-column: span 2; background: var(--bg); padding: 16px; border-radius: 8px; border: 1px dashed var(--b);">
+              <label style="font-size: 16px; color: var(--o); margin-bottom: 12px;"><span style="display:none;">Bundle Rooms Setup</span></label>
+              <div id="bundle-rooms-container" style="display:none;"></div>
+              <button type="button" style="display:none;"></button>
+            </div>
+
             <div class="form-grid cols2">
               <div class="field" style="display:flex;align-items:center;gap:10px;">
                 <input type="checkbox" id="bm-featured" style="width:16px;height:16px;"/>
@@ -3491,6 +3490,8 @@
               <div class="field"></div>
             </div>
 
+            <div class="form-grid cols2">
+              <div class="field">
                 <label>Discount %</label>
                 <input
                   type="number"
@@ -3526,7 +3527,7 @@
 
             <!-- Bundle Photo -->
             <div class="field">
-              <label>Bundle Photo (Optional)</label>
+              <label>Detail Page Photo (inside page)</label>
               <input
                 type="file"
                 id="bm-photo"
@@ -3555,8 +3556,41 @@
                   "
                 />
               </div>
+
+            <!-- Bundle Card Photo (for listing pages) -->
+            <div class="field">
+              <label>Card Photo (for listing/offers page)</label>
+              <input
+                type="file"
+                id="bm-card-photo"
+                accept="image/*"
+                onchange="handleBundleCardPhotoSelect()"
+              />
+              <div
+                id="bm-card-photo-preview"
+                style="
+                  margin-top: 10px;
+                  display: none;
+                  border-radius: 8px;
+                  overflow: hidden;
+                  max-width: 150px;
+                  aspect-ratio: 4/3;
+                  background: var(--s2);
+                "
+              >
+                <img
+                  id="bm-card-photo-img"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                  "
+                />
+              </div>
             </div>
           </div>
+        </div>
 
           <!-- Two-panel picker -->
           <div class="bp-wrap">
@@ -4368,9 +4402,7 @@
               <label>Name (English)</label
               ><input type="text" id="cm-en" placeholder="Category name" />
             </div>
-            <div class="field">
-              <label>Slug (auto-generated)</label
-              ><input
+            <div class="field"><label>Order (lower is first)</label><input type="number" id="cm-order" placeholder="0" value="0" /></div><div class="field"><label>Slug (auto-generated)</label><input
                 type="text"
                 id="cm-slug"
                 placeholder="e.g. living-rooms"
@@ -4969,10 +5001,7 @@
               <label>Name (EN)</label><input type="text" id="sh-en" />
             </div>
             <div class="form-grid cols2">
-              <div class="field">
-                <label>Fee EGP</label
-                ><input type="number" id="sh-fee" min="0" />
-              </div>
+              
               <div class="field">
                 <label>ETA text</label
                 ><input type="text" id="sh-eta" placeholder="2–4 days" />
@@ -5246,7 +5275,7 @@
               <input
                 type="text"
                 id="pbm-link"
-                placeholder="pages/shop.html?cat=living-room"
+                placeholder="/shop?cat=living-room"
               />
             </div>
             <div class="field">
@@ -5344,7 +5373,7 @@
               <input
                 type="text"
                 id="obm-link"
-                placeholder="pages/shop.html?cat=living-room"
+                placeholder="/shop?cat=living-room"
               />
             </div>
             <div class="field">
@@ -5425,7 +5454,7 @@
               <input
                 type="text"
                 id="bnm-link"
-                placeholder="pages/shop.html?cat=living-room"
+                placeholder="/shop?cat=living-room"
               />
             </div>
             <div class="field">
@@ -5738,7 +5767,7 @@
           sub: "Auto-apply discounts by category — no code needed",
           addBtn: false,
         },
-        shipping: { title: "Shipping", sub: "Zones and fees", addBtn: false },
+        shipping: { title: "Shipping", sub: "Zones and ETA", addBtn: false },
         customers: {
           title: "Customers",
           sub: "From order history",
@@ -8677,7 +8706,7 @@
          "cm-spec-fabric-ar", "cm-spec-fabric-en",
          "cm-spec-filling-ar", "cm-spec-filling-en",
          "cm-spec-dims-note-ar", "cm-spec-dims-note-en",
-         "cm-spec-care-ar", "cm-spec-care-en",
+         "cm-spec-care-ar", "cm-spec-care-en", "cm-order",
          "cm-fb-title-ar", "cm-fb-title-en", "cm-fb-desc-ar", "cm-fb-desc-en"
         ].forEach((f) => {
           const el = document.getElementById(f);
@@ -8724,6 +8753,7 @@
         document.getElementById("cm-spec-care-en").value = c.defaultProductCareEn || "";
         
         document.getElementById("cm-show-dream-room").checked = c.showInDreamRoom !== false;
+        document.getElementById("cm-order").value = c.order || 0;
 
         const fb = c.defaultFeatureBanner || {};
         document.getElementById("cm-fb-title-ar").value = fb.titleAr || "";
@@ -8846,6 +8876,7 @@
         const defaultProductCareEn = document.getElementById("cm-spec-care-en").value.trim();
         const defaultFeatureBanner = getCatFeatBannerData();
         const showInDreamRoom = document.getElementById("cm-show-dream-room").checked;
+        const order = Number(document.getElementById("cm-order").value) || 0;
 
         if (!nameEn || !slug)
           return toast("English name and slug are required", false);
@@ -8859,7 +8890,7 @@
             defaultSpecFillingAr, defaultSpecFillingEn,
             defaultSpecDimensionsNoteAr, defaultSpecDimensionsNoteEn,
             defaultProductCareAr, defaultProductCareEn,
-            defaultFeatureBanner, showInDreamRoom
+            defaultFeatureBanner, showInDreamRoom, order
           };
           if (editingCatId) {
             await api(`/admin/categories/${editingCatId}`, {
@@ -9237,11 +9268,7 @@
               const sizeLine = sz
                 ? `<span>Size: <strong style="color:var(--t)">${sz.nameEn || sz.nameAr || ""}</strong>${dims ? ` — ${dims}` : ""}</span>`
                 : "";
-              const meta = [colorLine, sizeLine].filter(Boolean);
-              return `<div style="padding:12px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--b)">
-              ${thumb}
-              <div style="flex:1;min-width:0">
-                <div style="font-size:14px;font-weight:700">${i.nameEn || i.nameAr || "—"}</div>
+              const meta = [colorLine, sizeLine].filter(Boolean); const bundleLine = i.isBundle && (i.bundleItemsEn || []).length ? `<div style="font-size:12px;color:var(--tm);margin-top:6px;padding:6px 8px;background:rgba(255,255,255,0.05);border-radius:6px;border:1px dashed var(--b);"><strong>Bundle Items:</strong><br>${i.bundleItemsEn.map(n => "· " + n).join("<br>")}</div>` : ""; return `<div style="padding:12px 14px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid var(--b)">${thumb}<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">${i.nameEn || i.nameAr || "—"} ${i.isBundle ? `<span style="font-size:10px;padding:2px 6px;margin-left:6px;background:var(--o);color:#fff;border-radius:4px;vertical-align:middle;text-transform:uppercase">Bundle</span>` : ""}</div>${bundleLine}
                 ${meta.length ? `<div style="font-size:13px;color:var(--tm);margin-top:5px;display:flex;flex-direction:column;gap:3px">${meta.map((m) => `<div>${m}</div>`).join("")}</div>` : ""}
                 <div style="font-size:13px;font-weight:700;color:var(--t);margin-top:5px">Qty: <span style="color:var(--o)">${i.quantity || 1}</span></div>
               </div>
@@ -9817,7 +9844,7 @@
         b.innerHTML = allShip
           .map(
             (z) => `<tr>
-    <td>${z.governorateAr || "—"}</td><td>${z.governorateEn || "—"}</td><td>${z.fee}</td><td>${z.etaDays || "—"}</td>
+    <td>${z.governorateAr || "—"}</td><td>${z.governorateEn || "—"}</td><td>${z.etaDays || "—"}</td>
     <td><button class="act-btn" onclick="editShip('${z.id}')">Edit</button> <button class="act-btn danger" onclick="deleteShip('${z.id}')">Del</button></td>
   </tr>`,
           )
@@ -9826,7 +9853,7 @@
       function openShipModal() {
         editingShipId = null;
         document.getElementById("ship-modal-title").textContent = "Add zone";
-        ["sh-ar", "sh-en", "sh-fee", "sh-eta"].forEach(
+        ["sh-ar", "sh-en", "sh-eta"].forEach(
           (id) => (document.getElementById(id).value = ""),
         );
         document.getElementById("ship-modal").classList.add("open");
@@ -9841,14 +9868,14 @@
         document.getElementById("ship-modal-title").textContent = "Edit zone";
         document.getElementById("sh-ar").value = z.governorateAr || "";
         document.getElementById("sh-en").value = z.governorateEn || "";
-        document.getElementById("sh-fee").value = z.fee || 0;
+        
         document.getElementById("sh-eta").value = z.etaDays || "";
         document.getElementById("ship-modal").classList.add("open");
       }
       async function saveShip() {
         const governorateAr = document.getElementById("sh-ar").value.trim();
         const governorateEn = document.getElementById("sh-en").value.trim();
-        const fee = parseFloat(document.getElementById("sh-fee").value) || 0;
+        const fee = 0;
         const etaDays = document.getElementById("sh-eta").value.trim();
         if (!governorateEn && !governorateAr)
           return toast("Name required", false);
@@ -11066,56 +11093,101 @@ let bundleRoomsData = [];
 
       function renderBundleRooms() {
         const container = document.getElementById("bundle-rooms-container");
-        if(!bundleRoomsData.length) {
-          container.innerHTML = '<div style="color:var(--tm); font-size:14px;">No rooms added. Use this to explicitly define rooms and their products.</div>';
+        if (!container) return;
+        if (!bundleRoomsData.length) {
+          container.innerHTML = '<div style="color:var(--tm); font-size:14px; text-align:center; padding:12px; border:1px dashed var(--b); border-radius:8px;">No rooms added. Click "+ Add Room" to define rooms and their alternative models.</div>';
           return;
         }
         let html = '';
         bundleRoomsData.forEach((r, i) => {
-          let options = allProducts.map(p => {
-            const selected = (r.productIds || []).includes(p.id) ? 'selected' : '';
-            return `<option value="${p.id}" ${selected}>${p.nameEn || p.nameAr}</option>`;
-          }).join('');
+          if (!r.productIds) r.productIds = [];
+          if (!r.alternatives) r.alternatives = [];
           
-          html += `
-          <div style="background:var(--s2); padding:16px; border-radius:8px; border:1px solid var(--b); display:grid; gap:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size: 14px;">Room ${i+1}</strong>
-              <button type="button" class="act-btn danger" style="padding:4px 8px; font-size:12px;" onclick="removeBundleRoom(${i})">Remove</button>
-            </div>
-            <div class="form-grid cols2">
-              <div>
-                <label style="font-size:12px; margin-bottom:4px;">Name (En)</label>
-                <input type="text" placeholder="e.g. Master Bedroom" value="${r.nameEn || ''}" oninput="updateBundleRoom(${i}, 'nameEn', this.value)">
-              </div>
-              <div>
-                <label style="font-size:12px; margin-bottom:4px;">Name (Ar)</label>
-                <input type="text" placeholder="e.g. غرفة نوم رئيسية" value="${r.nameAr || ''}" oninput="updateBundleRoom(${i}, 'nameAr', this.value)">
-              </div>
-            </div>
-            <div class="form-grid cols2">
-              <div>
-                <label style="font-size:12px; margin-bottom:4px;">Room Icon</label>
-                <select onchange="updateBundleRoom(${i}, 'icon', this.value)">
-                  <option value="bed" ${r.icon==='bed'?'selected':''}>Bed (Bedroom)</option>
-                  <option value="sofa" ${r.icon==='sofa'?'selected':''}>Sofa (Living)</option>
-                  <option value="dining" ${r.icon==='dining'?'selected':''}>Dining (Dining Room)</option>
-                  <option value="baby" ${r.icon==='baby'?'selected':''}>Baby/Kids (Kids Room)</option>
-                  <option value="youth" ${r.icon==='youth'?'selected':''}>Youth (Youth Room)</option>
-                  <option value="armchair" ${r.icon==='armchair'?'selected':''}>Armchair (Reception)</option>
-                </select>
-              </div>
-              <div>
-                
-              </div>
-            </div>
-          </div>`;
+          const mainPid = r.productIds[0] || '';
+          const mainProduct = allProducts.find(p => p.id === mainPid);
+
+          const mainOptions = [
+            '<option value="">-- Select Main Product --</option>',
+            ...allProducts.map(p => {
+              const sel = p.id === mainPid ? 'selected' : '';
+              const pr = p.price ? ' (' + Number(p.price).toLocaleString() + ' EGP)' : '';
+              return '<option value="' + p.id + '" ' + sel + '>' + (p.nameEn || p.nameAr) + pr + '</option>';
+            })
+          ].join('');
+
+          const altAvailableOptions = [
+            '<option value="">+ Add Alternative Model...</option>',
+            ...allProducts
+              .filter(p => p.id !== mainPid && !r.alternatives.includes(p.id))
+              .map(p => {
+                const pr = p.price ? ' (' + Number(p.price).toLocaleString() + ' EGP)' : '';
+                return '<option value="' + p.id + '">' + (p.nameEn || p.nameAr) + pr + '</option>';
+              })
+          ].join('');
+
+          const altChips = r.alternatives.map(altId => {
+            const altProd = allProducts.find(p => p.id === altId);
+            if (!altProd) return '';
+            const altName = altProd.nameEn || altProd.nameAr;
+            const diff = mainProduct ? (Number(altProd.price || 0) - Number(mainProduct.price || 0)) : 0;
+            const diffStr = diff > 0 ? '(+' + diff.toLocaleString() + ')' : (diff < 0 ? '(-' + Math.abs(diff).toLocaleString() + ')' : '(same)');
+            return '<div style="display:inline-flex; align-items:center; gap:6px; background:var(--s); border:1px solid var(--b); padding:4px 10px; border-radius:20px; font-size:12px;">' +
+              '<span>' + altName + ' <small style="color:var(--o); font-weight:600;">' + diffStr + '</small></span>' +
+              '<button type="button" onclick="removeBundleRoomAlt(' + i + ', \'' + altId + '\')" style="background:none; border:none; cursor:pointer; color:var(--tm); font-size:14px; line-height:1; padding:0 2px;">✕</button>' +
+            '</div>';
+          }).join('');
+
+          html += '<div style="background:var(--s2); padding:16px; border-radius:8px; border:1px solid var(--b); display:grid; gap:12px;">' +
+            '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+              '<strong style="font-size:14px; display:flex; align-items:center; gap:8px;">' +
+                '<span>Room ' + (i+1) + '</span>' +
+                (mainProduct ? '<span style="font-weight:400; font-size:12px; color:var(--tm);">[' + (mainProduct.nameEn || mainProduct.nameAr) + ']</span>' : '') +
+              '</strong>' +
+              '<button type="button" class="act-btn danger" style="padding:4px 8px; font-size:12px;" onclick="removeBundleRoom(' + i + ')">Remove Room</button>' +
+            '</div>' +
+            '<div class="form-grid cols2">' +
+              '<div>' +
+                '<label style="font-size:12px; margin-bottom:4px;">Room Name (En)</label>' +
+                '<input type="text" placeholder="e.g. Master Bedroom" value="' + (r.nameEn || '') + '" oninput="updateBundleRoom(' + i + ', \'nameEn\', this.value)">' +
+              '</div>' +
+              '<div>' +
+                '<label style="font-size:12px; margin-bottom:4px;">Room Name (Ar)</label>' +
+                '<input type="text" placeholder="e.g. غرفة نوم رئيسية" value="' + (r.nameAr || '') + '" oninput="updateBundleRoom(' + i + ', \'nameAr\', this.value)">' +
+              '</div>' +
+            '</div>' +
+            '<div class="form-grid cols2">' +
+              '<div>' +
+                '<label style="font-size:12px; margin-bottom:4px;">Room Icon</label>' +
+                '<select onchange="updateBundleRoom(' + i + ', \'icon\', this.value)">' +
+                  '<option value="bed" ' + (r.icon==='bed'?'selected':'') + '>Bed (Bedroom)</option>' +
+                  '<option value="sofa" ' + (r.icon==='sofa'?'selected':'') + '>Sofa (Living)</option>' +
+                  '<option value="dining" ' + (r.icon==='dining'?'selected':'') + '>Dining (Dining Room)</option>' +
+                  '<option value="baby" ' + (r.icon==='baby'?'selected':'') + '>Baby/Kids (Kids Room)</option>' +
+                  '<option value="youth" ' + (r.icon==='youth'?'selected':'') + '>Youth (Youth Room)</option>' +
+                  '<option value="armchair" ' + (r.icon==='armchair'?'selected':'') + '>Armchair (Reception)</option>' +
+                '</select>' +
+              '</div>' +
+              '<div>' +
+                '<label style="font-size:12px; margin-bottom:4px;">Main Product for this Room</label>' +
+                '<select onchange="updateBundleRoomMainProduct(' + i + ', this.value)">' + mainOptions + '</select>' +
+              '</div>' +
+            '</div>' +
+            '<div style="background:var(--s); padding:12px; border-radius:6px; border:1px solid var(--b);">' +
+              '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
+                '<label style="font-size:12px; font-weight:600; margin:0;">Alternative Models (Swap) / بدائل (تبديل الموديل)</label>' +
+                '<select style="width:auto; padding:4px 8px; font-size:12px;" onchange="addBundleRoomAlt(' + i + ', this.value); this.value=\'\';">' + altAvailableOptions + '</select>' +
+              '</div>' +
+              '<div style="display:flex; flex-wrap:wrap; gap:8px; min-height:24px;">' +
+                (altChips || '<span style="font-size:12px; color:var(--tm);">No alternative models added yet. Customers will only have the main product.</span>') +
+              '</div>' +
+            '</div>' +
+          '</div>';
         });
         container.innerHTML = html;
       }
 
       function addBundleRoom() {
-        bundleRoomsData.push({ icon: 'bed', nameEn: '', nameAr: '', productIds: [] });
+        bundleRoomsData.push({ icon: 'bed', nameEn: '', nameAr: '', productIds: [], alternatives: [] });
         renderBundleRooms();
         renderBundleSelected();
       }
@@ -11130,20 +11202,37 @@ let bundleRoomsData = [];
         bundleRoomsData[i][field] = val;
       }
 
-      function updateBundleRoomProducts(i, selectElement) {
-        bundleRoomsData[i].productIds = Array.from(selectElement.selectedOptions).map(opt => opt.value);
-        // Sync with flat products list so discount/totals calculate automatically
-        bundleRoomsData[i].productIds.forEach(pid => {
-           const p = allProducts.find(x => x.id === pid);
-           if(p && !bundleSelectedProducts.some(existing => existing.id === pid)) {
-               bundleSelectedProducts.push(p);
-           }
-        });
+      function updateBundleRoomMainProduct(i, pid) {
+        bundleRoomsData[i].productIds = pid ? [pid] : [];
+        if (pid) {
+          const p = allProducts.find(x => x.id === pid);
+          if (p && !bundleSelectedProducts.some(existing => existing.id === pid)) {
+            bundleSelectedProducts.push(p);
+            if (!bundleItemCounts[pid]) bundleItemCounts[pid] = 1;
+          }
+        }
+        renderBundleRooms();
         renderBundleSelected();
+      }
+
+      function addBundleRoomAlt(i, altId) {
+        if (!altId) return;
+        if (!bundleRoomsData[i].alternatives) bundleRoomsData[i].alternatives = [];
+        if (!bundleRoomsData[i].alternatives.includes(altId)) {
+          bundleRoomsData[i].alternatives.push(altId);
+        }
+        renderBundleRooms();
+      }
+
+      function removeBundleRoomAlt(i, altId) {
+        if (!bundleRoomsData[i].alternatives) return;
+        bundleRoomsData[i].alternatives = bundleRoomsData[i].alternatives.filter(id => id !== altId);
+        renderBundleRooms();
       }
 
       let _bpActiveCat = "all";
       let bundlePhotoData = null;
+      let bundleCardPhotoData = null;
 
       function openBundleModal(id) {
         editingBundleId = id || null;
@@ -11167,6 +11256,7 @@ let bundleRoomsData = [];
         
         // Handle bundle photo
         bundlePhotoData = b?.mainPhoto || null;
+        bundleCardPhotoData = b?.cardPhoto || null;
         const photoPreview = document.getElementById("bm-photo-preview");
         if (b?.mainPhoto) {
           document.getElementById("bm-photo-img").src = iu(b.mainPhoto);
@@ -11176,12 +11266,43 @@ let bundleRoomsData = [];
         }
         document.getElementById("bm-photo").value = "";
         
+        // Handle card photo
+        const cardPhotoPreview = document.getElementById("bm-card-photo-preview");
+        if (b?.cardPhoto) {
+          document.getElementById("bm-card-photo-img").src = iu(b.cardPhoto);
+          cardPhotoPreview.style.display = "block";
+        } else {
+          cardPhotoPreview.style.display = "none";
+        }
+        document.getElementById("bm-card-photo").value = "";
+        
         
         bundleItemCounts = {};
-        if (b && b.productIds) {
-          b.productIds.forEach(pid => {
+        bundleCustomItemPrices = {};
+        bundleFlatAlternatives = b && b.flatAlternatives ? JSON.parse(JSON.stringify(b.flatAlternatives)) : {};
+        bundleCustomItemPrices = {};
+        if (b && (b.mainProductIds || b.productIds)) {
+          let idsToUse = (b.mainProductIds && b.mainProductIds.length > 0) ? b.mainProductIds : b.productIds;
+          
+          if (!b.mainProductIds || b.mainProductIds.length === 0) {
+              const allAlts = [];
+              if (b.flatAlternatives) {
+                  Object.values(b.flatAlternatives).forEach(alts => allAlts.push(...alts));
+              }
+              idsToUse = idsToUse.filter(id => !allAlts.includes(id));
+          }
+
+          idsToUse.forEach(pid => {
              bundleItemCounts[pid] = (bundleItemCounts[pid] || 0) + 1;
+             bundleCustomItemPrices[pid] = b.customItemPrices ? b.customItemPrices[pid] : undefined;
           });
+          if (b.flatAlternatives) {
+             Object.values(b.flatAlternatives).forEach(alts => {
+                alts.forEach(altId => {
+                   bundleCustomItemPrices[altId] = b.customItemPrices ? b.customItemPrices[altId] : undefined;
+                });
+             });
+          }
           bundleSelectedProducts = Object.keys(bundleItemCounts)
             .map(pid => allProducts.find(p => p.id === pid))
             .filter(Boolean);
@@ -11195,7 +11316,33 @@ let bundleRoomsData = [];
         renderBundleSelected();
         
         
-        bundleRoomsData = b && b.rooms ? JSON.parse(JSON.stringify(b.rooms)) : [];
+        bundleRoomsData = [];
+        bundleFlatAlternatives = b && b.flatAlternatives ? JSON.parse(JSON.stringify(b.flatAlternatives)) : {};
+        
+        // Migrate legacy rooms into flat list automatically
+        if (b && b.rooms && b.rooms.length > 0) {
+            b.rooms.forEach(r => {
+                if (r.productIds && r.productIds.length > 0) {
+                    r.productIds.forEach(pid => {
+                        bundleItemCounts[pid] = (bundleItemCounts[pid] || 0) + 1;
+                        if (r.alternatives && r.alternatives.length > 0) {
+                            if (!bundleFlatAlternatives[pid]) bundleFlatAlternatives[pid] = [];
+                            r.alternatives.forEach(altId => {
+                                if (!bundleFlatAlternatives[pid].includes(altId)) bundleFlatAlternatives[pid].push(altId);
+                            });
+                        }
+                    });
+                }
+            });
+            // Re-evaluate selected products to include migrated ones
+            bundleSelectedProducts = Object.keys(bundleItemCounts)
+              .map(pid => allProducts.find(p => p.id === pid))
+              .filter(Boolean);
+            
+            // Re-render after migration
+            renderBundleSelected();
+            renderBpList();
+        }
           renderBundleRooms();
           document.getElementById("bundle-modal").classList.add("open");
     
@@ -11257,6 +11404,7 @@ let bundleRoomsData = [];
       }
 
       let bundleSelectedProducts = [];
+      let bundleFlatAlternatives = {};
       let bundleItemCounts = {};
 
       function bpAdd(id) {
@@ -11271,6 +11419,19 @@ let bundleRoomsData = [];
         }
         renderBpList();
         renderBundleSelected();
+      }
+
+      
+      function addFlatAlt(pid, altId) {
+          if (!altId) return;
+          if (!bundleFlatAlternatives[pid]) bundleFlatAlternatives[pid] = [];
+          if (!bundleFlatAlternatives[pid].includes(altId)) bundleFlatAlternatives[pid].push(altId);
+          renderBundleSelected();
+      }
+      function removeFlatAlt(pid, altId) {
+          if (!bundleFlatAlternatives[pid]) return;
+          bundleFlatAlternatives[pid] = bundleFlatAlternatives[pid].filter(id => id !== altId);
+          renderBundleSelected();
       }
 
       function bpRemove(id) {
@@ -11292,11 +11453,17 @@ let bundleRoomsData = [];
       }
 
       function renderBundleSelected() {
-        let total = bundleSelectedProducts.reduce(
-          (s, p) => s + ((Number(p.price) || 0) * (bundleItemCounts[p.id] || 1)),
-          0,
-        );
+        let total = 0;
+        let customTotal = 0;
+        bundleSelectedProducts.forEach(p => {
+            const qty = bundleItemCounts[p.id] || 1;
+            const orig = Number(p.price) || 0;
+            const cust = bundleCustomItemPrices[p.id] !== undefined ? Number(bundleCustomItemPrices[p.id]) : orig;
+            total += (orig * qty);
+            customTotal += (cust * qty);
+        });
         
+
         bundleRoomsData.forEach(r => {
             if (r.productIds) {
                 r.productIds.forEach(pid => {
@@ -11306,25 +11473,62 @@ let bundleRoomsData = [];
             }
         });
         const disc = Number(document.getElementById("bm-discount").value) || 0;
-        const bundlePrice = disc ? Math.round(total * (1 - disc / 100)) : null;
+        const bundlePrice = disc ? Math.round(customTotal * (1 - disc / 100)) : customTotal;
 
         if (!bundleSelectedProducts.length) {
-          document.getElementById("bp-selected").innerHTML =
-            '<div class="bp-empty">No products added yet</div>';
+          document.getElementById("bp-selected").innerHTML = '<div class="bp-empty">No products added yet</div>';
         } else {
           document.getElementById("bp-selected").innerHTML =
             bundleSelectedProducts
               .map(
-                (p) => `<div class="bp-row" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
-                  <div class="bp-name" style="flex:1; min-width:150px;">${p.nameEn || p.nameAr}</div>
-                  <div style="display:flex; align-items:center; gap:8px;">
-                     <button type="button" style="width:24px; height:24px; border-radius:4px; border:1px solid var(--b); background:var(--s2); cursor:pointer;" onclick="bpChangeQty('${p.id}', -1)">-</button>
-                     <span style="font-size:14px; min-width:20px; text-align:center;">${bundleItemCounts[p.id]}</span>
-                     <button type="button" style="width:24px; height:24px; border-radius:4px; border:1px solid var(--b); background:var(--s2); cursor:pointer;" onclick="bpChangeQty('${p.id}', 1)">+</button>
-                  </div>
-                  <div class="bp-price" style="width:100px; text-align:right;">${p.price ? "EGP " + (Number(p.price) * bundleItemCounts[p.id]).toLocaleString() : "—"}</div>
-                  <button class="bp-rm" onclick="bpRemove('${p.id}')" title="Remove"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
-                </div>`
+                (p) => {
+                  const altAvailableOptions = [
+                    '<option value="">+ Add Swap Option...</option>',
+                    ...allProducts
+                      .filter(x => x.id !== p.id && !(bundleFlatAlternatives[p.id] || []).includes(x.id))
+                      .map(x => '<option value="' + x.id + '">' + (x.nameEn || x.nameAr) + (x.price ? ' (' + Number(x.price).toLocaleString() + ' EGP)' : '') + '</option>')
+                  ].join('');
+
+                  const altChips = (bundleFlatAlternatives[p.id] || []).map(altId => {
+                    const altProd = allProducts.find(x => x.id === altId);
+                    if (!altProd) return '';
+                    const mainP_price = bundleCustomItemPrices[p.id] !== undefined ? bundleCustomItemPrices[p.id] : (p.price || 0);
+                    const altP_price = bundleCustomItemPrices[altId] !== undefined ? bundleCustomItemPrices[altId] : (altProd.price || 0);
+                    const diff = Number(altP_price) - Number(mainP_price);
+                    const diffStr = diff > 0 ? '(+' + diff.toLocaleString() + ')' : (diff < 0 ? '(-' + Math.abs(diff).toLocaleString() + ')' : '(same)');
+                    return `<div style="display:inline-flex; align-items:center; gap:6px; background:var(--s); border:1px solid var(--b); padding:4px 10px; border-radius:20px; font-size:12px; margin-top:4px;">
+                      <span>${altProd.nameEn || altProd.nameAr} <small style="color:var(--o); font-weight:600;">${diffStr}</small></span>
+                      <input type="number" style="width:60px; padding:2px 4px; font-size:11px; background:var(--bg); color:var(--t); border:1px solid var(--b); border-radius:4px;" value="${altP_price}" onchange="bundleCustomItemPrices['${altId}'] = Number(this.value); renderBundleSelected()" title="Custom Price in Bundle">
+                      <button type="button" onclick="removeFlatAlt('${p.id}', '${altId}')" style="background:none; border:none; cursor:pointer; color:var(--tm); font-size:14px; line-height:1; padding:0 2px;">✕</button>
+                    </div>`;
+                  }).join('');
+
+                  return `<div class="bp-row" style="display:flex; flex-direction:column; gap:10px; padding:12px; border:1px solid var(--b); border-radius:6px; margin-bottom:10px; background:rgba(255,255,255,0.02);">
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; width:100%;">
+                      <div class="bp-name" style="flex:1; min-width:150px; font-weight:600;">${p.nameEn || p.nameAr}</div>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                         <button type="button" style="width:24px; height:24px; border-radius:4px; border:1px solid var(--b); background:var(--s2); cursor:pointer;" onclick="bpChangeQty('${p.id}', -1)">-</button>
+                         <span style="font-size:14px; min-width:20px; text-align:center;">${bundleItemCounts[p.id]}</span>
+                         <button type="button" style="width:24px; height:24px; border-radius:4px; border:1px solid var(--b); background:var(--s2); cursor:pointer;" onclick="bpChangeQty('${p.id}', 1)">+</button>
+                      </div>
+                      <div class="bp-price" style="width:100px; text-align:right; font-weight:600;">${p.price ? "EGP " + (Number(p.price) * bundleItemCounts[p.id]).toLocaleString() : "—"}</div>
+                      <div style="display:flex; flex-direction:column; gap:4px; margin-right:12px;">
+                        <label style="font-size:10px; color:var(--tm);">Price in Bundle</label>
+                        <input type="number" value="${bundleCustomItemPrices[p.id] !== undefined ? bundleCustomItemPrices[p.id] : (p.price || 0)}" onchange="bundleCustomItemPrices['${p.id}'] = Number(this.value); renderBundleSelected()" style="width:80px; padding:4px; font-size:12px; background:var(--s); border:1px solid var(--b); color:var(--t); border-radius:4px;">
+                      </div>
+                      <button class="bp-rm" onclick="bpRemove('${p.id}')" title="Remove" style="color:red; background:none; border:none; cursor:pointer;"><svg width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-0.125em;'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg></button>
+                    </div>
+                    <div style="background:var(--bg); padding:10px; border-radius:4px; border:1px dashed var(--b);">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <label style="font-size:12px; font-weight:600; margin:0; color:var(--o);">Alternative Options (Swap) / بدائل (تبديل الموديل)</label>
+                        <select style="width:auto; padding:4px 8px; font-size:12px; background:var(--s); color:var(--t); border:1px solid var(--b); border-radius:4px;" onchange="addFlatAlt('${p.id}', this.value); this.value='';">${altAvailableOptions}</select>
+                      </div>
+                      <div style="display:flex; flex-wrap:wrap; gap:8px; min-height:24px;">
+                        ${altChips || '<span style="font-size:12px; color:var(--tm);">No alternatives added.</span>'}
+                      </div>
+                    </div>
+                  </div>`;
+                }
               )
               .join("");
         }
@@ -11388,6 +11592,30 @@ let bundleRoomsData = [];
           });
       }
 
+
+      function handleBundleCardPhotoSelect() {
+        const fileInput = document.getElementById("bm-card-photo");
+        const file = fileInput.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch(window.location.origin + "/api/admin/bundles/upload/photo", {
+          method: "POST",
+          body: formData,
+          headers: { "Authorization": "Bearer " + TOKEN },
+        })
+          .then((r) => r.json())
+          .then((res) => {
+            if (res.error) { toast("Error: " + res.error, false); return; }
+            bundleCardPhotoData = res.filename;
+            const imgUrl = bundleCardPhotoData.startsWith("http") ? bundleCardPhotoData : "/uploads/" + bundleCardPhotoData;
+            document.getElementById("bm-card-photo-img").src = imgUrl;
+            document.getElementById("bm-card-photo-preview").style.display = "block";
+            toast("Card photo uploaded!", true);
+          })
+          .catch((e) => toast("Upload failed: " + e.message, false));
+      }
+
       async function saveBundle() {
         const nameAr = document.getElementById("bm-name-ar").value.trim();
         const nameEn = document.getElementById("bm-name-en").value.trim();
@@ -11402,16 +11630,24 @@ let bundleRoomsData = [];
           }
     
         const disc = Number(document.getElementById("bm-discount").value) || 0;
-        let total = bundleSelectedProducts.reduce(
-          (s, p) => s + ((Number(p.price) || 0) * (bundleItemCounts[p.id] || 1)),
-          0,
-        );
-        // Include room products in total
+                let total = 0;
+        let customTotal = 0;
+        bundleSelectedProducts.forEach(p => {
+            const qty = bundleItemCounts[p.id] || 1;
+            const orig = Number(p.price) || 0;
+            const cust = bundleCustomItemPrices[p.id] !== undefined ? Number(bundleCustomItemPrices[p.id]) : orig;
+            total += (orig * qty);
+            customTotal += (cust * qty);
+        });
         bundleRoomsData.forEach(r => {
           if (r.productIds) {
             r.productIds.forEach(pid => {
               const p = allProducts.find(x => x.id === pid);
-              if (p) total += Number(p.price) || 0;
+              if (p) {
+                 const orig = Number(p.price) || 0;
+                 total += orig;
+                 customTotal += orig;
+              }
             });
           }
         });
@@ -11421,6 +11657,30 @@ let bundleRoomsData = [];
            const qty = bundleItemCounts[p.id] || 1;
            for(let i=0; i<qty; i++) productIds.push(p.id);
         });
+        // Track the main IDs separate from alternatives
+        const mainProductIds = [];
+        bundleSelectedProducts.forEach(p => {
+           const qty = bundleItemCounts[p.id] || 1;
+           for(let i=0; i<qty; i++) mainProductIds.push(p.id);
+        });
+
+        // Ensure all room main products and alternatives are in productIds for enrichment
+        bundleRoomsData.forEach(r => {
+           if (r.productIds) r.productIds.forEach(pid => { if (!productIds.includes(pid)) productIds.push(pid); });
+           if (r.alternatives) r.alternatives.forEach(pid => { if (!productIds.includes(pid)) productIds.push(pid); });
+        });
+        
+        // Clean up orphaned alternatives before saving
+        Object.keys(bundleFlatAlternatives).forEach(key => {
+            if (!bundleSelectedProducts.find(p => p.id === key)) {
+                delete bundleFlatAlternatives[key];
+            }
+        });
+        
+        // Ensure all flat alternatives are in productIds
+        Object.values(bundleFlatAlternatives).forEach(alts => {
+           alts.forEach(pid => { if (!productIds.includes(pid)) productIds.push(pid); });
+        });
 
         const body = {
           
@@ -11428,11 +11688,15 @@ let bundleRoomsData = [];
           nameAr,
           nameEn,
           productIds: productIds,
-            rooms: bundleRoomsData,
+          mainProductIds: mainProductIds,
+          flatAlternatives: bundleFlatAlternatives,
+          rooms: bundleRoomsData,
           discountPct: disc,
           originalTotal: total,
-          bundlePrice: disc ? Math.round(total * (1 - disc / 100)) : total,
+          bundlePrice: disc ? Math.round(customTotal * (1 - disc / 100)) : customTotal,
+          customItemPrices: bundleCustomItemPrices,
           mainPhoto: bundlePhotoData || null,
+          cardPhoto: bundleCardPhotoData || null,
           active: document.getElementById("bm-active").checked,
           tier: document.getElementById("bm-tier").value || undefined,
           order: Number(document.getElementById("bm-order").value) || 0,

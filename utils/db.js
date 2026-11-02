@@ -24,21 +24,51 @@ const DEFAULTS = {
 const cache = {};
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-// Populate cache from PostgreSQL, seed from JSON files on first run
+// ── helpers ──────────────────────────────────────────────────────────
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function isPopulated(val) {
+  if (val === null || val === undefined) return false;
+  if (Array.isArray(val)) return val.length > 0;
+  if (typeof val === "object") return Object.keys(val).length > 0;
+  return true;
+}
+
+// ── Populate cache from PostgreSQL, seed from JSON files on first run ──
 const ready = (async () => {
   let pgOk = false;
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS store_data (
-        key TEXT PRIMARY KEY,
-        value JSONB NOT NULL
-      )
-    `);
-    const { rows } = await pool.query("SELECT key, value FROM store_data");
-    for (const row of rows) cache[row.key] = row.value;
-    pgOk = true;
-  } catch (err) {
-    console.error("[db] pg error:", err.message);
+  const MAX_RETRIES = 3;
+  const BACKOFF = [1000, 2000, 4000]; // 1s, 2s, 4s
+
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS store_data (
+          key TEXT PRIMARY KEY,
+          value JSONB NOT NULL
+        )
+      `);
+      const { rows } = await pool.query("SELECT key, value FROM store_data");
+      for (const row of rows) cache[row.key] = row.value;
+      pgOk = true;
+      console.log(`[db] Postgres connected — loaded ${rows.length} key(s) from store_data`);
+      break;
+    } catch (err) {
+      console.error(
+        `[db] Postgres attempt ${attempt}/${MAX_RETRIES} failed: ${err.message}`,
+      );
+      if (attempt < MAX_RETRIES) {
+        const delay = BACKOFF[attempt - 1];
+        console.log(`[db] Retrying in ${delay}ms...`);
+        await sleep(delay);
+      } else {
+        console.error(
+          "[db] All Postgres retries exhausted — proceeding with local JSON fallback only (pgOk=false)",
+        );
+      }
+    }
   }
 
   // Only seed MISSING keys from JSON data files (never overwrite existing DB data)
@@ -60,8 +90,44 @@ const ready = (async () => {
             [key, JSON.stringify(val)],
           );
         }
-      } catch {}
+      } catch (err) {
+        console.error(
+          `[db] Failed to seed "${key}" from ${file}: ${err.message}`,
+        );
+      }
     }
+  }
+
+  // ── Startup summary ──────────────────────────────────────────────
+  console.log("[db] ── Startup data summary ──");
+  for (const key of Object.keys(DEFAULTS)) {
+    const val = cache[key];
+    const status = isPopulated(val)
+      ? Array.isArray(val)
+        ? `✓ ${val.length} item(s)`
+        : typeof val === "object"
+          ? `✓ ${Object.keys(val).length} key(s)`
+          : "✓ set"
+      : "✗ EMPTY (using default)";
+    console.log(`[db]   ${key.padEnd(16)} ${status}`);
+  }
+  console.log(`[db] ── pgOk=${pgOk} ──`);
+
+  // ── Admin account warning ────────────────────────────────────────
+  if (
+    !isPopulated(cache.admin) &&
+    !process.env.ADMIN_DEFAULT_USERNAME &&
+    !process.env.ADMIN_DEFAULT_PASSWORD
+  ) {
+    console.error(
+      "╔════════════════════════════════════════════════════════════════╗\n" +
+      "║  ⚠  WARNING: NO ADMIN ACCOUNT EXISTS                        ║\n" +
+      "║  cache.admin is empty/null AND ADMIN_DEFAULT_USERNAME /      ║\n" +
+      "║  ADMIN_DEFAULT_PASSWORD env vars are not set.                ║\n" +
+      "║  Admin login will return 503 until this is resolved.         ║\n" +
+      "║  Fix: set env vars or seed data/admin.json                  ║\n" +
+      "╚════════════════════════════════════════════════════════════════╝",
+    );
   }
 })();
 

@@ -1,15 +1,16 @@
 (function () {
-  const isSubPage = window.location.pathname.includes("/pages/");
-  const homePath = isSubPage ? "../mega-furniture.html" : "mega-furniture.html";
-  const shopPath = isSubPage ? "shop.html" : "pages/shop.html";
-  const offersPath = isSubPage ? "offers.html" : "pages/offers.html";
-  const reviewsPath = isSubPage ? "reviews.html" : "pages/reviews.html";
-  const videosPath = isSubPage ? "videos.html" : "pages/videos.html";
-  const aboutPath = isSubPage ? "about.html" : "pages/about.html";
-  const customPath = isSubPage ? "custom-work.html" : "pages/custom-work.html";
-  const contactPath = isSubPage ? "contact.html" : "pages/contact.html";
-  const trackPath = isSubPage ? "track.html" : "pages/track.html";
-  const logoPath = isSubPage ? "../logos/mega-logo.jpg" : "logos/mega-logo.jpg";
+  const isSubPage = false;
+  const homePath = "/";
+  const shopPath = "/shop";
+  const offersPath = "/offers";
+  const reviewsPath = "/reviews";
+  const videosPath = "/videos";
+  const aboutPath = "/about";
+  const customPath = "/custom-work";
+  const contactPath = "/contact";
+  const policiesPath = "/policies";
+  const trackPath = "/track";
+  const logoPath = "/logos/mega-logo.jpg";
   const lang = localStorage.getItem("megaLang") || "en";
 
   const apiBase = (window.location.protocol === "file:" || (window.location.port !== "3001" && window.location.port !== "")) && !window.location.hostname.includes("railway.app")
@@ -1058,7 +1059,7 @@
   document.head.appendChild(styleEl);
 
   // Inject Favicon dynamically
-  const faviconUrl = isSubPage ? "../logos/mega-logo.jpg" : "logos/mega-logo.jpg";
+  const faviconUrl = "/logos/mega-logo.jpg";
   let faviconLink = document.querySelector("link[rel~='icon']");
   if (!faviconLink) {
     faviconLink = document.createElement("link");
@@ -1069,15 +1070,16 @@
 
 
     const curPath = window.location.pathname;
-    const isHome = curPath.endsWith("/") || curPath.includes("mega-furniture.html") || (!curPath.includes("/pages/") && curPath.length <= 1);
-    const isShop = curPath.includes("shop.html");
-    const isOffers = curPath.includes("offers.html");
-    const isReviews = curPath.includes("reviews.html");
-    const isVideos = curPath.includes("videos.html");
-    const isAbout = curPath.includes("about.html");
-    const isCustom = curPath.includes("custom-work.html");
-    const isContact = curPath.includes("contact.html");
-    const isTrack = curPath.includes("track.html");
+    const isHome = curPath === "/" || curPath.endsWith("/") || curPath.includes("mega-furniture.html");
+    const isShop = curPath === "/shop" || curPath.includes("shop.html");
+    const isOffers = curPath === "/offers" || curPath.includes("offers.html");
+    const isReviews = curPath === "/reviews" || curPath.includes("reviews.html");
+    const isVideos = curPath === "/videos" || curPath.includes("videos.html");
+    const isAbout = curPath === "/about" || curPath.includes("about.html");
+    const isCustom = curPath === "/custom-work" || curPath.includes("custom-work.html");
+    const isContact = curPath === "/contact" || curPath.includes("contact.html");
+    const isPolicies = curPath === "/policies" || curPath.includes("policies.html");
+    const isTrack = curPath === "/track" || curPath.includes("track.html");
 
     // Mobile Drawer
     const headerHtml = `
@@ -1161,6 +1163,7 @@
             <li><a class="nlink-r2 ${isAbout ? 'active' : ''}" href="${aboutPath}" data-t="nav-about">About us</a></li>
             <li><a class="nlink-r2 ${isCustom ? 'active' : ''}" href="${customPath}" data-t="nav-custom-work">Custom work</a></li>
             <li><a class="nlink-r2 ${isContact ? 'active' : ''}" href="${contactPath}" data-t="nav-contact">Contact</a></li>
+            <li><a class="nlink-r2 ${isPolicies ? 'active' : ''}" href="${policiesPath}" data-t="nav-policies">Policies</a></li>
             <li><a class="nlink-r2 ${isTrack ? 'active' : ''}" href="${trackPath}" data-t="nav-track">Track Order</a></li>
           </ul>
         </div>
@@ -1191,6 +1194,7 @@
             <li><a class="mob-nav-link ${isAbout ? 'active' : ''}" href="${aboutPath}" data-t="nav-about" onclick="toggleMobDrawer()">About us</a></li>
             <li><a class="mob-nav-link ${isCustom ? 'active' : ''}" href="${customPath}" data-t="nav-custom-work" onclick="toggleMobDrawer()">Custom work</a></li>
             <li><a class="mob-nav-link ${isContact ? 'active' : ''}" href="${contactPath}" data-t="nav-contact" onclick="toggleMobDrawer()">Contact</a></li>
+            <li><a class="mob-nav-link ${isPolicies ? 'active' : ''}" href="${policiesPath}" data-t="nav-policies" onclick="toggleMobDrawer()">Policies</a></li>
             <li><a class="mob-nav-link ${isTrack ? 'active' : ''}" href="${trackPath}" data-t="nav-track" onclick="toggleMobDrawer()">Track Order</a></li>
           </ul>
         
@@ -1316,11 +1320,8 @@
   function iu(p) {
     if (!p) return "";
     if (p.startsWith("http") || p.startsWith("data:")) return p;
-    const isSub = window.location.pathname.includes("/pages/");
-    if (p.startsWith("/")) {
-      return isSub ? ".." + p : p;
-    }
-    return (isSub ? "../" : "") + "uploads/" + p;
+    if (p.startsWith("/")) return p;
+      return "/uploads/" + p;
   }
 
   function renderMegaMenu() {
@@ -1376,7 +1377,7 @@
                 const hasDisc = p.salePrice != null && p.salePrice < p.price;
                 const pPrice = hasDisc ? p.salePrice : p.price;
                 return `
-                  <a class="mega-product-item" href="${isSubPage ? "" : "pages/"}product.html?id=${p.id}" style="display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit; transition: transform 0.2s;">
+                  <a class="mega-product-item" href="/product?id=${p.id}" style="display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit; transition: transform 0.2s;">
                     <img class="mega-product-img" src="${iu(pPhoto)}" alt="${pName}" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; background: var(--s2, #f5f5f5);" />
                     <h5 class="mega-product-name" style="font-size: 11px; font-weight: 600; color: var(--t, #333); margin: 4px 0 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" data-ar="${p.nameAr}" data-en="${p.nameEn}">${pName}</h5>
                     <span class="mega-product-price" style="font-size: 10px; font-weight: 700; color: var(--o, #F5A623);">EGP ${Number(pPrice).toLocaleString()}</span>
@@ -1469,7 +1470,7 @@
                 const pName = lang === "ar" ? p.nameAr || p.nameEn : p.nameEn || p.nameAr;
                 const pPrice = p.salePrice || p.price;
                 return `
-                  <a class="mega-link" href="${isSubPage ? "" : "pages/"}product.html?id=${p.id}" onclick="toggleMobDrawer()" data-ar="${p.nameAr}" data-en="${p.nameEn}">${pName} - EGP ${Number(pPrice).toLocaleString()}</a>
+                  <a class="mega-link" href="/product?id=${p.id}" onclick="toggleMobDrawer()" data-ar="${p.nameAr}" data-en="${p.nameEn}">${pName} - EGP ${Number(pPrice).toLocaleString()}</a>
                 `;
               }).join("")}
             ` : ""}
@@ -1506,8 +1507,8 @@
                if (lt) {
                  let finalLink = ann.link;
                  const isSale = msg.toLowerCase().match(/sale|discount|offer|خصم|عرض|تخفيض/);
-                 if (isSale && finalLink.includes("shop.html")) {
-                   finalLink = isSubPage ? "offers.html" : "pages/offers.html";
+                 if (isSale && (finalLink.includes("shop.html") || finalLink.includes("/shop"))) {
+                   finalLink = "/offers";
                  }
                  html += ` <a href="${finalLink}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
                }
@@ -1576,11 +1577,11 @@
         const itemsHtml = matches.map(p => {
           const title = curLang === "ar" ? (p.nameAr || p.nameEn) : (p.nameEn || p.nameAr);
           let rawImg = p.mainPhoto || (p.photos && p.photos[0]) || p.image || (p.images && p.images[0]) || "";
-          let img = rawImg ? iu(rawImg) : (isSubPage ? "../logos/mega-logo.jpg" : "logos/mega-logo.jpg");
-          const prodUrl = isSubPage ? `product.html?id=${p.id}` : `pages/product.html?id=${p.id}`;
+          let img = rawImg ? iu(rawImg) : ("/logos/mega-logo.jpg");
+          const prodUrl = `/product?id=${p.id}`;
           return `
             <a class="search-res-item" href="${prodUrl}">
-              <img class="search-res-img" src="${img}" alt="${title}" onerror="this.src='${isSubPage?'../logos/mega-logo.jpg':'logos/mega-logo.jpg'}'" />
+              <img class="search-res-img" src="${img}" alt="${title}" onerror="this.src='/logos/mega-logo.jpg'" />
               <div class="search-res-info">
                 <span class="search-res-title">${title}</span>
                 <span class="search-res-price">EGP ${Number(p.price||0).toLocaleString()}</span>
@@ -1608,6 +1609,40 @@
         dropdown.classList.remove("active");
       }
     });
+  }
+
+  // Global Cart Open Fallback
+  if (!window.openCart) {
+      window.openCart = function() {
+          const cp = document.getElementById("cp") || document.getElementById("cpa");
+          const cov = document.getElementById("cov");
+          if (cp && cov && typeof renderCart === 'function') {
+              renderCart();
+              cp.classList.add("open");
+              cov.classList.add("open");
+              document.body.style.overflow = "hidden";
+          } else {
+              window.location.href = "/checkout";
+          }
+      };
+  }
+
+  // Global Cart Badge Sync
+  window.updBadge = function () {
+    try {
+      const cart = JSON.parse(localStorage.getItem("megaCart") || "[]");
+      const n = cart.reduce((s, c) => s + (c.qty || 1), 0);
+      document.querySelectorAll(".cbadge").forEach(badge => {
+        badge.textContent = n > 0 ? n : '';
+        badge.style.display = n > 0 ? 'flex' : 'none';
+      });
+    } catch (e) {}
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", window.updBadge);
+  } else {
+    window.updBadge();
   }
 
   // Wishlist Badge Sync

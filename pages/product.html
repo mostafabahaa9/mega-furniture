@@ -2371,7 +2371,38 @@
       .lightbox-controls button:active {
         transform: scale(0.9);
       }
+    
+      /* Footer styles */
+      footer { background: var(--s); border-top: 1px solid var(--b); padding: 60px 48px 32px; transition: background 0.3s; }
+      .fg { max-width: 1200px; margin: 0 auto 48px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+      .fbr p { color: var(--tm); font-size: 14px; line-height: 1.7; margin-top: 12px; max-width: 280px; }
+      .fc h4 { font-family: "Fraunces", serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; color: var(--t); }
+      .fc ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+      .fc a { color: var(--tm); font-size: 14px; text-decoration: none; transition: color 0.2s; }
+      .fc a:hover { color: var(--o); }
+      .fb { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--b); padding-top: 24px; font-size: 12px; color: var(--tm); }
+      .logo-wordmark { font-family: "Fraunces", serif; font-size: 22px; font-weight: 700; color: var(--t); letter-spacing: 0.02em; }
+      @media (max-width: 768px) { footer { padding: 32px 16px 20px; } .fg { grid-template-columns: 1fr; gap: 20px; } .fb { flex-direction: column; gap: 4px; text-align: center; } }
     </style>
+  
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1236448993498775');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1236448993498775&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    <script src="/pages/metaTracking.js"></script>
   </head>
   <body dir="ltr">
     <div class="pb" id="pb"></div>
@@ -2387,7 +2418,7 @@
     </div>
 
     <!-- NAV -->
-    <script src="header.js"></script>
+    <script src="/pages/header.js"></script>
 
     <!-- CART DRAWER -->
     <div class="ov" id="cov" onclick="closeCart()"></div>
@@ -2398,7 +2429,7 @@
       </div>
       <div class="clist" id="clist"></div>
       <div class="cftr" id="cftr" style="display: none">
-        <a class="bp" style="width: 100%; justify-content: center" href="/pages/checkout.html" data-t="cart-view">View Cart →</a>
+        <a class="bp" style="width: 100%; justify-content: center" href="/checkout" data-t="cart-view">View Cart →</a>
       </div>
     </aside>
 
@@ -2430,32 +2461,63 @@
       <button class="sbb-btn-add" id="sbb-add-btn" onclick="handleAddCartClick()">ADD TO CART</button>
     </div>
 
+    <footer>
+      <div class="fg">
+        <div class="fbr">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <img src="/logos/mega-logo.jpg" alt="Logo" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;" onerror="this.style.display = 'none'" />
+            <div class="logo-wordmark">MEGA <span>FURNITURE</span></div>
+          </div>
+          <p data-ar="أثاث فاخر للبيوت المصرية · تأسست 2020 · خبرة منذ 1998" data-en="Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998">
+            Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998
+          </p>
+          <div class="f-soc" style="display: flex; gap: 12px; margin-top: 16px;">
+            <a href="https://www.instagram.com/megafurniturehome/" target="_blank" title="Instagram" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="https://www.facebook.com/MegaFurnitureHome?locale=ar_AR" target="_blank" title="Facebook" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" title="TikTok" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
+          </div>
+        </div>
+        <div class="fc">
+          <h4 data-ar="تسوق" data-en="Shop">Shop</h4>
+          <ul>
+            <li><a href="/shop?cat=living-room" data-ar="غرف معيشة" data-en="Living Rooms">Living Rooms</a></li>
+            <li><a href="/shop?cat=bedroom" data-ar="غرف نوم" data-en="Bedrooms">Bedrooms</a></li>
+            <li><a href="/shop?cat=dining-room" data-ar="سفرة" data-en="Dining Rooms">Dining Rooms</a></li>
+            <li><a href="/shop?cat=office" data-ar="غرف مكتب" data-en="Home Office">Home Office</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="الشركة" data-en="Company">Company</h4>
+          <ul>
+            <li><a href="/about" data-ar="عن ميجا" data-en="About Us">About Us</a></li>
+            <li><a href="https://www.instagram.com/megafurniturehome/" target="_blank" data-ar="انستجرام" data-en="Instagram">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" data-ar="تيك توك" data-en="TikTok">TikTok</a></li>
+            <li><a href="/videos" data-ar="فيديوهات" data-en="Videos">Videos</a></li>
+          </ul>
+        </div>
+        <div class="fc">
+          <h4 data-ar="دعم" data-en="Support">Support</h4>
+          <ul>
+            <li><a href="/contact" data-ar="الاسترجاع" data-en="Returns">Returns</a></li>
+            <li><a href="/about#warranty" data-ar="الضمان" data-en="Warranty">Warranty</a></li>
+            <li><a href="/contact" data-ar="واتساب" data-en="WhatsApp">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fb">
+        <span data-ar="© 2026 ميجا فرنيتشر." data-en="© 2026 Mega Furniture.">© 2026 Mega Furniture.</span>
+        <span data-ar="صُنع لمصر" data-en="Made for Egypt">Made for Egypt</span>
+      </div>
+    </footer>
+
     <!-- FLOATING WA & TOP BUTTONS -->
     <div class="fbtns">
       <button class="fbtn topb" id="topb" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑</button>
-      <div class="wa-menu-container">
-        <div class="wa-menu" id="wa-menu">
-          <a href="https://wa.me/201040454343" target="_blank" class="wa-menu-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            <span data-t="wa-menu-sales">Sales Team</span>
-          </a>
-          <a href="https://wa.me/201105343715" target="_blank" class="wa-menu-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            <span data-t="wa-menu-web">Web Support</span>
-          </a>
-        </div>
-        <button
-          onclick="toggleWaMenu(event)"
-          class="fbtn wab"
-          aria-label="WhatsApp"
-        >
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-            <path
-              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-            />
-          </svg>
-        </button>
-      </div>
+      <a onclick="try{fbq('track', 'Contact');}catch(e){}" href="https://wa.me/201559518088" target="_blank" class="fbtn wab" aria-label="WhatsApp" >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
     </div>
 
     <!-- TOAST MESSAGE -->
@@ -2506,6 +2568,8 @@
           "nav-custom-work": "شغل عمولة",
           "nav-contact": "تواصل",
           "cart-title": "السلة",
+          "call-price": "اتصل للسعر",
+          "cart-items-label": "منتجات في السلة",
           "cart-empty": "السلة فاضية",
           "cart-empty-sub": "تسوق حاجة حلوة!",
           "cart-count": "منتج في سلتك",
@@ -2576,6 +2640,8 @@
           "nav-contact": "Contact",
           "nav-track": "Track Order",
           "cart-title": "Your Cart",
+          "call-price": "Call for Price",
+          "cart-items-label": "items in your cart",
           "cart-empty": "Your cart is empty",
           "cart-empty-sub": "Find something you love!",
           "cart-count": "items in your cart",
@@ -2641,6 +2707,9 @@
         document.querySelectorAll("[data-t]").forEach((el) => {
           const k = el.getAttribute("data-t");
           if (TRANS[l][k] !== undefined) el.innerHTML = TRANS[l][k];
+        });
+        document.querySelectorAll("[data-ar][data-en]").forEach((el) => {
+          el.textContent = el.getAttribute(l === "ar" ? "data-ar" : "data-en") || el.textContent;
         });
 
         const b = document.getElementById("langbtn");
@@ -2787,16 +2856,7 @@
             const idx = cart.indexOf(item);
             if (item.isBundle) {
               const bundleTag = t("bundle-tag");
-              const countLbl = t("bundle-includes").replace("{n}", item.itemCount || 0);
-              const itemsList = (item.items || [])
-                .map(
-                  (p) =>
-                    "· " +
-                    (lang === "ar"
-                      ? p.nameAr || p.nameEn
-                      : p.nameEn || p.nameAr),
-                )
-                .join("<br>");
+              const bundleItemNames = lang === "ar" ? (item.bundleItemsAr || item.bundleItemsEn || []) : (item.bundleItemsEn || item.bundleItemsAr || []); const countLbl = t("bundle-includes").replace("{n}", bundleItemNames.length || 0); const itemsList = bundleItemNames.map(name => "· " + name).join("<br>");
               const priceStr =
                 unitPrice > 0
                   ? item.qty > 1
@@ -2905,7 +2965,7 @@
 
       async function initProductPage() {
         if (!productId) {
-          window.location.href = "shop.html";
+          window.location.href="/shop";
           return;
         }
 
@@ -2924,6 +2984,44 @@
 
           document.title = "Mega Furniture | " + (lang === "ar" ? prodData.nameAr || prodData.nameEn : prodData.nameEn || prodData.nameAr);
 
+          // ── SEO: Update OG meta tags and JSON-LD (client-side, for in-browser) ──
+          try {
+            const seoName = prodData.nameEn || prodData.nameAr || "Product";
+            const seoDesc = (prodData.descriptionEn || prodData.descriptionAr || "").substring(0, 200);
+            const seoImg = prodData.mainPhoto
+              ? (prodData.mainPhoto.startsWith("http") ? prodData.mainPhoto : window.location.origin + "/uploads/" + prodData.mainPhoto)
+              : "";
+            const seoUrl = window.location.href;
+            const seoPrice = prodData.salePrice || prodData.price || 0;
+
+            function setMeta(prop, val) {
+              let el = document.querySelector('meta[property="' + prop + '"]') || document.querySelector('meta[name="' + prop + '"]');
+              if (!el) { el = document.createElement("meta"); el.setAttribute(prop.startsWith("twitter") ? "name" : "property", prop); document.head.appendChild(el); }
+              el.setAttribute("content", val);
+            }
+            setMeta("og:title", seoName + " | Mega Furniture");
+            setMeta("og:description", seoDesc);
+            setMeta("og:image", seoImg);
+            setMeta("og:url", seoUrl);
+            setMeta("og:type", "product");
+            setMeta("og:site_name", "Mega Furniture");
+            setMeta("twitter:card", "summary_large_image");
+            setMeta("twitter:title", seoName + " | Mega Furniture");
+            setMeta("twitter:description", seoDesc);
+            setMeta("twitter:image", seoImg);
+
+            // JSON-LD structured data
+            let ldEl = document.getElementById("product-jsonld");
+            if (!ldEl) { ldEl = document.createElement("script"); ldEl.type = "application/ld+json"; ldEl.id = "product-jsonld"; document.head.appendChild(ldEl); }
+            ldEl.textContent = JSON.stringify({
+              "@context": "https://schema.org", "@type": "Product",
+              name: seoName, image: seoImg ? [seoImg] : [], description: seoDesc,
+              brand: { "@type": "Brand", name: "Mega Furniture" },
+              offers: { "@type": "Offer", url: seoUrl, priceCurrency: "EGP", price: seoPrice,
+                availability: prodData.stock !== 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock" }
+            });
+          } catch(seoErr) { console.warn("SEO meta update failed:", seoErr); }
+
           // Find default selectors
           if (prodData.variants && prodData.variants.length) {
             const legacy = variantsToLegacy(prodData.variants);
@@ -2941,12 +3039,21 @@
           renderProductDetails();
           renderSimilarProducts();
           loadStats();
+          try {
+            metaTrack('ViewContent', {
+              content_name: prodData.nameEn || prodData.nameAr || 'Product',
+              content_ids: [prodData.id],
+              content_type: 'product',
+              value: prodData.salePrice || prodData.price || 0,
+              currency: 'EGP'
+            });
+          } catch(e) {}
         } catch (e) {
           document.getElementById("product-details-content").innerHTML = `
             <div style="grid-column: span 2; text-align: center; padding: 100px 0; color: #ff4757">
-              <h3 style="font-family:'Fraunces',serif; font-size:24px; margin-bottom:12px;">Product Error</h3>
+              <h3 style="font-family:'Fraunces',serif; font-size:24px; margin-bottom:12px;" data-t="prod-err">Product Error</h3>
               <p>${e.message}</p>
-              <a href="shop.html" class="bp" style="margin: 20px auto 0; display:inline-block; max-width:200px;">Back to Shop</a>
+              <a href="/shop" class="bp" style="margin: 20px auto 0; display:inline-block; max-width:200px;" data-t="err-back">Back to Shop</a>
             </div>
           `;
         }
@@ -2973,9 +3080,9 @@
         const shopText = t("breadcrumb-shop");
         const prodName = lang === "ar" ? prodData.nameAr || prodData.nameEn : prodData.nameEn || prodData.nameAr;
 
-        let html = `<a href="../mega-furniture.html">${homeText}</a> <span>/</span> <a href="shop.html">${shopText}</a>`;
+        let html = `<a href="/">${homeText}</a> <span>/</span> <a href="/shop">${shopText}</a>`;
         if (categoryName) {
-          html += ` <span>/</span> <a href="shop.html?cat=${categorySlug}">${categoryName}</a>`;
+          html += ` <span>/</span> <a href="/shop?cat=${categorySlug}">${categoryName}</a>`;
         }
         html += ` <span>/</span> <span style="color:var(--t); font-weight:500">${prodName}</span>`;
         container.innerHTML = html;
@@ -3667,7 +3774,7 @@
             
             return `
               <div class="room-product-card" style="background: var(--s2); border: 1px solid var(--b); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px;">
-                <a href="product.html?id=${p.id}" style="text-decoration: none; color: inherit;">
+                <a href="/product?id=${p.id}" style="text-decoration: none; color: inherit;">
                   <img src="${iu(pPhoto)}" alt="${pName}" style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; background: var(--s3);" />
                   <h4 style="font-size: 14px; font-weight: 600; margin: 8px 0 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 38px;">${pName}</h4>
                 </a>
@@ -3813,7 +3920,6 @@
                   <span>WhatsApp</span>
                 </button>
               </div>
-            </div>
             </div>
           </div>
 
@@ -4423,6 +4529,28 @@
         document.body.appendChild(overlay);
       }
 
+      function toggleWish(id, e) {
+        if (e) e.stopPropagation();
+        let w = getWish();
+        const i = w.indexOf(id);
+        if (i >= 0) w.splice(i, 1);
+        else w.push(id);
+        setWish(w);
+        renderWishBtn();
+        if (typeof toast === "function") {
+          toast(i >= 0 ? (lang === "ar" ? "تم الحذف من المفضلة" : "Removed from wishlist") : (lang === "ar" ? "تمت الإضافة للمفضلة" : "Saved to wishlist"));
+        }
+      }
+      function renderWishBtn() {
+        const btn = document.getElementById("prod-wish-btn");
+        if (!btn || !prodData) return;
+        const w = getWish();
+        const wOn = w.includes(prodData.id);
+        btn.innerHTML = wOn
+          ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
+          : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+      }
+
       function scrollToReviews() {
         const block = document.getElementById("reviews-block");
         if (block) {
@@ -4453,27 +4581,7 @@
         localStorage.setItem("megaWish", JSON.stringify(a));
         if (typeof updWbadge === "function") updWbadge();
       }
-      function toggleWish(id, e) {
-        if (e) e.stopPropagation();
-        let w = getWish();
-        const i = w.indexOf(id);
-        if (i >= 0) w.splice(i, 1);
-        else w.push(id);
-        setWish(w);
-        renderWishBtn();
-        if (typeof showToast === "function") {
-          showToast("", i >= 0 ? "Removed" : "Saved");
-        }
-      }
-      function renderWishBtn() {
-        const btn = document.getElementById("prod-wish-btn");
-        if (!btn || !prodData) return;
-        const w = getWish();
-        const wOn = w.includes(prodData.id);
-        btn.innerHTML = wOn
-          ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
-          : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
-      }
+      
 
       /* ── ADD TO CART LOGIC ── */
       async function handleAddCartClick() {
@@ -4497,6 +4605,16 @@
         // Get final price
         const priceInfo = getCalculatedPrice(prodData, selectedSize, selectedColor);
         const finalUnitPrice = priceInfo.hasDiscount ? priceInfo.salePrice : priceInfo.price;
+        try {
+          metaTrack('AddToCart', {
+            content_name: prodData.nameEn || prodData.nameAr || 'Product',
+            content_ids: [prodData.id],
+            content_type: 'product',
+            value: finalUnitPrice * qty,
+            currency: 'EGP',
+            num_items: qty
+          });
+        } catch(e) {}
 
         // Custom size/color label formatting
         const legacy = variantsToLegacy(prodData.variants || []);
@@ -4632,6 +4750,8 @@
       function handleWhatsAppOrder() {
         const qtyInp = document.getElementById("purchase-qty-input");
         const qty = qtyInp ? parseInt(qtyInp.value) || 1 : 1;
+        const _sType = prodData.sideChoiceType || (prodData.sideChoiceEnabled ? "orientation" : "none");
+        const _sOpts = prodData.sideOptions || (prodData.sideChoiceEnabled ? ["left", "right"] : []);
 
         const priceInfo = getCalculatedPrice(prodData, selectedSize, selectedColor);
         const finalUnitPrice = priceInfo.hasDiscount ? priceInfo.salePrice : priceInfo.price;
@@ -4684,8 +4804,8 @@
           message += `- Product Link: ${pageUrl}`;
         }
 
-        const waUrl = `https://wa.me/201040454343?text=${encodeURIComponent(message)}`;
-        window.open(waUrl, "_blank");
+        const waUrl = `https://wa.me/201559518088?text=${encodeURIComponent(message)}`;
+        metaTrack('Contact'); window.open(waUrl, "_blank");
       }
 
       /* ── REVIEWS INTERACTION HELPERS ── */
@@ -4877,7 +4997,7 @@
             const catLabel = p.categories && p.categories.length ? String(p.categories[0]).toUpperCase() : "";
 
             return `
-              <a href="product.html?id=${p.id}" class="pcard">
+              <a href="/product?id=${p.id}" class="pcard">
                 <div class="pc-img-wrap">
                   ${hasDisc ? `<div class="discount-bar-red">${discLabelText}</div>` : ""}
                   <img src="${iu(cardImg)}" alt="${nm}" loading="lazy" onerror="this.src='bg.jpg'" />
@@ -4966,7 +5086,7 @@
           if (product.discountPercent != null) {
             salePrice = Math.round(basePrice * (1 - product.discountPercent / 100));
           } else {
-            const diff = product.originalPrice - product.salePrice;
+            const diff = (product.originalPrice || product.price) - product.salePrice;
             salePrice = Math.max(0, basePrice - diff);
           }
           return {
@@ -5002,8 +5122,8 @@
             if (lt) {
               let finalLink = ann.link;
               const isSale = msg.toLowerCase().match(/sale|discount|offer|خصم|عرض|تخفيض/);
-              if (isSale && finalLink.includes("shop.html")) {
-                finalLink = "offers.html";
+              if (isSale && (finalLink.includes("shop.html") || finalLink.includes("/shop"))) {
+                finalLink = "/offers";
               }
               html += ` <a href="${finalLink}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
             }

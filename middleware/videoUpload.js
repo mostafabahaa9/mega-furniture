@@ -40,7 +40,7 @@ const allowedVideoExts = [".mp4", ".webm", ".mov", ".avi", ".mkv"];
 
 const videoFileFilter = (req, file, cb) => {
   const ext = path.extname(file.originalname || "").toLowerCase();
-  if (!allowedVideoTypes.includes(file.mimetype) && !allowedVideoExts.includes(ext)) {
+  if (!allowedVideoTypes.includes(file.mimetype) || !allowedVideoExts.includes(ext)) {
     return cb(
       new Error("Invalid file type. Only video files (MP4, WebM, MOV, AVI, MKV) are allowed."),
       false,

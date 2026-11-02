@@ -5,6 +5,7 @@ const { read, write } = require("../utils/db");
 const { adminAuth } = require("../middleware/auth");
 const { sendMail } = require("../utils/mail");
 const { notifyAdmin } = require("../utils/notify");
+const { trackPurchase } = require("../utils/metaCapi");
 const couponsRouter = require("./coupons");
 
 const VALID_STATUSES = [
@@ -143,7 +144,7 @@ function buildStatusEmail(order, newStatus) {
         <!-- CTA -->
         <tr><td style="background:#ffffff;padding:0 36px 36px;text-align:center">
           <p style="color:#6A6055;font-size:13px;margin:0 0 16px">Questions about your order? Reach out to us:</p>
-          <a href="https://wa.me/${process.env.WHATSAPP_NUMBER || "201040454343"}" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 28px;border-radius:100px">
+          <a href="https://wa.me/${process.env.WHATSAPP_NUMBER || "201559518088"}" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 28px;border-radius:100px">
             Contact Support on WhatsApp
           </a>
         </td></tr>
@@ -152,7 +153,7 @@ function buildStatusEmail(order, newStatus) {
           newStatus === "delivered"
             ? (() => {
                 const base = process.env.BASE_URL || "http://localhost:3001";
-                const fullUrl = `${base}/pages/reviews.html?tracking=${track}&name=${encodeURIComponent(name)}`;
+                const fullUrl = `${base}/reviews?tracking=${track}&name=${encodeURIComponent(name)}`;
                 const labels = { 1: "Poor", 5: "Great" };
                 const starCells = [5, 4, 3, 2, 1]
                   .map((n) => {
@@ -310,7 +311,7 @@ function buildCustomerInvoiceEmail(order) {
         <!-- CTA -->
         <tr><td style="background:#fff;padding:0 36px 32px;text-align:center;border-top:1px solid #f0ede6">
           <p style="color:#6A6055;font-size:13px;margin:0 0 14px">Need assistance? Reach out to our customer support:</p>
-          <a href="https://wa.me/${process.env.WHATSAPP_NUMBER || "201040454343"}" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 28px;border-radius:100px">
+          <a href="https://wa.me/${process.env.WHATSAPP_NUMBER || "201559518088"}" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 28px;border-radius:100px">
             Contact Support on WhatsApp
           </a>
         </td></tr>
@@ -401,6 +402,7 @@ router.post("/orders", async (req, res) => {
   }
 
   const rawProducts = read("products") || [];
+  const rawBundles = read("bundles") || [];
   const zones = read("shipping") || [];
   const now = new Date();
   const discounts = (read("discounts") || []).filter(
@@ -410,12 +412,35 @@ router.post("/orders", async (req, res) => {
   let subtotal = 0;
   const enriched = [];
   for (const it of items) {
+    const qty = Math.max(1, Number(it.quantity || it.qty) || 1);
+    
+    if (it.isBundle) {
+        const b = rawBundles.find(x => x.id === (it.bundleId || it.id));
+        if (!b) return res.status(400).json({ error: `Invalid bundle in order: ${it.bundleId || it.id}` });
+        
+        let realPrice = Number(it.price) || Number(b.bundlePrice) || 0; // Trusting client for now due to custom items
+        subtotal += realPrice * qty;
+        
+        enriched.push({
+            id: it.id,
+            bundleId: it.bundleId,
+            isBundle: true,
+            nameAr: it.nameAr || b.nameAr || "",
+            nameEn: it.nameEn || b.nameEn || "",
+            price: realPrice,
+            quantity: qty,
+            costAtOrder: 0,
+            bundleItemsAr: it.bundleItemsAr || [],
+            bundleItemsEn: it.bundleItemsEn || []
+        });
+        continue;
+    }
+
     const pId = it.productId || it.id;
     const p = rawProducts.find((x) => x.id === pId);
     if (!p) {
       return res.status(400).json({ error: `Invalid product in order: ${pId}` });
     }
-    const qty = Math.max(1, Number(it.quantity || it.qty) || 1);
 
     // Always recalculate real price from database catalog
     let realPrice = Number(p.price) || 0;
@@ -471,16 +496,20 @@ router.post("/orders", async (req, res) => {
     });
   }
 
-  let shippingFee = 0;
   let shippingZone = null;
   if (shippingZoneId) {
     shippingZone = zones.find((z) => z.id === shippingZoneId);
-    shippingFee = shippingZone ? Number(shippingZone.fee) || 0 : 0;
-  }
-  if (!shippingFee) {
+  } else {
     const m = matchShippingFee(city, zones);
-    shippingFee = m.fee;
     shippingZone = m.zone;
+  }
+
+  let shippingFee = 0;
+  if (subtotal > 0) {
+    if (subtotal < 10000) shippingFee = 300;
+    else if (subtotal < 20000) shippingFee = 500;
+    else if (subtotal < 50000) shippingFee = 1300;
+    else shippingFee = 2300;
   }
 
   let coupon = null;
@@ -741,10 +770,23 @@ router.post("/orders", async (req, res) => {
     );
   }
 
+  // Server-side Meta CAPI Purchase event (bypasses ad blockers)
+  let purchaseEventId;
+  try {
+    purchaseEventId = trackPurchase({
+      order,
+      ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+      userAgent: req.headers["user-agent"],
+    });
+  } catch (e) {
+    console.error("[CAPI] trackPurchase error:", e.message);
+  }
+
   res.status(201).json({
     trackingCode: order.trackingCode,
     id: order.id,
     total: order.total,
+    eventId: purchaseEventId,
     clientSecret,
     publicKey: process.env.PAYMOB_PUBLIC_KEY
   });
@@ -1146,7 +1188,7 @@ router.get("/admin/orders/:id/export", adminAuth, async (req, res) => {
 });
 
 // --- DEBUG ROUTE ---
-router.get("/paymob-logs", (req, res) => {
+router.get("/paymob-logs", adminAuth, (req, res) => {
   const db = read("orders_logs") || [];
   res.json(db);
 });

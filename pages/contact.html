@@ -852,7 +852,7 @@
         margin-bottom: 40px;
       }
       .copts {
-        display: grid;
+        display: none;
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
         margin-bottom: 60px;
@@ -900,6 +900,103 @@
         display: flex;
         align-items: center;
         gap: 4px;
+      }
+      /* PRIMARY BUSINESS CONTACT */
+      .business-contact {
+        max-width: 760px;
+        margin: 0 auto 64px;
+        padding: 0 24px;
+      }
+      .business-contact-card {
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        background: var(--s);
+        border: 1px solid var(--b);
+        border-radius: 24px;
+        padding: clamp(28px, 5vw, 48px);
+        box-shadow: var(--sh);
+      }
+      .business-contact-card::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        top: -180px;
+        right: -100px;
+        border-radius: 50%;
+        background: rgba(245, 166, 35, 0.12);
+        pointer-events: none;
+      }
+      .business-kicker {
+        position: relative;
+        color: var(--o);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .business-contact-card h2 {
+        position: relative;
+        font-family: "Fraunces", serif;
+        font-size: clamp(30px, 5vw, 42px);
+        font-weight: 400;
+        margin: 10px 0 8px;
+        color: var(--t);
+      }
+      .business-contact-card > p {
+        position: relative;
+        max-width: 440px;
+        margin: 0 auto 26px;
+        color: var(--tm);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .business-primary {
+        position: relative;
+        display: block;
+        text-decoration: none;
+        background: var(--s2);
+        border: 1px solid var(--bh);
+        border-radius: 18px;
+        padding: 24px 20px;
+        color: var(--t);
+        transition: transform 0.2s, background 0.2s;
+      }
+      .business-primary:hover {
+        background: var(--ol);
+        transform: translateY(-2px);
+      }
+      .business-primary-label {
+        display: block;
+        color: var(--o);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .business-primary-number {
+        display: block;
+        font-family: "Fraunces", serif;
+        font-size: clamp(30px, 6vw, 44px);
+        font-weight: 400;
+        letter-spacing: 0.03em;
+        margin: 5px 0 12px;
+      }
+      .business-primary-actions {
+        display: inline-flex;
+        gap: 16px;
+        color: var(--tm);
+        font-size: 13px;
+      }
+      .business-email {
+        position: relative;
+        display: inline-block;
+        margin-top: 22px;
+        color: var(--o);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
       }
       /* MAIN LAYOUT */
       .cmain {
@@ -1423,7 +1520,7 @@
           padding: 40px 20px 0;
         }
         .copts {
-          grid-template-columns: 1fr;
+          display: none;
         }
         .cmain {
           grid-template-columns: 1fr;
@@ -1445,6 +1542,28 @@
         }
         .frow {
           grid-template-columns: 1fr;
+        }
+      }
+      /* Keep the contact journey readable on tablets and narrow desktop windows. */
+      @media (max-width: 1100px) {
+        .cmain {
+          grid-template-columns: 1fr;
+          max-width: 760px;
+          gap: 28px;
+        }
+        .copts {
+          display: none;
+        }
+        .copts .copt:not(:first-child) {
+          display: none;
+        }
+        .copt {
+          min-height: 164px;
+          padding: 26px;
+        }
+        .cmap,
+        .cfaq {
+          max-width: 760px;
         }
       }
       @media (max-width: 400px) {
@@ -1478,13 +1597,52 @@
         }
         .copts {
           gap: 10px;
+          margin-bottom: 32px;
+        }
+        .copt {
+          min-height: 0;
+          padding: 22px;
+        }
+        .copt .ico {
+          font-size: 30px;
+        }
+        .copt h3 {
+          font-size: 18px;
+        }
+        .copt p,
+        .copt .action {
+          font-size: 14px;
         }
         .cmain {
           padding: 0 16px 48px;
           gap: 20px;
         }
         .cform {
-          padding: 20px 16px;
+          padding: 26px 20px;
+          border-radius: 18px;
+        }
+        .crooms {
+          gap: 16px;
+        }
+        .room {
+          padding: 20px;
+        }
+        .business-contact {
+          margin-bottom: 40px;
+          padding: 0 16px;
+        }
+        .business-contact-card {
+          border-radius: 20px;
+          padding: 28px 20px;
+        }
+        .business-contact-card > p {
+          font-size: 14px;
+        }
+        .business-primary {
+          padding: 22px 14px;
+        }
+        .business-primary-actions {
+          gap: 12px;
         }
         .frow {
           grid-template-columns: 1fr;
@@ -1514,6 +1672,25 @@
         }
       }
     </style>
+  
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1236448993498775');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1236448993498775&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    <script src="/pages/metaTracking.js"></script>
   </head>
   <body>
     <!-- GENERAL ANNOUNCEMENT BAR -->
@@ -1548,7 +1725,7 @@
       <span id="ti"></span><span id="tm2"></span>
     </div>
 
-    <script src="header.js"></script>
+    <script src="/pages/header.js"></script>
 
     <div class="ov" id="cov" onclick="closeCart()"></div>
     <aside class="cpa" id="cpa">
@@ -1558,7 +1735,7 @@
       </div>
       <div class="clist" id="clist"></div>
       <div class="cftr" id="cftr" style="display: none">
-        <a class="bp bf" href="shop.html" data-t="cart-view"
+        <a class="bp bf" href="/checkout" data-t="cart-view"
           >عرض السلة والطلب ←</a
         >
       </div>
@@ -1573,7 +1750,7 @@
           بيرد بسرعة.
         </p>
         <div class="copts">
-          <a class="copt" href="https://wa.me/201040454343" target="_blank">
+          <a class="copt" onclick="try{fbq('track', 'Contact');}catch(e){}" href="https://wa.me/201559518088" target="_blank">
             <div class="ico">
               <svg
                 width="16"
@@ -1597,7 +1774,7 @@
             </p>
             <div class="action" data-t="wa-action">تكلم معانا ←</div>
           </a>
-          <a class="copt" href="tel:+201040454343">
+          <a class="copt" href="tel:+201559518088">
             <div class="ico">
               <svg
                 width="16"
@@ -1619,7 +1796,7 @@
             <p data-t="call-desc">
               اتكلم مع مستشار أثاث.
             </p>
-            <div class="action">+20 104 045 4343 →</div>
+            <div class="action">+20 155 951 8088 →</div>
           </a>
           <a
             class="copt"
@@ -1652,6 +1829,20 @@
           </a>
         </div>
       </div>
+
+      <section class="business-contact" aria-labelledby="business-info-title">
+        <div class="business-contact-card">
+          <div class="business-kicker" data-t="business-kicker">Official Business Contact</div>
+          <h2 id="business-info-title" data-t="business-title">Talk to <span style="color:var(--o);font-style:italic;">Mega</span></h2>
+          <p data-t="business-subtitle">For orders, delivery updates, warranty and support.</p>
+          <a class="business-primary" href="https://wa.me/201559518088" target="_blank" onclick="try{fbq('track', 'Contact');}catch(e){}">
+            <span class="business-primary-label" data-t="business-main-label">Main sales & WhatsApp</span>
+            <strong class="business-primary-number">01559518088</strong>
+            <span class="business-primary-actions"><span data-t="business-call">Call</span><span aria-hidden="true">•</span><span data-t="business-whatsapp">WhatsApp</span></span>
+          </a>
+          <a class="business-email" href="mailto:megastorefurniture@gmail.com">megastorefurniture@gmail.com</a>
+        </div>
+      </section>
 
       <div class="cmain rev">
         <div class="cform">
@@ -1835,7 +2026,7 @@
                 </svg>
                 <span data-t="team-call">اتصل</span></a
               >
-              <a class="rlink" href="https://wa.me/201080608497" target="_blank"
+              <a class="rlink" onclick="try{fbq('track', 'Contact');}catch(e){}" href="https://wa.me/201080608497" target="_blank"
                 ><svg
                   width="16"
                   height="16"
@@ -1938,7 +2129,7 @@
                 </svg>
                 <span data-t="team-call">اتصل</span></a
               >
-              <a class="rlink" href="https://wa.me/201006536575" target="_blank"
+              <a class="rlink" onclick="try{fbq('track', 'Contact');}catch(e){}" href="https://wa.me/201006536575" target="_blank"
                 ><svg
                   width="16"
                   height="16"
@@ -1958,42 +2149,41 @@
               >
             </div>
           </div>
-        </div>
-                <div class="room">
+          <div class="room">
             <div class="rtop">
               <h3 data-t="team-sales-name">فريق المبيعات</h3>
               <span class="rbadge" style="background:var(--o);color:white;" data-t="team-badge">قسم</span>
             </div>
             <div class="rdet">
               <p>
-                <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg></span>01040454343
+                <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg></span>01559518088
               </p>
             </div>
             <div class="rlinks">
-              <a class="rlink" href="tel:+201040454343"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg> <span data-t="team-call">اتصل</span></a>
-              <a class="rlink" href="https://wa.me/201040454343" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> <span data-t="team-wa">واتساب</span></a>
+              <a class="rlink" href="tel:+201559518088"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg> <span data-t="team-call">اتصل</span></a>
+              <a class="rlink" onclick="try{fbq('track', 'Contact');}catch(e){}" href="https://wa.me/201559518088" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> <span data-t="team-wa">واتساب</span></a>
             </div>
           </div>
-          <div class="room">
-            <div class="rtop">
-              <h3 data-t="team-web-name">دعم الموقع</h3>
-              <span class="rbadge" style="background:var(--o);color:white;" data-t="team-badge">قسم</span>
-            </div>
-            <div class="rdet">
-              <p>
-                <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg></span>01105343715
-              </p>
-            </div>
-            <div class="rlinks">
-              <a class="rlink" href="tel:+201105343715"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg> <span data-t="team-call">اتصل</span></a>
-              <a class="rlink" href="https://wa.me/201105343715" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> <span data-t="team-wa">واتساب</span></a>
-            </div>
-          </div>
+          
+        </div>
         </div>
 
       <div class="cmap rev">
         <h2 data-t="map-h2">مواقعنا على الخريطة</h2>
         <div class="maptiles">
+
+          <a
+            class="maptile"
+            href="https://maps.app.goo.gl/qPmfiDbRcPBmApLX7?g_st=ic"
+            target="_blank"
+          >
+            <div class="maptile-icon">🏭</div>
+            <div class="maptile-info">
+              <span class="maptile-badge" data-t="loc1-badge" style="background:var(--p);color:white;">مصنع</span>
+              <h3 data-t="loc1-name">المصنع الرئيسي</h3>
+              <p data-t="factory-hours">مفتوح كل يوم • ١٠ص - ٥م</p>
+            </div>
+          </a>
 
           <a
             class="maptile"
@@ -2032,7 +2222,7 @@
       <div class="fg">
         <div class="fbr">
           <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-            <img src="../logos/mega-logo.jpg" alt="Logo" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;" onerror="this.style.display = 'none'" />
+            <img src="/logos/mega-logo.jpg" alt="Logo" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;" onerror="this.style.display = 'none'" />
             <div class="logo-wordmark">MEGA <span>FURNITURE</span></div>
           </div>
           <p data-ar="أثاث فاخر للبيوت المصرية · تأسست 2020 · خبرة منذ 1998" data-en="Premium furniture for Egyptian homes · Est. 2020 · Experience since 1998">
@@ -2040,34 +2230,34 @@
           </p>
           <div class="f-soc" style="display: flex; gap: 12px; margin-top: 16px;">
             <a href="https://www.instagram.com/megafurniturehome/" target="_blank" title="Instagram" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-            <a href="https://www.facebook.com/search/top?q=mega%20furniture&locale=ar_AR" target="_blank" title="Facebook" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="https://www.facebook.com/MegaFurnitureHome?locale=ar_AR" target="_blank" title="Facebook" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
             <a href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" title="TikTok" style="color: var(--tm); transition: color 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
           </div>
         </div>
         <div class="fc">
           <h4 data-ar="تسوق" data-en="Shop">Shop</h4>
           <ul>
-            <li><a href="../pages/shop.html?cat=living-room" data-ar="غرف معيشة" data-en="Living Rooms">Living Rooms</a></li>
-            <li><a href="../pages/shop.html?cat=bedroom" data-ar="غرف نوم" data-en="Bedrooms">Bedrooms</a></li>
-            <li><a href="../pages/shop.html?cat=dining" data-ar="سفرة" data-en="Dining Rooms">Dining Rooms</a></li>
-            <li><a href="../pages/shop.html?cat=home-office" data-ar="غرف مكتب" data-en="Home Office">Home Office</a></li>
+            <li><a href="/shop?cat=living-room" data-ar="غرف معيشة" data-en="Living Rooms">Living Rooms</a></li>
+            <li><a href="/shop?cat=bedroom" data-ar="غرف نوم" data-en="Bedrooms">Bedrooms</a></li>
+            <li><a href="/shop?cat=dining-room" data-ar="سفرة" data-en="Dining Rooms">Dining Rooms</a></li>
+            <li><a href="/shop?cat=office" data-ar="غرف مكتب" data-en="Home Office">Home Office</a></li>
           </ul>
         </div>
         <div class="fc">
           <h4 data-ar="الشركة" data-en="Company">Company</h4>
           <ul>
-            <li><a href="../pages/about.html" data-ar="عن ميجا" data-en="About Us">About Us</a></li>
+            <li><a href="/about" data-ar="عن ميجا" data-en="About Us">About Us</a></li>
             <li><a href="https://www.instagram.com/megafurniturehome/" target="_blank" data-ar="انستجرام" data-en="Instagram">Instagram</a></li>
             <li><a href="https://www.tiktok.com/@khaledmohyrashdan" target="_blank" data-ar="تيك توك" data-en="TikTok">TikTok</a></li>
-            <li><a href="../pages/videos.html" data-ar="فيديوهات" data-en="Videos">Videos</a></li>
+            <li><a href="/videos" data-ar="فيديوهات" data-en="Videos">Videos</a></li>
           </ul>
         </div>
         <div class="fc">
           <h4 data-ar="دعم" data-en="Support">Support</h4>
           <ul>
-            <li><a href="../pages/contact.html" data-ar="الاسترجاع" data-en="Returns">Returns</a></li>
-            <li><a href="../pages/about.html#warranty" data-ar="الضمان" data-en="Warranty">Warranty</a></li>
-            <li><a href="../pages/contact.html" data-ar="واتساب" data-en="WhatsApp">WhatsApp</a></li>
+            <li><a href="/contact" data-ar="الاسترجاع" data-en="Returns">Returns</a></li>
+            <li><a href="/about#warranty" data-ar="الضمان" data-en="Warranty">Warranty</a></li>
+            <li><a href="/contact" data-ar="واتساب" data-en="WhatsApp">WhatsApp</a></li>
           </ul>
         </div>
       </div>
@@ -2085,29 +2275,11 @@
       >
         ↑
       </button>
-      <div class="wa-menu-container">
-        <div class="wa-menu" id="wa-menu">
-          <a href="https://wa.me/201040454343" target="_blank" class="wa-menu-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            <span data-t="wa-menu-sales">Sales Team</span>
-          </a>
-          <a href="https://wa.me/201105343715" target="_blank" class="wa-menu-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:8px;flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            <span data-t="wa-menu-web">Web Support</span>
-          </a>
-        </div>
-        <button
-          onclick="toggleWaMenu(event)"
-          class="fbtn wab"
-          aria-label="WhatsApp"
-        >
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-            <path
-              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-            />
-          </svg>
-        </button>
-      </div>
+      <a onclick="try{fbq('track', 'Contact');}catch(e){}" href="https://wa.me/201559518088" target="_blank" class="fbtn wab" aria-label="WhatsApp" >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
     </div>
 
     <script>
@@ -2172,8 +2344,8 @@
           return;
         }
         const text = `Hello! I'm reaching out via the Mega Furniture website.\n\nName: ${fn} ${ln}\nPhone: ${ph}\nCity: ${city || "Not specified"}\nSubject: ${subj || "General Inquiry"}\n\nMessage:\n${msg || "(no message)"}`;
-        window.open(
-          "https://wa.me/201040454343?text=" + encodeURIComponent(text),
+        metaTrack('Contact', {}, { phone: ph, city: city }); window.open(
+          "https://wa.me/201559518088?text=" + encodeURIComponent(text),
           "_blank",
         );
         showToast("", "Opening WhatsApp...");
@@ -2401,6 +2573,7 @@
           "nav-about": "من نحن",
           "nav-reviews": "آراء",
           "nav-contact": "تواصل",
+          "nav-policies": "السياسات",
           "nav-custom-work": "شغل عمولة",
           "nav-shop-cta": "تسوق الآن",
           "f-warranty": "الضمان ضد عيوب الصناعة",
@@ -2422,6 +2595,7 @@
           "call-h3": "اتصل بينا",
           "call-desc": "اتكلم مع مستشار أثاث.",
           "call-action": "اتصل الآن ←",
+          "team-calls-only": "للمكالمات:",
           "team-sales-name": "فريق المبيعات",
           "team-web-name": "دعم الموقع",
           "team-badge": "قسم",
@@ -2437,6 +2611,12 @@
           "form-h2": "ابعت رسالة",
           "form-sub": "اكتب بياناتك وهنرد عليك عن طريق واتساب في خلال ساعتين.",
           "rooms-h2": "مواقعنا",
+          "business-kicker": "التواصل الرسمي",
+          "business-title": "تواصل مع <span style=\"color:var(--o);font-style:italic;\">ميجا</span>",
+          "business-subtitle": "للطلبات ومتابعة التوصيل والضمان والدعم.",
+          "business-main-label": "المبيعات الرئيسية وواتساب",
+          "business-call": "اتصل",
+          "business-whatsapp": "واتساب",
           "rooms-sub": "المصنع والمعارض — زورنا بنفسك.",
           "map-h2": "مواقعنا على الخريطة",
           "loc1-name": "المصنع الرئيسي",
@@ -2445,11 +2625,14 @@
           "loc2-badge": "معرض",
           "loc3-name": "New Cairo Showroom",
           "loc3-badge": "معرض",
+          "factory-hours": "مفتوح كل يوم • ١٠ص - ٥م",
           "maptile-open": "افتح في خرائط جوجل ←",
           "faq-h2": "أسئلة <span>شايعة</span>",
           "wa-menu-sales": "فريق المبيعات",
           "wa-menu-web": "الدعم والطلبات (الموقع)",
           "cart-title": "السلة",
+          "call-price": "اتصل للسعر",
+          "cart-items-label": "منتجات في السلة",
           "bundle-tag": "طقم",
           "bundle-includes": "يشمل {n} منتجات",
         },
@@ -2473,6 +2656,7 @@
           "nav-about": "About Us",
           "nav-reviews": "Reviews",
           "nav-contact": "Contact",
+          "nav-policies": "Policies",
           "nav-track": "Track Order",
           "nav-custom-work": "Custom Work",
           "nav-shop-cta": "Shop Now",
@@ -2505,6 +2689,12 @@
           "form-sub":
             "Fill in your details and we'll get back to you via WhatsApp within 2 hours.",
           "rooms-h2": "Our Locations",
+          "business-kicker": "Official Business Contact",
+          "business-title": "Talk to <span style=\"color:var(--o);font-style:italic;\">Mega</span>",
+          "business-subtitle": "For orders, delivery updates, warranty and support.",
+          "business-main-label": "Main sales & WhatsApp",
+          "business-call": "Call",
+          "business-whatsapp": "WhatsApp",
           "rooms-sub": "Factory &amp; showrooms — come see us in person.",
           "map-h2": "Our Locations on the Map",
           "loc1-name": "Main Factory",
@@ -2513,9 +2703,11 @@
           "loc2-badge": "Showroom",
           "loc3-name": "New Cairo Showroom",
           "loc3-badge": "Showroom",
+          "factory-hours": "Open daily • 10AM - 5PM",
           "maptile-open": "Open in Google Maps →",
           
           "call-action": "Call now ←",
+          "team-calls-only": "For Calls:",
           "team-sales-name": "Sales Team",
           "team-web-name": "Web Support",
           "team-badge": "Dept",
@@ -2526,6 +2718,7 @@
           "cairo-hours": "Everyday: 12pm - 10pm",
           "hadayek-hours": "Everyday: 12pm - 10pm",
           
+          "team-calls-only": "For Calls:",
           "team-sales-name": "Sales Team",
           "team-web-name": "Web Support",
           "team-badge": "Dept",
@@ -2539,10 +2732,13 @@
           "wa-menu-sales": "Sales Team",
           "wa-menu-web": "Web Support",
           "cart-title": "Your Cart",
+          "call-price": "Call for Price",
+          "cart-items-label": "items in your cart",
           "bundle-tag": "BUNDLE",
           "bundle-includes": "{n} products included",
         },
       };
+      function t(k) { const l = localStorage.getItem("megaLang") || "en"; return (TRANS[l] && TRANS[l][k]) || k; }
       function applyLang(lang) {
         localStorage.setItem("megaLang", lang);
         document.documentElement.lang = lang === "ar" ? "ar" : "en";
@@ -2598,8 +2794,8 @@
             if (lt) {
               let finalLink = ann.link;
               const isSale = msg.toLowerCase().match(/sale|discount|offer|خصم|عرض|تخفيض/);
-              if (isSale && finalLink.includes("shop.html")) {
-                finalLink = "offers.html";
+              if (isSale && (finalLink.includes("shop.html") || finalLink.includes("/shop"))) {
+                finalLink = "/offers";
               }
               html += ` <a href="${finalLink}" style="color:var(--o);text-decoration:none;font-weight:500;margin-inline-start:8px">${lt}</a>`;
             }

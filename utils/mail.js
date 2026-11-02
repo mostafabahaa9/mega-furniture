@@ -20,9 +20,11 @@ async function sendMail({ to, subject, text, html, bcc }) {
     process.env.SMTP_FROM ||
     `Mega Furniture <${process.env.SMTP_USER || "noreply@example.com"}>`;
 
+  const toArr = Array.isArray(to) ? to.map(e => typeof e === 'string' ? { email: e.trim() } : e) : [{ email: String(to).trim() }];
+
   const body = {
     sender: parseFrom(fromStr),
-    to: [{ email: to }],
+    to: toArr,
     subject,
   };
 

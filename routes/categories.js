@@ -48,6 +48,7 @@ function normalizeCategory(c) {
     defaultProductCareEn: c.defaultProductCareEn || "",
     defaultFeatureBanner: c.defaultFeatureBanner || null,
     showInDreamRoom: c.showInDreamRoom !== false,
+    order: c.order !== undefined ? Number(c.order) : 0,
   };
 }
 
@@ -74,15 +75,11 @@ function normalizeIcon({ iconType, iconKey, iconUrl }, existing = {}) {
 }
 
 router.get("/categories", (req, res) => {
-  res.json(read("categories").map(normalizeCategory));
+  res.json(read("categories").map(normalizeCategory).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0)));
 });
 
 router.get("/categories/:parentId/subcategories", (req, res) => {
-  res.json(
-    read("categories")
-      .map(normalizeCategory)
-      .filter((c) => c.parentId === req.params.parentId),
-  );
+  res.json(read("categories").map(normalizeCategory).filter((c) => c.parentId === req.params.parentId).sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0)));
 });
 
 router.post("/admin/categories", adminAuth, (req, res) => {
@@ -112,8 +109,7 @@ router.post("/admin/categories", adminAuth, (req, res) => {
     defaultProductCareAr,
     defaultProductCareEn,
     defaultFeatureBanner,
-    showInDreamRoom,
-  } = req.body;
+    showInDreamRoom, order } = req.body;
   if (!nameAr || !nameEn || !slug)
     return res
       .status(400)
@@ -146,6 +142,7 @@ router.post("/admin/categories", adminAuth, (req, res) => {
     defaultProductCareEn: defaultProductCareEn || "",
     defaultFeatureBanner: defaultFeatureBanner || null,
     showInDreamRoom: showInDreamRoom !== undefined ? showInDreamRoom : true,
+    order: order !== undefined ? Number(order) : 0,
     createdAt: new Date().toISOString(),
   });
   categories.push(category);
@@ -183,8 +180,7 @@ router.put("/admin/categories/:id", adminAuth, (req, res) => {
     defaultProductCareAr,
     defaultProductCareEn,
     defaultFeatureBanner,
-    showInDreamRoom,
-  } = req.body;
+    showInDreamRoom, order } = req.body;
   if (
     slug &&
     categories.some((c) => c.id !== req.params.id && c.slug === slug)
@@ -222,6 +218,7 @@ router.put("/admin/categories/:id", adminAuth, (req, res) => {
     defaultProductCareEn: defaultProductCareEn !== undefined ? defaultProductCareEn : categories[idx].defaultProductCareEn,
     defaultFeatureBanner: defaultFeatureBanner !== undefined ? defaultFeatureBanner : categories[idx].defaultFeatureBanner,
     showInDreamRoom: showInDreamRoom !== undefined ? showInDreamRoom : categories[idx].showInDreamRoom,
+    order: order !== undefined ? Number(order) : (categories[idx].order || 0),
     ...icon,
   });
   write("categories", categories);

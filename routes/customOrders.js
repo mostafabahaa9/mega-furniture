@@ -41,7 +41,7 @@ const CO_TYPE_LABELS = {
 function buildConfirmEmail(order) {
   const name = order.customerName || "Valued Customer";
   const type = CO_TYPE_LABELS[order.furnitureType] || order.furnitureType;
-  const wa = process.env.WHATSAPP_NUMBER || "201040454343";
+  const wa = process.env.WHATSAPP_NUMBER || "201559518088";
 
   return `<!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -148,7 +148,7 @@ function buildStatusEmail(order, status) {
   const label = CO_STATUS_LABELS[status] || status;
   const desc = CO_STATUS_DESC[status] || "";
   const icon = CO_STATUS_ICON[status] || "";
-  const wa = process.env.WHATSAPP_NUMBER || "201040454343";
+  const wa = process.env.WHATSAPP_NUMBER || "201559518088";
 
   const accentColor =
     status === "completed"
